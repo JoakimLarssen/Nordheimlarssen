@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  nordheimlarssen.no  ::  flagship personal site for Joakim Nordheim Larssen
+  Static site, no build step. Hosted on Vercel (repo: JoakimLarssen/Nordheimlarssen).
+
+  DEPLOY (full guide in SETUP.md):
+    1. Vercel: Add New -> Project -> import "Nordheimlarssen" -> Deploy.
+       (No build settings needed; Vercel serves the static files as-is.)
+    2. Project -> Settings -> Domains -> add "nordheimlarssen.no" (and www).
+    3. Set the DNS Vercel shows at Domeneshop (apex A + www CNAME).
+    4. thesis.pdf lives at /thesis.pdf in this repo, so the thesis link works.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Joakim Nordheim Larssen :: security researcher and developer</title>
+  <meta name="description" content="Joakim Nordheim Larssen. Security researcher and developer in Oslo. Offensive security, CTF, and secure AI-accelerated development." />
+  <meta name="author" content="Joakim Nordheim Larssen" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0D1011" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Joakim Nordheim Larssen" />
+  <meta property="og:description" content="Security researcher and developer, Oslo. I break systems, then build the tools that catch the next break." />
+  <meta property="og:url" content="https://nordheimlarssen.no/" />
+  <link rel="canonical" href="https://nordheimlarssen.no/" />
+
+  <!-- Fonts: JetBrains Mono (structure) + IBM Plex Sans (prose). No serif. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Gate reveal animations on JS BEFORE first paint, so no-JS users see
+       all content and JS users never get a flash of un-animated content. -->
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="Joakim Nordheim Larssen, home">
+        <span class="brand-prompt" aria-hidden="true">~/</span><span class="brand-name">jnl</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="#whoami" data-nav>whoami</a></li>
+          <li><a href="#projects" data-nav>projects</a></li>
+          <li><a href="#ctf" data-nav>ctf</a></li>
+          <li><a href="#academics" data-nav>academics</a></li>
+          <li><a href="#contact" data-nav>contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ===================== HERO / WHOAMI ===================== -->
+    <section class="hero section" id="whoami" aria-labelledby="hero-name">
+      <div class="wrap">
+        <p class="kicker reveal"><span class="prompt">$</span> whoami</p>
+        <h1 class="hero-name reveal" id="hero-name">Joakim Nordheim Larssen</h1>
+        <p class="hero-identity reveal">Security researcher and developer, Oslo</p>
+        <p class="hero-tagline reveal">
+          I break systems, then build the tools that catch the next break.
+        </p>
+        <p class="now-line reveal">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="now-label">now</span>
+          <span class="now-text">finishing a BSc in Cybersecurity, building Riposte.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section class="section" id="about" aria-labelledby="about-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="section-index">01</span>
+          <h2 class="section-title" id="about-h">about</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose about reveal">
+          <p>
+            I am a cybersecurity student in my final year of a BSc at Hoyskolen
+            Kristiania, Bergen campus. I work at the intersection of offensive
+            security and software development: I like understanding exactly how
+            a system fails, and then writing the code that makes the next
+            failure visible.
+          </p>
+          <p>
+            I compete in CTFs, mostly crypto, pwn, and forensics, and I
+            volunteer as a developer at Kvarteret studenthus. My current focus
+            is whether AI coding tools actually produce secure code, the subject
+            of my bachelor thesis and the idea behind Riposte, an offline
+            purple-team platform I build solo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PROJECTS ===================== -->
+    <section class="section" id="projects" aria-labelledby="projects-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="section-index">02</span>
+          <h2 class="section-title" id="projects-h">projects</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+
+        <ul class="project-grid">
+          <!-- RIPOSTE -->
+          <li class="card reveal">
+            <article>
+              <div class="card-top">
+                <h3 class="card-title">Riposte</h3>
+                <span class="badge badge-live" data-status>[ in dev ]</span>
+              </div>
+              <p class="card-desc">
+                An offline AI purple-team platform. Red and blue agents run a
+                four-gate verified-detection loop, so every simulated attack is
+                proven caught or missed. Fully offline, hundreds of tests.
+              </p>
+              <dl class="card-meta">
+                <div><dt>role</dt><dd>solo builder / architect</dd></div>
+                <div><dt>stack</dt><dd>Python, LiteLLM, Sigma, MITRE ATT&amp;CK, Docker</dd></div>
+              </dl>
+              <div class="card-links">
+                <a href="https://github.com/JoakimLarssen/Riposte" target="_blank" rel="noopener">
+                  github <span class="arrow" aria-hidden="true">&#8599;</span>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- FUTTIA -->
+          <li class="card reveal">
+            <article>
+              <div class="card-top">
+                <h3 class="card-title">Futtia</h3>
+                <span class="badge badge-dot" data-status>[ in dev ]</span>
+              </div>
+              <p class="card-desc">
+                AI football analysis. A TypeScript / Bun monorepo that turns
+                match footage into queryable, watchable insight.
+              </p>
+              <dl class="card-meta">
+                <div><dt>role</dt><dd>developer</dd></div>
+                <div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
+              </dl>
+              <div class="card-links">
+                <a href="https://futtia.no" target="_blank" rel="noopener">
+                  futtia.no <span class="arrow" aria-hidden="true">&#8599;</span>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- BACHELOR THESIS -->
+          <li class="card reveal">
+            <article>
+              <div class="card-top">
+                <h3 class="card-title">Bachelor thesis</h3>
+                <span class="badge" data-status>[ 2026 ]</span>
+              </div>
+              <p class="card-desc">
+                Secure AI-Accelerated Development in Agile Workflows: a framework
+                for small teams. An empirical study of whether AI coding tools
+                (Claude Code, Codex, Copilot) generate secure code, scored with
+                Semgrep and manual review, on a ToSee AS case study.
+              </p>
+              <dl class="card-meta">
+                <div><dt>grade</dt><dd><span class="grade-badge">A</span></dd></div>
+              </dl>
+              <div class="card-links">
+                <a href="/thesis.pdf" target="_blank" rel="noopener">
+                  read thesis <span class="arrow" aria-hidden="true">&#8599;</span>
+                </a>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== CTF / COMPETITIONS ===================== -->
+    <section class="section" id="ctf" aria-labelledby="ctf-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="section-index">03</span>
+          <h2 class="section-title" id="ctf-h">ctf / competitions</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+
+        <p class="prose lede reveal">
+          Three podium finishes, including a win at CybVest. I co-hosted one
+          CybVest edition, once. Crypto, pwn, and forensics.
+        </p>
+
+        <div class="table-wrap reveal" role="region" aria-label="CTF results" tabindex="0">
+          <table class="spec-table">
+            <caption class="sr-only">Capture the flag results and roles</caption>
+            <thead>
+              <tr>
+                <th scope="col">Event</th>
+                <th scope="col">Role</th>
+                <th scope="col" class="num">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CybVest</td>
+                <td>competitor</td>
+                <td class="num"><span class="result-win">1st</span></td>
+              </tr>
+              <tr>
+                <td>Helt Sikker CTF</td>
+                <td>solo</td>
+                <td class="num">3rd</td>
+              </tr>
+              <tr>
+                <td>Kongsberg &times; Helt Sikker</td>
+                <td>team</td>
+                <td class="num">3rd</td>
+              </tr>
+              <tr>
+                <td>EPT 2025</td>
+                <td>team</td>
+                <td class="num">4th student</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ACADEMICS ===================== -->
+    <section class="section" id="academics" aria-labelledby="academics-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="section-index">04</span>
+          <h2 class="section-title" id="academics-h">academics</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+
+        <div class="academics-grid">
+          <!-- Block 1: Kristiania -->
+          <div class="acad-block reveal">
+            <h3 class="acad-title">BSc Cybersecurity</h3>
+            <p class="acad-sub">Hoyskolen Kristiania, Bergen</p>
+            <table class="spec-table grades">
+              <caption class="sr-only">Selected coursework, Hoyskolen Kristiania</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Course</th>
+                  <th scope="col" class="num">Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Bachelor thesis</td><td class="num"><span class="grade-badge is-signal">A</span></td></tr>
+                <tr><td>Cyber Defense</td><td class="num"><span class="grade-badge">A</span></td></tr>
+                <tr><td>Agile Project</td><td class="num"><span class="grade-badge">A</span></td></tr>
+                <tr><td>Ethical Hacking</td><td class="num"><span class="grade-badge">B</span></td></tr>
+                <tr><td>IoT / OT Security</td><td class="num"><span class="grade-badge">B</span></td></tr>
+                <tr><td>Governance, Risk &amp; Compliance</td><td class="num"><span class="grade-badge">B</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Block 2: Exchange -->
+          <div class="acad-block reveal">
+            <h3 class="acad-title">Exchange</h3>
+            <p class="acad-sub">Southern Utah University, USA &middot; Spring 2025</p>
+            <table class="spec-table grades">
+              <caption class="sr-only">Selected coursework, Southern Utah University</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Course</th>
+                  <th scope="col" class="num">Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Cyber Warfare</td><td class="num"><span class="grade-badge">A</span></td></tr>
+                <tr><td>Data Communications &amp; Networking</td><td class="num"><span class="grade-badge">A</span></td></tr>
+                <tr><td>Algorithms &amp; Data Structures</td><td class="num"><span class="grade-badge">A</span></td></tr>
+                <tr><td>Technology &amp; Ethics</td><td class="num"><span class="grade-badge">A</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p class="acad-note reveal">Full transcript and verified record available on request.</p>
+      </div>
+    </section>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section class="section contact" id="contact" aria-labelledby="contact-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="section-index">05</span>
+          <h2 class="section-title" id="contact-h">contact</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+
+        <ul class="contact-list reveal">
+          <li>
+            <span class="contact-key">email</span>
+            <a href="mailto:joakimnordheimlarssen@gmail.com">joakimnordheimlarssen@gmail.com</a>
+          </li>
+          <li>
+            <span class="contact-key">github</span>
+            <a href="https://github.com/JoakimLarssen" target="_blank" rel="noopener">github.com/JoakimLarssen</a>
+          </li>
+          <li>
+            <span class="contact-key">linkedin</span>
+            <a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223" target="_blank" rel="noopener">in/joakim-nordheim-larssen</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="colophon">Built with JetBrains Mono &amp; IBM Plex Sans. No build step, no trackers.</span>
+      <span class="colophon">&copy; <span id="year">2026</span> Joakim Nordheim Larssen</span>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
