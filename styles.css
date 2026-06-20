@@ -303,6 +303,8 @@ img, svg { display: block; max-width: 100%; }
 .card-desc a:hover { text-decoration: underline; }
 .card-meta a { color: var(--accent); }
 .card-meta a:hover { text-decoration: underline; }
+.prose a, .now-line a { color: var(--accent); }
+.prose a:hover, .now-line a:hover { text-decoration: underline; }
 .card-meta {
   display: grid; gap: 8px;
   margin-bottom: 18px;
