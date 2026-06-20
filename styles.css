@@ -299,6 +299,8 @@ img, svg { display: block; max-width: 100%; }
   color: #c4c8c9;
   margin-bottom: 18px;
 }
+.card-desc a { color: var(--accent); }
+.card-desc a:hover { text-decoration: underline; }
 .card-meta {
   display: grid; gap: 8px;
   margin-bottom: 18px;
