@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  nordheimlarssen.no/writing  ::  publications and writeups
+  Static site, no build step. Lives in /writing/ so Vercel serves it at the
+  clean URL /writing. All asset paths are absolute because this is a subfolder.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>writing &middot; Joakim Nordheim Larssen</title>
+  <meta name="description" content="Writing by Joakim Nordheim Larssen: publications and writeups on software security, including the SAIF bachelor thesis on secure AI-accelerated development." />
+  <meta name="author" content="Joakim Nordheim Larssen" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0D1011" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="writing &middot; Joakim Nordheim Larssen" />
+  <meta property="og:description" content="Publications and writeups on software security, including the SAIF bachelor thesis on secure AI-accelerated development." />
+  <meta property="og:url" content="https://nordheimlarssen.no/writing" />
+  <meta property="og:image" content="https://nordheimlarssen.no/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="writing &middot; Joakim Nordheim Larssen" />
+  <meta name="twitter:description" content="Publications and writeups on software security, including the SAIF bachelor thesis." />
+  <meta name="twitter:image" content="https://nordheimlarssen.no/og.png" />
+  <link rel="canonical" href="https://nordheimlarssen.no/writing" />
+
+  <!-- Fonts: JetBrains Mono (structure) + IBM Plex Sans (prose). No serif. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Gate reveal animations on JS BEFORE first paint, so no-JS users see
+       all content and JS users never get a flash of un-animated content. -->
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <!-- Separate page: brand and home-section links point back to "/" absolutely.
+       The "writing" item is the current page (no data-nav scroll-spy here). -->
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="Joakim Nordheim Larssen, home">
+        <span class="brand-prompt" aria-hidden="true">~/</span><span class="brand-name">jnl</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#whoami">whoami</a></li>
+          <li><a href="/#projects">projects</a></li>
+          <li><a href="/#ctf">ctf</a></li>
+          <li><a href="/#academics">academics</a></li>
+          <li><a href="/writing" class="is-active" aria-current="page">writing</a></li>
+          <li><a href="/#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ===================== WRITING ===================== -->
+    <section class="section" id="writing" aria-labelledby="writing-h">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="section-index">00</span>
+          <h2 class="section-title" id="writing-h">writing</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+
+        <p class="prose lede reveal">
+          Publications and writeups. Mostly software security: how systems fail,
+          and how to make the next failure visible.
+        </p>
+
+        <ul class="project-grid">
+          <!-- BACHELOR THESIS (real entry) -->
+          <li class="card reveal">
+            <article>
+              <div class="card-top">
+                <h3 class="card-title">Secure AI-Accelerated Development in Agile Workflows</h3>
+                <span class="badge" data-status>[ 2026 ]</span>
+              </div>
+              <p class="card-desc">
+                A framework (SAIF) for folding AI-accelerated development into an
+                agile workflow without losing security, architecture, or
+                reliability. Grounded in a security experiment across four AI
+                coding models and a semester building inside the ToSee AS startup.
+                A group thesis with
+                <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/" rel="noopener" target="_blank">Bendik Hagen</a>
+                and
+                <a href="https://www.linkedin.com/in/krister-eriksen-774963300/" rel="noopener" target="_blank">Krister Eriksen</a>.
+              </p>
+              <dl class="card-meta">
+                <div><dt>type</dt><dd>bachelor thesis</dd></div>
+                <div><dt>year</dt><dd>2026</dd></div>
+                <div><dt>grade</dt><dd><span class="grade-badge is-signal">A</span></dd></div>
+              </dl>
+              <div class="card-links">
+                <a href="/thesis.pdf" target="_blank" rel="noopener">
+                  read thesis <span class="arrow" aria-hidden="true">&#8599;</span>
+                </a>
+              </div>
+            </article>
+          </li>
+        </ul>
+
+        <p class="acad-note reveal">More writeups coming.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="colophon">&copy; <span id="year">2026</span> Joakim Nordheim Larssen</span>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>
