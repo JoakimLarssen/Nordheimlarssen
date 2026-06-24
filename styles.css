@@ -281,6 +281,24 @@ img, svg { display: block; max-width: 100%; }
   background: var(--elev-2);
   transform: translateY(-2px);
 }
+/* "Featured" flag: marks the single highlighted writeup (the thesis), pinned first.
+   Teal is the reserved signal, so the featured piece earns it. */
+.card-flag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1px solid var(--accent-dim);
+  border-radius: 999px;
+  padding: 3px 10px;
+  margin-bottom: 12px;
+}
+.card.is-featured { border-color: var(--accent-dim); }
+
 .card-top {
   display: flex; align-items: baseline; justify-content: space-between;
   gap: 12px;
