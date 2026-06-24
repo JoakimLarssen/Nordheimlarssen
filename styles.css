@@ -285,8 +285,10 @@ img, svg { display: block; max-width: 100%; }
    Teal is the reserved signal, so the featured piece earns it. */
 .card-flag {
   display: inline-block;
+  align-self: flex-start;   /* the card is a flex column; stop the pill stretching full width */
+  width: fit-content;
   font-family: var(--mono);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -295,7 +297,7 @@ img, svg { display: block; max-width: 100%; }
   border: 1px solid var(--accent-dim);
   border-radius: 999px;
   padding: 3px 10px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 .card.is-featured { border-color: var(--accent-dim); }
 
