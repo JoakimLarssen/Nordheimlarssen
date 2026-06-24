@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  nordheimlarssen.no/writing/the-vulnerabilities-ai-writes
+  Article page. Static, no build step. Lives in its own folder so Vercel
+  serves it at the clean URL /writing/the-vulnerabilities-ai-writes.
+  All asset paths are absolute because this is a nested subfolder.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>the vulnerabilities AI writes are not the ones you were warned about &middot; Joakim Nordheim Larssen</title>
+  <meta name="description" content="All four frontier models we tested protected against SQL injection unprompted; the same four, unprompted, hardcoded secrets and shipped insecure session cookies in every sample. The inversion, and the cheap process control that closes it." />
+  <meta name="author" content="Joakim Nordheim Larssen" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0D1011" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="the vulnerabilities AI writes are not the ones you were warned about" />
+  <meta property="og:description" content="All four frontier models we tested protected against SQL injection unprompted; the same four, unprompted, hardcoded secrets and shipped insecure session cookies in every sample. The inversion, and the cheap process control that closes it." />
+  <meta property="og:url" content="https://nordheimlarssen.no/writing/the-vulnerabilities-ai-writes" />
+  <meta property="og:image" content="https://nordheimlarssen.no/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="the vulnerabilities AI writes are not the ones you were warned about" />
+  <meta name="twitter:description" content="All four frontier models we tested protected against SQL injection unprompted; the same four, unprompted, hardcoded secrets and shipped insecure session cookies in every sample." />
+  <meta name="twitter:image" content="https://nordheimlarssen.no/og.png" />
+  <link rel="canonical" href="https://nordheimlarssen.no/writing/the-vulnerabilities-ai-writes" />
+
+  <!-- Fonts: JetBrains Mono (structure) + IBM Plex Sans (prose). No serif. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Gate reveal animations on JS BEFORE first paint, so no-JS users see
+       all content and JS users never get a flash of un-animated content. -->
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <!-- Separate page: brand and home-section links point back to "/" absolutely.
+       The "writing" item is the current page (no data-nav scroll-spy here). -->
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="Joakim Nordheim Larssen, home">
+        <span class="brand-prompt" aria-hidden="true">~/</span><span class="brand-name">jnl</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#whoami">whoami</a></li>
+          <li><a href="/#projects">projects</a></li>
+          <li><a href="/#ctf">ctf</a></li>
+          <li><a href="/#academics">academics</a></li>
+          <li><a href="/writing" class="is-active" aria-current="page">writing</a></li>
+          <li><a href="/#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ===================== ARTICLE ===================== -->
+    <article class="section" id="article" aria-labelledby="article-h">
+      <div class="wrap">
+
+        <!-- Title + dateline -->
+        <header class="section-head reveal" style="display:block; margin-bottom: clamp(20px, 3vw, 32px);">
+          <h1 class="hero-name" id="article-h" style="font-size: clamp(1.7rem, 4.6vw, 2.6rem); margin-bottom: 18px;">the vulnerabilities AI writes are not the ones you were warned about</h1>
+          <p class="acad-sub" style="margin-bottom: 0;">
+            Joakim Nordheim Larssen &middot; 2026 &middot; drawn from the group bachelor thesis with
+            <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/" rel="noopener" target="_blank" style="color: var(--accent);">Bendik Hagen</a>
+            and
+            <a href="https://www.linkedin.com/in/krister-eriksen-774963300/" rel="noopener" target="_blank" style="color: var(--accent);">Krister Eriksen</a>
+          </p>
+        </header>
+
+        <!-- Lede -->
+        <div class="prose reveal">
+          <p>All four frontier models we tested protected against SQL injection unprompted: 8 of 8 samples used parameterized queries. The same four, unprompted, hardcoded secrets and shipped insecure session cookies: 0 of 8 got either right. The textbook vulnerability is solved by default. The operational hygiene that rarely shows up in a published code snippet, secrets in env vars and cookie flags, fails in every sample.</p>
+          <p>The inversion is the finding, and it points at a fix that is not a better model but a cheaper process control.</p>
+          <p>This is from a bachelor thesis I wrote with Bendik Hagen and Krister Eriksen at Hoyskolen Kristiania, in collaboration with a small Oslo startup, ToSee AS, graded A in 2026. What follows is the practitioner's version: what we measured, where it agrees and disagrees with the literature, and the part that matters if you run a three-person team shipping AI-generated code.</p>
+        </div>
+
+        <!-- // the question worth asking -->
+        <div class="section-head reveal">
+          <span class="section-index">01</span>
+          <h2 class="section-title">the question worth asking</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>"Is AI-generated code secure" has been asked enough that the answer is a cliche: roughly one in three samples has a problem. Perry et al. (CCS 2023) found AI-assisted participants wrote SQL-injection-vulnerable code 36% of the time against 7% for the control. Pearce et al. ("Asleep at the Keyboard", IEEE S&amp;P 2022) found about 40% of Copilot completions vulnerable across deliberately high-risk scenarios. Veracode's 2025 report ran the question across more than 100 models and found security flat across model generations.</p>
+          <p>The flatness is the tell. If the newest, largest model is not meaningfully safer than the older one, then "which model" is the wrong axis. The question worth asking is not whether the code is insecure but which parts fail and what closes the gap.</p>
+        </div>
+
+        <!-- // the experiment -->
+        <div class="section-head reveal">
+          <span class="section-index">02</span>
+          <h2 class="section-title">the experiment</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>Four models: Claude Opus 4.6, GPT-5.3-Codex, Gemini 3.1 Pro, and Kimi K2.5. Two tasks, both deliberately dense with security-critical surface: a Flask/SQLite login system with registration and authentication, and a REST API for user profiles with JWT auth. Two prompt conditions: a neutral prompt stating functional requirements only, and a security prompt that explicitly asked for SQL-injection protection, password hashing, input validation, secrets handling, and rate limiting. Four models times two tasks times two prompts is sixteen code samples, one run per cell.</p>
+          <p>Each sample was scored on six categories (SQL injection, password storage, input validation, XSS, secrets, auth/cookies), zero to two points each, twelve max. Zero meant the vulnerable pattern (string-concatenated queries, plaintext passwords, hardcoded secrets); two meant the secure one (parameterized queries, bcrypt or argon2, secrets in environment variables, httpOnly and Secure cookie flags). We then ran every sample through Semgrep on its default Python/Flask ruleset, and separately reviewed all sixteen by hand against the same checklist.</p>
+          <p>The honest framing comes before the results: n is sixteen, one generation per combination, and model output is non-deterministic. This is a within-study descriptive pattern, not a generalizable effect size. It is one of two strands. The other is a semester of shipping product at ToSee, which is qualitative, and which I keep separate from the experiment throughout, because conflating them is the easiest way to overclaim.</p>
+        </div>
+
+        <!-- // the inverted failure profile -->
+        <div class="section-head reveal">
+          <span class="section-index">03</span>
+          <h2 class="section-title">the inverted failure profile</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>Here is the per-category pass count, out of eight samples each:</p>
+        </div>
+
+        <div class="table-wrap reveal" role="region" aria-label="Per-category pass count under neutral and security prompts" tabindex="0">
+          <table class="spec-table">
+            <caption class="sr-only">Per-category pass count, out of eight samples each, under the neutral and security prompts</caption>
+            <thead>
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col" class="num">Neutral (/8)</th>
+                <th scope="col" class="num">Security (/8)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>sql injection protected</td><td class="num">8/8</td><td class="num">8/8</td></tr>
+              <tr><td>password correctly hashed</td><td class="num">3/8</td><td class="num">8/8</td></tr>
+              <tr><td>input validated</td><td class="num">2/8</td><td class="num">8/8</td></tr>
+              <tr><td>xss protected</td><td class="num">1/8</td><td class="num">8/8</td></tr>
+              <tr><td>secrets in env vars</td><td class="num">0/8</td><td class="num">6/8</td></tr>
+              <tr><td>auth / cookies secured</td><td class="num">0/8</td><td class="num">8/8</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="prose reveal">
+          <p>Read the neutral column top to bottom. SQL injection passes everywhere, then it falls off a cliff. Ranked as failure rates under the neutral prompt: hardcoded secrets 100%, insecure auth/cookies 100%, missing XSS protection 87.5%, missing input validation 75%, plaintext passwords 62.5%, SQL injection 0%. The one class everyone teaches passes in every sample. The classes nobody publishes, secrets and cookie flags, fail in all eight.</p>
+          <p>My interpretation of why: this tracks training-data representation, not model capability. Parameterized queries are over-represented in public code because SQL injection has been the canonical example for two decades, so the secure pattern is what the model has mostly seen. Secrets handling and <code>httpOnly</code>/<code>Secure</code> flags are configuration details that rarely show up in published snippets, so the model has mostly seen the insecure default. The per-category numbers are measured; the training-data explanation is interpretation, not something the experiment isolated. It is consistent with the data and the literature, and proven by neither.</p>
+          <p>The literature corroborates which classes recur. Fu et al. (ACM TOSEM, 2023/2024) found CWE-79 (XSS), CWE-330 (insufficient randomness), and CWE-94 (code injection) among the most common across 733 real Copilot snippets. Veracode (2025) reported XSS left undefended in 86% of relevant samples (it labels this CWE-80). Neither Fu et al. nor Veracode frames the result as an inversion driven by corpus representation. That framing is what our data adds.</p>
+        </div>
+
+        <!-- // security is a prompt-quality function -->
+        <div class="section-head reveal">
+          <span class="section-index">04</span>
+          <h2 class="section-title">security is a prompt-quality function</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>Add the security prompt and the picture changes almost completely. The average score across all samples rose from 5.875 to 11.625 out of twelve, close to a doubling. Two models, Claude Opus 4.6 and GPT-5.3-Codex, hit a clean 12/12 with the prompt. The thesis is explicit: that figure is "a descriptive measure of the difference between the two conditions in this experiment, and must not be interpreted as a statistically generalizable effect size." One run per cell. A pattern, not an effect size.</p>
+          <p>But look back at the table, secrets row, security column: 6/8. Even when explicitly asked to handle secrets correctly, two of eight samples still hardcoded them. The prompt is necessary and it is not sufficient. The reframing the thesis lands on is that the models can write secure code, they just do not unless asked, and even then not always.</p>
+          <p>One published result cuts against the easy reading. Shukla et al. (IEEE ISTAS 2025) found that iterative refinement, asking a model to improve its code across rounds, produced an overall 37.6% increase in critical vulnerabilities across the study's four prompting strategies (efficiency, feature, security, ambiguous) after five iterations. One well-formed security prompt helps in a single shot (our result); repeatedly leaning on the model to self-correct can degrade the code (theirs). The operational takeaway is the same either way: a human has to check the output between steps. The model does not verify itself.</p>
+        </div>
+
+        <!-- // the cheap model -->
+        <div class="section-head reveal">
+          <span class="section-index">05</span>
+          <h2 class="section-title">the cheap model</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>We included Kimi K2.5 to test the assumption that a cheaper model would produce worse security. On the neutral prompt it scored highest of the four, 7/12, ahead of Claude Opus 4.6 at 6.5, with GPT-5.3-Codex and Gemini 3.1 Pro both at 5. The cheap model had the best unprompted defaults.</p>
+          <p>That is one sample per model, so the safe statement is narrow: the price-equals-security assumption did not hold here. What gives the cell weight beyond its own n is the convergence with the largest-scale evidence available. Veracode ran more than 100 models and found that newer and larger ones did not write more secure code; security stayed flat regardless of model size or training sophistication, with roughly 45% of samples introducing flaws. Recency and tier do not predict safety at their scale either. "Cheap models are as secure" is not a claim this experiment can make, and I am not making it. The assumption failed in the only place we tested it, and the direction agrees with the largest study that has asked.</p>
+        </div>
+
+        <!-- // what static analysis missed -->
+        <div class="section-head reveal">
+          <span class="section-index">06</span>
+          <h2 class="section-title">what static analysis missed</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>This is the result that matters most for a small team. Across all sixteen samples:</p>
+        </div>
+
+        <div class="table-wrap reveal" role="region" aria-label="Samples with vulnerabilities found by detection method" tabindex="0">
+          <table class="spec-table">
+            <caption class="sr-only">Samples with vulnerabilities found, by detection method, across all sixteen samples</caption>
+            <thead>
+              <tr>
+                <th scope="col">Method</th>
+                <th scope="col" class="num">Samples with vulnerabilities found</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>semgrep (sast)</td><td class="num">2/16</td></tr>
+              <tr><td>manual review</td><td class="num">12/16</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="prose reveal">
+          <p>Semgrep, on its default ruleset, flagged two samples, and only for hardcoded secrets. It caught none of the plaintext passwords, missing validation, XSS, or insecure cookies. The manual checklist review found problems in twelve, including all eight neutral samples and the two security-prompt samples where secrets were still hardcoded.</p>
+          <p>The caveat is mandatory and the thesis states it: this is Semgrep with its default ruleset, not a verdict on static analysis in general. Schreiber and Tippe ran CodeQL across 7,703 AI-attributed files and surfaced 4,241 CWE instances across 77 types, though 87.9% of those files carried no CWE-mapped vulnerability at all, so detection rate is heavily a function of tool and ruleset. The 2/16 is not "SAST is useless." It is that the cheap, default SAST a small team actually reaches for, out of the box, will sail past most of what AI code gets wrong, and a five-minute human checklist will not. That is the reading a team without a security org needs to hear. Where tooling does excel is closing known classes fast once found: GitHub's Copilot Autofix data, vendor-reported from a public beta, claims SQL-injection remediation in 18 minutes against 3.7 hours manually. The gain is in verification tooling, not in trusting generation.</p>
+        </div>
+
+        <!-- // overtrust and the workflow that waves it through -->
+        <div class="section-head reveal">
+          <span class="section-index">07</span>
+          <h2 class="section-title">overtrust and the workflow that waves it through</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>The risk is not output quality in isolation. It is velocity times overtrust, inside a workflow that merges before anyone looks. I did not measure overtrust in our own team. We imposed the control, AI code was never treated as finished and was reviewed before merge, but we never measured overtrust or its absence in ourselves. The external evidence is strong on its own: Snyk's 2023 survey found only about 10% of professionals scan most of their AI output. Our contribution is not measuring that gap, it is the control built to sit inside it.</p>
+        </div>
+
+        <!-- // the framework gap -->
+        <div class="section-head reveal">
+          <span class="section-index">08</span>
+          <h2 class="section-title">the framework gap</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>If the risk lives in the team's process rather than in the model, the obvious move is to reach for an existing secure-development framework. Every mature one presupposes an organization the small team does not have.</p>
+        </div>
+
+        <div class="table-wrap reveal" role="region" aria-label="Secure-development frameworks and what each one assumes" tabindex="0">
+          <table class="spec-table">
+            <caption class="sr-only">Secure-development frameworks and the organization each one assumes</caption>
+            <thead>
+              <tr>
+                <th scope="col">Framework</th>
+                <th scope="col">What it assumes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>nist ssdf (sp 800-218)</td><td>org-level roles and toolchain; a "prepare the organization" practice group</td></tr>
+              <tr><td>nist sp 800-218a</td><td>audience is producers and acquirers of AI models, not consumers of an assistant</td></tr>
+              <tr><td>owasp llm top 10</td><td>secures the LLM in your product, not the developer-uses-an-LLM workflow</td></tr>
+              <tr><td>owasp samm v2</td><td>a maturity ladder, not day-one controls</td></tr>
+              <tr><td>microsoft sdl (ai evolution, 2026)</td><td>six standing organizational security functions</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="prose reveal">
+          <p>Two are worth spelling out. NIST SP 800-218A, by its own stated audience, is guidance for people building and acquiring AI models, not for the three-person shop consuming Claude through a CLI. The Cloud Security Alliance's Secure Vibe Coding Guide (Huang, April 2025) is the closest analog and worth citing as related work, but it is a generic individual checklist, not an agile-process-integrated, experiment-grounded framework.</p>
+          <p>The clearest datable sign the space is still open is OWASP's own. There is a proposal, filed as GitHub issue #826 in April 2026, for an "OWASP Top 10 for AI-Generated Code." It is unapproved and unmerged. A credible proposal for exactly this category, existing only as an open issue, dates how recently the gap was still vacant.</p>
+        </div>
+
+        <!-- // SAIF, briefly -->
+        <div class="section-head reveal">
+          <span class="section-index">09</span>
+          <h2 class="section-title">SAIF, briefly</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>So we built a framework for the team that has none of that substrate: two to eight people, agile, using AI tools daily, no dedicated security roles. SAIF (Secure AI-Integrated Framework) is five components, described as what a three-person team does on day one, not as a maturity model:</p>
+        </div>
+
+        <div class="table-wrap reveal" role="region" aria-label="The five components of the SAIF framework" tabindex="0">
+          <table class="spec-table">
+            <caption class="sr-only">The five components of the SAIF framework and what each does</caption>
+            <thead>
+              <tr>
+                <th scope="col">Component</th>
+                <th scope="col">What it does</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>model routing</td><td>route tasks to models by type and security sensitivity, against a living model-profile catalogue</td></tr>
+              <tr><td>three-level security</td><td>effort scales with risk: level 1 (auth, secrets, user data) makes the security prompt and full checklist mandatory; level 3 (styling, no user data) skips them</td></tr>
+              <tr><td>review checklist</td><td>six questions, one per experiment category, under five minutes per PR, blocks merge on any "no"</td></tr>
+              <tr><td>sprint workflow</td><td>wires the above into planning, development, review, integration, and retrospective</td></tr>
+              <tr><td>adoption staircase</td><td>layer it in over weeks instead of all at once</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="prose reveal">
+          <p>The under-studied piece is the routing, and it needs a distinction the experiment did not. The four benchmarked models (Claude Opus 4.6, GPT-5.3-Codex, Gemini 3.1 Pro, Kimi K2.5) are not the same as the CLI tools we actually shipped with day to day (Claude Code, Codex CLI, Opencode). Most prior work tests one model in isolation, usually Copilot. The ToSee strand, qualitatively, is where deliberate per-task tool choice showed its value. One concrete decision: we routed debugging and reading an unfamiliar part of the codebase to Claude Code, because it was consistently strongest there, and the observed payoff was less time lost to wrong-headed edits on code the author had not written. The practical primary tool ended up being Opencode, because it runs multiple models in one terminal and the routing stops being a context-switch. That is informed practice from one deployment, not a proven result, and we found no external source that validates the routing practice. It is the contribution the controlled experiment could not produce, which is exactly why it is the least corroborated.</p>
+          <p>The necessary admission: SAIF is a proposed control, not a validated one. No other team has tested it. The adoption-staircase timeframes are recommendations from one case, not experience-confirmed standards. The whole thing is the prescription the literature points toward and does not build, which is what makes a concrete framework worth publishing even unvalidated. It does not make it proven.</p>
+        </div>
+
+        <!-- // limits -->
+        <div class="section-head reveal">
+          <span class="section-index">10</span>
+          <h2 class="section-title">limits</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>n=16, one run per cell, non-deterministic generation. A single team, a single company, React and Bun in the product and Python/Flask in the experiment. Static analysis and manual review only, no dynamic testing or pen-testing of running systems. The SAST result is specific to Semgrep's default ruleset. Productivity at ToSee was experienced qualitatively and never measured. Every productivity percentage in this genre belongs to someone else's study, and at least one cuts against the optimistic reading: METR's 2025 result found that allowing AI increased experienced open-source developers' task completion time by 19%, slowing them down. I will not imply we measured a speedup. This is analytic generalization, the kind you reason from to your own context, not statistical generalization. Take the numbers as indications of a pattern, then verify in your own stack.</p>
+        </div>
+
+        <!-- // where this goes -->
+        <div class="section-head reveal">
+          <span class="section-index">11</span>
+          <h2 class="section-title">where this goes</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="prose reveal">
+          <p>The through-line is short. The security failures in AI-generated code are not where the model is weak, they are where the training corpus is thin; and they are not closed by buying a better model, they are closed by a cheap process control: an explicit prompt for security-critical code, and a five-minute checklist a human runs before merge. The model-choice spread in our data, two points neutral and one with a prompt, was smaller than what one prompt bought, 5.75. Process is where the gain is.</p>
+          <p>Which lands on the thing I keep coming back to in security work. The hard part was never generating the code. It is verifying that the control worked, that the secret really is in an environment variable, that the cookie really has its flags, rather than trusting the thing that wrote it. You verify the control fired. You do not trust the generator.</p>
+        </div>
+
+        <!-- // sources -->
+        <div class="section-head reveal">
+          <span class="section-index">12</span>
+          <h2 class="section-title">sources</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <ul class="prose reveal" style="display:grid; gap:14px; font-size:0.92rem; line-height:1.55;">
+          <li>Perry, N., Srivastava, M., Kumar, D., Boneh, D. <em>Do Users Write More Insecure Code with AI Assistants?</em> ACM CCS 2023. <a href="https://arxiv.org/abs/2211.03622" target="_blank" rel="noopener">arxiv.org/abs/2211.03622</a> / <a href="https://dl.acm.org/doi/10.1145/3576915.3623157" target="_blank" rel="noopener">dl.acm.org/doi/10.1145/3576915.3623157</a></li>
+          <li>Pearce, H., Ahmad, B., Tan, B., Dolan-Gavitt, B., Karri, R. <em>Asleep at the Keyboard? Assessing the Security of GitHub Copilot's Code Contributions.</em> IEEE S&amp;P 2022 (CACM 2023). <a href="https://arxiv.org/abs/2108.09293" target="_blank" rel="noopener">arxiv.org/abs/2108.09293</a> / <a href="https://ieeexplore.ieee.org/document/9833571" target="_blank" rel="noopener">ieeexplore.ieee.org/document/9833571</a></li>
+          <li>Veracode. <em>2025 GenAI Code Security Report.</em> 2025 (vendor source). <a href="https://www.veracode.com/blog/genai-code-security-report/" target="_blank" rel="noopener">veracode.com/blog/genai-code-security-report</a> / <a href="https://www.veracode.com/wp-content/uploads/2025_GenAI_Code_Security_Report_Final.pdf" target="_blank" rel="noopener">veracode.com/.../2025_GenAI_Code_Security_Report_Final.pdf</a></li>
+          <li>Fu, Y., Liang, P., Tahir, A., Li, Z., Shahin, M., Yu, J., Chen, J. <em>Security Weaknesses of Copilot-Generated Code in GitHub Projects: An Empirical Study.</em> ACM TOSEM, 2023/2024. <a href="https://arxiv.org/abs/2310.02059" target="_blank" rel="noopener">arxiv.org/abs/2310.02059</a></li>
+          <li>Schreiber, Maximilian, Tippe, Pascal. <em>Security Vulnerabilities in AI-Generated Code: A Large-Scale Analysis of Public GitHub Repositories.</em> In Information and Communications Security (ICICS 2025), Lecture Notes in Computer Science, vol. 16219. Springer, Singapore. DOI 10.1007/978-981-95-3537-8_9. <a href="https://doi.org/10.1007/978-981-95-3537-8_9" target="_blank" rel="noopener">doi.org/10.1007/978-981-95-3537-8_9</a> / <a href="https://arxiv.org/abs/2510.26103" target="_blank" rel="noopener">arxiv.org/abs/2510.26103</a></li>
+          <li>Snyk. <em>2023 AI Code Security Report.</em> 2023 (vendor survey). <a href="https://go.snyk.io/2023-ai-code-security-report.html" target="_blank" rel="noopener">go.snyk.io/2023-ai-code-security-report.html</a></li>
+          <li>Shukla, S., Joshi, H., Syed, R. <em>Security Degradation in Iterative AI Code Generation: A Systematic Analysis of the Paradox.</em> IEEE ISTAS 2025. arXiv:2506.11022. <a href="https://arxiv.org/abs/2506.11022" target="_blank" rel="noopener">arxiv.org/abs/2506.11022</a></li>
+          <li>GitHub. <em>Found means fixed: Secure code more than three times faster with Copilot Autofix.</em> GitHub Blog, 2024 (vendor source; public-beta data; the SQL-injection 18-min-vs-3.7-hr pair is distinct from the overall 28-min-vs-1.5-hr "3x faster" headline). <a href="https://github.blog/news-insights/product-news/secure-code-more-than-three-times-faster-with-copilot-autofix/" target="_blank" rel="noopener">github.blog/news-insights/product-news/secure-code-more-than-three-times-faster-with-copilot-autofix</a></li>
+          <li>Becker, J., Rush, N., Barnes, E., Rein, D. <em>Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity.</em> 2025. arXiv:2507.09089. <a href="https://arxiv.org/abs/2507.09089" target="_blank" rel="noopener">arxiv.org/abs/2507.09089</a></li>
+          <li>NIST (Souppaya, M., Scarfone, K., Dodson, D.). <em>Secure Software Development Framework (SSDF) v1.1.</em> SP 800-218, Feb 2022. <a href="https://csrc.nist.gov/pubs/sp/800/218/final" target="_blank" rel="noopener">csrc.nist.gov/pubs/sp/800/218/final</a></li>
+          <li>NIST (Booth, Souppaya, Vassilev, Ogata; Stanley, CISA; Scarfone). <em>Secure Software Development Practices for Generative AI and Dual-Use Foundation Models: An SSDF Community Profile.</em> SP 800-218A, July 2024. <a href="https://csrc.nist.gov/pubs/sp/800/218/a/final" target="_blank" rel="noopener">csrc.nist.gov/pubs/sp/800/218/a/final</a></li>
+          <li>OWASP GenAI Security Project. <em>OWASP Top 10 for Large Language Model Applications</em> (2025). <a href="https://genai.owasp.org/llm-top-10/" target="_blank" rel="noopener">genai.owasp.org/llm-top-10</a> / <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank" rel="noopener">owasp.org/www-project-top-10-for-large-language-model-applications</a></li>
+          <li>Sharif, R. (CyberSecAI Ltd). <em>Proposal: OWASP Top 10 for AI-Generated Code (AGC).</em> OWASP GitHub Issue #826, filed 17 April 2026, status proposed/unapproved. <a href="https://github.com/OWASP/www-project-top-10-for-large-language-model-applications/issues/826" target="_blank" rel="noopener">github.com/OWASP/www-project-top-10-for-large-language-model-applications/issues/826</a></li>
+          <li>OWASP. <em>Software Assurance Maturity Model (SAMM) v2.0.</em> 11 Feb 2020. <a href="https://owaspsamm.org/" target="_blank" rel="noopener">owaspsamm.org</a> / <a href="https://owasp.org/www-project-samm/" target="_blank" rel="noopener">owasp.org/www-project-samm</a></li>
+          <li>Microsoft (Zunger, Y.). <em>Microsoft SDL: Evolving security practices for an AI-powered world.</em> Microsoft Security Blog, 3 Feb 2026. <a href="https://www.microsoft.com/en-us/security/blog/2026/02/03/microsoft-sdl-evolving-security-practices-for-an-ai-powered-world/" target="_blank" rel="noopener">microsoft.com/.../microsoft-sdl-evolving-security-practices-for-an-ai-powered-world</a></li>
+          <li>Huang, K. (CSA). <em>Secure Vibe Coding Guide.</em> Cloud Security Alliance, 9 April 2025. <a href="https://cloudsecurityalliance.org/blog/2025/04/09/secure-vibe-coding-guide" target="_blank" rel="noopener">cloudsecurityalliance.org/blog/2025/04/09/secure-vibe-coding-guide</a></li>
+        </ul>
+
+        <p class="acad-note reveal">Source thesis: Larssen, J. N., Hagen, B., Eriksen, K. <em>Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams.</em> Bachelor thesis, Hoyskolen Kristiania, 2026 (graded A). All experiment numbers and the SAIF framework are from this work.</p>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="colophon">&copy; <span id="year">2026</span> Joakim Nordheim Larssen</span>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>
