@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  nordheimlarssen.no/writing/the-economics-of-a-zero-day  ::  article
+  Static page, no build step. All asset paths absolute.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>the economics of a zero-day &middot; Joakim Nordheim Larssen</title>
+  <meta name="description" content="How a single secret bug gets priced, who pays, and why the number keeps climbing. The mechanics of the zero-day market, from bug bounties to seven-figure broker deals." />
+  <meta name="author" content="Joakim Nordheim Larssen" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0D1011" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="the economics of a zero-day &middot; Joakim Nordheim Larssen" />
+  <meta property="og:description" content="How a single secret bug gets priced, who pays, and why the number keeps climbing." />
+  <meta property="og:url" content="https://nordheimlarssen.no/writing/the-economics-of-a-zero-day" />
+  <meta property="og:image" content="https://nordheimlarssen.no/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="the economics of a zero-day &middot; Joakim Nordheim Larssen" />
+  <meta name="twitter:description" content="How a single secret bug gets priced, who pays, and why the number keeps climbing." />
+  <meta name="twitter:image" content="https://nordheimlarssen.no/og.png" />
+  <link rel="canonical" href="https://nordheimlarssen.no/writing/the-economics-of-a-zero-day" />
+
+  <!-- Fonts: JetBrains Mono (structure) + IBM Plex Sans (prose). No serif. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Gate reveal animations on JS BEFORE first paint, so no-JS users see
+       all content and JS users never get a flash of un-animated content. -->
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="Joakim Nordheim Larssen, home">
+        <span class="brand-prompt" aria-hidden="true">~/</span><span class="brand-name">jnl</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#whoami">whoami</a></li>
+          <li><a href="/#projects">projects</a></li>
+          <li><a href="/#ctf">ctf</a></li>
+          <li><a href="/#academics">academics</a></li>
+          <li><a href="/writing" class="is-active" aria-current="page">writing</a></li>
+          <li><a href="/#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <article class="article">
+          <a class="article-back" href="/writing">&#8592; writing</a>
+
+          <h1>the economics of a zero-day</h1>
+          <p class="article-lede">how a single secret bug gets priced, who pays, and why the number keeps climbing.</p>
+          <p class="article-byline">Joakim Nordheim Larssen</p>
+
+          <p class="prose">A zero-day is a vulnerability the vendor does not yet know about, which means no patch exists and nobody is defended against it. That gap, between a flaw existing and a fix existing, is the entire product. It is also one of the strangest markets in the world: the same bug can be worth fifteen thousand dollars or seven million depending on who you sell it to and what they mean to do with it.</p>
+          <p class="prose">Most coverage is either breathless ("hackers sell exploits for millions") or moralizing ("the spyware industry is evil"), and neither tells you how the price is set. The thesis: a zero-day is priced as a wasting, secret, exclusive offensive capability, and almost every number in this market follows from those four words.</p>
+
+          <div class="article-summary">
+            <span class="label">the short version</span>
+            <ul>
+              <li>Three markets, one bug. The <strong>white market</strong> (vendor bounties, Pwn2Own) discloses, patches, and pays the least; the <strong>gray market</strong> (brokers, governments) keeps it secret and pays 3x to 10x more; the <strong>black market</strong> sells to criminals with no vouching or escrow [1][2][3].</li>
+              <li>Real broker numbers: Crowdfense announced a <strong>$30 million</strong> program in 2024 with up to <strong>$7M for an iOS zero-click chain</strong> and <strong>$9M for an SMS/MMS chain</strong> [9][10]. Operation Zero (Russia) advertised <strong>$20M</strong> in 2023 while its standing list still tops out at <strong>$2.5M</strong> [4][5][6]. The headline is not the rate card.</li>
+              <li>iOS and Android prices have flipped twice, for opposite reasons: in 2019 Android out-priced iOS because the market was flooded with iOS bugs [7][8]; by 2024 iOS out-priced Android because Apple hardening made iOS bugs scarce again [9][10].</li>
+              <li>Price tracks reliability, exclusivity, zero-click delivery, and persistence, discounted by how long the bug survives a patch; a RAND study of ~200 real zero-days found an average life of <strong>6.9 years</strong> and only a <strong>5.7% per year</strong> rediscovery chance, which is what justifies paying millions [12][13].</li>
+              <li>The government is the biggest buyer, the owner of the stockpile that leaked and caused EternalBlue, the referee running the toothless Vulnerabilities Equities Process, and the regulator sanctioning spyware vendors, all at once [14][15][23][27].</li>
+            </ul>
+          </div>
+
+          <h2>three markets, one bug</h2>
+          <p class="prose">Anyone holding a working exploit faces a fork: sell white, gray, or black. The choice is mostly about whether the bug gets fixed [1].</p>
+          <p class="prose">The white market is the vendors and the competitions that feed them. Apple, Google, and Microsoft run bug-bounty programs; Trend Micro's Zero Day Initiative runs Pwn2Own. You hand over the bug, it gets disclosed and patched, you get paid legally, and the pay is the lowest of the three [1][2]. The defining feature is that your sale destroys the asset: the moment the vendor knows, the clock starts on a patch.</p>
+          <p class="prose">The gray market inverts that. You sell exclusively to one buyer, usually a broker or a government, and the bug is deliberately not disclosed, kept alive for surveillance or offensive use. This is where Zerodium, Crowdfense, and Operation Zero live; your sale begins the asset's useful life rather than ending it, which is why the gray market outbids the white one for any bug whose value depends on staying secret.</p>
+          <p class="prose">The black market is the least documented because it is the least structured: illicit sales to criminal groups, no vouching, no escrow, no reputation to protect [3]. The gray and black markets pay many multiples of the white market for the identical bug, precisely to keep the rest of us undefended.</p>
+
+          <h2>the brokers, and the real numbers</h2>
+          <p class="prose">The gray market's most public face for years was <strong>Zerodium</strong>, founded in 2015 by Chaouki Bekrar, who had cofounded the French exploit firm VUPEN [31]. The model is simple: buy exclusive zero-days from researchers, resell them secretly to government customers.</p>
+          <p class="prose">Watch the iOS bounty climb. In 2015 Zerodium offered around <strong>$1 million</strong> for an iOS 9 exploit [4]; by September 2016 it had tripled that to <strong>$1.5 million</strong> for a remote iOS 10 jailbreak [16]; in 2019 it raised the ceiling to <strong>$2 million</strong> for a persistent, zero-click (no tap or action needed from the victim), remote iOS jailbreak [17]. Then the pattern broke. On September 3, 2019, Zerodium's list put an <strong>Android full-chain zero-click with persistence at $2.5 million</strong>, above the iOS full chain ($2 million, or $1 million for the one-click variant) [7][8]. It was the first time Android out-priced iOS since Zerodium opened. One caveat: Zerodium has been largely quiet since around 2021, so treat any of its figures as a dated, advertised payout. Advertised payouts were always marketing; the real clearing prices stayed private.</p>
+          <p class="prose">The Russian broker <strong>Operation Zero</strong> is where honesty about numbers matters most. Founded in 2021 and run by CEO Sergey Zelenyuk, it restricts its sales so that, in its words, "the end user is a non-NATO country" [5]. On September 27, 2023, it announced it was raising its bounty for full Android and iOS chains from $200,000 to <strong>$20 million</strong>, citing "high demand on the market." But its own published list still tops out at <strong>$2.5 million for Android</strong> and <strong>$2 million for iOS</strong> [6]. Zelenyuk himself framed the $20 million as possibly temporary and noted competitors keep low public list prices while transacting higher in private [5]. Treat $20 million as a situational maximum; the standing rate is $2.5 million.</p>
+          <p class="prose"><strong>Crowdfense</strong>, based in the UAE, is the cleanest modern data point because its list is detailed and current. In April 2024 it announced a <strong>$30 million</strong> acquisition program, far above the $3 million ceiling of its 2019 program [9]. The tiers:</p>
+          <ul>
+            <li>iOS zero-click full chain: up to <strong>$7 million</strong></li>
+            <li>Android zero-click full chain: up to <strong>$5 million</strong></li>
+            <li>SMS/MMS zero-click full chain: up to <strong>$9 million</strong>, the program's top figure</li>
+            <li>Chrome RCE plus LPE (remote code execution joined to a local privilege escalation, the move that takes an attacker from running code to full control): $2 to $3 million; Safari: $2.5 to $3.5 million</li>
+            <li>WhatsApp and iMessage zero-days: $3 to $5 million; overall range $10,000 to $9 million [9][10]</li>
+          </ul>
+          <p class="prose">Notice that Crowdfense prices iOS ($7M) above Android ($5M), the exact opposite of Zerodium's 2019 list. That is the inversion cutting the other way.</p>
+
+          <h2>why iOS and Android keep swapping places</h2>
+          <p class="prose">The 2019 flip and the 2024 flip look identical and are driven by opposite forces. Conflating them is the most common mistake in coverage.</p>
+          <p class="prose">The 2019 inversion was a supply story. Bekrar said plainly that "the zero-day market is so flooded by iOS exploits that we've recently started refusing some of them," while full Android chains had "become very hard and time consuming" thanks to Google and Samsung hardening. Android cost more in 2019 because Android bugs were scarce and iOS bugs were a glut; Zerodium said it would keep Android highest "until Apple re-improves the security of iOS" [8].</p>
+          <p class="prose">The 2024 inversion is a hardening story pointing the other way. By then, defenses like Lockdown Mode and memory-safety work had made iOS chains genuinely harder to build, so iOS became the scarce, expensive target again. Crowdfense's research director Paolo Stagno put it directly: "The mitigations that vendors are implementing are working," making exploits "much more complicated, much more time-consuming"; where a single researcher once built a working exploit, now it takes teams [10]. Scarcity from hardening is the engine: when the bug gets harder to find and weaponize, the price rises to keep researchers hunting.</p>
+          <p class="prose">A 2025 entrant makes the point loudly. In August 2025, a UAE firm calling itself Advanced Security Solutions offered up to <strong>$20 million</strong> for a zero-day that can hack any smartphone by text message; one researcher told TechCrunch the figure might even be undervalued [18].</p>
+
+          <h2>what actually sets the price</h2>
+          <p class="prose">Underneath the headline tiers, an exploit's value is a function of a few properties; brokers say so explicitly, that payouts are "up to" a ceiling and the real figure is set by technical assessment. The levers:</p>
+          <p class="prose"><strong>Reliability and exclusivity.</strong> An exploit that fires across many devices without crashing is worth far more than one that works half the time; unreliability is the market's central problem and the main reason real prices land below the advertised ceiling. And a bug sold to one buyer beats one floating around: Crowdfense's contract makes the research "the sole and exclusive property of Crowdfense" [11]. Exclusivity is the asset, not a bonus.</p>
+          <p class="prose"><strong>Chain completeness, zero-click, persistence.</strong> A full chain (code execution, then sandbox escape, then privilege escalation) is worth a multiple of any single component, because it is usable as delivered. Zero-click delivery is the biggest interaction multiplier; every top tier above is the zero-click variant. And persistence, surviving a reboot, is its own named line, which is why Bekrar called persistence difficulty one of the two things holding iOS prices up.</p>
+          <p class="prose">Then the discount that hangs over all of it: time. A zero-day is a depreciating asset whose value collapses the day the vulnerability is patched. Even staleness erodes value before a patch; one Windows privilege-escalation seller cut the price from $95,000 to $90,000 simply because the listing had sat too long. So contracts get clever: buyers pay in milestones, and the seller effectively warrants the exploit's survival, not just its function at delivery [12].</p>
+          <p class="prose">If a patch destroys the value, you would expect buyers to be nervous. They are less nervous than you would think, because the underlying asset is durable. The RAND study "Zero Days, Thousands of Nights," by Ablon and Bogart in 2017, examined roughly 200 real zero-days from 2002 to 2016. The average vulnerability lived <strong>6.9 years</strong> before disclosure, with no correlation between severity and lifespan. The economic punchline is the collision rate: only about <strong>5.7% per year</strong> of a stockpile is independently rediscovered by someone else [13]. That low number is why an exploit holds value over years; the buyer's temporary monopoly is rarely broken by an outside discovery, and the dominant kill-risk is the vendor's own patch. (RAND's primary PDF would not load for me, so these figures come from consistent secondary reporting.)</p>
+
+          <h2>the gap, and why bug bounties can't close it</h2>
+          <p class="prose">Now put the two markets side by side. The same iOS or Android zero-click chain is worth roughly <strong>$2 million</strong> at the top of Apple's bounty and <strong>$5 to $7 million</strong> at Crowdfense, with gray-market headline numbers running to $20 million [10][18]. The white market pays a fraction, and the gap is structural, not stinginess.</p>
+          <p class="prose">The two buyers want opposite things from the same object. The vendor wants to disclose and destroy the bug; the offensive buyer wants to keep it secret and use it. A defensive purchase is the asset's funeral while an offensive purchase is its birth. That asymmetry lets offensive demand outbid defensive demand for any secrecy-dependent capability, which is why bug bounties cannot clear the high end and the best researchers feel a permanent pull toward gray [11].</p>
+          <p class="prose">The vendors are not standing still. Apple overhauled its Security Bounty in late 2025, doubling the top base award for a zero-click chain to <strong>$2 million</strong>, with bonuses pushing the maximum past <strong>$5 million</strong>; it has paid over $35 million to more than 800 researchers since 2020, and coverage frames the increase explicitly as catching up to mercenary-spyware prices [19]. Google raised its top Android reward to <strong>$1.5 million</strong> for a zero-click Pixel secure-chip chain with persistence, and paid out $17.1 million across its programs in 2025 [32]. That is the real story of 2024 and 2025: the white market chasing the gray upward, both responding to the same hardening. But even after the increases, the gray market still pays several times more.</p>
+          <p class="prose">Pwn2Own is the interesting exception, because it solves the quality problem by construction. Run by ZDI since 2007, it publishes payouts for live, judge-verified exploits, a transparent reference price among opaque rates. Pwn2Own Ireland 2025 introduced a <strong>$1 million prize for a zero-click WhatsApp exploit</strong>, the largest single target in the contest's history [33]. Because the exploit must be demonstrated to win and is then disclosed, the lemon problem disappears and the price still sits below offensive rates: same quality, asset dead on disclosure.</p>
+
+          <h2>the broker's margin, and the human cost</h2>
+          <p class="prose">The markup is the point. NSO Group's Pegasus, per New York Times reporting from 2016, cost upward of <strong>$650,000 to infect 10 phones</strong> plus a <strong>$500,000 setup fee</strong>, with internal NSO documents pricing 100 phones at &euro;41.4 million a year [20]. Intellexa's Predator, by leaked commercial proposals, carried price tags around <strong>&euro;8 million</strong> for 100 infections (both figures from secondary reporting) [34]. Yet a weaponized Chrome bug for mass deployment reportedly runs roughly $100,000 to $300,000 at the component level [21]. Buy a browser bug for low six figures, sell a working surveillance product for seven or eight.</p>
+          <p class="prose">And the human cost is the externality nobody prices. Intellexa is behind at least 15 of the roughly 70 mobile zero-days Google's threat-intelligence team has documented since 2021, fresh bugs burned to keep Predator running [21]. NSO's Pegasus, investigated by the Pegasus Project in 2021, was found targeting civil society at scale: forensics tied to a leak of about 50,000 phone numbers identified at least 180 journalists across 20 countries selected for targeting, and the people around murdered Saudi journalist Jamal Khashoggi were among them [22]. The chains that command the highest prices land on a dissident's phone.</p>
+
+          <h2>the state on every side of the table</h2>
+          <p class="prose">Here is where the economics become a governance problem. The state is the biggest buyer in this market, and it is also the referee and the regulator, roles that do not sit comfortably together.</p>
+          <p class="prose">The NSA's logic for keeping a bug rather than disclosing it is <strong>NOBUS</strong>, "nobody but us": if exploiting a flaw requires resources only the agency has, the offensive value is judged to outweigh the defensive risk, so it is retained. Former director Michael Hayden articulated the idea publicly, asking you to judge a vulnerability by "who else can do this?" [23]. The flaw is that NOBUS bets the assessment stays true forever, and it does not. Once the exploit leaks, the calculus inverts and the bug is exploitable by everybody, against the very systems the country relies on.</p>
+          <p class="prose">The formal machinery for that decision is the <strong>Vulnerabilities Equities Process</strong>, the US interagency mechanism for choosing whether to disclose a bug or retain it. Developed around 2008 and 2009 but kept secret, it was glimpsed in 2016 after an EFF lawsuit and finally published as a charter on November 15, 2017, under pressure following the Shadow Brokers leak. Its weaknesses are well documented: the NSA, the agency with the strongest offensive interest, serves as its executive secretariat, and critics cite "restriction by non-disclosure agreements, lack of risk ratings, special treatment for the NSA, and less than whole-hearted commitment to disclosure as the default" [14]. The NDA point matters for the economics: if the government buys an exploit from a broker under an NDA, the contract can keep that bug outside the review entirely, and there is no credible public figure for how often it discloses versus retains.</p>
+          <p class="prose">What NOBUS risks, <strong>EternalBlue</strong> demonstrated. The NSA developed that exploit against a Windows flaw and reportedly held it for more than five years. On March 14, 2017, Microsoft quietly patched the flaw, evidently tipped off the tools were at risk; a month later the Shadow Brokers dumped the NSA toolkit publicly [24]. On May 12, 2017, the WannaCry ransomware worm weaponized EternalBlue, hitting around 200,000 to 230,000 computers across 150 countries and crippling the UK's NHS [15]. In June, NotPetya reused it and did far more damage; a White House assessment put its losses above $10 billion, the most destructive cyberattack in history. WannaCry was later attributed to North Korea, NotPetya to Russia's GRU [25].</p>
+          <p class="prose">The honest nuance is that the patch existed before WannaCry spread, so defenders argue the damage was a patching failure, not the retention; critics counter that a bug the NSA never held could never have leaked. Both are true, which is why this is still the live debate. Microsoft's Brad Smith made the critics' case memorably, comparing government stockpiling to "the U.S. military having some of its Tomahawk missiles stolen."</p>
+
+          <h2>the regulator's two attempts</h2>
+          <p class="prose">The state's attempts to regulate this market show how hard intangible code is to control. The first was export control. In 2013 the <strong>Wassenaar Arrangement</strong>, then a 41-country regime (42 today) for arms and dual-use goods, added "intrusion software" to its control lists, reacting to Western surveillance tools turning up in repressive regimes. The 2015 US implementation was a disaster: the proposed rule was so broad it would have required export licenses for commercial penetration-testing tools and potentially any exploit proof-of-concept sent across borders. Symantec, FireEye, Google, and the EFF all pushed back, because language written for weapons swept up the defensive research security depends on. The proposal was withdrawn; only in December 2017 did Wassenaar add exemptions for vulnerability disclosure and incident response [26]. Clumsy controls on dual-use code harm defenders more than attackers.</p>
+          <p class="prose">The second attempt targets the spyware vendors directly. In November 2021, US Commerce added <strong>NSO Group</strong> and others to its Entity List for supplying spyware used to target journalists, activists, and officials, barring them from buying US technology [27]. Then, on March 27, 2023, President Biden signed an <strong>executive order prohibiting US government use of commercial spyware</strong> that poses national-security or human-rights risks, including indirect use through contractors, naming risk factors such as a vendor being under foreign-government control or its tools being used "to curb dissent or political opposition" [28]. The number that drove it: a senior official briefed that at least 50 US government personnel across at least 10 countries had been targeted ("We were astounded by the number"), a figure from the briefing rather than the order's text [29]. The policy kept escalating; in 2024 the State Department added visa restrictions on individuals involved in spyware abuse [30].</p>
+
+          <h2>my reasoned close</h2>
+          <p class="prose">Step back and the structure resolves into one uncomfortable fact: the state sits on both sides of a single market. It is the largest buyer, sustaining the brokers and spyware vendors; the owner of the stockpile whose leak produced the costliest cyberattacks ever recorded; the referee, through a VEP that is NSA-run, NDA-exempt, and toothless by design; and the regulator, swinging through export controls that overreached and sanctions that keep escalating. One actor, four incentives that cancel out.</p>
+          <p class="prose">The market itself is rational, which is the unsettling part. A zero-click iOS chain with persistence is worth $7 million because it reaches a billion devices, fires reliably, needs no user action, survives a reboot, and will probably stay secret for years given a 5.7% collision rate [13]. The system works exactly as designed, and what it is designed to do is convert a researcher's discovery into a capability aimed at someone's phone, with the public's continued vulnerability as a load-bearing part of the price.</p>
+          <p class="prose">I do not think you regulate your way out of this cleanly, and Wassenaar is the proof: controlling intangible dual-use code tends to hit defenders first. The more honest lever is the one Apple and Google are pulling, slowly and expensively: raise the white-market bid and, above all, make the bugs harder to find. Hardening is the only move that shrinks supply for every buyer at once. A mitigation that turns a one-researcher exploit into a ten-person, two-year project drains this market more than any export rule, because it attacks what the price structure rests on: scarcity itself.</p>
+          <p class="prose">So the number keeps climbing, and that is not entirely bad news; a rising price means the bugs are getting harder to find. The tragedy is that the same hardening drives the white market's bid up to chase it, and the gray market, freed from any duty to disclose, can always pay a little more. That gap is the price of living on devices the world's governments very much want to read.</p>
+
+          <div class="references">
+            <h2>// references</h2>
+            <ol>
+              <li>The Register. "So you've got a zero-day, do you sell to black, grey or white markets?" April 15, 2018. <a href="https://www.theregister.com/2018/04/15/mature_bug_bounty_market_bsidessf/" rel="noopener" target="_blank">https://www.theregister.com/2018/04/15/mature_bug_bounty_market_bsidessf/</a></li>
+              <li>Cybernews. "The zero-day market explained." <a href="https://cybernews.com/editorial/zero-day-market-explained/" rel="noopener" target="_blank">https://cybernews.com/editorial/zero-day-market-explained/</a></li>
+              <li>Wikipedia. "Market for zero-day exploits." <a href="https://en.wikipedia.org/wiki/Market_for_zero-day_exploits" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Market_for_zero-day_exploits</a></li>
+              <li>SecurityAffairs. "Zerodium offers $1.5M for iOS exploits." <a href="https://securityaffairs.com/51812/hacking/zerodium-ios-exploit.html" rel="noopener" target="_blank">https://securityaffairs.com/51812/hacking/zerodium-ios-exploit.html</a></li>
+              <li>TechCrunch. "Russian zero-day seller offers $20M for hacking Android and iPhones." Sept 27, 2023. <a href="https://techcrunch.com/2023/09/27/russian-zero-day-seller-offers-20m-for-hacking-android-and-iphones/" rel="noopener" target="_blank">https://techcrunch.com/2023/09/27/russian-zero-day-seller-offers-20m-for-hacking-android-and-iphones/</a></li>
+              <li>Operation Zero. "Prices." <a href="https://opzero.ru/en/prices/" rel="noopener" target="_blank">https://opzero.ru/en/prices/</a></li>
+              <li>Threatpost. "Android Zero-Days Now Worth More Than iPhone Exploits." <a href="https://threatpost.com/android-zero-days-worth-more-iphone-exploits/147981/" rel="noopener" target="_blank">https://threatpost.com/android-zero-days-worth-more-iphone-exploits/147981/</a></li>
+              <li>BleepingComputer. "Zerodium makes Android zero-days more expensive than iOS." <a href="https://www.bleepingcomputer.com/news/security/zerodium-makes-android-zero-days-more-expensive-than-ios/" rel="noopener" target="_blank">https://www.bleepingcomputer.com/news/security/zerodium-makes-android-zero-days-more-expensive-than-ios/</a></li>
+              <li>SecurityWeek. "Company Offering $30 Million for Android, iOS, Browser Zero-Day Exploits." <a href="https://www.securityweek.com/company-offering-30-million-for-android-ios-browser-zero-day-exploits/" rel="noopener" target="_blank">https://www.securityweek.com/company-offering-30-million-for-android-ios-browser-zero-day-exploits/</a></li>
+              <li>TechCrunch. "Price of zero-day exploits rises as companies harden products against hackers." April 6, 2024. <a href="https://techcrunch.com/2024/04/06/price-of-zero-day-exploits-rises-as-companies-harden-products-against-hackers/" rel="noopener" target="_blank">https://techcrunch.com/2024/04/06/price-of-zero-day-exploits-rises-as-companies-harden-products-against-hackers/</a></li>
+              <li>Crowdfense. "Exploit Acquisition Program." <a href="https://www.crowdfense.com/exploit-acquisition-program/" rel="noopener" target="_blank">https://www.crowdfense.com/exploit-acquisition-program/</a></li>
+              <li>Lawfare. "Hack Global, Buy Local: The Inefficiencies of the Zero-Day Exploit Market." <a href="https://www.lawfaremedia.org/article/hack-global-buy-local-inefficiencies-zero-day-exploit-market" rel="noopener" target="_blank">https://www.lawfaremedia.org/article/hack-global-buy-local-inefficiencies-zero-day-exploit-market</a></li>
+              <li>The Intercept. "Zero Days, Thousands of Nights." (reporting on RAND RR1751, Ablon &amp; Bogart, 2017). March 10, 2017. <a href="https://theintercept.com/2017/03/10/government-zero-days-7-years/" rel="noopener" target="_blank">https://theintercept.com/2017/03/10/government-zero-days-7-years/</a></li>
+              <li>Wikipedia. "Vulnerabilities Equities Process." <a href="https://en.wikipedia.org/wiki/Vulnerabilities_Equities_Process" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Vulnerabilities_Equities_Process</a></li>
+              <li>Wikipedia. "EternalBlue." <a href="https://en.wikipedia.org/wiki/EternalBlue" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/EternalBlue</a></li>
+              <li>The Hacker News. "Zerodium offers $1.5 million for iOS zero-day exploits." Sept 2016. <a href="https://thehackernews.com/2016/09/zerodium-zero-day-exploit.html" rel="noopener" target="_blank">https://thehackernews.com/2016/09/zerodium-zero-day-exploit.html</a></li>
+              <li>Threatpost. "Zerodium Raises Zero-Day Payout Ceiling to $2M." <a href="https://threatpost.com/zerodium-raises-zero-day-payout-ceiling-to-2m/140624/" rel="noopener" target="_blank">https://threatpost.com/zerodium-raises-zero-day-payout-ceiling-to-2m/140624/</a></li>
+              <li>TechCrunch. "New zero-day startup offers $20 million for tools that can hack any smartphone." Aug 20, 2025. <a href="https://techcrunch.com/2025/08/20/new-zero-day-startup-offers-20-million-for-tools-that-can-hack-any-smartphone/" rel="noopener" target="_blank">https://techcrunch.com/2025/08/20/new-zero-day-startup-offers-20-million-for-tools-that-can-hack-any-smartphone/</a></li>
+              <li>Apple Security. "Apple Security Bounty, evolved." <a href="https://security.apple.com/blog/apple-security-bounty-evolved/" rel="noopener" target="_blank">https://security.apple.com/blog/apple-security-bounty-evolved/</a></li>
+              <li>Britannica. "Pegasus spyware." (citing The New York Times, 2016). <a href="https://www.britannica.com/topic/Pegasus-spyware" rel="noopener" target="_blank">https://www.britannica.com/topic/Pegasus-spyware</a></li>
+              <li>Google Cloud Threat Intelligence. "Intellexa's Prolific Zero-Day Exploits Continue." <a href="https://cloud.google.com/blog/topics/threat-intelligence/intellexa-zero-day-exploits-continue" rel="noopener" target="_blank">https://cloud.google.com/blog/topics/threat-intelligence/intellexa-zero-day-exploits-continue</a></li>
+              <li>Amnesty International. "The Pegasus Project." July 2021. <a href="https://www.amnesty.org/en/latest/press-release/2021/07/the-pegasus-project/" rel="noopener" target="_blank">https://www.amnesty.org/en/latest/press-release/2021/07/the-pegasus-project/</a></li>
+              <li>Wikipedia. "NOBUS." <a href="https://en.wikipedia.org/wiki/NOBUS" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/NOBUS</a></li>
+              <li>Wikipedia. "The Shadow Brokers." <a href="https://en.wikipedia.org/wiki/The_Shadow_Brokers" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/The_Shadow_Brokers</a></li>
+              <li>Wikipedia. "Petya and NotPetya." <a href="https://en.wikipedia.org/wiki/Petya_and_NotPetya" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Petya_and_NotPetya</a></li>
+              <li>Lawfare. "Wassenaar Export Controls on Surveillance Tools: New Exemptions for Vulnerability Research." <a href="https://www.lawfaremedia.org/article/wassenaar-export-controls-surveillance-tools-new-exemptions-vulnerability-research" rel="noopener" target="_blank">https://www.lawfaremedia.org/article/wassenaar-export-controls-surveillance-tools-new-exemptions-vulnerability-research</a></li>
+              <li>US Commerce Department. "Commerce Adds NSO Group and Other Foreign Companies to Entity List." Nov 3, 2021. <a href="https://www.commerce.gov/news/press-releases/2021/11/commerce-adds-nso-group-and-other-foreign-companies-entity-list" rel="noopener" target="_blank">https://www.commerce.gov/news/press-releases/2021/11/commerce-adds-nso-group-and-other-foreign-companies-entity-list</a></li>
+              <li>The White House. "Fact Sheet: President Biden Signs Executive Order to Prohibit U.S. Government Use of Commercial Spyware." March 27, 2023. <a href="https://bidenwhitehouse.archives.gov/briefing-room/statements-releases/2023/03/27/fact-sheet-president-biden-signs-executive-order-to-prohibit-u-s-government-use-of-commercial-spyware-that-poses-risks-to-national-security/" rel="noopener" target="_blank">https://bidenwhitehouse.archives.gov/briefing-room/statements-releases/2023/03/27/fact-sheet-president-biden-signs-executive-order-to-prohibit-u-s-government-use-of-commercial-spyware/</a></li>
+              <li>CNN. "Biden signs order restricting US government use of commercial spyware." March 27, 2023. <a href="https://www.cnn.com/2023/03/27/politics/us-government-bans-spyware" rel="noopener" target="_blank">https://www.cnn.com/2023/03/27/politics/us-government-bans-spyware</a></li>
+              <li>Defense One. "Foreign abusers of commercial spyware hit with new visa restrictions." Feb 2024. <a href="https://www.defenseone.com/threats/2024/02/foreign-abusers-commercial-spyware-hit-new-visa-restrictions/393942/" rel="noopener" target="_blank">https://www.defenseone.com/threats/2024/02/foreign-abusers-commercial-spyware-hit-new-visa-restrictions/393942/</a></li>
+              <li>Threatpost. "VUPEN Founder Launches New Zero-Day Acquisition Firm Zerodium." July 24, 2015. <a href="https://threatpost.com/vupen-launches-new-zero-day-acquisition-firm-zerodium/113933/" rel="noopener" target="_blank">https://threatpost.com/vupen-launches-new-zero-day-acquisition-firm-zerodium/113933/</a></li>
+              <li>SecurityWeek. "Google Paid Out $17 Million in Bug Bounty Rewards in 2025." <a href="https://www.securityweek.com/google-paid-out-17-million-in-bug-bounty-rewards-in-2025/" rel="noopener" target="_blank">https://www.securityweek.com/google-paid-out-17-million-in-bug-bounty-rewards-in-2025/</a></li>
+              <li>SecurityWeek. "$1 Million Offered for WhatsApp Exploit at Pwn2Own Ireland 2025." <a href="https://www.securityweek.com/1-million-offered-for-whatsapp-exploit-at-pwn2own-ireland-2025/" rel="noopener" target="_blank">https://www.securityweek.com/1-million-offered-for-whatsapp-exploit-at-pwn2own-ireland-2025/</a></li>
+              <li>Cisco Talos. "Intellexa and Cytrox: From fixer-upper to Intel Agency-grade spyware." <a href="https://blog.talosintelligence.com/intellexa-and-cytrox-intel-agency-grade-spyware/" rel="noopener" target="_blank">https://blog.talosintelligence.com/intellexa-and-cytrox-intel-agency-grade-spyware/</a></li>
+            </ol>
+          </div>
+
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="colophon">&copy; <span id="year">2026</span> Joakim Nordheim Larssen</span>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>

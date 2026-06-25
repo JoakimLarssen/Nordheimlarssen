@@ -71,4 +71,49 @@
 
     sections.forEach(function (s) { spy.observe(s); });
   }
+
+  /* ---- Mobile nav (progressive enhancement) ----
+     Inject a hamburger toggle and turn the nav into a dropdown on small
+     screens. Done in JS so every page gets it without duplicating markup.
+     Without JS, CSS lets the nav wrap instead of overflowing. */
+  var header = document.querySelector(".site-header");
+  var nav = header && header.querySelector(".nav");
+  var headerInner = header && header.querySelector(".header-inner");
+  if (header && nav && headerInner) {
+    document.documentElement.classList.add("nav-enhanced");
+    if (!nav.id) nav.id = "primary-nav";
+
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "nav-toggle";
+    toggle.setAttribute("aria-label", "Menu");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", nav.id);
+    toggle.innerHTML = '<span class="nav-toggle-bars" aria-hidden="true"></span>';
+    headerInner.appendChild(toggle);
+
+    var setOpen = function (open) {
+      header.classList.toggle("nav-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+
+    toggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      setOpen(!header.classList.contains("nav-open"));
+    });
+    nav.addEventListener("click", function (e) {
+      if (e.target.closest("a")) setOpen(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" || e.keyCode === 27) setOpen(false);
+    });
+    document.addEventListener("click", function (e) {
+      if (header.classList.contains("nav-open") && !e.target.closest(".site-header")) {
+        setOpen(false);
+      }
+    });
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 640) setOpen(false);
+    });
+  }
 })();

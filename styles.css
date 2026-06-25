@@ -154,6 +154,37 @@ img, svg { display: block; max-width: 100%; }
   font-weight: 700;
 }
 
+/* Mobile menu toggle (hamburger). Hidden on desktop; injected by main.js and
+   shown only on small screens via the .nav-enhanced gate below. */
+.nav-toggle {
+  display: none;
+  -webkit-appearance: none; appearance: none;
+  align-items: center; justify-content: center;
+  width: 42px; height: 36px; padding: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease);
+}
+.nav-toggle:hover { border-color: var(--border-hi); }
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  display: block; width: 18px; height: 2px;
+  background: var(--text); border-radius: 2px;
+  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+}
+.nav-toggle-bars { position: relative; }
+.nav-toggle-bars::before,
+.nav-toggle-bars::after { content: ""; position: absolute; left: 0; }
+.nav-toggle-bars::before { top: -6px; }
+.nav-toggle-bars::after  { top: 6px; }
+/* open: morph the bars into an X */
+.site-header.nav-open .nav-toggle-bars { background: transparent; }
+.site-header.nav-open .nav-toggle-bars::before { transform: translateY(6px) rotate(45deg); }
+.site-header.nav-open .nav-toggle-bars::after  { transform: translateY(-6px) rotate(-45deg); }
+
 /* ---------- SECTION HEADS ---------- */
 .section-head {
   display: flex; align-items: center; gap: 16px;
@@ -613,7 +644,46 @@ img, svg { display: block; max-width: 100%; }
 }
 
 @media (max-width: 380px) {
-  .nav a { font-size: 0.68rem; }
+  html:not(.nav-enhanced) .nav a { font-size: 0.68rem; }
+}
+
+/* ---------- MOBILE NAV (hamburger, <= 640px) ---------- */
+@media (max-width: 640px) {
+  /* JS present: show the toggle, turn the nav into a dropdown panel. */
+  .nav-enhanced .nav-toggle { display: inline-flex; }
+  .nav-enhanced .site-header .nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    display: none;
+    background: var(--elev-1);
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 16px 30px -16px rgba(0, 0, 0, 0.7);
+  }
+  .nav-enhanced .site-header.nav-open .nav { display: block; }
+  .nav-enhanced .site-header .nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding: 6px var(--gutter) 14px;
+  }
+  .nav-enhanced .site-header .nav li { width: 100%; }
+  .nav-enhanced .site-header .nav a {
+    display: block;
+    font-size: 0.95rem;
+    padding: 13px 0 13px 16px;
+    color: var(--text);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-enhanced .site-header .nav li:last-child a { border-bottom: 0; }
+  .nav-enhanced .site-header .nav a.is-active { color: var(--accent); }
+  .nav-enhanced .site-header .nav a.is-active::before { left: 0; }
+
+  /* No JS: let the nav wrap onto its own line instead of overflowing. */
+  html:not(.nav-enhanced) .header-inner {
+    flex-wrap: wrap; height: auto;
+    padding-top: 10px; padding-bottom: 10px; gap: 6px 0;
+  }
+  html:not(.nav-enhanced) .nav { width: 100%; }
+  html:not(.nav-enhanced) .nav ul { flex-wrap: wrap; gap: 10px 18px; }
 }
 
 /* ============================ ARTICLE (long-form writeups) ============================ */
@@ -661,6 +731,16 @@ img, svg { display: block; max-width: 100%; }
 .article li strong { color: var(--text); font-weight: 600; }
 .article li a { color: var(--accent); }
 .article hr.sep { border: 0; border-top: 1px solid var(--hairline); margin: 34px 0; }
+/* figures (e.g. experiment plots): full-width within the prose column */
+.article figure { margin: 28px 0; }
+.article figure img {
+  display: block; width: 100%; height: auto;
+  background: #fff; border: 1px solid var(--hairline); border-radius: 8px;
+}
+.article figcaption {
+  margin-top: 10px; font-family: var(--mono); font-size: 0.8rem;
+  line-height: 1.5; color: var(--muted, #8b9296);
+}
 .article blockquote {
   margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--accent-dim);
   font-family: var(--sans); font-size: 1.02rem; line-height: 1.55; color: #d6d9da;
