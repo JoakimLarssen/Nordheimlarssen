@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  nordheimlarssen.no/writing/too-dangerous-to-release  ::  article
+  Static page, no build step. All asset paths absolute.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>too dangerous to release: the containment problem in frontier ai &middot; Joakim Nordheim Larssen</title>
+  <meta name="description" content="We are getting good at telling when an AI model is dangerous. We are not getting good at stopping its release. That gap is the whole problem." />
+  <meta name="author" content="Joakim Nordheim Larssen" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0D1011" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="too dangerous to release: the containment problem in frontier ai &middot; Joakim Nordheim Larssen" />
+  <meta property="og:description" content="We are getting good at telling when an AI model is dangerous. We are not getting good at stopping its release. That gap is the whole problem." />
+  <meta property="og:url" content="https://nordheimlarssen.no/writing/too-dangerous-to-release" />
+  <meta property="og:image" content="https://nordheimlarssen.no/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="too dangerous to release: the containment problem in frontier ai &middot; Joakim Nordheim Larssen" />
+  <meta name="twitter:description" content="We are getting good at telling when an AI model is dangerous. We are not getting good at stopping its release. That gap is the whole problem." />
+  <meta name="twitter:image" content="https://nordheimlarssen.no/og.png" />
+  <link rel="canonical" href="https://nordheimlarssen.no/writing/too-dangerous-to-release" />
+
+  <!-- Fonts: JetBrains Mono (structure) + IBM Plex Sans (prose). No serif. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Gate reveal animations on JS BEFORE first paint, so no-JS users see
+       all content and JS users never get a flash of un-animated content. -->
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="Joakim Nordheim Larssen, home">
+        <span class="brand-prompt" aria-hidden="true">~/</span><span class="brand-name">jnl</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#whoami">whoami</a></li>
+          <li><a href="/#projects">projects</a></li>
+          <li><a href="/#ctf">ctf</a></li>
+          <li><a href="/#academics">academics</a></li>
+          <li><a href="/writing" class="is-active" aria-current="page">writing</a></li>
+          <li><a href="/#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <article class="article">
+          <a class="article-back" href="/writing">&#8592; writing</a>
+
+          <h1>too dangerous to release: the containment problem in frontier ai</h1>
+          <p class="article-lede">we are getting good at telling when an ai model is dangerous. we are not getting good at stopping its release. that gap is the whole problem.</p>
+          <p class="article-byline">Joakim Nordheim Larssen</p>
+
+          <div class="article-summary">
+            <span class="label">the short version</span>
+            <ul>
+              <li>The labs building frontier ai have spent three years building an apparatus for <em>detecting</em> danger: dangerous-capability evaluations, government testing institutes, "if-then" safety frameworks with named numeric triggers. That part is real and maturing.</li>
+              <li>What has not matured is the ability to act on what detection finds. Open model weights cannot be recalled. Safety training can be stripped off for a couple hundred dollars. Every major lab has written, into its own published policy, an escape hatch that lets it lower its safeguards if a competitor moves first. The hardest mitigations are explicitly described as worthless unless everyone adopts them at once, which is exactly the coordination that keeps not happening.</li>
+              <li>The treaty history people reach for as a model tells the same story. The regimes that worked, worked because the dangerous thing was physical, scarce, declarable, and destructible. Ai is none of those. It is closer to biology, and the biological weapons treaty is the cautionary tale: no verification body, three staff.</li>
+              <li>My position, argued rather than asserted: the asymmetry between detection and containment is structural, not a temporary engineering gap. Containment cannot be the primary strategy because it cannot be made reliable. We should plan accordingly.</li>
+            </ul>
+          </div>
+
+          <h2>the asymmetry, stated plainly</h2>
+          <p class="prose">The International AI Safety Report, the multi-government assessment chaired by Yoshua Bengio, names the timing version of this problem the "evidence dilemma": pre-emptive mitigation might turn out unnecessary, but waiting for conclusive evidence "could leave society vulnerable to risks that emerge rapidly." [1] That is about <em>when</em> you know. The containment problem is its irreversible twin: what you can <em>do</em> once you know.</p>
+          <p class="prose">The detection side has genuinely improved. The canonical paper, "Model evaluation for extreme risks" (Shevlane et al., 2023), proposed dangerous-capability evals (offensive cyber, manipulation, CBRN uplift) and alignment evals (will it apply them). [2] But it is about detection. It does not solve what to do once a dangerous capability is found.</p>
+          <p class="prose">The reports now admit the control side is the weak one. The October 2025 update to the Safety Report cites "new evidence of challenges in monitoring and controllability," warning that future systems "may conceal unsafe behaviours during testing." [3] Our best detection method gets least reliable exactly when stakes are highest. The November 2025 update adds that the number of companies publishing safety frameworks more than doubled, yet "sophisticated attackers can often bypass current defences, and the real-world effectiveness of many safeguards is uncertain." [4] More detection, safeguards that attackers route around.</p>
+
+          <h2>the cleanest real-world case: claude opus 4</h2>
+          <p class="prose">The asymmetry showed up, in writing, in a single deployment decision. On May 22, 2025, Anthropic activated its strictest safeguards, ASL-3, for Claude Opus 4. It stated it had "not yet determined whether Claude Opus 4 has definitively passed the Capabilities Threshold that requires ASL-3 protections," and acted because "clearly ruling out ASL-3 risks is not possible." [5] The detection was ambiguous: the lab could confirm neither danger nor safety. It shipped anyway, with mitigations bolted on as a precaution.</p>
+          <p class="prose">This cuts both ways. Acting precautionarily under uncertainty is the responsible move, and it is to their credit. But it illustrates the whole problem. When you cannot tell whether you are over the line, you do not stop; you ship with mitigations and hope they hold. Detection that resolves to "we are not sure" produces release-with-caveats, not non-release.</p>
+
+          <h2>what the thresholds actually say</h2>
+          <p class="prose">The three leading labs all publish "if-then" frameworks: here is the capability we watch for, here is what we do if we detect it. The named triggers are real and falsifiable. Credit where due, before I take it away.</p>
+          <p class="prose"><strong>Anthropic's Responsible Scaling Policy</strong> reached version 3.0 on February 24, 2026. Its automated-R&amp;D threshold triggers "at the point where we determine that a model could compress two years of 2018 to 2024 AI progress into a single year." [6] A real, checkable claim, the kind that did not exist in 2022.</p>
+          <p class="prose">But notice what v3.0 did structurally. Its appendix admits that "a specific list of controls is overly rigid," and now prefers "to focus on what sort of argument an AI developer should make": a pivot from bright-line rules to case-by-case judgment. [6] And it steps back from hard "we won't deploy" commitments, "because" of a collective action problem: one lab pausing while others race "could result in a world that is less safe." [6] The governance failure this essay is about, conceded by the people writing the policy.</p>
+          <p class="prose"><strong>OpenAI's Preparedness Framework v2</strong> (April 15, 2025) defines "severe harm" as "the death or grave injury of thousands of people or hundreds of billions of dollars of economic damage." [7] "Critical" capability triggers the strongest language in any of these documents: "Until we have specified safeguards... that would meet a Critical standard, halt further development." [7] A real commitment to stop. But no model has been verified to cross a Critical threshold, so the stop button has not been tested in anger.</p>
+          <p class="prose">OpenAI also quietly removed things. The framework dropped from four thresholds to two, and dropped persuasion entirely, on the grounds that those risks "require solutions at a systemic or societal level." [7] Read that as honesty about scope or as a major risk vector defined out of existence. I lean toward the second: persuasion is the capability most likely to act at societal scale.</p>
+          <p class="prose"><strong>Google DeepMind's Frontier Safety Framework v3.0</strong> (September 22, 2025) uses "Critical Capability Levels," detected with "early warning evaluations" and "alert thresholds." [8] It also wrote down the unsolved problem. For misalignment at "Instrumental Reasoning Level 2," where a model could undermine human control even while monitored, the listed mitigation is: "Future work: We are actively researching approaches." [8] Admirably honest, and an admission that detection has outrun control.</p>
+
+          <h2>the escape hatch all three wrote down</h2>
+          <p class="prose">Here is the part that turns three policies into one structural problem. Every framework contains a competitor clause: if a rival ships a comparably dangerous model without comparable safeguards, the lab may lower its bar.</p>
+          <p class="prose">OpenAI's is the most discussed. Section 4.3 says it may release a model with High or Critical capability if a competitor already did so, provided this "does not meaningfully increase the overall risk of severe harm" and it keeps safeguards "more protective than the other AI developer." [7] Zvi Mowshowitz and others called this a race-to-the-bottom incentive. [9]</p>
+          <p class="prose">Anthropic, when in the lead, commits to delay "until and unless we no longer believe we have a significant lead." [6] The commitment only binds when Anthropic is confident no competitor is close, which is precisely when competitive pressure is lowest. It evaporates exactly when it would matter most.</p>
+          <p class="prose">DeepMind's appears in its risk-acceptance criteria: a model at a misuse capability level can still be acceptable because "if other models are similarly capable and have few mitigations, then the marginal risk added by our release is likely low." [8]</p>
+          <p class="prose">This is the codified race to the bottom: the structure rewards whoever moves first with the weakest safeguards, who then defines the "marginal risk is low" baseline everyone else points to. And the labs know it. All three frame their hardest mitigations as conditional on industry-wide adoption. DeepMind says its mitigations are "of limited social utility" unless "all relevant organisations provide similar levels of protection"; Anthropic separates "our plan as a company" from "ambitious industry-wide recommendations" it "cannot commit to... unilaterally." [6][8]</p>
+          <p class="prose">The decision to deploy sits, in all three cases, with the company, under frameworks Anthropic calls "voluntary" outright. [6] Self-certification is the enforcement model: the gap between detection and binding stopping power.</p>
+
+          <h2>why you cannot recall weights</h2>
+          <p class="prose">Detection cannot save us because the most consequential release decision is irreversible.</p>
+          <p class="prose">The UK AI Security Institute put it as plainly as a government body can. Open-weight models "can allow harmful AI capabilities to proliferate rapidly and irreversibly," and safeguards baked into them "can also be quickly and cheaply removed." Their bottom line: "no current solutions can offer hard guarantees of safety." [10] The same institute holds the other side fairly: open weights "increase transparency, allow for widespread red teaming, and decrease market concentration." [10] Closed models are not safe either; they get jailbroken, and concentration creates its own systemic risk. The honest framing is not "open bad, closed good." It is that open release removes the one lever, rollback, that closed release retains.</p>
+          <p class="prose">That lever is real and has been used. When OpenAI's April 2025 GPT-4o update turned excessively sycophantic, to the point of encouraging self-harm, OpenAI reverted it. [11] An open-weight model with the same flaw could not have been pulled back; the copies were already distributed.</p>
+          <p class="prose">The de-alignment cost should end the "but we shipped it with safety training" argument. Lermen, Rogers-Smith and Ladish (2023) showed that with LoRA fine-tuning, a budget "under $200 and one GPU" reduced Llama 2-Chat 70B's refusal rate on harmful prompts to "about 1%" while retaining general capability. [12] Once weights are public, the safety training is not a property of the deployed system. It is a suggestion.</p>
+
+          <h2>the cases: llama and deepseek</h2>
+          <p class="prose"><strong>Meta's Llama</strong> is the proliferation case. Llama 3.1 405B (July 2024) was the first open-weight model to benchmark competitively against GPT-4o and Claude 3.5 Sonnet. [13] The download numbers are irreversibility as a single figure: one billion cumulative by mid-March 2025, 1.2 billion by late April 2025. [14][15] You cannot un-distribute 1.2 billion downloads. (Llama is open <em>weights</em>, not OSI open <em>source</em>; the Community License imposes a 700-million-MAU cap. [16] For containment the distinction is irrelevant: licensed or not, the weights are downloaded and de-alignable.)</p>
+          <p class="prose"><strong>DeepSeek</strong> is the export-control stress test. DeepSeek-R1 (January 20, 2025) roughly matched advanced US models, and the headline was the cost. The DeepSeek-V3 report states the model "required 2.788M GPU hours" and, "assuming an H800 GPU rental price of $2 per GPU hour, the total training costs amount to $5.576M." [17]</p>
+          <p class="prose">A caveat the research demands: that $5.576M is the <em>final training run only</em>. The paper says it "excludes the costs associated with prior research and ablation experiments." [17] The "frontier model for $6M" narrative is misleading, and Brookings notes an unsubstantiated suggestion DeepSeek had more compute than disclosed. [18] (There are also allegations, in the politically charged House Select Committee report "DeepSeek Unmasked," that it used "over 60,000 Nvidia chips" via transshipment through Singapore. [19]) But the real point is the direction: a non-US lab produced a near-frontier model at a fraction of the assumed cost, which is what makes any compute-based containment lever leak. DeepSeek even splits the experts, who divide over whether it argues for smarter controls or for keeping them: the strongest physical lever is contested at the level of whether it helps or hurts. [20][21][22]</p>
+
+          <h2>the enforcement levers, and where each one leaks</h2>
+          <p class="prose">If self-certification is the enforcement model and open weights are irreversible, what is left? Four external levers, each failing at a different seam.</p>
+          <p class="prose"><strong>Compute and chip export controls.</strong> The strongest lever, because chips are physical, scarce, and produced by a concentrated supply chain. Also the leakiest in practice. The administration banned even compliant H20 chips in April 2025, reversed in July to let Nvidia resume H20 shipments, and in December 2025 announced H200 exports to China in exchange for a 25% revenue stake to the US government. [23][24][25] A lever that reverses three times in a year is not reliable. And it leaks physically: in December 2025, CNBC reported roughly $160 million of export-controlled Nvidia GPUs allegedly smuggled into China. [26]</p>
+          <p class="prose"><strong>The EU AI Act.</strong> The most concrete legal regime. A general-purpose model is presumed to have "high-impact capabilities" (the criterion that triggers systemic-risk obligations under Article 51) when training compute "measured in floating point operations is greater than 10^25." [27] Models in scope face risk assessment, adversarial testing, and serious-incident reporting. [28] But the Act governs behavior and reporting, not release reversal. The 10^25 threshold is a compute proxy that DeepSeek-style efficiency gains route around, it is EU-only, and it does nothing about open weights already in the wild.</p>
+          <p class="prose"><strong>The International AI Safety Report.</strong> The best collective instrument we have, and by design an assessment that makes no policy recommendations. [29] It diagnoses; it cannot enforce. That our flagship international instrument is a detection instrument, not a containment one, is itself evidence for the thesis.</p>
+          <p class="prose"><strong>Voluntary commitments and summit diplomacy.</strong> The Bletchley Declaration (2023, 28 countries and the EU, including China) is explicitly voluntary. [30] The Seoul Frontier AI Safety Commitments (2024) had 16 companies, including China's Zhipu and the UAE's TII, agree to publish safety frameworks. [31] Real and worth something, but unenforceable, self-defined, and carrying no penalty for breach.</p>
+
+          <h2>why voluntary containment fails: the unilateralist's curse</h2>
+          <p class="prose">There is a clean theoretical reason voluntary regimes cannot hold, the keystone of my argument.</p>
+          <p class="prose">Bostrom, Douglas and Sandberg (2016) named the "unilateralist's curse": "when a set of decision makers independently choose whether or not to undertake some action, the action will be taken more frequently than is optimal." [32] Even if every actor is altruistic and well-informed, it takes only the single most optimistic one to trigger an irreversible action. Their remedy is a "principle of conformity," that is, coordination, which is exactly what voluntary regimes cannot guarantee.</p>
+          <p class="prose">Apply it. It does not matter how good the cautious majority's detection is. If one lab, or one nation, judges a release acceptable, the weights are permanently out. DeepSeek and Meta are real-world instances. The competitor escape hatches are not bugs; they are the formalization of the curse, explicitly letting the most optimistic actor set the floor for everyone else.</p>
+          <p class="prose">This is why I keep returning to "structural." Containment of a non-scarce, copyable, irreversibly distributable artifact requires unanimous restraint, and unanimous restraint is the one thing the curse guarantees you will not get.</p>
+
+          <h2>what the treaty analogies actually teach</h2>
+          <p class="prose">People reach for nuclear and chemical arms control as the model. The comparison is instructive, mostly for the disanalogy.</p>
+          <p class="prose"><strong>Nuclear (NPT and IAEA).</strong> The NPT has 191 states parties, the most-ratified arms-control treaty; IAEA safeguards cover roughly 900 nuclear facilities across 57 non-nuclear-weapon states. [33][34] Why did it partly work? The control point is fissile material: rare, expensive, physically detectable, hard to hide. And even then only partly. India, Pakistan and Israel never joined; North Korea acceded, withdrew in 2003, tested in 2006; the A.Q. Khan network sold enrichment technology to Iran, Libya and North Korea. [35][36] The best case in the history of containment achieved only partial containment.</p>
+          <p class="prose"><strong>Chemical (CWC and OPCW).</strong> The strongest verification success. The Chemical Weapons Convention has 193 states parties, and on July 7, 2023 the OPCW verified that all 72,304.34 metric tonnes of declared chemical agent had been irreversibly destroyed. [37] You can literally destroy the dangerous thing, and they did, and counted it. But hold onto one word: declared. Syria acceded in 2013, did not declare its full program, then used chemical weapons; after Assad fell, OPCW teams found previously undeclared weapons. [38] Verification verifies the declared, not the hidden.</p>
+          <p class="prose"><strong>Biological (BWC).</strong> The cautionary tale, and the best analogy for ai. The Biological Weapons Convention entered into force in 1975 with 187 states parties, and it has no verification organization and no inspection regime. [39] In July 2001, after about six years of negotiation, the United States rejected the draft verification protocol and all further negotiation, arguing in part that bioweapons development cannot be reliably verified. [39] Its entire Implementation Support Unit was set up in 2006 with three permanent staff. [39] Contrast: 900 facilities inspected, 72,304 tonnes destroyed, three staff.</p>
+          <p class="prose">Biology is the closest precedent because it is dual-use, knowledge-based, dispersed across legitimate labs, and the dangerous input is not scarce. The US declared verification infeasible and the regime stalled. That is the precedent ai is walking into.</p>
+
+          <h2>why ai is harder than all three</h2>
+          <p class="prose">The arms-control cases that worked shared four properties: the dangerous thing was physical, scarce, declarable, destructible. Ai has none, with one partial exception: compute. "Computing Power and the Governance of Artificial Intelligence" (Sastry, Heim, Belfield, Anderljung, Brundage, Bengio et al., 2024) argues compute is the one ai input that is detectable, excludable, quantifiable, and produced via a concentrated supply chain: the ai analogue of fissile material. [40] The same paper warns naive compute governance "carry[s] significant risks in areas like privacy, economic impacts, and centralization of power." [40]</p>
+          <p class="prose">But the lever is eroding. Epoch AI estimates the compute needed to reach a given capability halves roughly every eight months, about 3x per year, far faster than Moore's Law. [41] Decentralized training is breaking the assumption that frontier models require one concentrated cluster; low-communication algorithms have sharply reduced the interconnect bandwidth that distributed training needs. [42] And the verification hardware that would make compute governance enforceable, on-chip metering and proof-of-training, is the least mature part of the stack. [43] That mirrors the BWC: the verification technology is not there, so the lever cannot bind. Everything else points the same way. Stanford's Alpaca was fine-tuned from Meta's LLaMA for under $600 [44]; open weights are irreversible, which the NTIA's 2024 dual-use foundation models report treats as the central feature of the open-weight question. [45] Where the CWC could inventory and destroy 72,304 tonnes of a substance, there is only a file that has already been copied.</p>
+          <p class="prose">For balance, the bridge proposals are serious: an "IAEA for AI" (proposed by OpenAI's leadership in 2023), standard-setting and registration, four-institution designs including an "NPT for AI." [46][47][48] But the skeptics are equally credible. Chatham House and others argue the nuclear model will not work for ai, on the disanalogies above: ai is intangible software, led by private firms not states, moving faster than institutions can. [49][50] The "IAEA for AI" proposals are designs for a fissile material that does not exist.</p>
+
+          <h2>my position</h2>
+          <p class="prose">The asymmetry between detecting danger and stopping release is structural, not a policy gap waiting to be closed by a better framework or a more committed lab. Detection has matured. Every containment lever, meanwhile, fails at a different seam. Physical chips leak through smuggling and reverse through politics. Legal thresholds are jurisdictional and gameable by efficiency gains. Voluntary commitments founder on the unilateralist's curse. Open weights are irreversible and two hundred dollars to de-align.</p>
+          <p class="prose">So the answer is not "ban open weights." The benefits are real, and the curse makes a ban both costly and futile: you give up the transparency and red-teaming, and one optimistic actor abroad releases anyway. The only levers that survive scrutiny are the physical chokepoint, compute, while it lasts, and binding pre-release verification on the EU model, evidence of safety before release rather than self-certification after. Both are worth doing. Neither is sufficient. Compute is eroding at 3x a year, and verification verifies the declared, not the hidden.</p>
+          <p class="prose">So the honest conclusion is uncomfortable. If containment cannot be made reliable, it cannot be the primary strategy. We should plan for a world where dangerous capabilities proliferate, because the structure of the problem says they will, and invest in resilience and defense, not only gatekeeping. The labs already wrote the diagnosis into their own policies: the hardest mitigations are worthless unless everyone adopts them at once, and no one can make everyone do anything.</p>
+          <p class="prose">We are getting very good at reading the warning light. We have not built a brake. The work that matters now is the work that assumes the brake will not arrive in time.</p>
+
+          <div class="references">
+            <h2>// references</h2>
+            <ol>
+              <li>International AI Safety Report 2025. <a href="https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025" rel="noopener" target="_blank">https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025</a></li>
+              <li>Shevlane et al., "Model evaluation for extreme risks," arXiv:2305.15324. <a href="https://arxiv.org/abs/2305.15324" rel="noopener" target="_blank">https://arxiv.org/abs/2305.15324</a></li>
+              <li>International AI Safety Report, First Key Update (Oct 2025), arXiv:2510.13653. <a href="https://arxiv.org/abs/2510.13653" rel="noopener" target="_blank">https://arxiv.org/abs/2510.13653</a></li>
+              <li>International AI Safety Report, Second Key Update (Nov 2025), arXiv:2511.19863. <a href="https://arxiv.org/abs/2511.19863" rel="noopener" target="_blank">https://arxiv.org/abs/2511.19863</a></li>
+              <li>Anthropic, "Activating ASL3 protections" (May 22, 2025). <a href="https://www.anthropic.com/news/activating-asl3-protections" rel="noopener" target="_blank">https://www.anthropic.com/news/activating-asl3-protections</a></li>
+              <li>Anthropic, Responsible Scaling Policy v3.0 (Feb 24, 2026), PDF. <a href="https://www-cdn.anthropic.com/e670587677525f28df69b59e5fb4c22cc5461a17.pdf" rel="noopener" target="_blank">https://www-cdn.anthropic.com/e670587677525f28df69b59e5fb4c22cc5461a17.pdf</a></li>
+              <li>OpenAI, Preparedness Framework v2 (Apr 15, 2025), PDF. <a href="https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf" rel="noopener" target="_blank">https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf</a></li>
+              <li>Google DeepMind, Frontier Safety Framework v3.0 (Sept 22, 2025), PDF. <a href="https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/strengthening-our-frontier-safety-framework/frontier-safety-framework_3.pdf" rel="noopener" target="_blank">https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/strengthening-our-frontier-safety-framework/frontier-safety-framework_3.pdf</a></li>
+              <li>Zvi Mowshowitz, "OpenAI Preparedness Framework 2.0." <a href="https://thezvi.substack.com/p/openai-preparedness-framework-20" rel="noopener" target="_blank">https://thezvi.substack.com/p/openai-preparedness-framework-20</a></li>
+              <li>UK AI Security Institute, "Managing risks from increasingly capable open-weight AI systems" (Aug 29, 2025). <a href="https://www.aisi.gov.uk/blog/managing-risks-from-increasingly-capable-open-weight-ai-systems" rel="noopener" target="_blank">https://www.aisi.gov.uk/blog/managing-risks-from-increasingly-capable-open-weight-ai-systems</a></li>
+              <li>OpenAI, "Sycophancy in GPT-4o: What happened and what we're doing about it" (April 2025). <a href="https://openai.com/index/sycophancy-in-gpt-4o/" rel="noopener" target="_blank">https://openai.com/index/sycophancy-in-gpt-4o/</a></li>
+              <li>Lermen, Rogers-Smith, Ladish, "LoRA Fine-tuning Efficiently Undoes Safety Training in Llama 2-Chat 70B" (2023), arXiv:2310.20624. <a href="https://arxiv.org/abs/2310.20624" rel="noopener" target="_blank">https://arxiv.org/abs/2310.20624</a></li>
+              <li>Meta, "Introducing Llama 3.1." <a href="https://ai.meta.com/blog/meta-llama-3-1/" rel="noopener" target="_blank">https://ai.meta.com/blog/meta-llama-3-1/</a></li>
+              <li>Meta, "Celebrating 1 billion downloads of Llama" (March 2025). <a href="https://about.fb.com/news/2025/03/celebrating-1-billion-downloads-llama/" rel="noopener" target="_blank">https://about.fb.com/news/2025/03/celebrating-1-billion-downloads-llama/</a></li>
+              <li>TechCrunch, "Meta says its Llama AI models have been downloaded 1.2B times" (Apr 29, 2025). <a href="https://techcrunch.com/2025/04/29/meta-says-its-llama-ai-models-have-been-downloaded-1-2b-times/" rel="noopener" target="_blank">https://techcrunch.com/2025/04/29/meta-says-its-llama-ai-models-have-been-downloaded-1-2b-times/</a></li>
+              <li>Llama 3 Community License. <a href="https://www.llama.com/llama3/license/" rel="noopener" target="_blank">https://www.llama.com/llama3/license/</a></li>
+              <li>DeepSeek-V3 Technical Report, arXiv:2412.19437. <a href="https://arxiv.org/abs/2412.19437" rel="noopener" target="_blank">https://arxiv.org/abs/2412.19437</a></li>
+              <li>Brookings, "DeepSeek shows the limits of US export controls on AI chips." <a href="https://www.brookings.edu/articles/deepseek-shows-the-limits-of-us-export-controls-on-ai-chips/" rel="noopener" target="_blank">https://www.brookings.edu/articles/deepseek-shows-the-limits-of-us-export-controls-on-ai-chips/</a></li>
+              <li>US House Select Committee on the CCP, "DeepSeek Unmasked" (Apr 16, 2025). <a href="http://selectcommitteeontheccp.house.gov/media/press-releases/moolenaar-krishnamoorthi-unveil-explosive-report-chinese-ai-firm-deepseek" rel="noopener" target="_blank">http://selectcommitteeontheccp.house.gov/media/press-releases/moolenaar-krishnamoorthi-unveil-explosive-report-chinese-ai-firm-deepseek</a></li>
+              <li>RAND, "DeepSeek's Lesson: America Needs Smarter Export Controls" (Feb 2025). <a href="https://www.rand.org/pubs/commentary/2025/02/deepseeks-lesson-america-needs-smarter-export-controls.html" rel="noopener" target="_blank">https://www.rand.org/pubs/commentary/2025/02/deepseeks-lesson-america-needs-smarter-export-controls.html</a></li>
+              <li>CSIS, "DeepSeek, Huawei, Export Controls, and the Future of the US-China AI Race." <a href="https://www.csis.org/analysis/deepseek-huawei-export-controls-and-future-us-china-ai-race" rel="noopener" target="_blank">https://www.csis.org/analysis/deepseek-huawei-export-controls-and-future-us-china-ai-race</a></li>
+              <li>Foundation for American Innovation, "DeepSeek's Success Reinforces the Case for Export Controls." <a href="https://www.thefai.org/posts/deepseek-s-success-reinforces-the-case-for-export-controls" rel="noopener" target="_blank">https://www.thefai.org/posts/deepseek-s-success-reinforces-the-case-for-export-controls</a></li>
+              <li>Built In, "Trump lifts AI chip ban for China and Nvidia." <a href="https://builtin.com/articles/trump-lifts-ai-chip-ban-china-nvidia" rel="noopener" target="_blank">https://builtin.com/articles/trump-lifts-ai-chip-ban-china-nvidia</a></li>
+              <li>FDD, "Rolling Back Export Controls: U.S. Offers China Powerful AI Chips" (Dec 10, 2025). <a href="https://www.fdd.org/analysis/2025/12/10/rolling-back-export-controls-u-s-offers-china-powerful-ai-chips/" rel="noopener" target="_blank">https://www.fdd.org/analysis/2025/12/10/rolling-back-export-controls-u-s-offers-china-powerful-ai-chips/</a></li>
+              <li>Congressional Research Service, R48642. <a href="https://www.congress.gov/crs-product/R48642" rel="noopener" target="_blank">https://www.congress.gov/crs-product/R48642</a></li>
+              <li>CNBC, "$160 million of export-controlled Nvidia GPUs allegedly smuggled to China" (Dec 31, 2025). <a href="https://www.cnbc.com/2025/12/31/160-million-export-controlled-nvidia-gpus-allegedly-smuggled-to-china.html" rel="noopener" target="_blank">https://www.cnbc.com/2025/12/31/160-million-export-controlled-nvidia-gpus-allegedly-smuggled-to-china.html</a></li>
+              <li>EU AI Act, Article 51. <a href="https://artificialintelligenceact.eu/article/51/" rel="noopener" target="_blank">https://artificialintelligenceact.eu/article/51/</a></li>
+              <li>EU AI Act, Article 55. <a href="https://artificialintelligenceact.eu/article/55/" rel="noopener" target="_blank">https://artificialintelligenceact.eu/article/55/</a></li>
+              <li>International AI Safety Report (landing). <a href="https://internationalaisafetyreport.org/" rel="noopener" target="_blank">https://internationalaisafetyreport.org/</a></li>
+              <li>The Bletchley Declaration (Nov 1-2, 2023). <a href="https://www.gov.uk/government/publications/ai-safety-summit-2023-the-bletchley-declaration/the-bletchley-declaration-by-countries-attending-the-ai-safety-summit-1-2-november-2023" rel="noopener" target="_blank">https://www.gov.uk/government/publications/ai-safety-summit-2023-the-bletchley-declaration/the-bletchley-declaration-by-countries-attending-the-ai-safety-summit-1-2-november-2023</a></li>
+              <li>Frontier AI Safety Commitments, AI Seoul Summit 2024. <a href="https://www.gov.uk/government/publications/frontier-ai-safety-commitments-ai-seoul-summit-2024/frontier-ai-safety-commitments-ai-seoul-summit-2024" rel="noopener" target="_blank">https://www.gov.uk/government/publications/frontier-ai-safety-commitments-ai-seoul-summit-2024/frontier-ai-safety-commitments-ai-seoul-summit-2024</a></li>
+              <li>Bostrom, Douglas, Sandberg, "The Unilateralist's Curse and the Case for a Principle of Conformity" (2016). <a href="https://nickbostrom.com/papers/unilateralist.pdf" rel="noopener" target="_blank">https://nickbostrom.com/papers/unilateralist.pdf</a></li>
+              <li>IAEA, Treaty on the Non-Proliferation of Nuclear Weapons. <a href="https://www.iaea.org/topics/non-proliferation-treaty" rel="noopener" target="_blank">https://www.iaea.org/topics/non-proliferation-treaty</a></li>
+              <li>World Nuclear Association, Safeguards to Prevent Nuclear Proliferation. <a href="https://world-nuclear.org/information-library/safety-and-security/non-proliferation/safeguards-to-prevent-nuclear-proliferation" rel="noopener" target="_blank">https://world-nuclear.org/information-library/safety-and-security/non-proliferation/safeguards-to-prevent-nuclear-proliferation</a></li>
+              <li>Arms Control Association, "Nuclear Weapons: Who Has What at a Glance." <a href="https://www.armscontrol.org/factsheets/nuclear-weapons-who-has-what-glance" rel="noopener" target="_blank">https://www.armscontrol.org/factsheets/nuclear-weapons-who-has-what-glance</a></li>
+              <li>Council on Foreign Relations, "Four Nuclear Outlier States." <a href="https://www.cfr.org/backgrounder/four-nuclear-outlier-states" rel="noopener" target="_blank">https://www.cfr.org/backgrounder/four-nuclear-outlier-states</a></li>
+              <li>Chemical Weapons Convention (OPCW press release July 7, 2023). <a href="https://www.opcw.org/media-centre/news/2023/07/opcw-confirms-all-declared-chemical-weapons-stockpiles-verified" rel="noopener" target="_blank">https://www.opcw.org/media-centre/news/2023/07/opcw-confirms-all-declared-chemical-weapons-stockpiles-verified</a></li>
+              <li>OPCW and Syria. <a href="https://www.opcw.org/media-centre/featured-topics/opcw-and-syria" rel="noopener" target="_blank">https://www.opcw.org/media-centre/featured-topics/opcw-and-syria</a></li>
+              <li>Arms Control Association, "The Biological Weapons Convention (BWC) At a Glance." <a href="https://www.armscontrol.org/factsheets/biological-weapons-convention-bwc-glance-0" rel="noopener" target="_blank">https://www.armscontrol.org/factsheets/biological-weapons-convention-bwc-glance-0</a></li>
+              <li>Sastry, Heim, Belfield, Anderljung, Brundage, Bengio et al., "Computing Power and the Governance of Artificial Intelligence," arXiv:2402.08797. <a href="https://arxiv.org/abs/2402.08797" rel="noopener" target="_blank">https://arxiv.org/abs/2402.08797</a></li>
+              <li>Epoch AI, "Algorithmic progress in language models." <a href="https://epoch.ai/blog/algorithmic-progress-in-language-models" rel="noopener" target="_blank">https://epoch.ai/blog/algorithmic-progress-in-language-models</a></li>
+              <li>"Distributed and Decentralised Training: Technical Governance Challenges," arXiv:2507.07765. <a href="https://arxiv.org/abs/2507.07765" rel="noopener" target="_blank">https://arxiv.org/abs/2507.07765</a></li>
+              <li>"Hardware-Level Governance of AI Compute: A Feasibility Taxonomy," arXiv:2604.04712. <a href="https://arxiv.org/abs/2604.04712" rel="noopener" target="_blank">https://arxiv.org/abs/2604.04712</a></li>
+              <li>Centre for Future Generations, "AI governance challenges part 3: proliferation." <a href="https://cfg.eu/ai-governance-challenges-part-3-proliferation/" rel="noopener" target="_blank">https://cfg.eu/ai-governance-challenges-part-3-proliferation/</a></li>
+              <li>NTIA, "Dual-Use Foundation Models with Widely Available Model Weights." <a href="https://www.ntia.gov/programs-and-initiatives/artificial-intelligence/open-model-weights-report" rel="noopener" target="_blank">https://www.ntia.gov/programs-and-initiatives/artificial-intelligence/open-model-weights-report</a></li>
+              <li>TechCrunch, "OpenAI leaders propose international regulatory body for AI" (May 22, 2023). <a href="https://techcrunch.com/2023/05/22/openai-leaders-propose-international-regulatory-body-for-ai/" rel="noopener" target="_blank">https://techcrunch.com/2023/05/22/openai-leaders-propose-international-regulatory-body-for-ai/</a></li>
+              <li>Anderljung et al., "Frontier AI Regulation: Managing Emerging Risks to Public Safety," arXiv:2307.03718. <a href="https://arxiv.org/abs/2307.03718" rel="noopener" target="_blank">https://arxiv.org/abs/2307.03718</a></li>
+              <li>"Domestic frontier AI regulation, an IAEA for AI, an NPT for AI, and a US-led Allied Public-Private Partnership for AI," arXiv:2507.06379. <a href="https://arxiv.org/abs/2507.06379" rel="noopener" target="_blank">https://arxiv.org/abs/2507.06379</a></li>
+              <li>Chatham House, "The nuclear governance model won't work for AI" (June 2023). <a href="https://www.chathamhouse.org/2023/06/nuclear-governance-model-wont-work-ai" rel="noopener" target="_blank">https://www.chathamhouse.org/2023/06/nuclear-governance-model-wont-work-ai</a></li>
+              <li>"The Nuclear Analogy in AI Governance Research," arXiv:2510.21203; AI Frontiers, "Nuclear Non-Proliferation Is the Wrong Framework for AI Governance." <a href="https://arxiv.org/abs/2510.21203" rel="noopener" target="_blank">https://arxiv.org/abs/2510.21203</a></li>
+            </ol>
+          </div>
+
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="colophon">&copy; <span id="year">2026</span> Joakim Nordheim Larssen</span>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>

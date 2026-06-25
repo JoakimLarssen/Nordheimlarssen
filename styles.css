@@ -283,23 +283,42 @@ img, svg { display: block; max-width: 100%; }
 }
 /* "Featured" flag: marks the single highlighted writeup (the thesis), pinned first.
    Teal is the reserved signal, so the featured piece earns it. */
+/* FEATURED flag: a bold, clearly-bordered badge so it stands out. */
 .card-flag {
-  display: inline-block;
-  align-self: flex-start;   /* the card is a flex column; stop the pill stretching full width */
+  display: inline-flex; align-items: center;
+  align-self: flex-start;   /* the card is a flex column; stop it stretching full width */
   width: fit-content;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  background: var(--accent-glow);
+  border: 1.5px solid var(--accent);
+  border-radius: 6px;
+  padding: 5px 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 0 14px -2px var(--accent-glow);
+}
+.card.is-featured { border-color: var(--accent-dim); }
+
+/* Secondary card tag (e.g. "cyberwarfare course / final project"): same badge shape,
+   muted gray so it reads as context, not as the reserved teal Featured signal. */
+.card-tag {
+  display: inline-flex; align-items: center;
+  align-self: flex-start; width: fit-content;
   font-family: var(--mono);
   font-size: 0.62rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--accent);
-  background: var(--accent-glow);
-  border: 1px solid var(--accent-dim);
-  border-radius: 999px;
-  padding: 3px 10px;
-  margin-bottom: 14px;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+  background: transparent;
+  border: 1px solid #313a3c;
+  border-radius: 6px;
+  padding: 4px 11px;
+  margin-bottom: 16px;
 }
-.card.is-featured { border-color: var(--accent-dim); }
 
 .card-top {
   display: flex; align-items: baseline; justify-content: space-between;
@@ -595,4 +614,84 @@ img, svg { display: block; max-width: 100%; }
 
 @media (max-width: 380px) {
   .nav a { font-size: 0.68rem; }
+}
+
+/* ============================ ARTICLE (long-form writeups) ============================ */
+.article { max-width: 760px; }
+.article-back {
+  font-family: var(--mono); font-size: 0.82rem; color: var(--dim);
+  display: inline-block; margin-bottom: 22px;
+  transition: color var(--dur) var(--ease);
+}
+.article-back:hover { color: var(--accent); }
+.article h1 {
+  font-family: var(--mono); font-weight: 700;
+  font-size: clamp(1.55rem, 4vw, 2.15rem); letter-spacing: -0.01em; line-height: 1.18;
+  margin-bottom: 14px;
+}
+.article-lede {
+  font-family: var(--sans); font-size: 1.05rem; line-height: 1.5; color: #c4c8c9;
+  margin-bottom: 10px;
+}
+.article-byline {
+  font-family: var(--mono); font-size: 0.74rem; color: var(--dim); margin-bottom: 30px;
+}
+.article h2 {
+  font-family: var(--mono); font-weight: 700; font-size: 1.15rem; color: var(--text);
+  margin: 40px 0 12px; letter-spacing: 0.01em;
+}
+.article h3 {
+  font-family: var(--mono); font-weight: 500; font-size: 1rem; color: var(--text);
+  margin: 28px 0 10px;
+}
+.article .prose {
+  font-family: var(--sans); font-size: 1rem; line-height: 1.66; color: #cfd2d3;
+  margin-bottom: 16px;
+}
+.article .prose strong { color: var(--text); font-weight: 600; }
+.article .prose a { color: var(--accent); }
+.article .prose a:hover { text-decoration: underline; }
+/* body lists in the article: match the prose font (without this they fall back to a
+   different font than the surrounding paragraphs). References/summary lists override below. */
+.article ul, .article ol {
+  font-family: var(--sans); font-size: 1rem; line-height: 1.66; color: #cfd2d3;
+  margin: 0 0 16px; padding-left: 24px;
+}
+.article li { margin-bottom: 8px; }
+.article li strong { color: var(--text); font-weight: 600; }
+.article li a { color: var(--accent); }
+.article hr.sep { border: 0; border-top: 1px solid var(--hairline); margin: 34px 0; }
+.article blockquote {
+  margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--accent-dim);
+  font-family: var(--sans); font-size: 1.02rem; line-height: 1.55; color: #d6d9da;
+}
+/* the scannable "short version" box near the top */
+.article-summary {
+  background: var(--elev-1); border: 1px solid var(--hairline);
+  border-left: 3px solid var(--accent-dim); border-radius: 8px;
+  padding: 18px 20px; margin: 26px 0 32px;
+}
+.article-summary .label {
+  font-family: var(--mono); font-size: 0.64rem; text-transform: uppercase;
+  letter-spacing: 0.14em; color: var(--accent); display: block; margin-bottom: 12px;
+}
+.article-summary ul { margin: 0; padding-left: 18px; }
+.article-summary li {
+  font-family: var(--sans); font-size: 0.95rem; line-height: 1.5; color: #cfd2d3;
+  margin-bottom: 9px;
+}
+.article-summary li strong { color: var(--text); }
+/* references */
+.references { margin-top: 38px; padding-top: 20px; border-top: 1px solid var(--hairline); }
+.references h2 { margin-top: 0; }
+.references ol {
+  font-family: var(--mono); font-size: 0.77rem; line-height: 1.6; color: var(--dim);
+  padding-left: 24px;
+}
+.references li { margin-bottom: 9px; overflow-wrap: anywhere; }
+.references a { color: var(--accent); }
+.references a:hover { text-decoration: underline; }
+@media (max-width: 600px) {
+  .article-summary { padding: 16px; }
+  .article h2 { margin-top: 32px; }
 }

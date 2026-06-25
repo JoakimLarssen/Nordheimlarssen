@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  nordheimlarssen.no/writing/the-power-grid-is-the-battlefield
+  Standalone article page. Static, no build step. Asset paths absolute.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>the power grid is the battlefield &middot; Joakim Nordheim Larssen</title>
+  <meta name="description" content="How an adversary takes down the lights, and what it actually takes to stop them." />
+  <meta name="author" content="Joakim Nordheim Larssen" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0D1011" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="the power grid is the battlefield &middot; Joakim Nordheim Larssen" />
+  <meta property="og:description" content="How an adversary takes down the lights, and what it actually takes to stop them." />
+  <meta property="og:url" content="https://nordheimlarssen.no/writing/the-power-grid-is-the-battlefield" />
+  <meta property="og:image" content="https://nordheimlarssen.no/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="the power grid is the battlefield &middot; Joakim Nordheim Larssen" />
+  <meta name="twitter:description" content="How an adversary takes down the lights, and what it actually takes to stop them." />
+  <meta name="twitter:image" content="https://nordheimlarssen.no/og.png" />
+  <link rel="canonical" href="https://nordheimlarssen.no/writing/the-power-grid-is-the-battlefield" />
+
+  <!-- Fonts: JetBrains Mono (structure) + IBM Plex Sans (prose). No serif. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Gate reveal animations on JS BEFORE first paint, so no-JS users see
+       all content and JS users never get a flash of un-animated content. -->
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="Joakim Nordheim Larssen, home">
+        <span class="brand-prompt" aria-hidden="true">~/</span><span class="brand-name">jnl</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <ul>
+          <li><a href="/#whoami">whoami</a></li>
+          <li><a href="/#projects">projects</a></li>
+          <li><a href="/#ctf">ctf</a></li>
+          <li><a href="/#academics">academics</a></li>
+          <li><a href="/writing" class="is-active" aria-current="page">writing</a></li>
+          <li><a href="/#contact">contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <article class="article">
+          <a class="article-back" href="/writing">&#8592; writing</a>
+          <h1>the power grid is the battlefield</h1>
+          <p class="article-lede">how an adversary takes down the lights, and what it actually takes to stop them</p>
+          <p class="article-byline">Joakim Nordheim Larssen</p>
+
+          <div class="article-summary">
+            <span class="label">the short version</span>
+            <ul>
+              <li>The U.S. electric grid runs on industrial control systems that were designed for reliability and safety, not for fending off nation-state hackers. That mismatch is the whole problem. The same systems that let an operator open a circuit breaker from a control room hundreds of miles away will, if an attacker reaches them, let the attacker open that breaker too.</li>
+              <li>This is not hypothetical. In 2015 and again in 2016, attackers turned off power to parts of Ukraine using the grid's own control protocols. The malware they built for the second attack, Industroyer, was the first piece of code purpose-made to speak the language of grid equipment. Its successor, Industroyer2, surfaced again in 2022.</li>
+              <li>The defensive answer is not a single product. It is layers: segment the network so a breach of one system does not become a breach of all of them, watch the traffic for commands that should not be there, harden the people who keep getting phished, and plan for the day a layer fails anyway. None of it is exotic. Most of it is unglamorous discipline applied consistently to systems that were never built to receive it.</li>
+              <li>This essay walks the path an attacker takes, from reconnaissance to the moment the breakers trip, and shows what blocks them at each step. I use the Western Interconnection, the grid covering the western U.S. and parts of Canada and Mexico, as the running example, because that is the system I spent a semester studying.</li>
+            </ul>
+          </div>
+
+          <h2>// why the grid is a soft target</h2>
+
+          <p class="prose">Start with the architecture, because the vulnerabilities follow from it directly.</p>
+
+          <p class="prose">A power grid is built in layers: generation plants, high-voltage transmission lines, and local distribution. Every layer leans on operational technology, or OT, to function. The two dominant control systems are SCADA, which gives operators centralized monitoring and supervisory control over assets spread across thousands of miles, and the distributed control systems and programmable logic controllers that do the local work of regulating a generator or a transformer.</p>
+
+          <p class="prose">SCADA is the part that makes the grid attackable at a distance. A master station in a control center polls remote terminal units at substations, and operators use that link to open and close breakers, adjust voltages, and respond to faults across a huge area. That remote reach is the entire point. It is also the entire risk.</p>
+
+          <p class="prose">These systems were not built with security as a primary concern. They were built for availability and safety. You cannot easily take a substation offline to patch it. Many devices have limited compute, so they cannot run modern security agents. The protocols they speak, DNP3, Modbus, IEC 61850, IEC 60870-5-104, often have no built-in encryption or authentication, which means a command on the wire is trusted simply because it arrived.</p>
+
+          <p class="prose">For decades that did not matter much, because OT networks were isolated, air-gapped, and proprietary. That world is gone. Utilities have converged IT and OT for remote management and data sharing, and control systems now run on commercial operating systems and standard Ethernet. The convenience is real. So is the consequence: the ordinary IT failures, unpatched software, weak authentication, malware, now reach the machines that move electricity.</p>
+
+          <p class="prose">The result is a network where the front door is a corporate IT environment full of email and the back room is a set of legacy controllers that will faithfully execute any command they receive. Connect the two carelessly and you have built a path from a phishing email to a circuit breaker.</p>
+
+          <h2>// the kill chain, walked</h2>
+
+          <p class="prose">The cleanest way to think about a grid attack is the cyber kill chain: reconnaissance, weaponization, delivery, exploitation, installation, command and control, and finally actions on objectives. I will walk it with Industroyer2 as the worked example, because it is the threat I modeled and because it is real.</p>
+
+          <p class="prose">Industroyer2 is the successor to the 2016 Industroyer, the malware behind a Ukrainian blackout. It targets industrial control systems by abusing the IEC 60870-5-104 protocol to manipulate circuit breakers directly, driving uncontrolled outages. The adversary profile that fits it is a state-sponsored group with genuine ICS expertise. The 2016 original is attributed to Sandworm, a unit of Russia's military intelligence [1][2].</p>
+
+          <p class="prose"><strong>Reconnaissance.</strong> The attacker gathers open-source intelligence on the target's infrastructure: which utilities, which vendors, which employees, which remote-access points. The countermeasure is to limit what is exposed and to watch for the scanning that precedes an intrusion. You cannot stop someone from reading your public filings, but you can avoid publishing network diagrams and you can notice when someone maps your perimeter.</p>
+
+          <p class="prose"><strong>Weaponization and delivery.</strong> The payload is tailored for ICS protocols, then delivered. The two reliable delivery vectors are spear-phishing emails with malicious attachments and the exploitation of a vendor's access. This is where the human layer and the supply chain become the attack surface, and I will come back to both.</p>
+
+          <p class="prose"><strong>Exploitation and installation.</strong> The attacker exploits an unpatched VPN or weak credentials to get in, then establishes persistence with a backdoor. The countermeasures are the boring fundamentals: patch management, multi-factor authentication, network segmentation, and endpoint detection. Boring does not mean optional. The 2021 Colonial Pipeline breach started with a single VPN account that had a reused password and no MFA [3].</p>
+
+          <p class="prose"><strong>Command and control, then actions on objectives.</strong> The malware communicates with its operators, often over encrypted channels, and then does the thing it was built to do: it issues the breaker commands. The last line of defense at this stage is real-time monitoring of the control network and the ability to fall back to manual operation, operators running the grid by hand when the automated systems can no longer be trusted.</p>
+
+          <p class="prose">The reason to map an attack this way is that it shows defense is not one wall. It is seven chances to catch the same intruder. Miss them at delivery and you might still catch them at installation. Miss them there and monitoring might flag the C2 traffic. The attacker has to win every step. The defender has to win once.</p>
+
+          <h2>// it was not hypothetical: Ukraine</h2>
+
+          <p class="prose">The kill chain above is not a textbook abstraction. It is a description of attacks that happened.</p>
+
+          <p class="prose">In December 2015, attackers cut power to roughly 230,000 people in Ukraine for one to six hours, the first publicly confirmed cyberattack to cause a blackout. They got in with BlackEnergy malware, then manually operated circuit breakers through hijacked operator workstations, wiped systems with KillDisk to slow recovery, and flooded the call centers with a telephone denial-of-service so customers could not report the outage. The attack was attributed to Sandworm [4].</p>
+
+          <p class="prose">A year later, in December 2016, it happened again in the northern part of Kyiv, this time with Industroyer, also called CRASHOVERRIDE. This was the leap that matters. The 2015 attack was a manual hijack: humans clicking through stolen sessions. Industroyer was the first malware purpose-built to manipulate grid control protocols on its own, without needing the operators' software at all. The capability had evolved from breaking in and driving the controls by hand to a reusable, automated grid weapon [5].</p>
+
+          <p class="prose">And in 2022, during the full-scale invasion, Sandworm tried a third time with Industroyer2, an attack that was detected and foiled before it caused an outage [1].</p>
+
+          <p class="prose">Three attempts, escalating in sophistication, against civilian power infrastructure. The 2016 malware was dissected publicly, which is exactly how the threat I studied for the Western Interconnection came to exist as a known, documented capability rather than a worst-case guess. This is the central uncomfortable fact: grid-attack tooling is real, it has been used, and once used it gets analyzed and the techniques spread.</p>
+
+          <h2>// who is actually trying</h2>
+
+          <p class="prose">The Industroyer family is the nation-state case, and nation-states are the most capable adversary. But the grid faces a wider field, and the others matter because they are more numerous and, in some ways, harder to predict.</p>
+
+          <p class="prose"><strong>Criminal ransomware groups are the most active threat.</strong> They are financially motivated, and they view utilities as targets that will pay to restore service fast. They usually do not want a prolonged blackout, because destruction does not pay a ransom, but their attacks disrupt operations anyway. Colonial Pipeline is the cleanest illustration: the DarkSide group hit Colonial's IT and billing systems, not the operational systems that move fuel, and Colonial shut the pipeline down as a precaution because it could not bill. The largest fuel pipeline in the U.S., carrying around 45% of East Coast supply, went dark for about six days [3]. Ransomware does not have to reach the controllers to take the grid offline. It only has to make operators unwilling to keep running blind.</p>
+
+          <p class="prose"><strong>Hacktivists are less capable but less predictable.</strong> They favor the cyber front door: DDoS, defacement, data leaks, phishing for embarrassment rather than ransom. Historically they have not tried to cause blackouts. In 2012 the NSA warned that Anonymous could one day be able to disable parts of the grid, and Anonymous dismissed the idea as pointless, since turning off people's electricity served no purpose [6]. The real concern is escalation and proliferation: a hacktivist who gets hold of leaked ICS malware, or who turns a botnet of internet-connected high-wattage devices into a tool for swinging grid demand, could do real damage with borrowed capability.</p>
+
+          <p class="prose"><strong>Terrorist and extremist actors are the high-intent, low-capability case.</strong> They want maximum disruption and are not deterred by harm to civilians, which is the point. So far their cyber attempts have failed for lack of skill; ISIS-affiliated hackers tried to breach U.S. power companies and did not succeed, with one FBI-era assessment summarized as "strong intent, low capability" [7]. The danger is the day intent meets capability, whether through a leak or a state sponsor handing tools to a proxy to mask its own involvement.</p>
+
+          <p class="prose">The practical takeaway across all three is that the defenses overlap. Segmentation, MFA, monitoring, and phishing-resistant staff raise the cost for a ransomware crew, a hacktivist, and a state actor alike. You do not build a separate grid for each adversary. You build one that is hard for all of them.</p>
+
+          <h2>// the human layer keeps losing</h2>
+
+          <p class="prose">Every kill chain above has the same first move that actually works: a person gets tricked. Social engineering exploits psychology, not software, and it is the most reliable way past technical controls because it goes around them.</p>
+
+          <p class="prose">Three techniques cover most of it. Phishing and spear-phishing use a convincing message, often impersonating a regulator like NERC or the Department of Energy, to harvest credentials through a fake login portal. The spear-phishing variant adds reconnaissance, so the email references a real project or a real colleague and reads as authentic. Pretexting uses a fabricated story, an attacker posing as an auditor or a contractor who needs urgent access for a compliance check, exploiting deference to authority. Baiting uses curiosity, the classic infected USB drive labeled something irresistible and left where an employee will find it [8][9].</p>
+
+          <p class="prose">The defense is training that is specific, not generic. Teach control-room operators what a cyberattack looks like on an HMI versus an ordinary equipment fault. Run phishing simulations. Establish the rule that any request for credentials or access gets verified through an independent channel, never by replying to the message that asked. Make reporting easy and blameless, so the employee who clicked the link says so immediately instead of hiding it.</p>
+
+          <p class="prose">None of this eliminates the risk. Humans will keep clicking. What it does is shrink the success rate and shorten the time between the click and the response, which is often the difference between a contained incident and a blackout.</p>
+
+          <h2>// the supply chain is somebody else's network</h2>
+
+          <p class="prose">Even a hardened utility inherits the weaknesses of its vendors. The grid depends on a small number of suppliers for critical components like large transformers, and on third-party maintenance firms with legitimate access to control networks.</p>
+
+          <p class="prose">That access is a vector. A spear-phish against a vendor with a maintenance connection can become a path into the utility that the utility's own perimeter never sees, because the traffic arrives through a trusted door. The 2021 SolarWinds compromise is the canonical demonstration of the principle: attackers trojanized signed software updates, and around 18,000 organizations downloaded the poisoned build, though the hands-on follow-on exploitation hit a much smaller set [10]. The lesson is not the headcount. It is that a trusted update channel is an attack channel.</p>
+
+          <p class="prose">Supply chain risk is not only cyber. The 2021 Texas freeze showed how fragile component and fuel dependencies are under stress, with natural gas supply failures cascading into massive outages [11]. The defenses are vendor audits, testing components before they enter critical systems, treating remote vendor access as the privileged risk it is with jump hosts and one-time approvals rather than standing connections, and keeping spares of long-lead-time hardware like transformers staged for recovery.</p>
+
+          <h2>// defense in depth, made concrete</h2>
+
+          <p class="prose">Now the constructive part. The grid cannot be made un-hackable, so the goal is layered defense: enough independent controls that a single failure does not become a catastrophe. Three technical layers carry most of the weight.</p>
+
+          <p class="prose"><strong>Segmentation and firewalls.</strong> This is the first and most important line. The OT network must be isolated from corporate IT and the internet using demilitarized zones and firewalls that allow only the specific traffic that has to flow, SCADA poll-and-response, a named engineering workstation, and block everything else. CISA's ICS guidance is explicit about strictly controlling traffic between the ICS and corporate networks [12]. Going further, micro-segmentation inside the OT environment, putting relays, RTUs, and maintenance laptops in separate zones, limits an attacker's lateral movement even after they get a foothold. NERC CIP, the mandatory baseline for the U.S. bulk power system, requires defined electronic security perimeters around critical cyber assets for exactly this reason [13]. Good segmentation is what turns "they breached a workstation" into a contained event instead of a grid-wide one.</p>
+
+          <p class="prose"><strong>Intrusion detection and prevention.</strong> Once an attacker is past the perimeter, you need to see them. IDS sensors placed inside the OT DMZ inspect traffic for known attack signatures and for anomalies, commands that deviate from normal patterns. The catch is that conventional IT intrusion detection often cannot even parse grid protocols, so ICS-specific tooling is required to recognize, say, a sequence of breaker-trip commands sent outside any normal operating window [14]. Detection is usually preferred over automatic prevention in critical OT, because a false positive that blocks a legitimate command is its own outage; prevention gets deployed selectively, on the clearest signatures and the least critical segments.</p>
+
+          <p class="prose"><strong>Centralized monitoring with SIEM.</strong> Individual alerts are noise until something correlates them. A SIEM aggregates logs from firewalls, IDS, operator workstations, and VPN gateways into one view, so the security team can connect an odd login on an HMI with a network scan and an unauthorized write to a PLC and see the single intrusion underneath [15]. This is what makes incident response possible: when something goes wrong, analysts can trace the attacker's path from entry to action and scope the damage instead of guessing.</p>
+
+          <p class="prose">Above these sit the standards and the cryptography. NERC CIP supplies the mandatory floor. The NSA's defense-in-depth guidance pushes the same logic, segmentation, least-privilege access, continuous monitoring, treated as an integrated whole rather than a checklist [16]. And where the legacy protocols allow it, the IEC 62351 series adds encryption and mutual authentication, TLS and a public-key infrastructure, so that a command on the wire is trusted because it is cryptographically verified, not merely because it arrived [17]. Retrofitting that onto decades-old equipment is slow, but it closes the gap that makes a captured network so dangerous.</p>
+
+          <h2>// technology is not enough</h2>
+
+          <p class="prose">Tools fail when the discipline around them lapses, so the operational practices matter as much as the boxes.</p>
+
+          <p class="prose">Patch and update management is the unglamorous core. Utilities should inventory every asset and its software version and patch on a methodical schedule, testing in a lab or a maintenance window first because unplanned downtime is unacceptable. Where a legacy device genuinely cannot be patched, it gets compensating controls: isolation behind strict firewall rules, or a virtual patch in the form of an IPS signature. Colonial's unpatched VPN is the cautionary tale [3].</p>
+
+          <p class="prose">Secure configuration and access control means least privilege everywhere: unique operator accounts, no shared logins, MFA, role separation so an operator cannot make engineering changes, default credentials replaced, unused ports and services disabled, and persistent remote access into the OT network eliminated in favor of approved, time-boxed jump-host sessions. Physical security belongs here too, because an intruder who can plug a rogue device into a substation switch has bypassed the network defenses entirely.</p>
+
+          <p class="prose">Incident response has to be planned and drilled, not improvised. A determined adversary will eventually get through something, so the plan needs clear roles, criteria for when to isolate or physically disconnect, and clean-restore procedures, rebuild from trusted backups rather than reboot, so latent malware does not survive. The industry rehearses this at scale in NERC's biennial GridEx exercise, where thousands of participants from utilities, government, and the DoD practice responding to combined cyber and physical attacks [18]. Every organization should run its own tabletop and technical drills, including the scenario where SCADA is gone and operators must run the grid by hand.</p>
+
+          <p class="prose">That manual-operation fallback is the quiet keystone of the whole plan. The reason the Ukraine attacks lasted hours rather than days is that operators could revert to manual control. The grid's analog bones are its last and most reliable defense, which is a strange thing to say about a cyber strategy and also true.</p>
+
+          <h2>// mission assurance, or why this is a national problem</h2>
+
+          <p class="prose">The reason to invest in all of this beyond keeping the lights on is that the grid is not just civilian infrastructure. It is the foundation national defense runs on.</p>
+
+          <p class="prose">The Department of Defense depends heavily on commercial power for mission-essential functions, which is why grid cybersecurity is treated as a national security priority and why mission assurance, the discipline of keeping critical missions running under attack, applies to the grid at all. The military's partial answer is resilience at the edge: bases deploy on-site generators and microgrids that can island themselves and run essential loads through a regional blackout. But that only works for so long. A long, wide-area outage exhausts on-site backups and degrades the surrounding civilian infrastructure, water, transportation, that personnel also depend on [19].</p>
+
+          <p class="prose">So mission assurance cannot stop at the fence line. It requires deep coordination with the utilities themselves, through information sharing via the E-ISAC, joint exercises, and aligning defense needs with the NERC CIP framework that already governs the bulk power system. The grid's security is a shared problem between government and a private sector that owns most of the assets, and neither side can solve it alone.</p>
+
+          <h2>// the realistic close</h2>
+
+          <p class="prose">I do not think the grid can be made invulnerable, and I do not think pretending otherwise helps. The honest position is the one the evidence supports: the attacks are real, the tooling exists and has been used in Ukraine three times, and the threat field runs from nation-states down to lone extremists. That is the world the Western Interconnection operates in.</p>
+
+          <p class="prose">But the gap between "vulnerable" and "doomed" is large, and it is filled with work that is already understood. Segment the networks so one breach is not total. Watch the OT traffic for commands that do not belong. Patch what you can and isolate what you cannot. Harden the people, because the people are where the kill chain starts. Drill the response, and keep the ability to run the grid by hand when the digital layer fails. None of it is a silver bullet. All of it together is the difference between a contained incident and a regional blackout.</p>
+
+          <p class="prose">The attacker has to win every step of the kill chain. The defender has to win one. Defense in depth is just the discipline of making sure there is always a next step where the defender can win. The grid is the battlefield now whether we like it or not, and the work is to make it terrain that favors the side keeping the lights on.</p>
+
+          <div class="references">
+            <h2>// references</h2>
+            <ol>
+              <li>Claroty Team82, "Industroyer2 Variant Surfaces in Foiled Attack Against Ukraine Electricity Provider." <a href="https://claroty.com/team82/blog/industroyer2-variant-surfaces-in-foiled-attack-against-ukraine-electricity-provider" rel="noopener" target="_blank">https://claroty.com/team82/blog/industroyer2-variant-surfaces-in-foiled-attack-against-ukraine-electricity-provider</a> ; CISA, "APT Cyber Tools Targeting ICS/SCADA Devices" (AA22-103A), <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-103a" rel="noopener" target="_blank">https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-103a</a></li>
+              <li>DOJ, indictment of six GRU Unit 74455 officers (Oct 19, 2020), tying the Ukraine grid attacks, NotPetya, and Olympic Destroyer. <a href="https://www.justice.gov/archives/opa/press-release/file/1328521/dl" rel="noopener" target="_blank">https://www.justice.gov/archives/opa/press-release/file/1328521/dl</a> ; Sandworm overview, <a href="https://en.wikipedia.org/wiki/Sandworm_(hacker_group)" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Sandworm_(hacker_group)</a></li>
+              <li>"Colonial Pipeline ransomware attack" (DarkSide, IT/billing systems, unpatched VPN with reused password and no MFA, ~45% of East Coast fuel, ~6-day shutdown). <a href="https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack</a> ; GAO, "Colonial Pipeline Cyberattack Highlights Need for Better Federal and Private-Sector Preparedness" (May 18, 2021), <a href="https://www.gao.gov/blog/colonial-pipeline-cyberattack-highlights-need-better-federal-and-private-sector-preparedness-infographic" rel="noopener" target="_blank">https://www.gao.gov/blog/colonial-pipeline-cyberattack-highlights-need-better-federal-and-private-sector-preparedness-infographic</a></li>
+              <li>E-ISAC / SANS, "Analysis of the Cyber Attack on the Ukrainian Power Grid" (Mar 18, 2016). <a href="https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2016/05/20081514/E-ISAC_SANS_Ukraine_DUC_5.pdf" rel="noopener" target="_blank">https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2016/05/20081514/E-ISAC_SANS_Ukraine_DUC_5.pdf</a> ; CISA alert IR-ALERT-H-16-056-01, <a href="https://www.cisa.gov/news-events/ics-alerts/ir-alert-h-16-056-01" rel="noopener" target="_blank">https://www.cisa.gov/news-events/ics-alerts/ir-alert-h-16-056-01</a></li>
+              <li>"Industroyer" / CRASHOVERRIDE overview. <a href="https://en.wikipedia.org/wiki/Industroyer" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Industroyer</a> ; CISA, "CrashOverride Malware" (TA17-163A), <a href="https://www.cisa.gov/news-events/alerts/2017/06/12/crashoverride-malware" rel="noopener" target="_blank">https://www.cisa.gov/news-events/alerts/2017/06/12/crashoverride-malware</a></li>
+              <li>"Anonymous (hacker group)" and 2012 NSA-warning context on hacktivist grid threats. <a href="https://en.wikipedia.org/wiki/Anonymous_(hacker_group)" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Anonymous_(hacker_group)</a></li>
+              <li>Infosec Institute, "ISIS Cyber Capabilities" (failed attempts against U.S. energy infrastructure; "strong intent, low capability"). <a href="https://www.infosecinstitute.com/resources/threat-intelligence/isis-cyber-capabilities/" rel="noopener" target="_blank">https://www.infosecinstitute.com/resources/threat-intelligence/isis-cyber-capabilities/</a></li>
+              <li>IBM, "Spear phishing vs. phishing: what's the difference?" <a href="https://www.ibm.com/think/topics/spear-phishing-vs-standard-phishing" rel="noopener" target="_blank">https://www.ibm.com/think/topics/spear-phishing-vs-standard-phishing</a> ; IBM, "What is pretexting?" <a href="https://www.ibm.com/think/topics/pretexting" rel="noopener" target="_blank">https://www.ibm.com/think/topics/pretexting</a></li>
+              <li>Carnegie Mellon University, Information Security Office, "Social Engineering" (baiting). <a href="https://www.cmu.edu/iso/aware/dont-take-the-bait/social-engineering.html" rel="noopener" target="_blank">https://www.cmu.edu/iso/aware/dont-take-the-bait/social-engineering.html</a></li>
+              <li>MITRE ATT&amp;CK Campaign C0024 (SolarWinds Compromise). <a href="https://attack.mitre.org/campaigns/C0024/" rel="noopener" target="_blank">https://attack.mitre.org/campaigns/C0024/</a></li>
+              <li>"2021 Texas power crisis" (supply chain and fuel dependency failures under extreme cold). <a href="https://en.wikipedia.org/wiki/2021_Texas_power_crisis" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/2021_Texas_power_crisis</a></li>
+              <li>CISA, "Cybersecurity Best Practices for Industrial Control Systems" (network segmentation, controlling traffic between ICS and corporate networks). <a href="https://www.cisa.gov/sites/default/files/publications/Cybersecurity_Best_Practices_for_Industrial_Control_Systems.pdf" rel="noopener" target="_blank">https://www.cisa.gov/sites/default/files/publications/Cybersecurity_Best_Practices_for_Industrial_Control_Systems.pdf</a></li>
+              <li>NERC CIP Standards (electronic security perimeters, mandatory baseline). <a href="https://www.nerc.com/pa/Stand/Pages/CIPStandards.aspx" rel="noopener" target="_blank">https://www.nerc.com/pa/Stand/Pages/CIPStandards.aspx</a></li>
+              <li>Kostadinov, D., "Intrusion Detection and Prevention for ICS/SCADA Environments," Infosec Institute (need for ICS-specific detection). <a href="https://www.infosecinstitute.com/resources/scada-ics-security/intrusion-detection-and-prevention-for-ics-scada-environments/" rel="noopener" target="_blank">https://www.infosecinstitute.com/resources/scada-ics-security/intrusion-detection-and-prevention-for-ics-scada-environments/</a></li>
+              <li>Industrial Defender, "How to Centralize OT Security Data in a SIEM" (SIEM aggregation and correlation in OT). <a href="https://www.industrialdefender.com/blog/how-to-centralize-ot-security-data-in-siem" rel="noopener" target="_blank">https://www.industrialdefender.com/blog/how-to-centralize-ot-security-data-in-siem</a></li>
+              <li>NSA, "NSA's Top Ten Cybersecurity Mitigation Strategies" (layered, defense-in-depth Information Assurance guidance). <a href="https://media.defense.gov/2019/Jul/16/2002158046/-1/-1/0/CSI-NSAS-TOP10-CYBERSECURITY-MITIGATION-STRATEGIES.PDF" rel="noopener" target="_blank">https://media.defense.gov/2019/Jul/16/2002158046/-1/-1/0/CSI-NSAS-TOP10-CYBERSECURITY-MITIGATION-STRATEGIES.PDF</a> ; CISA &amp; NSA, "Control System Defense: Know the Opponent" (AA22-265A), <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-265a" rel="noopener" target="_blank">https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-265a</a></li>
+              <li>Nozomi Networks, "IEC 62351 Standards for Securing Power System Communications" (TLS, PKI, mutual authentication for SCADA/EMS). <a href="https://www.nozominetworks.com/blog/iec-62351-standards-for-securing-power-system-communications" rel="noopener" target="_blank">https://www.nozominetworks.com/blog/iec-62351-standards-for-securing-power-system-communications</a></li>
+              <li>NERC, "GridEx" (biennial grid security exercise). <a href="https://www.nerc.com/pa/CI/ESISAC/Pages/GridEx.aspx" rel="noopener" target="_blank">https://www.nerc.com/pa/CI/ESISAC/Pages/GridEx.aspx</a></li>
+              <li>Stockton, P. N., &amp; Paczkowski, J. P., "Strengthening Mission Assurance Against Emerging Threats," Joint Force Quarterly 95 (2019). <a href="https://ndupress.ndu.edu/Portals/68/Documents/jfq/jfq-95/jfq-95.pdf" rel="noopener" target="_blank">https://ndupress.ndu.edu/Portals/68/Documents/jfq/jfq-95/jfq-95.pdf</a></li>
+            </ol>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="colophon">&copy; <span id="year">2026</span> Joakim Nordheim Larssen</span>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>
