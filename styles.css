@@ -775,3 +775,66 @@ img, svg { display: block; max-width: 100%; }
   .article-summary { padding: 16px; }
   .article h2 { margin-top: 32px; }
 }
+
+/* ---------- WRITING (home-page preview of /writing) ---------- */
+/* A featured card, then a compact index of the other pieces (title + kind),
+   then one button that is the single way in. The index rows are NOT links; the
+   kind tag on each row marks it plainly as a piece of writing, and the styling
+   mirrors the site's other non-clickable catalogs (the ctf + grades tables).
+   Teal stays rationed to the card's "Featured" badge. */
+.writing-more {
+  max-width: 640px;
+  margin-top: 22px;
+  border-top: 1px solid var(--hairline);
+}
+.writing-more li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.wm-title {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.wm-kind {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  white-space: nowrap;
+}
+/* Narrow screens: stack the kind under the title so the index never overflows. */
+@media (max-width: 560px) {
+  .writing-more li {
+    grid-template-columns: 1fr;
+    gap: 3px;
+    padding: 12px 0;
+  }
+}
+
+.writing-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--dim);
+  background: var(--elev-1);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 11px 18px;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.writing-cta:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+/* Reuse the global .arrow translate on hover for the CTA too. */
+.writing-cta:hover .arrow { transform: translate(2px, 0); }
