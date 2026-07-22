@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- MOCKUP direction B, branch redesign/craft-density, not deployed -->
+<!-- MOCKUP direction B, round 2: EVIDENCE CONSOLE. branch redesign/craft-density, not deployed -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -13,9 +13,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   DIRECTION B, OPERATOR
-   Monochrome craft, one mono family, one amber, one signature:
-   the command palette (ctrl+K or /). Everything else is silent.
+   DIRECTION B, EVIDENCE CONSOLE
+   Dark, all-mono, dense, tabular. The page is a ledger of
+   verifiable record: one status treatment, one key/value
+   anatomy, numbered sections, counted rows.
+   Terminal notes are limited to the ~/jnl wordmark and the
+   single $ whoami kicker. Signature: the ctrl+K palette.
    No scroll-triggered motion anywhere. Interaction only.
    ============================================================ */
 
@@ -23,11 +26,11 @@
   /* ground: monochrome, near-black, three text levels */
   --bg:        #0B0C0E;
   --panel:     #101214;
-  --sel:       #16191C;   /* TUI selection row */
-  --text:      #E8EAEB;   /* level 1: names, results */
+  --sel:       #16191C;
+  --text:      #E8EAEB;   /* level 1: names, values, results */
   --body:      #B9BEC1;   /* level 2: running text */
   --dim:       #878E93;   /* level 3: metadata */
-  --faint:     #7B838A;   /* labels, hints */
+  --faint:     #6E767D;   /* level 4: labels, hints, indices */
   --hairline:  #1E2225;
   --border:    #2B3134;
   --border-hi: #3F474C;
@@ -42,6 +45,14 @@
   --pad: clamp(20px, 4vw, 48px);
   --ease: cubic-bezier(0.25, 0.6, 0.3, 1);
   --fast: 120ms;
+
+  /* the type ladder: six deliberate stops, nothing in between */
+  --fs-label: 0.6875rem;   /* uppercase keys, chips, counts   */
+  --fs-small: 0.75rem;     /* nav, strip subs, footer         */
+  --fs-meta:  0.8125rem;   /* meta values, tables, kicker     */
+  --fs-body:  0.9375rem;   /* prose, descriptions, index rows */
+  --fs-h3:    1.125rem;    /* entry titles                    */
+  --fs-h2:    1.4375rem;   /* section heads                   */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,7 +65,7 @@ html {
 body {
   background: var(--bg);
   color: var(--body);
-  font: 400 0.875rem/1.7 var(--mono);
+  font: 400 var(--fs-body)/1.7 var(--mono);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -73,6 +84,22 @@ body {
   padding-inline: var(--pad);
 }
 
+/* ---------- shared: the one uppercase key style ---------- */
+
+.key,
+.meta dt,
+.contact-list .lbl,
+.now-row .lbl,
+.strip-label,
+.sec-count,
+.windex .kind {
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
 /* ---------- links: the underline that thickens ---------- */
 
 a { color: inherit; }
@@ -80,7 +107,7 @@ a { color: inherit; }
 .lnk,
 .prose a,
 .entry-desc a,
-.entry-meta a,
+.meta a,
 .contact-list a {
   color: var(--text);
   text-decoration: underline;
@@ -93,7 +120,7 @@ a { color: inherit; }
 .lnk:hover, .lnk:focus-visible,
 .prose a:hover, .prose a:focus-visible,
 .entry-desc a:hover, .entry-desc a:focus-visible,
-.entry-meta a:hover, .entry-meta a:focus-visible,
+.meta a:hover, .meta a:focus-visible,
 .contact-list a:hover, .contact-list a:focus-visible {
   text-decoration-color: var(--accent);
   text-decoration-thickness: 2px;
@@ -107,7 +134,7 @@ a { color: inherit; }
   background: var(--panel);
   border: 1px solid var(--border);
   color: var(--text);
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   text-decoration: none;
 }
 .skip-link:focus { top: 12px; }
@@ -150,7 +177,10 @@ a { color: inherit; }
 .site-nav a {
   position: relative;
   padding: 6px 9px 6px calc(9px + 1.1ch);
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
   color: var(--dim);
   text-decoration: none;
   transition: color var(--fast) var(--ease);
@@ -178,7 +208,7 @@ a { color: inherit; }
   font: inherit;
 }
 kbd {
-  font: 500 0.6875rem/1 var(--mono);
+  font: 500 var(--fs-label)/1 var(--mono);
   color: var(--dim);
   background: var(--panel);
   border: 1px solid var(--border);
@@ -203,7 +233,7 @@ kbd {
 }
 
 .kicker {
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   color: var(--dim);
   margin-bottom: 18px;
 }
@@ -226,7 +256,7 @@ h1 {
 
 .tagline {
   margin-top: 6px;
-  font-size: 0.875rem;
+  font-size: var(--fs-meta);
   color: var(--dim);
 }
 
@@ -242,9 +272,11 @@ h1 {
   display: flex;
   align-items: baseline;
   gap: 12px;
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   line-height: 1.65;
+  color: var(--dim);
 }
+.now-row a { color: var(--body); }
 .now-row .dot {
   flex: none;
   width: 7px; height: 7px;
@@ -253,87 +285,132 @@ h1 {
   transform: translateY(-1px);
 }
 .now-row .dot-live { background: var(--accent); }
-.now-row .lbl {
-  flex: none;
-  width: 4.5ch;
-  color: var(--faint);
-}
+.now-row .lbl { flex: none; width: 5ch; }
 
-/* the only permitted ambient motion: one status-dot pulse, once */
-@keyframes pulse-once {
-  0%   { box-shadow: 0 0 0 0 rgba(223, 168, 62, 0.4); }
-  100% { box-shadow: 0 0 0 11px rgba(223, 168, 62, 0); }
+/* the only ambient motion: one slow status-dot pulse */
+@keyframes dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(223, 168, 62, 0.35); }
+  50%      { box-shadow: 0 0 0 5px rgba(223, 168, 62, 0); }
 }
-.dot-live { animation: pulse-once 1.7s var(--ease) 0.5s 1; }
+.dot-live { animation: dot-pulse 3s var(--ease) 0.6s infinite; }
 
-/* the one-line quantified record: a statusline */
-.statusline {
+/* ============================================================
+   THE CREDENTIAL STRIP: second focal point of the fold.
+   Four evidence cells, big values, small keys underneath.
+   ============================================================ */
+
+.strip {
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  margin: 48px 0 52px;
-  padding: 11px 18px;
-  border: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 54px 0 0;
   background: var(--panel);
-  font-size: 0.8125rem;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent-line);
+}
+
+.strip-cell {
+  min-width: 0;
+  padding: 20px 24px 18px;
+  border-left: 1px solid var(--hairline);
+}
+.strip-cell:first-child { border-left: 0; }
+
+.strip-value {
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.strip-value .hi { color: var(--accent); }
+
+.strip-sub {
+  margin-top: 5px;
+  font-size: var(--fs-small);
   color: var(--dim);
 }
-.statusline li { min-width: 0; }
-.statusline li + li::before {
-  content: "\2502";
-  color: var(--faint);
-  opacity: 0.55;
-  margin: 0 12px;
+.strip-sub .hi { color: var(--accent); font-weight: 600; }
+
+/* ---------- sections: numbered ledger heads ---------- */
+
+.sec { padding-block: 58px 66px; }
+.sec + .sec { padding-top: 0; }
+#whoami { padding-top: 64px; }
+
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 34px;
 }
-.statusline strong { color: var(--text); font-weight: 600; }
-.statusline .hl { color: var(--accent); font-weight: 600; }
-
-/* ---------- sections: left rail, dense right column ---------- */
-
-.sec { border-top: 1px solid var(--hairline); }
-
-.sec-grid {
-  display: grid;
-  grid-template-columns: 180px minmax(0, 1fr);
-  gap: 20px 56px;
-  padding-block: 52px 60px;
-}
-
-.sec-title {
-  font-size: 1.25rem;
+.sec-index {
+  font-size: var(--fs-meta);
   font-weight: 600;
-  color: var(--text);
-  letter-spacing: 0.01em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
 }
-.sec-title::before { content: "~/"; color: var(--faint); font-weight: 400; }
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.sec-count { margin-left: auto; white-space: nowrap; }
 
 .lede {
   color: var(--dim);
-  font-size: 0.875rem;
+  font-size: var(--fs-body);
+  line-height: 1.75;
   max-width: 70ch;
 }
 
 /* ---------- about ---------- */
 
-.about-cols {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 14px;
-  max-width: 68ch;
+.prose { max-width: 66ch; }
+.prose p { line-height: 1.75; }
+.prose p + p { margin-top: 14px; }
+
+/* ---------- the one status treatment ---------- */
+
+.status {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--dim);
+  white-space: nowrap;
 }
-.prose p { max-width: 60ch; }
-.prose p, .entry-desc, .lede { font-size: 0.9375rem; line-height: 1.75; }
+.status::before { content: "[ "; color: var(--faint); font-weight: 400; }
+.status::after  { content: " ]"; color: var(--faint); font-weight: 400; }
+.status-live::before { content: "[ \25CF\00A0"; color: var(--accent); }
+.status-hi { color: var(--accent); }
+
+/* the one signal treatment for results and grades */
+.g-sig { color: var(--accent); font-weight: 700; }
+
+/* ---------- the one metadata row anatomy ---------- */
+
+.meta { font-size: var(--fs-meta); }
+.meta > div {
+  display: grid;
+  grid-template-columns: 6ch minmax(0, 1fr);
+  gap: 0 16px;
+  padding: 3px 0;
+}
+.meta dt { padding-top: 2px; }
+.meta dd { color: var(--body); }
 
 /* ---------- entries (projects + featured writing) ---------- */
 
 .entry {
-  padding: 22px 16px;
+  padding: 26px 16px;
   margin-inline: -16px;
-  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
   transition: background-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
 }
-.entry:last-of-type { border-bottom: 1px solid var(--hairline); }
 .entry:hover {
   background: var(--panel);
   box-shadow: inset 2px 0 0 var(--accent);
@@ -345,17 +422,17 @@ h1 {
   gap: 14px;
   flex-wrap: wrap;
 }
-.entry-head h3 {
-  font-size: 1.1875rem;
+h3 {
+  font-size: var(--fs-h3);
   font-weight: 600;
-  color: var(--text);
   letter-spacing: -0.01em;
+  color: var(--text);
 }
 .entry-links {
   margin-left: auto;
   display: flex;
   gap: 20px;
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
 }
 .entry-links a {
   color: var(--dim);
@@ -363,6 +440,7 @@ h1 {
   text-decoration-color: transparent;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+  white-space: nowrap;
   transition: color var(--fast) var(--ease), text-decoration-color var(--fast) var(--ease);
 }
 .entry-links a:hover, .entry-links a:focus-visible {
@@ -373,163 +451,128 @@ h1 {
 
 .entry-body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
+  grid-template-columns: minmax(0, 1fr) 280px;
   gap: 8px 56px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
-.entry-desc { max-width: 68ch; }
-
-.entry-meta { font-size: 0.8125rem; }
-.entry-meta > div {
-  display: grid;
-  grid-template-columns: 6ch minmax(0, 1fr);
-  gap: 0 14px;
-  padding: 3px 0;
-}
-.entry-meta dt { color: var(--faint); }
-.entry-meta dd { color: var(--body); }
-
-/* badges: bracketed mono, quiet */
-.badge {
-  font-size: 0.75rem;
-  color: var(--dim);
-  white-space: nowrap;
-}
-.badge::before { content: "[ "; color: var(--faint); }
-.badge::after  { content: " ]"; color: var(--faint); }
-.badge-live::before { content: "[ \25CF\00A0"; color: var(--accent); }
-.badge-year::before, .badge-year::after { content: none; }
-
-.flag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.flag::before { content: "[ "; font-weight: 400; }
-.flag::after  { content: " ]"; font-weight: 400; }
-
-.grade-chip {
-  display: inline-block;
-  padding: 0 8px;
-  border: 1px solid var(--accent-line);
-  border-radius: 3px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: 600;
+.entry-desc {
+  max-width: 68ch;
+  line-height: 1.75;
 }
 
-/* ---------- tables: TUI rows ---------- */
+/* ---------- tables: ledger rows ---------- */
+
+.table-wrap { overflow-x: auto; }
 
 .tbl {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   font-variant-numeric: tabular-nums;
+  line-height: 1.55;
 }
 .tbl th {
   text-align: left;
-  font-size: 0.71875rem;
+  font-size: var(--fs-label);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.09em;
   color: var(--faint);
-  padding: 7px 16px 7px 0;
+  padding: 8px 16px 8px 0;
   border-bottom: 1px solid var(--border);
 }
 .tbl td {
-  padding: 8px 16px 8px 0;
+  padding: 9px 16px 9px 0;
   border-bottom: 1px solid var(--hairline);
   color: var(--body);
-  vertical-align: top;
+  vertical-align: baseline;
 }
+.tbl td:last-child, .tbl th:last-child { padding-right: 0; }
 .tbl tbody tr { transition: background-color var(--fast) var(--ease); }
 .tbl tbody tr:hover td { background: var(--sel); color: var(--text); }
-.tbl tbody tr:hover td:first-child { box-shadow: inset 2px 0 0 var(--accent); padding-left: 10px; }
-.tbl td:first-child, .tbl th:first-child { padding-left: 10px; }
-.tbl .win { color: var(--accent); font-weight: 700; }
-.tbl .g-a { color: var(--text); font-weight: 700; }
-.tbl .g-b { color: var(--dim); }
-.tbl .num { text-align: right; padding-right: 10px; }
-.tbl th.num { padding-right: 10px; }
+.tbl .ix { color: var(--faint); width: 2ch; }
+.tbl tbody tr:hover td.ix { color: var(--accent); }
+.tbl .num { text-align: right; white-space: nowrap; }
+.tbl td.wrap-ok { white-space: normal; }
 
-.ctf-lede { margin-bottom: 20px; }
-.ctf-tbl { max-width: 640px; }
+.ctf-lede { margin-bottom: 24px; }
+.ctf-tbl { max-width: 680px; }
 
 /* ---------- academics ---------- */
+
+.acad-lead {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 32px;
+}
+.acad-lead .meta { margin-top: 8px; }
+.acad-lead .acad-note-inline {
+  margin-top: 10px;
+  font-size: var(--fs-meta);
+  color: var(--dim);
+  max-width: 70ch;
+}
 
 .acad-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 36px 56px;
 }
-.acad-msc {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding-bottom: 22px;
-  border-bottom: 1px solid var(--hairline);
+.acad-block .meta { margin: 6px 0 16px; }
+/* keep the two side-by-side grade tables on the same baseline:
+   reserve two meta rows in both columns */
+@media (min-width: 901px) {
+  .acad-block .meta { min-height: 56px; }
 }
-.acad-block h3, .acad-msc h3 {
-  font-size: 1.0625rem;
-  font-weight: 600;
-  color: var(--text);
-}
-.acad-sub { font-size: 0.8125rem; color: var(--dim); }
-.acad-msc .acad-note-inline { font-size: 0.8125rem; color: var(--dim); flex-basis: 100%; }
-.acad-block .acad-sub { margin: 3px 0 14px; }
 
-.acad-notes {
-  margin-top: 30px;
+.notes {
+  margin-top: 36px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
-.acad-note {
-  font-size: 0.8125rem;
+.note {
+  font-size: var(--fs-meta);
   color: var(--dim);
-  max-width: 78ch;
+  max-width: 74ch;
+  border-left: 2px solid var(--border);
+  padding-left: 14px;
 }
-.acad-note::before { content: "# "; color: var(--faint); }
 
-/* ---------- writing ---------- */
+/* ---------- writing index: generous single-column rows ---------- */
 
-.wl {
+.windex {
   list-style: none;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  max-width: 640px;
-  gap: 0;
-  margin-top: 26px;
+  max-width: 760px;
+  margin-top: 30px;
 }
-.wl li {
+.windex-label { margin-bottom: 4px; }
+.windex li {
   display: flex;
   align-items: baseline;
-  gap: 10px;
-  padding: 9px 0;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 15px 2px;
   border-bottom: 1px solid var(--hairline);
-  font-size: 0.8125rem;
 }
-.wl .t { color: var(--body); min-width: 0; }
-.wl .dots {
-  flex: 1;
-  min-width: 24px;
-  border-bottom: 1px dotted var(--border);
-  transform: translateY(-4px);
+.windex li:first-of-type { border-top: 1px solid var(--hairline); }
+.windex .title {
+  min-width: 0;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.55;
 }
-.wl .k { color: var(--faint); white-space: nowrap; }
+.windex .kind { white-space: nowrap; }
 
 .cta {
   display: inline-block;
-  margin-top: 28px;
+  margin-top: 30px;
   padding: 9px 18px;
   border: 1px solid var(--border);
   border-radius: 3px;
   color: var(--text);
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   text-decoration: none;
   transition: border-color var(--fast) var(--ease), color var(--fast) var(--ease);
 }
@@ -544,22 +587,22 @@ h1 {
 .contact-list li {
   display: grid;
   grid-template-columns: 10ch minmax(0, 1fr);
+  align-items: baseline;
   overflow-wrap: anywhere;
   gap: 16px;
-  padding: 10px 10px;
+  padding: 11px 10px;
   margin-inline: -10px;
   border-bottom: 1px solid var(--hairline);
-  font-size: 0.8125rem;
+  font-size: var(--fs-meta);
   transition: background-color var(--fast) var(--ease);
 }
+.contact-list li:first-child { border-top: 1px solid var(--hairline); }
 .contact-list li:hover { background: var(--sel); }
-.contact-list .lbl { color: var(--faint); }
 .contact-note {
-  margin-top: 22px;
-  font-size: 0.8125rem;
+  margin-top: 24px;
+  font-size: var(--fs-meta);
   color: var(--dim);
 }
-.contact-note::before { content: "# "; color: var(--faint); }
 
 @media (hover: none) and (pointer: coarse) {
   .contact-note { display: none; }
@@ -574,7 +617,7 @@ h1 {
   gap: 16px;
   flex-wrap: wrap;
   padding-block: 26px;
-  font-size: 0.75rem;
+  font-size: var(--fs-small);
   color: var(--faint);
 }
 
@@ -640,21 +683,20 @@ h1 {
   text-decoration: none;
 }
 #palette-list .cmd { color: var(--text); font-size: 0.875rem; }
-#palette-list .desc { color: var(--dim); font-size: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#palette-list .desc { color: var(--dim); font-size: var(--fs-small); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #palette-list li.is-selected a {
   background: var(--accent-soft);
   box-shadow: inset 2px 0 0 var(--accent);
 }
 #palette-list li.is-selected .cmd { color: var(--accent); }
-#palette-empty { padding: 14px 13px; color: var(--faint); font-size: 0.8125rem; }
-#palette-empty::before { content: "# "; }
+#palette-empty { padding: 14px 13px; color: var(--faint); font-size: var(--fs-meta); }
 
 .palette-hints {
   display: flex;
   gap: 18px;
   padding: 10px 18px;
   border-top: 1px solid var(--hairline);
-  font-size: 0.71875rem;
+  font-size: var(--fs-label);
   color: var(--faint);
 }
 
@@ -665,23 +707,58 @@ body.palette-open { overflow: hidden; }
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 30px; }
   .now-block { border-left: 0; border-top: 1px solid var(--hairline); padding: 24px 0 0; }
-  .sec-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-block: 40px 46px; }
-  .about-cols { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-  .entry-body { grid-template-columns: minmax(0, 1fr); gap: 14px; }
-  .acad-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
-  .wl { grid-template-columns: minmax(0, 1fr); }
+  .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strip-cell { border-left: 0; }
+  .strip-cell:nth-child(even) { border-left: 1px solid var(--hairline); }
+  .strip-cell:nth-child(n+3) { border-top: 1px solid var(--hairline); }
+  .sec { padding-block: 46px 54px; }
+  #whoami { padding-top: 52px; }
+  .entry-body { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .acad-grid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
 }
 
 @media (max-width: 560px) {
+  :root {
+    --fs-h2: 1.25rem;
+    --fs-h3: 1.0625rem;
+  }
   .head-row { flex-wrap: wrap; row-gap: 0; padding-block: 10px; }
   .site-nav { order: 3; width: 100%; margin-left: -9px; flex-wrap: wrap; }
   .kbtn { margin-left: auto; }
-  .statusline { flex-direction: column; align-items: stretch; gap: 9px; padding: 14px 16px; }
-  .statusline li + li::before { content: none; margin: 0; }
-  .tbl th, .tbl td { padding-right: 10px; font-size: 0.75rem; }
-  .ctf-tbl th:nth-child(2), .ctf-tbl td:nth-child(2) { width: 1%; white-space: nowrap; }
-  .entry { padding-inline: 12px; margin-inline: -12px; }
+
+  /* strip becomes a ledger: one row per cell, value left, key right */
+  .strip { grid-template-columns: minmax(0, 1fr); }
+  .strip-cell {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 13px 16px;
+    border-left: 0;
+  }
+  .strip-cell:nth-child(even) { border-left: 0; }
+  .strip-cell + .strip-cell { border-top: 1px solid var(--hairline); }
+  .strip-value { font-size: 1rem; white-space: nowrap; }
+  .strip-sub { margin-top: 0; text-align: right; }
+
+  .sec-head { flex-wrap: wrap; gap: 10px 16px; margin-bottom: 28px; }
+
+  .entry { padding: 22px 12px; margin-inline: -12px; }
   .entry-links { margin-left: 0; flex-basis: 100%; }
+
+  .tbl th, .tbl td { padding-right: 12px; font-size: var(--fs-small); }
+  .ctf-tbl th:nth-child(3), .ctf-tbl td:nth-child(3) { width: 1%; white-space: nowrap; }
+  .ctf-tbl td.num { white-space: normal; }
+
+  .windex li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding-block: 13px;
+  }
+
+  .contact-list li { grid-template-columns: minmax(0, 1fr); gap: 2px; padding-block: 9px; }
+
   .palette-hints { gap: 12px; }
 }
 
@@ -702,12 +779,12 @@ body.palette-open { overflow: hidden; }
   <div class="wrap head-row">
     <a class="brand" href="#top"><span class="tilde">~/</span>jnl</a>
     <nav class="site-nav" aria-label="Site">
-      <a href="#whoami">whoami</a>
-      <a href="#projects">projects</a>
-      <a href="#ctf">ctf</a>
-      <a href="#academics">academics</a>
-      <a href="#writing">writing</a>
-      <a href="#contact">contact</a>
+      <a href="#whoami">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#ctf">CTF</a>
+      <a href="#academics">Academics</a>
+      <a href="#writing">Writing</a>
+      <a href="#contact">Contact</a>
     </nav>
     <button class="kbtn" id="palette-trigger" type="button" aria-haspopup="dialog"
             aria-label="Open command palette" title="Command palette: ctrl+K or /">
@@ -718,14 +795,14 @@ body.palette-open { overflow: hidden; }
 
 <main id="main">
 
-  <!-- ========== first screen: the whole identity ========== -->
+  <!-- ========== first screen: name, then the record ========== -->
   <section id="top" aria-label="Introduction">
     <div class="wrap">
       <div class="hero-grid">
         <div>
           <p class="kicker"><span class="prompt">$</span> whoami</p>
           <h1>Joakim Nordheim&nbsp;Larssen</h1>
-          <p class="identity">Security researcher and developer, Oslo</p>
+          <p class="identity">Security researcher and developer,&nbsp;Oslo</p>
           <p class="tagline">I work on software security, compete in CTFs, and ship products.</p>
         </div>
         <div class="now-block">
@@ -742,41 +819,61 @@ body.palette-open { overflow: hidden; }
           <p class="now-row">
             <span class="dot" aria-hidden="true"></span>
             <span class="lbl">open</span>
-            <span>graduating summer 2026, open to security roles (Oslo, Gj&oslash;vik, or remote)</span>
+            <span>graduating summer 2026, open to security roles (Oslo, Gj&oslash;vik, or&nbsp;remote)</span>
           </p>
         </div>
       </div>
 
-      <ul class="statusline" aria-label="Record">
-        <li><strong>3&nbsp;podium finishes</strong>&nbsp;in CTFs,&nbsp;<span class="hl">1st at Cybvest</span></li>
-        <li><strong>Riposte</strong>&nbsp;+&nbsp;<strong>Futtia</strong>: in dev</li>
-        <li>MSc: NTNU Gj&oslash;vik, autumn 2026</li>
-        <li>bachelor thesis:&nbsp;<strong>A</strong></li>
+      <!-- the credential strip: second focal point of the fold -->
+      <ul class="strip" aria-label="Record">
+        <li class="strip-cell">
+          <p class="strip-value">3 podium finishes</p>
+          <p class="strip-sub">in CTFs, <span class="hi">1st at Cybvest</span></p>
+        </li>
+        <li class="strip-cell">
+          <p class="strip-value">Riposte + Futtia</p>
+          <p class="strip-sub">in dev</p>
+        </li>
+        <li class="strip-cell">
+          <p class="strip-value">MSc: NTNU Gj&oslash;vik</p>
+          <p class="strip-sub">autumn 2026</p>
+        </li>
+        <li class="strip-cell">
+          <p class="strip-value"><span class="hi">A</span></p>
+          <p class="strip-sub">bachelor thesis</p>
+        </li>
       </ul>
     </div>
   </section>
 
-  <!-- ========== about ========== -->
+  <!-- ========== 01 about ========== -->
   <section class="sec" id="whoami">
-    <div class="wrap sec-grid">
-      <h2 class="sec-title">about</h2>
-      <div class="about-cols prose">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-index" aria-hidden="true">01</span>
+        <h2>About</h2>
+      </header>
+      <div class="prose">
         <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik. I work at the intersection of offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
-        <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
+        <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>.</p>
       </div>
     </div>
   </section>
 
-  <!-- ========== projects ========== -->
+  <!-- ========== 02 projects ========== -->
   <section class="sec" id="projects">
-    <div class="wrap sec-grid">
-      <h2 class="sec-title">projects</h2>
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-index" aria-hidden="true">02</span>
+        <h2>Projects</h2>
+        <span class="sec-count">3 entries</span>
+      </header>
       <div>
 
         <article class="entry" id="riposte">
           <header class="entry-head">
             <h3>Riposte</h3>
-            <span class="badge badge-live">in dev</span>
+            <span class="status status-live">in dev</span>
             <span class="entry-links">
               <a href="https://riposte.no">riposte.no &#8599;</a>
               <a href="https://github.com/JoakimLarssen/Riposte">github &#8599;</a>
@@ -784,10 +881,10 @@ body.palette-open { overflow: hidden; }
           </header>
           <div class="entry-body">
             <p class="entry-desc">An agentic security CLI in the spirit of Claude Code and Codex. Where those drive coding, Riposte drives offensive and defensive work: real recon, exploitation, and detection engineering. Every action is scope-gated and audited, so the agent can't go off-leash.</p>
-            <dl class="entry-meta">
+            <dl class="meta">
               <div><dt>role</dt><dd>builder / architect</dd></div>
-              <div><dt>with</dt><dd><a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a></dd></div>
-              <div><dt>stack</dt><dd>Python, LiteLLM, Sigma, MITRE ATT&amp;CK, Docker</dd></div>
+              <div><dt>with</dt><dd><a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a></dd></div>
+              <div><dt>stack</dt><dd>Python, LiteLLM, Sigma, MITRE&nbsp;ATT&amp;CK, Docker</dd></div>
             </dl>
           </div>
         </article>
@@ -795,14 +892,14 @@ body.palette-open { overflow: hidden; }
         <article class="entry" id="futtia">
           <header class="entry-head">
             <h3>Futtia</h3>
-            <span class="badge badge-live">in dev</span>
+            <span class="status status-live">in dev</span>
             <span class="entry-links">
               <a href="https://futtia.no">futtia.no &#8599;</a>
             </span>
           </header>
           <div class="entry-body">
             <p class="entry-desc">AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>
-            <dl class="entry-meta">
+            <dl class="meta">
               <div><dt>role</dt><dd>developer</dd></div>
               <div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
             </dl>
@@ -812,15 +909,15 @@ body.palette-open { overflow: hidden; }
         <article class="entry" id="thesis">
           <header class="entry-head">
             <h3>Bachelor thesis</h3>
-            <span class="badge badge-year">2026</span>
+            <span class="status">2026</span>
             <span class="entry-links">
               <a href="/thesis.pdf">read thesis &#8599;</a>
             </span>
           </header>
           <div class="entry-body">
-            <p class="entry-desc">Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams. How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup. A group thesis with <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik Hagen</a> and <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
-            <dl class="entry-meta">
-              <div><dt>grade</dt><dd><span class="grade-chip">A</span></dd></div>
+            <p class="entry-desc">Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams. How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup. A group thesis with <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik&nbsp;Hagen</a> and <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>.</p>
+            <dl class="meta">
+              <div><dt>grade</dt><dd><span class="g-sig">A</span></dd></div>
             </dl>
           </div>
         </article>
@@ -829,113 +926,136 @@ body.palette-open { overflow: hidden; }
     </div>
   </section>
 
-  <!-- ========== ctf ========== -->
+  <!-- ========== 03 ctf ========== -->
   <section class="sec" id="ctf">
-    <div class="wrap sec-grid">
-      <h2 class="sec-title">ctf</h2>
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-index" aria-hidden="true">03</span>
+        <h2>CTF / Competitions</h2>
+        <span class="sec-count">5 events</span>
+      </header>
       <div>
         <p class="lede ctf-lede">Three podium finishes, including a win at Cybvest. I also co-hosted a Cybvest edition. Crypto, pwn, and web.</p>
-        <table class="tbl ctf-tbl">
-          <thead>
-            <tr><th scope="col">Event</th><th scope="col">Role</th><th scope="col">Result</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Cybvest</td><td>team</td><td class="win">1st</td></tr>
-            <tr><td>Helt Sikker CTF</td><td>solo</td><td>3rd</td></tr>
-            <tr><td>Kongsberg &times; Helt Sikker</td><td>team</td><td>3rd</td></tr>
-            <tr><td>EPT 2025</td><td>team</td><td>16th overall, 4th student</td></tr>
-            <tr><td>EPT 2024</td><td>team</td><td>34th overall, 8th student</td></tr>
-          </tbody>
-        </table>
+        <div class="table-wrap">
+          <table class="tbl ctf-tbl">
+            <thead>
+              <tr><th scope="col" class="ix" aria-label="Row">#</th><th scope="col">Event</th><th scope="col">Role</th><th scope="col" class="num">Result</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="ix">01</td><td>Cybvest</td><td>team</td><td class="num g-sig">1st</td></tr>
+              <tr><td class="ix">02</td><td>Helt Sikker CTF</td><td>solo</td><td class="num">3rd</td></tr>
+              <tr><td class="ix">03</td><td>Kongsberg &times; Helt&nbsp;Sikker</td><td>team</td><td class="num">3rd</td></tr>
+              <tr><td class="ix">04</td><td>EPT 2025</td><td>team</td><td class="num wrap-ok">16th overall, 4th&nbsp;student</td></tr>
+              <tr><td class="ix">05</td><td>EPT 2024</td><td>team</td><td class="num wrap-ok">34th overall, 8th&nbsp;student</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== academics ========== -->
+  <!-- ========== 04 academics ========== -->
   <section class="sec" id="academics">
-    <div class="wrap sec-grid">
-      <h2 class="sec-title">academics</h2>
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-index" aria-hidden="true">04</span>
+        <h2>Academics</h2>
+        <span class="sec-count">3 records</span>
+      </header>
       <div>
-        <div class="acad-grid">
 
-          <div class="acad-msc">
-            <h3>MSc Information Security</h3>
-            <p class="acad-sub">NTNU, Gj&oslash;vik &middot; from autumn 2026</p>
-            <p class="acad-note-inline">Two-year master's in Information Security. Incoming, autumn 2026.</p>
-          </div>
+        <div class="acad-lead">
+          <h3>MSc Information Security</h3>
+          <dl class="meta">
+            <div><dt>where</dt><dd>NTNU, Gj&oslash;vik</dd></div>
+            <div><dt>from</dt><dd>autumn 2026</dd></div>
+          </dl>
+          <p class="acad-note-inline">Two-year master's in Information Security. Incoming, autumn 2026.</p>
+        </div>
+
+        <div class="acad-grid">
 
           <div class="acad-block">
             <h3>BSc Cybersecurity</h3>
-            <p class="acad-sub">H&oslash;yskolen Kristiania, Bergen</p>
+            <dl class="meta">
+              <div><dt>where</dt><dd>H&oslash;yskolen Kristiania, Bergen</dd></div>
+            </dl>
             <table class="tbl">
               <thead><tr><th scope="col">Course</th><th scope="col" class="num">Grade</th></tr></thead>
               <tbody>
-                <tr><td>Bachelor thesis</td><td class="num g-a">A</td></tr>
-                <tr><td>Cyber Defense</td><td class="num g-a">A</td></tr>
-                <tr><td>Agile Project</td><td class="num g-a">A</td></tr>
-                <tr><td>Ethical Hacking</td><td class="num g-b">B</td></tr>
-                <tr><td>IoT / OT Security</td><td class="num g-b">B</td></tr>
-                <tr><td>Governance, Risk &amp; Compliance</td><td class="num g-b">B</td></tr>
+                <tr><td>Bachelor thesis</td><td class="num g-sig">A</td></tr>
+                <tr><td>Cyber Defense</td><td class="num g-sig">A</td></tr>
+                <tr><td>Agile Project</td><td class="num g-sig">A</td></tr>
+                <tr><td>Ethical Hacking</td><td class="num">B</td></tr>
+                <tr><td>IoT / OT Security</td><td class="num">B</td></tr>
+                <tr><td>Governance, Risk &amp; Compliance</td><td class="num">B</td></tr>
               </tbody>
             </table>
           </div>
 
           <div class="acad-block">
             <h3>Exchange</h3>
-            <p class="acad-sub">Southern Utah University, USA &middot; Spring 2025</p>
+            <dl class="meta">
+              <div><dt>where</dt><dd>Southern Utah University, USA</dd></div>
+              <div><dt>when</dt><dd>Spring 2025</dd></div>
+            </dl>
             <table class="tbl">
               <thead><tr><th scope="col">Course</th><th scope="col" class="num">Grade</th></tr></thead>
               <tbody>
-                <tr><td>Cyber Warfare</td><td class="num g-a">A</td></tr>
-                <tr><td>Data Communications &amp; Networking</td><td class="num g-a">A</td></tr>
-                <tr><td>Algorithms &amp; Data Structures</td><td class="num g-a">A</td></tr>
-                <tr><td>Technology &amp; Ethics</td><td class="num g-a">A</td></tr>
+                <tr><td>Cyber Warfare</td><td class="num g-sig">A</td></tr>
+                <tr><td>Data Communications &amp; Networking</td><td class="num g-sig">A</td></tr>
+                <tr><td>Algorithms &amp; Data Structures</td><td class="num g-sig">A</td></tr>
+                <tr><td>Technology &amp; Ethics</td><td class="num g-sig">A</td></tr>
               </tbody>
             </table>
           </div>
 
         </div>
 
-        <div class="acad-notes">
-          <p class="acad-note">Cyber Warfare and Data Communications &amp; Networking were taught by Gary Wallace, a former U.S. Navy commander and head of IT for the U.S. Navy.</p>
-          <p class="acad-note">Full transcript and verified record available on request.</p>
+        <div class="notes">
+          <p class="note">Cyber Warfare and Data Communications &amp; Networking were taught by Gary Wallace, a former U.S. Navy commander and head of IT for the U.S. Navy.</p>
+          <p class="note">Full transcript and verified record available on request.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== writing ========== -->
+  <!-- ========== 05 writing ========== -->
   <section class="sec" id="writing">
-    <div class="wrap sec-grid">
-      <h2 class="sec-title">writing</h2>
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-index" aria-hidden="true">05</span>
+        <h2>Writing</h2>
+        <span class="sec-count">7 listed</span>
+      </header>
       <div>
         <p class="lede">I also write about security, AI risk, and critical infrastructure. Some research, some coursework, some from my own projects.</p>
 
-        <article class="entry" style="margin-top: 22px;">
+        <article class="entry" style="margin-top: 24px;">
           <header class="entry-head">
             <h3>The Power Grid is the Battlefield</h3>
-            <span class="flag">Featured</span>
-            <span class="badge badge-year">2025</span>
+            <span class="status status-hi">Featured</span>
+            <span class="status">2025</span>
             <span class="entry-links">
               <a href="/writing/the-power-grid-is-the-battlefield">read project &#8599;</a>
             </span>
           </header>
           <div class="entry-body">
             <p class="entry-desc">How an adversary actually takes down a power grid: the threat landscape from Industroyer-class ICS malware to supply-chain compromise and social engineering against operators. A look at what defense-in-depth for critical infrastructure really requires once the attacker is already inside. Built from my cyberwarfare coursework.</p>
-            <dl class="entry-meta">
+            <dl class="meta">
               <div><dt>type</dt><dd><a href="#academics">cyberwarfare final project</a></dd></div>
               <div><dt>year</dt><dd>2025</dd></div>
             </dl>
           </div>
         </article>
 
-        <ul class="wl">
-          <li><span class="t">Secure AI-Accelerated Development in Agile Workflows</span><span class="dots" aria-hidden="true"></span><span class="k">bachelor thesis</span></li>
-          <li><span class="t">Building and Securing a Network from Scratch</span><span class="dots" aria-hidden="true"></span><span class="k">coursework</span></li>
-          <li><span class="t">Does AI Actually Write Insecure Code?</span><span class="dots" aria-hidden="true"></span><span class="k">research review</span></li>
-          <li><span class="t">The Economics of a Zero-Day</span><span class="dots" aria-hidden="true"></span><span class="k">analysis</span></li>
-          <li><span class="t">Marking the Machine</span><span class="dots" aria-hidden="true"></span><span class="k">analysis + experiment</span></li>
-          <li><span class="t">Too Dangerous to Release</span><span class="dots" aria-hidden="true"></span><span class="k">analysis</span></li>
+        <ul class="windex" aria-label="More writing">
+          <li><span class="title">Secure AI-Accelerated Development in Agile Workflows</span><span class="kind">bachelor thesis</span></li>
+          <li><span class="title">Building and Securing a Network from Scratch</span><span class="kind">coursework</span></li>
+          <li><span class="title">Does AI Actually Write Insecure Code?</span><span class="kind">research review</span></li>
+          <li><span class="title">The Economics of a Zero-Day</span><span class="kind">analysis</span></li>
+          <li><span class="title">Marking the Machine</span><span class="kind">analysis + experiment</span></li>
+          <li><span class="title">Too Dangerous to Release</span><span class="kind">analysis</span></li>
         </ul>
 
         <a class="cta" href="/writing">read all writing &rarr;</a>
@@ -943,10 +1063,13 @@ body.palette-open { overflow: hidden; }
     </div>
   </section>
 
-  <!-- ========== contact ========== -->
+  <!-- ========== 06 contact ========== -->
   <section class="sec" id="contact">
-    <div class="wrap sec-grid">
-      <h2 class="sec-title">contact</h2>
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-index" aria-hidden="true">06</span>
+        <h2>Contact</h2>
+      </header>
       <div>
         <ul class="contact-list">
           <li><span class="lbl">email</span><a href="mailto:joakimnordheimlarssen@gmail.com">joakimnordheimlarssen@gmail.com</a></li>
@@ -979,25 +1102,28 @@ body.palette-open { overflow: hidden; }
       <kbd>esc</kbd>
     </div>
     <ul id="palette-list" role="listbox" aria-label="Destinations">
-      <li role="option" id="opt-whoami" aria-selected="false" data-cmd="whoami" data-desc="identity about">
-        <a href="#whoami" tabindex="-1"><span class="cmd">whoami</span><span class="desc">identity &middot; about</span></a>
+      <li role="option" id="opt-whoami" aria-selected="false" data-cmd="about" data-desc="identity oslo">
+        <a href="#whoami" tabindex="-1"><span class="cmd">about</span><span class="desc">identity &middot; Oslo</span></a>
       </li>
-      <li role="option" id="opt-riposte" aria-selected="false" data-cmd="projects/riposte" data-desc="agentic security cli in dev">
-        <a href="#riposte" tabindex="-1"><span class="cmd">projects/riposte</span><span class="desc">agentic security CLI &middot; in dev</span></a>
+      <li role="option" id="opt-riposte" aria-selected="false" data-cmd="riposte" data-desc="projects agentic security cli in dev">
+        <a href="#riposte" tabindex="-1"><span class="cmd">riposte</span><span class="desc">agentic security CLI &middot; in dev</span></a>
       </li>
-      <li role="option" id="opt-futtia" aria-selected="false" data-cmd="projects/futtia" data-desc="ai football analysis in dev">
-        <a href="#futtia" tabindex="-1"><span class="cmd">projects/futtia</span><span class="desc">AI football analysis &middot; in dev</span></a>
+      <li role="option" id="opt-futtia" aria-selected="false" data-cmd="futtia" data-desc="projects ai football analysis in dev">
+        <a href="#futtia" tabindex="-1"><span class="cmd">futtia</span><span class="desc">AI football analysis &middot; in dev</span></a>
       </li>
-      <li role="option" id="opt-ctf" aria-selected="false" data-cmd="ctf.log" data-desc="competitions record podium">
-        <a href="#ctf" tabindex="-1"><span class="cmd">ctf.log</span><span class="desc">3 podiums &middot; 1 win</span></a>
+      <li role="option" id="opt-ctf" aria-selected="false" data-cmd="ctf" data-desc="competitions record podium">
+        <a href="#ctf" tabindex="-1"><span class="cmd">ctf</span><span class="desc">3 podiums &middot; 1 win</span></a>
       </li>
-      <li role="option" id="opt-writing" aria-selected="false" data-cmd="writing/" data-desc="essays research coursework">
-        <a href="#writing" tabindex="-1"><span class="cmd">writing/</span><span class="desc">essays &middot; research &middot; coursework</span></a>
+      <li role="option" id="opt-academics" aria-selected="false" data-cmd="academics" data-desc="bsc msc exchange grades">
+        <a href="#academics" tabindex="-1"><span class="cmd">academics</span><span class="desc">BSc &middot; MSc &middot; exchange</span></a>
+      </li>
+      <li role="option" id="opt-writing" aria-selected="false" data-cmd="writing" data-desc="essays research coursework">
+        <a href="#writing" tabindex="-1"><span class="cmd">writing</span><span class="desc">essays &middot; research &middot; coursework</span></a>
       </li>
       <li role="option" id="opt-contact" aria-selected="false" data-cmd="contact" data-desc="email github linkedin">
         <a href="#contact" tabindex="-1"><span class="cmd">contact</span><span class="desc">email &middot; github &middot; linkedin</span></a>
       </li>
-      <li id="palette-empty" role="presentation" hidden>no matching command</li>
+      <li id="palette-empty" role="presentation" hidden>no matching destination</li>
     </ul>
     <div class="palette-hints" aria-hidden="true">
       <span>&uarr;&darr; select</span><span>&crarr; open</span><span>esc close</span>

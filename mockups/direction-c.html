@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- MOCKUP: direction C "SESSION", branch redesign/craft-density, not deployed -->
+<!-- MOCKUP: direction C "SESSION", round 2 rework, branch redesign/craft-density, not deployed -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -14,9 +14,13 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   PHOSPHOR FIELD / direction C "SESSION"
-   The hero is a terminal session. One signature, everything
-   else silent. No scroll animation, no glow, no cosplay.
+   PHOSPHOR FIELD / direction C "SESSION", round 2
+   The machine metaphor, committed and honest:
+   - hero = a short live session (whoami + now), nothing more
+   - log  = a dated ledger that points, never restates
+   - one status vocabulary: [ in dev ] brackets; wins are
+     accent-bold text; everything else is a key-value row
+   No scroll animation. No glow. No cosplay.
    ============================================================ */
 
 :root{
@@ -36,6 +40,7 @@
   --term-bar:#141A19;
   --out:#C6CBCC;
   --prose:#CFD2D3;
+  --meta:#A9AFB1;
   --mono:"JetBrains Mono",ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
   --sans:"IBM Plex Sans",system-ui,sans-serif;
   --maxw:920px;
@@ -65,11 +70,12 @@ a{
   transition:color var(--dur) var(--ease), text-decoration-color var(--dur) var(--ease);
 }
 a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
-.log-main a, .log-kind a, .wr a, .proj-links a, .feat h3 a, .t-dir{ text-decoration:none; }
-.log-main a:hover, .log-kind a:hover, .wr a:hover, .proj-links a:hover, .feat h3 a:hover, .t-dir:hover{ text-decoration:underline; text-decoration-color:var(--accent); }
+.log-ev a, .log-ptr a, .wr a, .proj-links a, .proj-head h3 a, .t-dir{ text-decoration:none; }
+.log-ev a:hover, .log-ptr a:hover, .wr a:hover, .proj-links a:hover, .proj-head h3 a:hover, .t-dir:hover{ text-decoration:underline; text-decoration-color:var(--accent); }
 :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
 
 .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--gutter); }
+.nb{ white-space:nowrap; }
 .sr-only{
   position:absolute; width:1px; height:1px; margin:-1px; padding:0;
   overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
@@ -87,6 +93,19 @@ a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
 .js-only{ display:none; }
 .js .js-only{ display:block; }
 .js .nojs-cursor{ display:none; }
+
+/* ---------- one status vocabulary ----------
+   [ in dev ] brackets, mono, small. Live work is accent.
+   Wins (1st place, grade A) are accent-bold text, nothing more. */
+.status{ font-size:0.72rem; font-weight:500; color:var(--dim); white-space:nowrap; }
+.status.live{ color:var(--accent); }
+.win{ color:var(--accent); font-weight:700; }
+
+/* ---------- one metadata anatomy: key-value rows ---------- */
+.meta{ margin:12px 0 0; font-size:0.8rem; }
+.meta > div{ display:grid; grid-template-columns:6ch minmax(0,1fr); gap:2px 2ch; padding:1px 0; }
+.meta dt{ margin:0; color:var(--dim); }
+.meta dd{ margin:0; color:var(--meta); }
 
 /* ---------- header ---------- */
 .site-head{
@@ -176,12 +195,6 @@ a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
 
 .t-ls{ display:grid; grid-template-columns:9ch minmax(0,1fr); gap:2px 2ch; }
 .t-dir{ font-weight:700; text-decoration-color:var(--border); }
-.t-b{ color:var(--dim); font-size:0.85em; white-space:nowrap; }
-.t-b.live::before{
-  content:""; display:inline-block; width:6px; height:6px; border-radius:50%;
-  background:var(--accent); margin-right:6px; vertical-align:1px;
-}
-.t-win{ color:var(--accent); font-weight:700; }
 .t-key{ color:var(--accent); font-weight:500; }
 
 .t-help{ display:grid; grid-template-columns:10ch minmax(0,1fr); gap:2px 2ch; }
@@ -222,7 +235,7 @@ noscript .t-hint{ margin-top:12px; }
 .sec-note{ font-size:0.72rem; color:var(--dim); white-space:nowrap; }
 @media (max-width:560px){ .sec-note{ display:none; } }
 
-/* ---------- shipped log ---------- */
+/* ---------- log: a ledger that points, never restates ---------- */
 .log{ list-style:none; margin:0; padding:0; }
 .log li{
   display:grid; grid-template-columns:6ch minmax(0,1fr) auto;
@@ -234,13 +247,14 @@ noscript .t-hint{ margin-top:12px; }
 }
 .log li:hover{ background:var(--elev-1); }
 .log-date{ color:var(--dim); font-size:0.78rem; font-variant-numeric:tabular-nums; }
-.log-date.is-nd span[aria-hidden]{ color:var(--dim); }
-.log-main a{ font-weight:500; }
-.log-desc{ color:var(--dim); }
-.log-kind{ color:var(--dim); font-size:0.74rem; text-align:right; white-space:nowrap; }
-@media (max-width:640px){
+.log-ev a{ font-weight:500; }
+.log-ev .ev-note{ color:var(--dim); }
+.log-ptr{ font-size:0.74rem; white-space:nowrap; }
+.log-ptr a{ color:var(--dim); }
+.log-ptr a:hover{ color:var(--accent); }
+@media (max-width:560px){
   .log li{ grid-template-columns:6ch minmax(0,1fr); }
-  .log-kind{ grid-column:2; text-align:left; white-space:normal; }
+  .log-ptr{ display:none; }
 }
 
 /* ---------- about ---------- */
@@ -258,42 +272,35 @@ noscript .t-hint{ margin-top:12px; }
 .proj-links{ margin-left:auto; display:flex; gap:18px; font-size:0.78rem; }
 .proj-desc{
   font-family:var(--sans); font-size:0.97rem; line-height:1.65;
-  color:#C4C8C9; max-width:70ch; margin:10px 0;
+  color:#C4C8C9; max-width:70ch; margin:10px 0 0;
 }
-.proj-meta{ font-size:0.78rem; color:#A9AFB1; margin:0; }
-.proj-meta .k{ color:var(--dim); }
-.proj-meta .sep{ color:var(--border-hi); margin:0 6px; }
 @media (max-width:560px){
   .proj-links{ margin-left:0; flex-basis:100%; order:9; }
 }
-
-.chip{
-  display:inline-block; font-size:0.68rem; font-weight:500; line-height:1;
-  padding:3px 7px; border:1px solid var(--border); border-radius:4px; color:var(--dim);
-  vertical-align:1px;
-}
-.chip.sig{ color:var(--accent); border-color:var(--accent-dim); background:var(--accent-tint); }
-.chip.live{ color:var(--accent); border-color:var(--accent-dim); }
-.chip.live::before{ content:""; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent); margin-right:6px; }
 
 /* ---------- ctf ---------- */
 .lede{
   font-family:var(--sans); font-size:0.97rem; line-height:1.65;
   color:var(--prose); max-width:70ch; margin:0 0 18px;
 }
-.spec{ width:100%; max-width:640px; border-collapse:collapse; font-size:0.85rem; font-variant-numeric:tabular-nums; }
+/* content-width table: headers sit over their values, no dead gulf */
+.spec{ border-collapse:collapse; font-size:0.85rem; font-variant-numeric:tabular-nums; }
 .spec th{
   text-align:left; font-weight:500; font-size:0.66rem; letter-spacing:0.09em;
   text-transform:uppercase; color:var(--dim);
-  padding:8px 12px; background:var(--elev-1); border-bottom:1px solid var(--border);
+  padding:0 48px 8px 0; border-bottom:1px solid var(--border);
 }
-.spec td{ padding:9px 12px; border-bottom:1px solid var(--hairline); }
+.spec td{ padding:9px 48px 9px 0; border-bottom:1px solid var(--hairline); white-space:nowrap; vertical-align:baseline; }
+.spec th:last-child, .spec td:last-child{ padding-right:0; }
 .spec tbody tr{ transition:background var(--dur) var(--ease); }
 .spec tbody tr:hover{ background:var(--elev-1); }
-.num{ text-align:right; }
-.spec th.num{ text-align:right; }
-@media (min-width:641px){ .spec td.num{ white-space:nowrap; } }
-.win{ color:var(--accent); font-weight:700; }
+/* mobile: results split on a designed two-line pattern, never ragged */
+@media (max-width:480px){
+  .spec{ font-size:0.78rem; }
+  .spec th, .spec td{ padding-right:18px; }
+  .rc{ display:none; }
+  .rs{ display:block; color:var(--dim); }
+}
 
 /* ---------- academics ---------- */
 .acad-msc{ margin-bottom:26px; }
@@ -311,17 +318,9 @@ noscript .t-hint{ margin-top:12px; }
 /* ---------- writing ---------- */
 .feat{
   border:1px solid var(--border); background:var(--elev-1);
-  border-radius:6px; padding:20px 22px; margin:0 0 6px;
+  border-radius:6px; padding:18px 22px 20px; margin:0 0 6px;
 }
-.feat-top{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
-.flag{
-  display:inline-block; font-size:0.6rem; font-weight:500; letter-spacing:0.14em;
-  text-transform:uppercase; color:var(--accent);
-  border:1px solid var(--accent-dim); background:var(--accent-tint);
-  border-radius:4px; padding:3px 8px;
-}
-.feat h3{ margin:10px 0 0; font-size:1.05rem; font-weight:700; letter-spacing:-0.01em; }
-.feat .proj-desc{ margin:8px 0 10px; }
+.feat-note{ margin:0 0 10px; font-size:0.72rem; color:var(--dim); }
 .wr{ list-style:none; margin:14px 0 0; padding:0; }
 .wr li{
   display:flex; justify-content:space-between; align-items:baseline; gap:16px;
@@ -356,16 +355,13 @@ noscript .t-hint{ margin-top:12px; }
 }
 
 /* ---------- footer ---------- */
-.foot{ border-top:1px solid var(--hairline); margin-top:clamp(48px,8vw,72px); padding:34px 0 52px; }
-.foot-logout{ margin:2px 0 20px; color:var(--dim); }
+.foot{ border-top:1px solid var(--hairline); margin-top:clamp(48px,8vw,72px); padding:30px 0 48px; }
 .foot-meta{ margin:0; font-size:0.75rem; color:var(--dim); }
-.foot-meta .sep{ color:var(--border-hi); margin:0 6px; }
 
 @media (max-width:480px){
   .term-body{ padding:16px 16px 18px; font-size:12.5px; }
   .t-ls{ grid-template-columns:8ch minmax(0,1fr); }
   .t-kv{ grid-template-columns:5ch minmax(0,1fr); }
-  .spec th, .spec td{ padding:8px 8px; }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -413,22 +409,9 @@ noscript .t-hint{ margin-top:12px; }
 
             <p class="t-cmd"><span class="t-ps">$</span>cat now.txt</p>
             <div class="t-out t-kv">
-              <span class="t-k">now</span><span>finishing a BSc in Cybersecurity, building <a href="https://riposte.no">Riposte</a> and <a href="https://futtia.no">Futtia</a></span>
-              <span class="t-k">next</span><span>MSc in Information Security at NTNU, Gj&oslash;vik, from autumn 2026</span>
-              <span class="t-k">open</span><span class="t-avail">graduating summer 2026, open to security roles (Oslo, Gj&oslash;vik, or&nbsp;remote)</span>
-            </div>
-
-            <p class="t-cmd"><span class="t-ps">$</span>ls projects/</p>
-            <div class="t-out t-ls">
-              <a class="t-dir" href="#riposte">riposte/</a><span>agentic security CLI: recon, exploitation, detection engineering <span class="t-b live">[ in dev ]</span></span>
-              <a class="t-dir" href="#futtia">futtia/</a><span>AI football analysis: ask questions of raw match footage <span class="t-b live">[ in dev ]</span></span>
-              <a class="t-dir" href="#thesis">thesis/</a><span>Secure AI-Accelerated Development in Agile Workflows, grade A <span class="t-b">[ 2026 ]</span></span>
-            </div>
-
-            <p class="t-cmd"><span class="t-ps">$</span>cat ctf.txt writing.txt</p>
-            <div class="t-out">
-              <p>Three podium finishes, including <span class="t-win">a win at Cybvest</span>.</p>
-              <p>I write about security, AI risk, and critical infrastructure.</p>
+              <span class="t-k">now</span><span>finishing a BSc in Cybersecurity, building <a href="https://riposte.no">Riposte</a> and&nbsp;<a href="https://futtia.no">Futtia</a></span>
+              <span class="t-k">next</span><span>MSc in Information Security at NTNU, Gj&oslash;vik, from autumn&nbsp;2026</span>
+              <span class="t-k">open</span><span class="t-avail">graduating summer 2026, open to security&nbsp;roles <span class="nb">(Oslo, Gj&oslash;vik, or remote)</span></span>
             </div>
 
           </div>
@@ -440,14 +423,14 @@ noscript .t-hint{ margin-top:12px; }
           </form>
           <p class="t-cmd nojs-cursor" aria-hidden="true"><span class="t-ps">$</span><span class="t-block"></span></p>
 
-          <p class="t-hint js-only" id="t-hint"># try: help &middot; riposte &middot; ctf &middot; ssh. everything below is plain HTML anyway.</p>
-          <noscript><p class="t-hint"># javascript is off: the session above is static. everything is rendered below.</p></noscript>
+          <p class="t-hint js-only" id="t-hint"># type help and press enter for commands</p>
+          <noscript><p class="t-hint"># javascript is off: the session above is static. the full page is below.</p></noscript>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= SHIPPED LOG ================= -->
+  <!-- ================= LOG: dated ledger, points to canonical sections ================= -->
   <section id="log" class="sec">
     <div class="wrap">
       <div class="sec-head">
@@ -458,48 +441,28 @@ noscript .t-hint{ margin-top:12px; }
       <ol class="log">
         <li>
           <span class="log-date">now</span>
-          <span class="log-main"><a href="#riposte">Riposte</a><span class="log-desc"> &middot; agentic security CLI</span></span>
-          <span class="log-kind">in dev &middot; <a href="https://riposte.no">riposte.no &#8599;</a></span>
+          <span class="log-ev"><a href="#riposte">Riposte</a></span>
+          <span class="log-ptr"><a href="#riposte">&rarr; projects</a></span>
         </li>
         <li>
           <span class="log-date">now</span>
-          <span class="log-main"><a href="#futtia">Futtia</a><span class="log-desc"> &middot; AI football analysis</span></span>
-          <span class="log-kind">in dev &middot; <a href="https://futtia.no">futtia.no &#8599;</a></span>
+          <span class="log-ev"><a href="#futtia">Futtia</a></span>
+          <span class="log-ptr"><a href="#futtia">&rarr; projects</a></span>
         </li>
         <li>
           <span class="log-date">2026</span>
-          <span class="log-main"><a href="/thesis.pdf">Secure AI-Accelerated Development in Agile Workflows</a><span class="log-desc"> &middot; bachelor&nbsp;thesis</span></span>
-          <span class="log-kind">grade <span class="chip sig">A</span></span>
+          <span class="log-ev"><a href="#thesis">Bachelor thesis</a><span class="ev-note">, graded A</span></span>
+          <span class="log-ptr"><a href="#thesis">&rarr; projects</a></span>
         </li>
         <li>
           <span class="log-date">2025</span>
-          <span class="log-main"><a href="/writing/the-power-grid-is-the-battlefield">The Power Grid is the Battlefield</a></span>
-          <span class="log-kind">cyberwarfare final project</span>
+          <span class="log-ev"><a href="#writing">The Power Grid is the Battlefield</a></span>
+          <span class="log-ptr"><a href="#writing">&rarr; writing</a></span>
         </li>
         <li>
           <span class="log-date">2025</span>
-          <span class="log-main"><a href="/networking-final-project.pdf">Building and Securing a Network from Scratch</a></span>
-          <span class="log-kind">coursework &middot; 145/150</span>
-        </li>
-        <li>
-          <span class="log-date is-nd"><span aria-hidden="true">n.d.</span><span class="sr-only">undated</span></span>
-          <span class="log-main"><a href="/writing/the-economics-of-a-zero-day">The Economics of a Zero-Day</a></span>
-          <span class="log-kind">analysis</span>
-        </li>
-        <li>
-          <span class="log-date is-nd"><span aria-hidden="true">n.d.</span><span class="sr-only">undated</span></span>
-          <span class="log-main"><a href="/writing/marking-the-machine">Marking the Machine</a></span>
-          <span class="log-kind">analysis + experiment</span>
-        </li>
-        <li>
-          <span class="log-date is-nd"><span aria-hidden="true">n.d.</span><span class="sr-only">undated</span></span>
-          <span class="log-main"><a href="/writing/too-dangerous-to-release">Too Dangerous to Release</a></span>
-          <span class="log-kind">analysis</span>
-        </li>
-        <li>
-          <span class="log-date is-nd"><span aria-hidden="true">n.d.</span><span class="sr-only">undated</span></span>
-          <span class="log-main"><a href="/writing/does-ai-write-insecure-code">Does AI Actually Write Insecure Code?</a></span>
-          <span class="log-kind">research review</span>
+          <span class="log-ev"><a href="#writing">Building and Securing a Network from Scratch</a></span>
+          <span class="log-ptr"><a href="#writing">&rarr; writing</a></span>
         </li>
       </ol>
     </div>
@@ -519,7 +482,7 @@ noscript .t-hint{ margin-top:12px; }
     </div>
   </section>
 
-  <!-- ================= PROJECTS ================= -->
+  <!-- ================= PROJECTS: canonical detail ================= -->
   <section id="projects" class="sec">
     <div class="wrap">
       <div class="sec-head">
@@ -531,48 +494,47 @@ noscript .t-hint{ margin-top:12px; }
       <article class="proj" id="riposte">
         <div class="proj-head">
           <h3>Riposte</h3>
-          <span class="chip live">in dev</span>
+          <span class="status live">[ in dev ]</span>
           <span class="proj-links">
             <a href="https://riposte.no">riposte.no &#8599;</a>
             <a href="https://github.com/JoakimLarssen/Riposte">github &#8599;</a>
           </span>
         </div>
         <p class="proj-desc">An agentic security CLI in the spirit of Claude Code and Codex. Where those drive coding, Riposte drives offensive and defensive work: real recon, exploitation, and detection engineering. Every action is scope-gated and audited, so the agent can't go off-leash.</p>
-        <p class="proj-meta">
-          <span class="k">role</span> builder / architect
-          <span class="sep">&middot;</span>
-          <span class="k">with</span> <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>
-          <span class="sep">&middot;</span>
-          <span class="k">stack</span> Python, LiteLLM, Sigma, MITRE&nbsp;ATT&amp;CK, Docker
-        </p>
+        <dl class="meta">
+          <div><dt>role</dt><dd>builder / architect</dd></div>
+          <div><dt>with</dt><dd><a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a></dd></div>
+          <div><dt>stack</dt><dd>Python, LiteLLM, Sigma, MITRE&nbsp;ATT&amp;CK, Docker</dd></div>
+        </dl>
       </article>
 
       <article class="proj" id="futtia">
         <div class="proj-head">
           <h3>Futtia</h3>
-          <span class="chip live">in dev</span>
+          <span class="status live">[ in dev ]</span>
           <span class="proj-links">
             <a href="https://futtia.no">futtia.no &#8599;</a>
           </span>
         </div>
         <p class="proj-desc">AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>
-        <p class="proj-meta">
-          <span class="k">role</span> developer
-          <span class="sep">&middot;</span>
-          <span class="k">stack</span> React, Hono, Bun, Python, Supabase, Vercel
-        </p>
+        <dl class="meta">
+          <div><dt>role</dt><dd>developer</dd></div>
+          <div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
+        </dl>
       </article>
 
       <article class="proj" id="thesis">
         <div class="proj-head">
           <h3>Bachelor thesis</h3>
-          <span class="chip">2026</span>
-          <span class="chip sig">grade A</span>
           <span class="proj-links">
             <a href="/thesis.pdf">read thesis &#8599;</a>
           </span>
         </div>
-        <p class="proj-desc">Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams. How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup. A group thesis with <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik&nbsp;Hagen</a> and <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
+        <p class="proj-desc">Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams. How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup. A group thesis with <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik&nbsp;Hagen</a> and <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>.</p>
+        <dl class="meta">
+          <div><dt>year</dt><dd>2026</dd></div>
+          <div><dt>grade</dt><dd><span class="win">A</span></dd></div>
+        </dl>
       </article>
     </div>
   </section>
@@ -588,14 +550,14 @@ noscript .t-hint{ margin-top:12px; }
       <table class="spec">
         <caption class="sr-only">CTF competition results</caption>
         <thead>
-          <tr><th scope="col">Event</th><th scope="col">Role</th><th scope="col" class="num">Result</th></tr>
+          <tr><th scope="col">Event</th><th scope="col">Role</th><th scope="col">Result</th></tr>
         </thead>
         <tbody>
-          <tr><td>Cybvest</td><td>team</td><td class="num"><span class="win">1st</span></td></tr>
-          <tr><td>Helt Sikker CTF</td><td>solo</td><td class="num">3rd</td></tr>
-          <tr><td>Kongsberg &times; Helt Sikker</td><td>team</td><td class="num">3rd</td></tr>
-          <tr><td>EPT 2025</td><td>team</td><td class="num">16th overall, 4th student</td></tr>
-          <tr><td>EPT 2024</td><td>team</td><td class="num">34th overall, 8th student</td></tr>
+          <tr><td>Cybvest</td><td>team</td><td><span class="win">1st</span></td></tr>
+          <tr><td>Helt Sikker CTF</td><td>solo</td><td>3rd</td></tr>
+          <tr><td>Kongsberg &times; Helt Sikker</td><td>team</td><td>3rd</td></tr>
+          <tr><td>EPT 2025</td><td>team</td><td>16th overall<span class="rc">,</span> <span class="rs">4th student</span></td></tr>
+          <tr><td>EPT 2024</td><td>team</td><td>34th overall<span class="rc">,</span> <span class="rs">8th student</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -622,12 +584,12 @@ noscript .t-hint{ margin-top:12px; }
           <table class="grades">
             <caption class="sr-only">BSc Cybersecurity course grades</caption>
             <tbody>
-              <tr><td>Bachelor thesis</td><td><span class="chip sig">A</span></td></tr>
-              <tr><td>Cyber Defense</td><td><span class="chip sig">A</span></td></tr>
-              <tr><td>Agile Project</td><td><span class="chip sig">A</span></td></tr>
-              <tr><td>Ethical Hacking</td><td><span class="chip">B</span></td></tr>
-              <tr><td>IoT / OT Security</td><td><span class="chip">B</span></td></tr>
-              <tr><td>Governance, Risk &amp; Compliance</td><td><span class="chip">B</span></td></tr>
+              <tr><td>Bachelor thesis</td><td><span class="win">A</span></td></tr>
+              <tr><td>Cyber Defense</td><td><span class="win">A</span></td></tr>
+              <tr><td>Agile Project</td><td><span class="win">A</span></td></tr>
+              <tr><td>Ethical Hacking</td><td>B</td></tr>
+              <tr><td>IoT / OT Security</td><td>B</td></tr>
+              <tr><td>Governance, Risk &amp; Compliance</td><td>B</td></tr>
             </tbody>
           </table>
         </div>
@@ -637,10 +599,10 @@ noscript .t-hint{ margin-top:12px; }
           <table class="grades">
             <caption class="sr-only">Exchange semester course grades</caption>
             <tbody>
-              <tr><td>Cyber Warfare</td><td><span class="chip sig">A</span></td></tr>
-              <tr><td>Data Communications &amp; Networking</td><td><span class="chip sig">A</span></td></tr>
-              <tr><td>Algorithms &amp; Data Structures</td><td><span class="chip sig">A</span></td></tr>
-              <tr><td>Technology &amp; Ethics</td><td><span class="chip sig">A</span></td></tr>
+              <tr><td>Cyber Warfare</td><td><span class="win">A</span></td></tr>
+              <tr><td>Data Communications &amp; Networking</td><td><span class="win">A</span></td></tr>
+              <tr><td>Algorithms &amp; Data Structures</td><td><span class="win">A</span></td></tr>
+              <tr><td>Technology &amp; Ethics</td><td><span class="win">A</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -651,7 +613,7 @@ noscript .t-hint{ margin-top:12px; }
     </div>
   </section>
 
-  <!-- ================= WRITING ================= -->
+  <!-- ================= WRITING: canonical detail ================= -->
   <section id="writing" class="sec">
     <div class="wrap">
       <div class="sec-head">
@@ -661,23 +623,22 @@ noscript .t-hint{ margin-top:12px; }
       <p class="lede">I also write about security, AI risk, and critical infrastructure. Some research, some coursework, some from my own projects.</p>
 
       <article class="feat">
-        <div class="feat-top">
-          <span class="flag">Featured</span>
+        <p class="feat-note"># featured</p>
+        <div class="proj-head">
+          <h3><a href="/writing/the-power-grid-is-the-battlefield">The Power Grid is the Battlefield</a></h3>
+          <span class="proj-links">
+            <a href="/writing/the-power-grid-is-the-battlefield">read project &#8599;</a>
+          </span>
         </div>
-        <h3><a href="/writing/the-power-grid-is-the-battlefield">The Power Grid is the Battlefield</a></h3>
         <p class="proj-desc">How an adversary actually takes down a power grid: the threat landscape from Industroyer-class ICS malware to supply-chain compromise and social engineering against operators. A look at what defense-in-depth for critical infrastructure really requires once the attacker is already inside. Built from my cyberwarfare coursework.</p>
-        <p class="proj-meta">
-          <span class="k">type</span> <a href="#academics">cyberwarfare final project</a>
-          <span class="sep">&middot;</span>
-          <span class="k">year</span> 2025
-          <span class="sep">&middot;</span>
-          <a href="/writing/the-power-grid-is-the-battlefield">read project &#8599;</a>
-        </p>
+        <dl class="meta">
+          <div><dt>type</dt><dd><a href="#academics">cyberwarfare final project</a></dd></div>
+          <div><dt>year</dt><dd>2025</dd></div>
+        </dl>
       </article>
 
       <ul class="wr">
-        <li><a href="/thesis.pdf">Secure AI-Accelerated Development in Agile Workflows</a><span class="kind">bachelor thesis</span></li>
-        <li><a href="/networking-final-project.pdf">Building and Securing a Network from Scratch</a><span class="kind">coursework</span></li>
+        <li><a href="/networking-final-project.pdf">Building and Securing a Network from Scratch</a><span class="kind">coursework &middot; 145/150</span></li>
         <li><a href="/writing/does-ai-write-insecure-code">Does AI Actually Write Insecure Code?</a><span class="kind">research review</span></li>
         <li><a href="/writing/the-economics-of-a-zero-day">The Economics of a Zero-Day</a><span class="kind">analysis</span></li>
         <li><a href="/writing/marking-the-machine">Marking the Machine</a><span class="kind">analysis + experiment</span></li>
@@ -700,7 +661,7 @@ noscript .t-hint{ margin-top:12px; }
         <li><span class="k">github</span><a href="https://github.com/JoakimLarssen">github.com/JoakimLarssen</a></li>
         <li><span class="k">linkedin</span><a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223">in/joakim-nordheim-larssen</a></li>
       </ul>
-      <p class="contact-note">graduating summer 2026, open to security roles (Oslo, Gj&oslash;vik, or&nbsp;remote)</p>
+      <p class="contact-note">graduating summer 2026, open to security&nbsp;roles <span class="nb">(Oslo, Gj&oslash;vik, or remote)</span></p>
     </div>
   </section>
 
@@ -708,9 +669,7 @@ noscript .t-hint{ margin-top:12px; }
 
 <footer class="foot">
   <div class="wrap">
-    <p class="t-cmd"><span class="t-ps">$</span>exit</p>
-    <p class="foot-logout">logout</p>
-    <p class="foot-meta">&copy; 2026 Joakim Nordheim Larssen<span class="sep">&middot;</span>no analytics, no build step<span class="sep">&middot;</span>view source: it is all one file</p>
+    <p class="foot-meta">&copy; 2026 Joakim Nordheim Larssen</p>
   </div>
 </footer>
 
@@ -737,8 +696,8 @@ noscript .t-hint{ margin-top:12px; }
     ripgh:  '<a href="https://github.com/JoakimLarssen/Riposte">github &#8599;</a>',
     fut:    '<a href="https://futtia.no">futtia.no &#8599;</a>',
     futN:   '<a href="https://futtia.no">Futtia</a>',
-    kri:    '<a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>',
-    ben:    '<a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik Hagen</a>',
+    kri:    '<a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>',
+    ben:    '<a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik&nbsp;Hagen</a>',
     mail:   '<a href="mailto:joakimnordheimlarssen@gmail.com">joakimnordheimlarssen@gmail.com</a>',
     gh:     '<a href="https://github.com/JoakimLarssen">github.com/JoakimLarssen</a>',
     li:     '<a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223">in/joakim-nordheim-larssen</a>',
@@ -750,6 +709,7 @@ noscript .t-hint{ margin-top:12px; }
   OUT.help =
     '<div class="t-out t-help">' +
     '<span class="t-key">whoami</span><span>name, place, one line of intent</span>' +
+    '<span class="t-key">now</span><span>current status</span>' +
     '<span class="t-key">projects</span><span>what is in flight</span>' +
     '<span class="t-key">riposte</span><span>agentic security CLI, in dev</span>' +
     '<span class="t-key">futtia</span><span>AI football analysis, in dev</span>' +
@@ -770,34 +730,34 @@ noscript .t-hint{ margin-top:12px; }
 
   OUT.now =
     '<div class="t-out t-kv">' +
-    '<span class="t-k">now</span><span>finishing a BSc in Cybersecurity, building ' + A.ripN + ' and ' + A.futN + '</span>' +
-    '<span class="t-k">next</span><span>MSc in Information Security at NTNU, Gjøvik, from autumn 2026</span>' +
-    '<span class="t-k">open</span><span>graduating summer 2026, open to security roles (Oslo, Gjøvik, or remote)</span>' +
+    '<span class="t-k">now</span><span>finishing a BSc in Cybersecurity, building ' + A.ripN + ' and&nbsp;' + A.futN + '</span>' +
+    '<span class="t-k">next</span><span>MSc in Information Security at NTNU, Gjøvik, from autumn&nbsp;2026</span>' +
+    '<span class="t-k">open</span><span>graduating summer 2026, open to security&nbsp;roles <span class="nb">(Oslo, Gjøvik, or remote)</span></span>' +
     '</div>';
 
   OUT.projects =
     '<div class="t-out t-ls">' +
-    '<a class="t-dir" href="#riposte">riposte/</a><span>agentic security CLI: recon, exploitation, detection engineering <span class="t-b live">[ in dev ]</span></span>' +
-    '<a class="t-dir" href="#futtia">futtia/</a><span>AI football analysis: ask questions of raw match footage <span class="t-b live">[ in dev ]</span></span>' +
-    '<a class="t-dir" href="#thesis">thesis/</a><span>Secure AI-Accelerated Development in Agile Workflows, grade A <span class="t-b">[ 2026 ]</span></span>' +
+    '<a class="t-dir" href="#riposte">riposte/</a><span>agentic security CLI: recon, exploitation, detection engineering <span class="status live">[ in dev ]</span></span>' +
+    '<a class="t-dir" href="#futtia">futtia/</a><span>AI football analysis: ask questions of raw match footage <span class="status live">[ in dev ]</span></span>' +
+    '<a class="t-dir" href="#thesis">thesis/</a><span>Secure AI-Accelerated Development in Agile Workflows, grade A <span class="status">[ 2026 ]</span></span>' +
     '</div>' +
-    '<div class="t-out"><p class="t-dim-p">try <span class="t-key">riposte</span> or <span class="t-key">futtia</span>, or scroll: everything is rendered below.</p></div>';
+    '<div class="t-out"><p class="t-dim-p">full detail in the <a href="#projects">projects</a> section.</p></div>';
 
   OUT.riposte =
     '<div class="t-out">' +
-    '<p class="t-strong">Riposte <span class="t-b live">[ in dev ]</span></p>' +
+    '<p class="t-strong">Riposte <span class="status live">[ in dev ]</span></p>' +
     '<p>An agentic security CLI in the spirit of Claude Code and Codex. Where those drive coding, Riposte drives offensive and defensive work: real recon, exploitation, and detection engineering. Every action is scope-gated and audited, so the agent can’t go off-leash.</p>' +
     '</div>' +
     '<div class="t-out t-kv">' +
     '<span class="t-k">role</span><span>builder / architect</span>' +
     '<span class="t-k">with</span><span>' + A.kri + '</span>' +
-    '<span class="t-k">stack</span><span>Python, LiteLLM, Sigma, MITRE ATT&amp;CK, Docker</span>' +
+    '<span class="t-k">stack</span><span>Python, LiteLLM, Sigma, MITRE&nbsp;ATT&amp;CK, Docker</span>' +
     '<span class="t-k">links</span><span>' + A.rip + ' · ' + A.ripgh + '</span>' +
     '</div>';
 
   OUT.futtia =
     '<div class="t-out">' +
-    '<p class="t-strong">Futtia <span class="t-b live">[ in dev ]</span></p>' +
+    '<p class="t-strong">Futtia <span class="status live">[ in dev ]</span></p>' +
     '<p>AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>' +
     '</div>' +
     '<div class="t-out t-kv">' +
@@ -808,19 +768,13 @@ noscript .t-hint{ margin-top:12px; }
 
   OUT.ctf =
     '<div class="t-out t-tab">' +
-    '<span>Cybvest</span><span>team</span><span class="t-win">1st</span>' +
+    '<span>Cybvest</span><span>team</span><span class="win">1st</span>' +
     '<span>Helt Sikker CTF</span><span>solo</span><span>3rd</span>' +
     '<span>Kongsberg × Helt Sikker</span><span>team</span><span>3rd</span>' +
     '<span>EPT 2025</span><span>team</span><span>16th overall, 4th student</span>' +
     '<span>EPT 2024</span><span>team</span><span>34th overall, 8th student</span>' +
     '</div>' +
     '<div class="t-out"><p class="t-dim-p">Three podium finishes, including a win at Cybvest. I also co-hosted a Cybvest edition. Crypto, pwn, and web.</p></div>';
-
-  OUT.ctfsummary =
-    '<div class="t-out"><p>Three podium finishes, including a win at Cybvest.</p></div>';
-
-  OUT.writingtxt =
-    '<div class="t-out"><p>I write about security, AI risk, and critical infrastructure.</p></div>';
 
   OUT.writing =
     '<div class="t-out t-wr">' +
@@ -836,7 +790,7 @@ noscript .t-hint{ margin-top:12px; }
 
   OUT.academics =
     '<div class="t-out t-kv">' +
-    '<span class="t-k">msc</span><span>Information Security, NTNU, Gjøvik · from autumn 2026</span>' +
+    '<span class="t-k">msc</span><span>Information Security, NTNU, Gjøvik · from autumn&nbsp;2026</span>' +
     '<span class="t-k">bsc</span><span>Cybersecurity, Høyskolen Kristiania, Bergen · Bachelor thesis A, Cyber Defense A, Agile Project A, Ethical Hacking B, IoT / OT Security B, Governance, Risk &amp; Compliance B</span>' +
     '<span class="t-k">exch</span><span>Southern Utah University, USA, spring 2025 · Cyber Warfare A, Data Communications &amp; Networking A, Algorithms &amp; Data Structures A, Technology &amp; Ethics A</span>' +
     '</div>' +
@@ -848,7 +802,7 @@ noscript .t-hint{ margin-top:12px; }
     '<span class="t-k">github</span><span>' + A.gh + '</span>' +
     '<span class="t-k">linkedin</span><span>' + A.li + '</span>' +
     '</div>' +
-    '<div class="t-out"><p class="t-dim-p">graduating summer 2026, open to security roles (Oslo, Gjøvik, or remote)</p></div>';
+    '<div class="t-out"><p class="t-dim-p">graduating summer 2026, open to security&nbsp;roles <span class="nb">(Oslo, Gjøvik, or remote)</span></p></div>';
 
   OUT.ssh =
     '<div class="t-out">' +
@@ -865,18 +819,10 @@ noscript .t-hint{ margin-top:12px; }
     'ls projects': 'projects',
     'ls projects/': 'projects',
     'cat now.txt': 'now',
-    'cat ctf.txt': 'ctfsummary',
-    'cat writing.txt': 'writingtxt',
-    'cat ctf.txt writing.txt': 'ctfwriting',
     'logout': 'exit'
   };
-  OUT.ctfwriting =
-    '<div class="t-out">' +
-    '<p>Three podium finishes, including a win at Cybvest.</p>' +
-    '<p>I write about security, AI risk, and critical infrastructure.</p>' +
-    '</div>';
 
-  var NAMES = ['help','whoami','projects','riposte','futtia','ctf','writing','academics','contact','clear','ssh'];
+  var NAMES = ['help','whoami','now','projects','riposte','futtia','ctf','writing','academics','contact','clear','ssh'];
   var hist = [], hi = 0;
 
   function print(html){
