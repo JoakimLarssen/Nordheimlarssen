@@ -27,7 +27,7 @@
   --text:      #E8EAEB;   /* level 1: names, results */
   --body:      #B9BEC1;   /* level 2: running text */
   --dim:       #878E93;   /* level 3: metadata */
-  --faint:     #5A6166;   /* labels, hints */
+  --faint:     #7B838A;   /* labels, hints */
   --hairline:  #1E2225;
   --border:    #2B3134;
   --border-hi: #3F474C;
@@ -210,7 +210,7 @@ kbd {
 .kicker .prompt { color: var(--accent); }
 
 h1 {
-  font-size: clamp(1.75rem, 1.05rem + 2.7vw, 2.5rem);
+  font-size: clamp(2rem, 1.2rem + 3.2vw, 2.875rem);
   font-weight: 700;
   line-height: 1.12;
   letter-spacing: -0.015em;
@@ -219,7 +219,7 @@ h1 {
 
 .identity {
   margin-top: 14px;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--text);
 }
@@ -272,7 +272,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  margin: 36px 0 44px;
+  margin: 48px 0 52px;
   padding: 11px 18px;
   border: 1px solid var(--hairline);
   background: var(--panel);
@@ -301,7 +301,7 @@ h1 {
 }
 
 .sec-title {
-  font-size: 0.9375rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--text);
   letter-spacing: 0.01em;
@@ -318,10 +318,12 @@ h1 {
 
 .about-cols {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 40px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  max-width: 68ch;
 }
 .prose p { max-width: 60ch; }
+.prose p, .entry-desc, .lede { font-size: 0.9375rem; line-height: 1.75; }
 
 /* ---------- entries (projects + featured writing) ---------- */
 
@@ -344,7 +346,7 @@ h1 {
   flex-wrap: wrap;
 }
 .entry-head h3 {
-  font-size: 1.0625rem;
+  font-size: 1.1875rem;
   font-weight: 600;
   color: var(--text);
   letter-spacing: -0.01em;
@@ -389,16 +391,17 @@ h1 {
 
 /* badges: bracketed mono, quiet */
 .badge {
-  font-size: 0.71875rem;
+  font-size: 0.75rem;
   color: var(--dim);
   white-space: nowrap;
 }
 .badge::before { content: "[ "; color: var(--faint); }
 .badge::after  { content: " ]"; color: var(--faint); }
 .badge-live::before { content: "[ \25CF\00A0"; color: var(--accent); }
+.badge-year::before, .badge-year::after { content: none; }
 
 .flag {
-  font-size: 0.71875rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -427,7 +430,7 @@ h1 {
 }
 .tbl th {
   text-align: left;
-  font-size: 0.6875rem;
+  font-size: 0.71875rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -439,6 +442,7 @@ h1 {
   padding: 8px 16px 8px 0;
   border-bottom: 1px solid var(--hairline);
   color: var(--body);
+  vertical-align: top;
 }
 .tbl tbody tr { transition: background-color var(--fast) var(--ease); }
 .tbl tbody tr:hover td { background: var(--sel); color: var(--text); }
@@ -470,7 +474,7 @@ h1 {
   border-bottom: 1px solid var(--hairline);
 }
 .acad-block h3, .acad-msc h3 {
-  font-size: 0.9375rem;
+  font-size: 1.0625rem;
   font-weight: 600;
   color: var(--text);
 }
@@ -496,8 +500,9 @@ h1 {
 .wl {
   list-style: none;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 0 56px;
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 640px;
+  gap: 0;
   margin-top: 26px;
 }
 .wl li {
@@ -555,6 +560,10 @@ h1 {
   color: var(--dim);
 }
 .contact-note::before { content: "# "; color: var(--faint); }
+
+@media (hover: none) and (pointer: coarse) {
+  .contact-note { display: none; }
+}
 
 /* ---------- footer ---------- */
 
@@ -631,7 +640,7 @@ h1 {
   text-decoration: none;
 }
 #palette-list .cmd { color: var(--text); font-size: 0.875rem; }
-#palette-list .desc { color: var(--dim); font-size: 0.75rem; white-space: nowrap; }
+#palette-list .desc { color: var(--dim); font-size: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #palette-list li.is-selected a {
   background: var(--accent-soft);
   box-shadow: inset 2px 0 0 var(--accent);
@@ -670,6 +679,7 @@ body.palette-open { overflow: hidden; }
   .statusline { flex-direction: column; align-items: stretch; gap: 9px; padding: 14px 16px; }
   .statusline li + li::before { content: none; margin: 0; }
   .tbl th, .tbl td { padding-right: 10px; font-size: 0.75rem; }
+  .ctf-tbl th:nth-child(2), .ctf-tbl td:nth-child(2) { width: 1%; white-space: nowrap; }
   .entry { padding-inline: 12px; margin-inline: -12px; }
   .entry-links { margin-left: 0; flex-basis: 100%; }
   .palette-hints { gap: 12px; }
@@ -714,7 +724,7 @@ body.palette-open { overflow: hidden; }
       <div class="hero-grid">
         <div>
           <p class="kicker"><span class="prompt">$</span> whoami</p>
-          <h1>Joakim Nordheim Larssen</h1>
+          <h1>Joakim Nordheim&nbsp;Larssen</h1>
           <p class="identity">Security researcher and developer, Oslo</p>
           <p class="tagline">I work on software security, compete in CTFs, and ship products.</p>
         </div>
@@ -740,8 +750,8 @@ body.palette-open { overflow: hidden; }
       <ul class="statusline" aria-label="Record">
         <li><strong>3&nbsp;podium finishes</strong>&nbsp;in CTFs,&nbsp;<span class="hl">1st at Cybvest</span></li>
         <li><strong>Riposte</strong>&nbsp;+&nbsp;<strong>Futtia</strong>: in dev</li>
-        <li>bachelor thesis:&nbsp;<strong>A</strong></li>
         <li>MSc: NTNU Gj&oslash;vik, autumn 2026</li>
+        <li>bachelor thesis:&nbsp;<strong>A</strong></li>
       </ul>
     </div>
   </section>
@@ -802,7 +812,7 @@ body.palette-open { overflow: hidden; }
         <article class="entry" id="thesis">
           <header class="entry-head">
             <h3>Bachelor thesis</h3>
-            <span class="badge">2026</span>
+            <span class="badge badge-year">2026</span>
             <span class="entry-links">
               <a href="/thesis.pdf">read thesis &#8599;</a>
             </span>
@@ -905,7 +915,7 @@ body.palette-open { overflow: hidden; }
           <header class="entry-head">
             <h3>The Power Grid is the Battlefield</h3>
             <span class="flag">Featured</span>
-            <span class="badge">2025</span>
+            <span class="badge badge-year">2025</span>
             <span class="entry-links">
               <a href="/writing/the-power-grid-is-the-battlefield">read project &#8599;</a>
             </span>

@@ -22,7 +22,7 @@
 :root{
   --bg:#0D1011;
   --text:#E6E7E8;
-  --dim:#828B8F;
+  --dim:#9BA4A7;
   --accent:#5ED3C4;            /* the only accent, rationed to commands + wins */
   --elev-1:#121617;
   --elev-2:#171C1E;
@@ -65,6 +65,8 @@ a{
   transition:color var(--dur) var(--ease), text-decoration-color var(--dur) var(--ease);
 }
 a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
+.log-main a, .log-kind a, .wr a, .proj-links a, .feat h3 a, .t-dir{ text-decoration:none; }
+.log-main a:hover, .log-kind a:hover, .wr a:hover, .proj-links a:hover, .feat h3 a:hover, .t-dir:hover{ text-decoration:underline; text-decoration-color:var(--accent); }
 :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
 
 .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--gutter); }
@@ -92,13 +94,17 @@ a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
   background:var(--bg);
   border-bottom:1px solid var(--hairline);
 }
-.site-head .wrap{ display:flex; align-items:center; gap:24px; height:54px; }
+.site-head .wrap{ display:flex; align-items:center; flex-wrap:wrap; gap:24px; row-gap:2px; height:auto; min-height:54px; padding-top:8px; padding-bottom:8px; }
 .brand{ font-weight:700; font-size:0.95rem; text-decoration:none; letter-spacing:-0.01em; }
 .brand .tilde{ color:var(--accent); }
 .brand:hover{ color:var(--text); }
 .site-nav{ margin-left:auto; display:flex; gap:clamp(12px,2.5vw,26px); }
 .site-nav a{ font-size:0.75rem; color:var(--dim); text-decoration:none; }
 .site-nav a:hover{ color:var(--accent); }
+@media (max-width:480px){
+  .site-nav{ width:100%; margin-left:0; justify-content:flex-start; gap:16px; }
+  .site-nav a{ padding:6px 0; }
+}
 
 /* ---------- hero terminal ---------- */
 .hero{ padding:clamp(26px,5vh,52px) 0 0; }
@@ -130,7 +136,7 @@ a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
 .term-dots{ display:inline-flex; gap:6px; }
 .term-dots i{ width:9px; height:9px; border-radius:50%; background:#232C2B; }
 .term-title{ color:var(--dim); font-size:0.72rem; letter-spacing:0.02em; }
-.term-shell{ margin-left:auto; color:#4A5457; font-size:0.68rem; }
+.term-shell{ margin-left:auto; color:var(--dim); font-size:0.68rem; }
 
 .term-body{
   position:relative;
@@ -144,7 +150,7 @@ a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
   .js .term-body{ max-height:620px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
 }
 
-.t-cmd{ margin:14px 0 0; color:var(--text); font-weight:500; }
+.t-cmd{ margin:22px 0 0; color:var(--text); font-weight:500; }
 .t-cmd:first-child{ margin-top:0; }
 .t-ps{ color:var(--accent); font-weight:700; margin-right:1ch; user-select:none; }
 .t-typed{ font-weight:500; }
@@ -157,12 +163,13 @@ a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
 
 .t-name{
   font-family:var(--mono);
-  font-size:clamp(1.3rem,2.6vw,1.62rem);
+  font-size:clamp(1.55rem,3.4vw,2.1rem);
   font-weight:700; letter-spacing:-0.015em; line-height:1.25;
-  margin:3px 0 2px; color:var(--text);
+  margin:4px 0 6px; color:var(--text);
 }
 .t-id{ color:var(--out); }
 .t-tag{ color:var(--dim); }
+.t-avail{ color:var(--text); font-weight:500; }
 
 .t-kv{ display:grid; grid-template-columns:6ch minmax(0,1fr); gap:2px 2ch; }
 .t-k{ color:var(--dim); }
@@ -199,7 +206,7 @@ a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
 .nojs-cursor{ margin-top:12px; }
 .t-block{ display:inline-block; width:9px; height:17px; background:var(--accent); vertical-align:-3px; }
 
-.t-hint{ margin:12px 0 0; font-size:0.75rem; color:#5E6A6D; }
+.t-hint{ margin:12px 0 0; font-size:0.75rem; color:var(--dim); }
 noscript .t-hint{ margin-top:12px; }
 
 /* ---------- sections ---------- */
@@ -209,7 +216,9 @@ noscript .t-hint{ margin-top:12px; }
   margin:0; font-size:0.92rem; font-weight:500; letter-spacing:0.02em;
 }
 .sec-head h2::before{ content:"// "; color:var(--dim); font-weight:400; }
-.sec-head .rule{ flex:1; height:1px; background:var(--hairline); }
+.sec-head .rule{ flex:1; height:1px; background:var(--hairline); order:3; }
+.sec-head h2{ order:1; }
+.sec-head .sec-note{ order:2; }
 .sec-note{ font-size:0.72rem; color:var(--dim); white-space:nowrap; }
 @media (max-width:560px){ .sec-note{ display:none; } }
 
@@ -225,7 +234,7 @@ noscript .t-hint{ margin-top:12px; }
 }
 .log li:hover{ background:var(--elev-1); }
 .log-date{ color:var(--dim); font-size:0.78rem; font-variant-numeric:tabular-nums; }
-.log-date.is-nd span[aria-hidden]{ color:var(--border-hi); letter-spacing:0.15em; }
+.log-date.is-nd span[aria-hidden]{ color:var(--dim); }
 .log-main a{ font-weight:500; }
 .log-desc{ color:var(--dim); }
 .log-kind{ color:var(--dim); font-size:0.74rem; text-align:right; white-space:nowrap; }
@@ -254,6 +263,9 @@ noscript .t-hint{ margin-top:12px; }
 .proj-meta{ font-size:0.78rem; color:#A9AFB1; margin:0; }
 .proj-meta .k{ color:var(--dim); }
 .proj-meta .sep{ color:var(--border-hi); margin:0 6px; }
+@media (max-width:560px){
+  .proj-links{ margin-left:0; flex-basis:100%; order:9; }
+}
 
 .chip{
   display:inline-block; font-size:0.68rem; font-weight:500; line-height:1;
@@ -261,13 +273,15 @@ noscript .t-hint{ margin-top:12px; }
   vertical-align:1px;
 }
 .chip.sig{ color:var(--accent); border-color:var(--accent-dim); background:var(--accent-tint); }
+.chip.live{ color:var(--accent); border-color:var(--accent-dim); }
+.chip.live::before{ content:""; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent); margin-right:6px; }
 
 /* ---------- ctf ---------- */
 .lede{
   font-family:var(--sans); font-size:0.97rem; line-height:1.65;
   color:var(--prose); max-width:70ch; margin:0 0 18px;
 }
-.spec{ width:100%; border-collapse:collapse; font-size:0.85rem; font-variant-numeric:tabular-nums; }
+.spec{ width:100%; max-width:640px; border-collapse:collapse; font-size:0.85rem; font-variant-numeric:tabular-nums; }
 .spec th{
   text-align:left; font-weight:500; font-size:0.66rem; letter-spacing:0.09em;
   text-transform:uppercase; color:var(--dim);
@@ -277,6 +291,8 @@ noscript .t-hint{ margin-top:12px; }
 .spec tbody tr{ transition:background var(--dur) var(--ease); }
 .spec tbody tr:hover{ background:var(--elev-1); }
 .num{ text-align:right; }
+.spec th.num{ text-align:right; }
+@media (min-width:641px){ .spec td.num{ white-space:nowrap; } }
 .win{ color:var(--accent); font-weight:700; }
 
 /* ---------- academics ---------- */
@@ -321,10 +337,9 @@ noscript .t-hint{ margin-top:12px; }
 .cta{
   display:inline-block; margin-top:18px;
   font-size:0.8rem; color:var(--text); text-decoration:none;
-  border:1px solid var(--border); border-radius:4px; padding:9px 14px;
-  transition:border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  border:0; padding:0;
 }
-.cta:hover{ border-color:var(--accent); color:var(--accent); }
+.cta:hover{ color:var(--accent); text-decoration:underline; text-decoration-color:var(--accent); }
 
 /* ---------- contact ---------- */
 .contact{ list-style:none; margin:0; padding:0; }
@@ -400,7 +415,7 @@ noscript .t-hint{ margin-top:12px; }
             <div class="t-out t-kv">
               <span class="t-k">now</span><span>finishing a BSc in Cybersecurity, building <a href="https://riposte.no">Riposte</a> and <a href="https://futtia.no">Futtia</a></span>
               <span class="t-k">next</span><span>MSc in Information Security at NTNU, Gj&oslash;vik, from autumn 2026</span>
-              <span class="t-k">open</span><span>graduating summer 2026, open to security roles (Oslo, Gj&oslash;vik, or remote)</span>
+              <span class="t-k">open</span><span class="t-avail">graduating summer 2026, open to security roles (Oslo, Gj&oslash;vik, or&nbsp;remote)</span>
             </div>
 
             <p class="t-cmd"><span class="t-ps">$</span>ls projects/</p>
@@ -453,7 +468,7 @@ noscript .t-hint{ margin-top:12px; }
         </li>
         <li>
           <span class="log-date">2026</span>
-          <span class="log-main"><a href="/thesis.pdf">Secure AI-Accelerated Development in Agile Workflows</a><span class="log-desc"> &middot; bachelor thesis</span></span>
+          <span class="log-main"><a href="/thesis.pdf">Secure AI-Accelerated Development in Agile Workflows</a><span class="log-desc"> &middot; bachelor&nbsp;thesis</span></span>
           <span class="log-kind">grade <span class="chip sig">A</span></span>
         </li>
         <li>
@@ -467,22 +482,22 @@ noscript .t-hint{ margin-top:12px; }
           <span class="log-kind">coursework &middot; 145/150</span>
         </li>
         <li>
-          <span class="log-date is-nd"><span aria-hidden="true">&middot;&middot;&middot;&middot;</span><span class="sr-only">undated</span></span>
+          <span class="log-date is-nd"><span aria-hidden="true">n.d.</span><span class="sr-only">undated</span></span>
           <span class="log-main"><a href="/writing/the-economics-of-a-zero-day">The Economics of a Zero-Day</a></span>
           <span class="log-kind">analysis</span>
         </li>
         <li>
-          <span class="log-date is-nd"><span aria-hidden="true">&middot;&middot;&middot;&middot;</span><span class="sr-only">undated</span></span>
+          <span class="log-date is-nd"><span aria-hidden="true">n.d.</span><span class="sr-only">undated</span></span>
           <span class="log-main"><a href="/writing/marking-the-machine">Marking the Machine</a></span>
           <span class="log-kind">analysis + experiment</span>
         </li>
         <li>
-          <span class="log-date is-nd"><span aria-hidden="true">&middot;&middot;&middot;&middot;</span><span class="sr-only">undated</span></span>
+          <span class="log-date is-nd"><span aria-hidden="true">n.d.</span><span class="sr-only">undated</span></span>
           <span class="log-main"><a href="/writing/too-dangerous-to-release">Too Dangerous to Release</a></span>
           <span class="log-kind">analysis</span>
         </li>
         <li>
-          <span class="log-date is-nd"><span aria-hidden="true">&middot;&middot;&middot;&middot;</span><span class="sr-only">undated</span></span>
+          <span class="log-date is-nd"><span aria-hidden="true">n.d.</span><span class="sr-only">undated</span></span>
           <span class="log-main"><a href="/writing/does-ai-write-insecure-code">Does AI Actually Write Insecure Code?</a></span>
           <span class="log-kind">research review</span>
         </li>
@@ -499,7 +514,7 @@ noscript .t-hint{ margin-top:12px; }
       </div>
       <div class="prose">
         <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik. I work at the intersection of offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
-        <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
+        <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>.</p>
       </div>
     </div>
   </section>
@@ -516,7 +531,7 @@ noscript .t-hint{ margin-top:12px; }
       <article class="proj" id="riposte">
         <div class="proj-head">
           <h3>Riposte</h3>
-          <span class="t-b live">[ in dev ]</span>
+          <span class="chip live">in dev</span>
           <span class="proj-links">
             <a href="https://riposte.no">riposte.no &#8599;</a>
             <a href="https://github.com/JoakimLarssen/Riposte">github &#8599;</a>
@@ -526,16 +541,16 @@ noscript .t-hint{ margin-top:12px; }
         <p class="proj-meta">
           <span class="k">role</span> builder / architect
           <span class="sep">&middot;</span>
-          <span class="k">with</span> <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>
+          <span class="k">with</span> <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>
           <span class="sep">&middot;</span>
-          <span class="k">stack</span> Python, LiteLLM, Sigma, MITRE ATT&amp;CK, Docker
+          <span class="k">stack</span> Python, LiteLLM, Sigma, MITRE&nbsp;ATT&amp;CK, Docker
         </p>
       </article>
 
       <article class="proj" id="futtia">
         <div class="proj-head">
           <h3>Futtia</h3>
-          <span class="t-b live">[ in dev ]</span>
+          <span class="chip live">in dev</span>
           <span class="proj-links">
             <a href="https://futtia.no">futtia.no &#8599;</a>
           </span>
@@ -551,13 +566,13 @@ noscript .t-hint{ margin-top:12px; }
       <article class="proj" id="thesis">
         <div class="proj-head">
           <h3>Bachelor thesis</h3>
-          <span class="t-b">[ 2026 ]</span>
+          <span class="chip">2026</span>
           <span class="chip sig">grade A</span>
           <span class="proj-links">
             <a href="/thesis.pdf">read thesis &#8599;</a>
           </span>
         </div>
-        <p class="proj-desc">Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams. How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup. A group thesis with <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik Hagen</a> and <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
+        <p class="proj-desc">Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams. How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup. A group thesis with <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik&nbsp;Hagen</a> and <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
       </article>
     </div>
   </section>
@@ -648,7 +663,6 @@ noscript .t-hint{ margin-top:12px; }
       <article class="feat">
         <div class="feat-top">
           <span class="flag">Featured</span>
-          <span class="t-b">[ 2025 ]</span>
         </div>
         <h3><a href="/writing/the-power-grid-is-the-battlefield">The Power Grid is the Battlefield</a></h3>
         <p class="proj-desc">How an adversary actually takes down a power grid: the threat landscape from Industroyer-class ICS malware to supply-chain compromise and social engineering against operators. A look at what defense-in-depth for critical infrastructure really requires once the attacker is already inside. Built from my cyberwarfare coursework.</p>
@@ -686,7 +700,7 @@ noscript .t-hint{ margin-top:12px; }
         <li><span class="k">github</span><a href="https://github.com/JoakimLarssen">github.com/JoakimLarssen</a></li>
         <li><span class="k">linkedin</span><a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223">in/joakim-nordheim-larssen</a></li>
       </ul>
-      <p class="contact-note">graduating summer 2026, open to security roles (Oslo, Gj&oslash;vik, or remote)</p>
+      <p class="contact-note">graduating summer 2026, open to security roles (Oslo, Gj&oslash;vik, or&nbsp;remote)</p>
     </div>
   </section>
 
