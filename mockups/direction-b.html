@@ -1,0 +1,1114 @@
+<!doctype html>
+<!-- MOCKUP direction B, branch redesign/craft-density, not deployed -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0B0C0E">
+<meta name="description" content="Joakim Nordheim Larssen, security researcher and developer in Oslo. I work on software security, compete in CTFs, and ship products (Riposte, Futtia).">
+<title>Joakim Nordheim Larssen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DIRECTION B, OPERATOR
+   Monochrome craft, one mono family, one amber, one signature:
+   the command palette (ctrl+K or /). Everything else is silent.
+   No scroll-triggered motion anywhere. Interaction only.
+   ============================================================ */
+
+:root {
+  /* ground: monochrome, near-black, three text levels */
+  --bg:        #0B0C0E;
+  --panel:     #101214;
+  --sel:       #16191C;   /* TUI selection row */
+  --text:      #E8EAEB;   /* level 1: names, results */
+  --body:      #B9BEC1;   /* level 2: running text */
+  --dim:       #878E93;   /* level 3: metadata */
+  --faint:     #5A6166;   /* labels, hints */
+  --hairline:  #1E2225;
+  --border:    #2B3134;
+  --border-hi: #3F474C;
+
+  /* one accent: disciplined amber, never neon */
+  --accent:      #DFA83E;
+  --accent-soft: rgba(223, 168, 62, 0.11);
+  --accent-line: rgba(223, 168, 62, 0.45);
+
+  --mono: "Spline Sans Mono", ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+  --maxw: 1160px;
+  --pad: clamp(20px, 4vw, 48px);
+  --ease: cubic-bezier(0.25, 0.6, 0.3, 1);
+  --fast: 120ms;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 78px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--body);
+  font: 400 0.875rem/1.7 var(--mono);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--accent); color: #0B0C0E; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+/* ---------- links: the underline that thickens ---------- */
+
+a { color: inherit; }
+
+.lnk,
+.prose a,
+.entry-desc a,
+.entry-meta a,
+.contact-list a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--border-hi);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--fast) var(--ease);
+}
+
+.lnk:hover, .lnk:focus-visible,
+.prose a:hover, .prose a:focus-visible,
+.entry-desc a:hover, .entry-desc a:focus-visible,
+.entry-meta a:hover, .entry-meta a:focus-visible,
+.contact-list a:hover, .contact-list a:focus-visible {
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px; top: -48px;
+  z-index: 200;
+  padding: 8px 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.8125rem;
+  text-decoration: none;
+}
+.skip-link:focus { top: 12px; }
+
+/* ---------- header ---------- */
+
+.site-head {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(11, 12, 14, 0.93);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.head-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 58px;
+}
+
+.brand {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+.brand .tilde { color: var(--accent); font-weight: 500; }
+.brand:hover .tilde, .brand:focus-visible .tilde { color: var(--text); }
+
+.site-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 2px;
+}
+
+/* the caret that appears before the hovered nav item */
+.site-nav a {
+  position: relative;
+  padding: 6px 9px 6px calc(9px + 1.1ch);
+  font-size: 0.8125rem;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color var(--fast) var(--ease);
+}
+.site-nav a::before {
+  content: "\203A";
+  position: absolute;
+  left: 9px;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity var(--fast) var(--ease);
+}
+.site-nav a:hover, .site-nav a:focus-visible { color: var(--text); }
+.site-nav a:hover::before, .site-nav a:focus-visible::before { opacity: 1; }
+
+/* the visible [ctrl k] affordance */
+.kbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  padding: 4px;
+  cursor: pointer;
+  font: inherit;
+}
+kbd {
+  font: 500 0.6875rem/1 var(--mono);
+  color: var(--dim);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 4px 6px 3px;
+  transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease);
+}
+.kbtn:hover kbd, .kbtn:focus-visible kbd {
+  color: var(--text);
+  border-color: var(--border-hi);
+}
+
+/* ---------- hero ---------- */
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 36px 64px;
+  align-items: start;
+  padding-top: clamp(44px, 7vh, 68px);
+}
+
+.kicker {
+  font-size: 0.8125rem;
+  color: var(--dim);
+  margin-bottom: 18px;
+}
+.kicker .prompt { color: var(--accent); }
+
+h1 {
+  font-size: clamp(1.75rem, 1.05rem + 2.7vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.identity {
+  margin-top: 14px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.tagline {
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: var(--dim);
+}
+
+.now-block {
+  border-left: 1px solid var(--hairline);
+  padding: 8px 0 8px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.now-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+}
+.now-row .dot {
+  flex: none;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--border-hi);
+  transform: translateY(-1px);
+}
+.now-row .dot-live { background: var(--accent); }
+.now-row .lbl {
+  flex: none;
+  width: 4.5ch;
+  color: var(--faint);
+}
+
+/* the only permitted ambient motion: one status-dot pulse, once */
+@keyframes pulse-once {
+  0%   { box-shadow: 0 0 0 0 rgba(223, 168, 62, 0.4); }
+  100% { box-shadow: 0 0 0 11px rgba(223, 168, 62, 0); }
+}
+.dot-live { animation: pulse-once 1.7s var(--ease) 0.5s 1; }
+
+/* the one-line quantified record: a statusline */
+.statusline {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin: 36px 0 44px;
+  padding: 11px 18px;
+  border: 1px solid var(--hairline);
+  background: var(--panel);
+  font-size: 0.8125rem;
+  color: var(--dim);
+}
+.statusline li { min-width: 0; }
+.statusline li + li::before {
+  content: "\2502";
+  color: var(--faint);
+  opacity: 0.55;
+  margin: 0 12px;
+}
+.statusline strong { color: var(--text); font-weight: 600; }
+.statusline .hl { color: var(--accent); font-weight: 600; }
+
+/* ---------- sections: left rail, dense right column ---------- */
+
+.sec { border-top: 1px solid var(--hairline); }
+
+.sec-grid {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 20px 56px;
+  padding-block: 52px 60px;
+}
+
+.sec-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+.sec-title::before { content: "~/"; color: var(--faint); font-weight: 400; }
+
+.lede {
+  color: var(--dim);
+  font-size: 0.875rem;
+  max-width: 70ch;
+}
+
+/* ---------- about ---------- */
+
+.about-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+}
+.prose p { max-width: 60ch; }
+
+/* ---------- entries (projects + featured writing) ---------- */
+
+.entry {
+  padding: 22px 16px;
+  margin-inline: -16px;
+  border-top: 1px solid var(--hairline);
+  transition: background-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+.entry:last-of-type { border-bottom: 1px solid var(--hairline); }
+.entry:hover {
+  background: var(--panel);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.entry-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.entry-head h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.entry-links {
+  margin-left: auto;
+  display: flex;
+  gap: 20px;
+  font-size: 0.8125rem;
+}
+.entry-links a {
+  color: var(--dim);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--fast) var(--ease), text-decoration-color var(--fast) var(--ease);
+}
+.entry-links a:hover, .entry-links a:focus-visible {
+  color: var(--text);
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+.entry-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 8px 56px;
+  margin-top: 10px;
+}
+.entry-desc { max-width: 68ch; }
+
+.entry-meta { font-size: 0.8125rem; }
+.entry-meta > div {
+  display: grid;
+  grid-template-columns: 6ch minmax(0, 1fr);
+  gap: 0 14px;
+  padding: 3px 0;
+}
+.entry-meta dt { color: var(--faint); }
+.entry-meta dd { color: var(--body); }
+
+/* badges: bracketed mono, quiet */
+.badge {
+  font-size: 0.71875rem;
+  color: var(--dim);
+  white-space: nowrap;
+}
+.badge::before { content: "[ "; color: var(--faint); }
+.badge::after  { content: " ]"; color: var(--faint); }
+.badge-live::before { content: "[ \25CF\00A0"; color: var(--accent); }
+
+.flag {
+  font-size: 0.71875rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.flag::before { content: "[ "; font-weight: 400; }
+.flag::after  { content: " ]"; font-weight: 400; }
+
+.grade-chip {
+  display: inline-block;
+  padding: 0 8px;
+  border: 1px solid var(--accent-line);
+  border-radius: 3px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ---------- tables: TUI rows ---------- */
+
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}
+.tbl th {
+  text-align: left;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--faint);
+  padding: 7px 16px 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+.tbl td {
+  padding: 8px 16px 8px 0;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--body);
+}
+.tbl tbody tr { transition: background-color var(--fast) var(--ease); }
+.tbl tbody tr:hover td { background: var(--sel); color: var(--text); }
+.tbl tbody tr:hover td:first-child { box-shadow: inset 2px 0 0 var(--accent); padding-left: 10px; }
+.tbl td:first-child, .tbl th:first-child { padding-left: 10px; }
+.tbl .win { color: var(--accent); font-weight: 700; }
+.tbl .g-a { color: var(--text); font-weight: 700; }
+.tbl .g-b { color: var(--dim); }
+.tbl .num { text-align: right; padding-right: 10px; }
+.tbl th.num { padding-right: 10px; }
+
+.ctf-lede { margin-bottom: 20px; }
+.ctf-tbl { max-width: 640px; }
+
+/* ---------- academics ---------- */
+
+.acad-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 36px 56px;
+}
+.acad-msc {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--hairline);
+}
+.acad-block h3, .acad-msc h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.acad-sub { font-size: 0.8125rem; color: var(--dim); }
+.acad-msc .acad-note-inline { font-size: 0.8125rem; color: var(--dim); flex-basis: 100%; }
+.acad-block .acad-sub { margin: 3px 0 14px; }
+
+.acad-notes {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.acad-note {
+  font-size: 0.8125rem;
+  color: var(--dim);
+  max-width: 78ch;
+}
+.acad-note::before { content: "# "; color: var(--faint); }
+
+/* ---------- writing ---------- */
+
+.wl {
+  list-style: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 56px;
+  margin-top: 26px;
+}
+.wl li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 0.8125rem;
+}
+.wl .t { color: var(--body); min-width: 0; }
+.wl .dots {
+  flex: 1;
+  min-width: 24px;
+  border-bottom: 1px dotted var(--border);
+  transform: translateY(-4px);
+}
+.wl .k { color: var(--faint); white-space: nowrap; }
+
+.cta {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 9px 18px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--text);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: border-color var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+.cta:hover, .cta:focus-visible { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- contact ---------- */
+
+.contact-list {
+  list-style: none;
+  max-width: 620px;
+}
+.contact-list li {
+  display: grid;
+  grid-template-columns: 10ch minmax(0, 1fr);
+  overflow-wrap: anywhere;
+  gap: 16px;
+  padding: 10px 10px;
+  margin-inline: -10px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 0.8125rem;
+  transition: background-color var(--fast) var(--ease);
+}
+.contact-list li:hover { background: var(--sel); }
+.contact-list .lbl { color: var(--faint); }
+.contact-note {
+  margin-top: 22px;
+  font-size: 0.8125rem;
+  color: var(--dim);
+}
+.contact-note::before { content: "# "; color: var(--faint); }
+
+/* ---------- footer ---------- */
+
+.site-foot { border-top: 1px solid var(--hairline); }
+.foot-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-block: 26px;
+  font-size: 0.75rem;
+  color: var(--faint);
+}
+
+/* ============================================================
+   THE SIGNATURE: command palette. Plain DOM, hidden until
+   invoked by ctrl+K, /, or the header button. Purely additive:
+   every destination is also a plain link above.
+   ============================================================ */
+
+#palette { position: fixed; inset: 0; z-index: 100; }
+#palette[hidden] { display: none; }
+
+.palette-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 6, 7, 0.62);
+}
+
+.palette-panel {
+  position: relative;
+  margin: 14vh auto 0;
+  width: min(600px, calc(100% - 40px));
+  background: var(--panel);
+  border: 1px solid var(--border-hi);
+  border-radius: 6px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.palette-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--hairline);
+}
+.palette-prompt { color: var(--accent); font-weight: 600; }
+#palette-input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  outline: none;
+  color: var(--text);
+  font: 400 0.9375rem/1.4 var(--mono);
+  caret-color: var(--accent);
+}
+#palette-input::placeholder { color: var(--faint); }
+
+#palette-list {
+  list-style: none;
+  padding: 6px;
+  max-height: 330px;
+  overflow-y: auto;
+}
+#palette-list a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 18px;
+  padding: 9px 13px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+#palette-list .cmd { color: var(--text); font-size: 0.875rem; }
+#palette-list .desc { color: var(--dim); font-size: 0.75rem; white-space: nowrap; }
+#palette-list li.is-selected a {
+  background: var(--accent-soft);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+#palette-list li.is-selected .cmd { color: var(--accent); }
+#palette-empty { padding: 14px 13px; color: var(--faint); font-size: 0.8125rem; }
+#palette-empty::before { content: "# "; }
+
+.palette-hints {
+  display: flex;
+  gap: 18px;
+  padding: 10px 18px;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.71875rem;
+  color: var(--faint);
+}
+
+body.palette-open { overflow: hidden; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .now-block { border-left: 0; border-top: 1px solid var(--hairline); padding: 24px 0 0; }
+  .sec-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; padding-block: 40px 46px; }
+  .about-cols { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .entry-body { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .acad-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .wl { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .head-row { flex-wrap: wrap; row-gap: 0; padding-block: 10px; }
+  .site-nav { order: 3; width: 100%; margin-left: -9px; flex-wrap: wrap; }
+  .kbtn { margin-left: auto; }
+  .statusline { flex-direction: column; align-items: stretch; gap: 9px; padding: 14px 16px; }
+  .statusline li + li::before { content: none; margin: 0; }
+  .tbl th, .tbl td { padding-right: 10px; font-size: 0.75rem; }
+  .entry { padding-inline: 12px; margin-inline: -12px; }
+  .entry-links { margin-left: 0; flex-basis: 100%; }
+  .palette-hints { gap: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="brand" href="#top"><span class="tilde">~/</span>jnl</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="#whoami">whoami</a>
+      <a href="#projects">projects</a>
+      <a href="#ctf">ctf</a>
+      <a href="#academics">academics</a>
+      <a href="#writing">writing</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <button class="kbtn" id="palette-trigger" type="button" aria-haspopup="dialog"
+            aria-label="Open command palette" title="Command palette: ctrl+K or /">
+      <kbd>ctrl</kbd><kbd>k</kbd>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========== first screen: the whole identity ========== -->
+  <section id="top" aria-label="Introduction">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <p class="kicker"><span class="prompt">$</span> whoami</p>
+          <h1>Joakim Nordheim Larssen</h1>
+          <p class="identity">Security researcher and developer, Oslo</p>
+          <p class="tagline">I work on software security, compete in CTFs, and ship products.</p>
+        </div>
+        <div class="now-block">
+          <p class="now-row">
+            <span class="dot dot-live" aria-hidden="true"></span>
+            <span class="lbl">now</span>
+            <span>finishing a BSc in Cybersecurity, building <a class="lnk" href="https://riposte.no">Riposte</a> and <a class="lnk" href="https://futtia.no">Futtia</a></span>
+          </p>
+          <p class="now-row">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="lbl">next</span>
+            <span>MSc in Information Security at NTNU, Gj&oslash;vik, from autumn 2026</span>
+          </p>
+          <p class="now-row">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="lbl">open</span>
+            <span>graduating summer 2026, open to security roles (Oslo, Gj&oslash;vik, or remote)</span>
+          </p>
+        </div>
+      </div>
+
+      <ul class="statusline" aria-label="Record">
+        <li><strong>3&nbsp;podium finishes</strong>&nbsp;in CTFs,&nbsp;<span class="hl">1st at Cybvest</span></li>
+        <li><strong>Riposte</strong>&nbsp;+&nbsp;<strong>Futtia</strong>: in dev</li>
+        <li>bachelor thesis:&nbsp;<strong>A</strong></li>
+        <li>MSc: NTNU Gj&oslash;vik, autumn 2026</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== about ========== -->
+  <section class="sec" id="whoami">
+    <div class="wrap sec-grid">
+      <h2 class="sec-title">about</h2>
+      <div class="about-cols prose">
+        <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik. I work at the intersection of offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
+        <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== projects ========== -->
+  <section class="sec" id="projects">
+    <div class="wrap sec-grid">
+      <h2 class="sec-title">projects</h2>
+      <div>
+
+        <article class="entry" id="riposte">
+          <header class="entry-head">
+            <h3>Riposte</h3>
+            <span class="badge badge-live">in dev</span>
+            <span class="entry-links">
+              <a href="https://riposte.no">riposte.no &#8599;</a>
+              <a href="https://github.com/JoakimLarssen/Riposte">github &#8599;</a>
+            </span>
+          </header>
+          <div class="entry-body">
+            <p class="entry-desc">An agentic security CLI in the spirit of Claude Code and Codex. Where those drive coding, Riposte drives offensive and defensive work: real recon, exploitation, and detection engineering. Every action is scope-gated and audited, so the agent can't go off-leash.</p>
+            <dl class="entry-meta">
+              <div><dt>role</dt><dd>builder / architect</dd></div>
+              <div><dt>with</dt><dd><a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a></dd></div>
+              <div><dt>stack</dt><dd>Python, LiteLLM, Sigma, MITRE ATT&amp;CK, Docker</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="entry" id="futtia">
+          <header class="entry-head">
+            <h3>Futtia</h3>
+            <span class="badge badge-live">in dev</span>
+            <span class="entry-links">
+              <a href="https://futtia.no">futtia.no &#8599;</a>
+            </span>
+          </header>
+          <div class="entry-body">
+            <p class="entry-desc">AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>
+            <dl class="entry-meta">
+              <div><dt>role</dt><dd>developer</dd></div>
+              <div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="entry" id="thesis">
+          <header class="entry-head">
+            <h3>Bachelor thesis</h3>
+            <span class="badge">2026</span>
+            <span class="entry-links">
+              <a href="/thesis.pdf">read thesis &#8599;</a>
+            </span>
+          </header>
+          <div class="entry-body">
+            <p class="entry-desc">Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams. How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup. A group thesis with <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik Hagen</a> and <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
+            <dl class="entry-meta">
+              <div><dt>grade</dt><dd><span class="grade-chip">A</span></dd></div>
+            </dl>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ctf ========== -->
+  <section class="sec" id="ctf">
+    <div class="wrap sec-grid">
+      <h2 class="sec-title">ctf</h2>
+      <div>
+        <p class="lede ctf-lede">Three podium finishes, including a win at Cybvest. I also co-hosted a Cybvest edition. Crypto, pwn, and web.</p>
+        <table class="tbl ctf-tbl">
+          <thead>
+            <tr><th scope="col">Event</th><th scope="col">Role</th><th scope="col">Result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Cybvest</td><td>team</td><td class="win">1st</td></tr>
+            <tr><td>Helt Sikker CTF</td><td>solo</td><td>3rd</td></tr>
+            <tr><td>Kongsberg &times; Helt Sikker</td><td>team</td><td>3rd</td></tr>
+            <tr><td>EPT 2025</td><td>team</td><td>16th overall, 4th student</td></tr>
+            <tr><td>EPT 2024</td><td>team</td><td>34th overall, 8th student</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== academics ========== -->
+  <section class="sec" id="academics">
+    <div class="wrap sec-grid">
+      <h2 class="sec-title">academics</h2>
+      <div>
+        <div class="acad-grid">
+
+          <div class="acad-msc">
+            <h3>MSc Information Security</h3>
+            <p class="acad-sub">NTNU, Gj&oslash;vik &middot; from autumn 2026</p>
+            <p class="acad-note-inline">Two-year master's in Information Security. Incoming, autumn 2026.</p>
+          </div>
+
+          <div class="acad-block">
+            <h3>BSc Cybersecurity</h3>
+            <p class="acad-sub">H&oslash;yskolen Kristiania, Bergen</p>
+            <table class="tbl">
+              <thead><tr><th scope="col">Course</th><th scope="col" class="num">Grade</th></tr></thead>
+              <tbody>
+                <tr><td>Bachelor thesis</td><td class="num g-a">A</td></tr>
+                <tr><td>Cyber Defense</td><td class="num g-a">A</td></tr>
+                <tr><td>Agile Project</td><td class="num g-a">A</td></tr>
+                <tr><td>Ethical Hacking</td><td class="num g-b">B</td></tr>
+                <tr><td>IoT / OT Security</td><td class="num g-b">B</td></tr>
+                <tr><td>Governance, Risk &amp; Compliance</td><td class="num g-b">B</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="acad-block">
+            <h3>Exchange</h3>
+            <p class="acad-sub">Southern Utah University, USA &middot; Spring 2025</p>
+            <table class="tbl">
+              <thead><tr><th scope="col">Course</th><th scope="col" class="num">Grade</th></tr></thead>
+              <tbody>
+                <tr><td>Cyber Warfare</td><td class="num g-a">A</td></tr>
+                <tr><td>Data Communications &amp; Networking</td><td class="num g-a">A</td></tr>
+                <tr><td>Algorithms &amp; Data Structures</td><td class="num g-a">A</td></tr>
+                <tr><td>Technology &amp; Ethics</td><td class="num g-a">A</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <div class="acad-notes">
+          <p class="acad-note">Cyber Warfare and Data Communications &amp; Networking were taught by Gary Wallace, a former U.S. Navy commander and head of IT for the U.S. Navy.</p>
+          <p class="acad-note">Full transcript and verified record available on request.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== writing ========== -->
+  <section class="sec" id="writing">
+    <div class="wrap sec-grid">
+      <h2 class="sec-title">writing</h2>
+      <div>
+        <p class="lede">I also write about security, AI risk, and critical infrastructure. Some research, some coursework, some from my own projects.</p>
+
+        <article class="entry" style="margin-top: 22px;">
+          <header class="entry-head">
+            <h3>The Power Grid is the Battlefield</h3>
+            <span class="flag">Featured</span>
+            <span class="badge">2025</span>
+            <span class="entry-links">
+              <a href="/writing/the-power-grid-is-the-battlefield">read project &#8599;</a>
+            </span>
+          </header>
+          <div class="entry-body">
+            <p class="entry-desc">How an adversary actually takes down a power grid: the threat landscape from Industroyer-class ICS malware to supply-chain compromise and social engineering against operators. A look at what defense-in-depth for critical infrastructure really requires once the attacker is already inside. Built from my cyberwarfare coursework.</p>
+            <dl class="entry-meta">
+              <div><dt>type</dt><dd><a href="#academics">cyberwarfare final project</a></dd></div>
+              <div><dt>year</dt><dd>2025</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <ul class="wl">
+          <li><span class="t">Secure AI-Accelerated Development in Agile Workflows</span><span class="dots" aria-hidden="true"></span><span class="k">bachelor thesis</span></li>
+          <li><span class="t">Building and Securing a Network from Scratch</span><span class="dots" aria-hidden="true"></span><span class="k">coursework</span></li>
+          <li><span class="t">Does AI Actually Write Insecure Code?</span><span class="dots" aria-hidden="true"></span><span class="k">research review</span></li>
+          <li><span class="t">The Economics of a Zero-Day</span><span class="dots" aria-hidden="true"></span><span class="k">analysis</span></li>
+          <li><span class="t">Marking the Machine</span><span class="dots" aria-hidden="true"></span><span class="k">analysis + experiment</span></li>
+          <li><span class="t">Too Dangerous to Release</span><span class="dots" aria-hidden="true"></span><span class="k">analysis</span></li>
+        </ul>
+
+        <a class="cta" href="/writing">read all writing &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== contact ========== -->
+  <section class="sec" id="contact">
+    <div class="wrap sec-grid">
+      <h2 class="sec-title">contact</h2>
+      <div>
+        <ul class="contact-list">
+          <li><span class="lbl">email</span><a href="mailto:joakimnordheimlarssen@gmail.com">joakimnordheimlarssen@gmail.com</a></li>
+          <li><span class="lbl">github</span><a href="https://github.com/JoakimLarssen">github.com/JoakimLarssen</a></li>
+          <li><span class="lbl">linkedin</span><a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223">in/joakim-nordheim-larssen</a></li>
+        </ul>
+        <p class="contact-note">or press <kbd>ctrl</kbd> <kbd>k</kbd> anywhere on this site</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-row">
+    <p>&copy; 2026 Joakim Nordheim Larssen</p>
+  </div>
+</footer>
+
+<!-- ========== command palette: plain DOM, hidden until invoked ========== -->
+<div id="palette" hidden>
+  <div class="palette-backdrop" data-close></div>
+  <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="palette-input-row">
+      <span class="palette-prompt" aria-hidden="true">&#10095;</span>
+      <input id="palette-input" type="text" placeholder="jump to&hellip;"
+             role="combobox" aria-expanded="true" aria-controls="palette-list"
+             aria-activedescendant="" autocomplete="off" autocapitalize="off"
+             spellcheck="false">
+      <kbd>esc</kbd>
+    </div>
+    <ul id="palette-list" role="listbox" aria-label="Destinations">
+      <li role="option" id="opt-whoami" aria-selected="false" data-cmd="whoami" data-desc="identity about">
+        <a href="#whoami" tabindex="-1"><span class="cmd">whoami</span><span class="desc">identity &middot; about</span></a>
+      </li>
+      <li role="option" id="opt-riposte" aria-selected="false" data-cmd="projects/riposte" data-desc="agentic security cli in dev">
+        <a href="#riposte" tabindex="-1"><span class="cmd">projects/riposte</span><span class="desc">agentic security CLI &middot; in dev</span></a>
+      </li>
+      <li role="option" id="opt-futtia" aria-selected="false" data-cmd="projects/futtia" data-desc="ai football analysis in dev">
+        <a href="#futtia" tabindex="-1"><span class="cmd">projects/futtia</span><span class="desc">AI football analysis &middot; in dev</span></a>
+      </li>
+      <li role="option" id="opt-ctf" aria-selected="false" data-cmd="ctf.log" data-desc="competitions record podium">
+        <a href="#ctf" tabindex="-1"><span class="cmd">ctf.log</span><span class="desc">3 podiums &middot; 1 win</span></a>
+      </li>
+      <li role="option" id="opt-writing" aria-selected="false" data-cmd="writing/" data-desc="essays research coursework">
+        <a href="#writing" tabindex="-1"><span class="cmd">writing/</span><span class="desc">essays &middot; research &middot; coursework</span></a>
+      </li>
+      <li role="option" id="opt-contact" aria-selected="false" data-cmd="contact" data-desc="email github linkedin">
+        <a href="#contact" tabindex="-1"><span class="cmd">contact</span><span class="desc">email &middot; github &middot; linkedin</span></a>
+      </li>
+      <li id="palette-empty" role="presentation" hidden>no matching command</li>
+    </ul>
+    <div class="palette-hints" aria-hidden="true">
+      <span>&uarr;&darr; select</span><span>&crarr; open</span><span>esc close</span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Command palette. Additive only: every target above is a plain link. */
+(function () {
+  "use strict";
+  var palette = document.getElementById("palette");
+  var input   = document.getElementById("palette-input");
+  var list    = document.getElementById("palette-list");
+  var trigger = document.getElementById("palette-trigger");
+  var empty   = document.getElementById("palette-empty");
+  var options = Array.prototype.slice.call(list.querySelectorAll('[role="option"]'));
+  var sel = 0;
+  var lastFocus = null;
+
+  function visible() {
+    return options.filter(function (o) { return !o.hidden; });
+  }
+
+  function render() {
+    var vis = visible();
+    options.forEach(function (o) {
+      o.classList.remove("is-selected");
+      o.setAttribute("aria-selected", "false");
+    });
+    if (!vis.length) {
+      empty.hidden = false;
+      input.setAttribute("aria-activedescendant", "");
+      return;
+    }
+    empty.hidden = true;
+    if (sel >= vis.length) sel = 0;
+    if (sel < 0) sel = vis.length - 1;
+    var cur = vis[sel];
+    cur.classList.add("is-selected");
+    cur.setAttribute("aria-selected", "true");
+    input.setAttribute("aria-activedescendant", cur.id);
+  }
+
+  function filter(q) {
+    q = q.trim().toLowerCase();
+    options.forEach(function (o) {
+      var hay = (o.getAttribute("data-cmd") + " " + o.getAttribute("data-desc")).toLowerCase();
+      o.hidden = q.length > 0 && hay.indexOf(q) === -1;
+    });
+    sel = 0;
+    render();
+  }
+
+  function openPalette() {
+    lastFocus = document.activeElement;
+    palette.hidden = false;
+    document.body.classList.add("palette-open");
+    input.value = "";
+    filter("");
+    input.focus();
+  }
+
+  function closePalette() {
+    palette.hidden = true;
+    document.body.classList.remove("palette-open");
+    if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+  }
+
+  function go() {
+    var vis = visible();
+    if (!vis.length) return;
+    var a = vis[sel].querySelector("a");
+    if (!a) return;
+    closePalette();
+    a.click();
+  }
+
+  document.addEventListener("keydown", function (e) {
+    var open = !palette.hidden;
+    if ((e.key === "k" || e.key === "K") && (e.ctrlKey || e.metaKey) && !e.altKey) {
+      e.preventDefault();
+      open ? closePalette() : openPalette();
+      return;
+    }
+    if (!open && e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      var t = document.activeElement;
+      var tag = t ? t.tagName : "";
+      if (tag !== "INPUT" && tag !== "TEXTAREA" && !(t && t.isContentEditable)) {
+        e.preventDefault();
+        openPalette();
+      }
+      return;
+    }
+    if (!open) return;
+    if (e.key === "Escape")        { e.preventDefault(); closePalette(); }
+    else if (e.key === "ArrowDown"){ e.preventDefault(); sel += 1; render(); }
+    else if (e.key === "ArrowUp")  { e.preventDefault(); sel -= 1; render(); }
+    else if (e.key === "Enter")    { e.preventDefault(); go(); }
+    else if (e.key === "Tab")      { e.preventDefault(); } /* focus stays in the prompt */
+  });
+
+  input.addEventListener("input", function () { filter(input.value); });
+
+  options.forEach(function (o) {
+    o.addEventListener("mousemove", function () {
+      var vis = visible();
+      var idx = vis.indexOf(o);
+      if (idx > -1 && idx !== sel) { sel = idx; render(); }
+    });
+    var a = o.querySelector("a");
+    if (a) a.addEventListener("click", function () { closePalette(); });
+  });
+
+  trigger.addEventListener("click", function () {
+    palette.hidden ? openPalette() : closePalette();
+  });
+
+  palette.querySelector("[data-close]").addEventListener("click", closePalette);
+})();
+</script>
+
+</body>
+</html>
