@@ -168,12 +168,33 @@ a { color: var(--acc); text-decoration: none; }
 /* ==========================================================================
    WRITING HUB  ::  featured cards + index of pieces
    ========================================================================== */
+/* The hub holds seven cards: three featured pieces, then four writeups.
+   A naive equal grid strands the seventh card alone. Instead the field is
+   sized so the counts always resolve to full rows: featured 3-up, writeups
+   2-up (3 + 2 + 2 = 7), so no card is ever left orphaned beside dead space. */
 .project-grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr;          /* narrow: a single column   */
   gap: 18px;
   margin-top: clamp(24px, 3vw, 36px);
+}
+.project-grid > .card { grid-column: auto; }
+
+/* mid: the three featured become full-width banners; the four writeups
+   pair up two-across, so the last row is always full */
+@media (min-width: 600px) {
+  .project-grid { grid-template-columns: repeat(2, 1fr); }
+  .project-grid > .card { grid-column: span 1; }
+  .project-grid > .card.is-featured { grid-column: span 2; }
+}
+
+/* wide: a six-column field. Featured span two each (a clean row of three);
+   writeups span three each (two rows of two). 3 + 2 + 2 ends evenly. */
+@media (min-width: 900px) {
+  .project-grid { grid-template-columns: repeat(6, 1fr); }
+  .project-grid > .card { grid-column: span 3; }
+  .project-grid > .card.is-featured { grid-column: span 2; }
 }
 .card {
   background: var(--panel);
@@ -230,13 +251,18 @@ a { color: var(--acc); text-decoration: none; }
 
 .card-meta {
   display: grid; gap: 8px;
-  margin-bottom: 18px;
+  align-content: start;
+  margin-top: auto;               /* bottom-anchor the meta + rule + links */
+  margin-bottom: 16px;
   border-top: 1px solid var(--hair);
   padding-top: 14px;
 }
+/* Featured cards vary by one row (only two of the three carry a grade).
+   Reserving the grade row's height keeps all three dividers on one line. */
+.card.is-featured .card-meta { min-height: 5.75rem; }
 .card-meta > div {
   display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr);
+  grid-template-columns: 3.75rem minmax(0, 1fr);
   gap: 12px; align-items: baseline;
 }
 .card-meta dt {
@@ -250,6 +276,19 @@ a { color: var(--acc); text-decoration: none; }
   color: var(--fg);
   overflow-wrap: anywhere;
 }
+/* TYPE value (always the first meta row) reads the same on every card:
+   some are plain text, some link to /#academics. Render the links as plain
+   metadata too, so the column is consistent; a quiet hover keeps them live. */
+.card-meta > div:first-child dd a {
+  color: var(--fg);
+  text-decoration: none;
+}
+.card-meta > div:first-child dd a:hover {
+  color: var(--acc);
+  text-decoration: underline;
+  text-decoration-color: var(--acc-soft);
+  text-underline-offset: .2em;
+}
 
 /* grade chips: neutral by default, one green signal (the flagship thesis A) */
 .grade-badge {
@@ -262,7 +301,7 @@ a { color: var(--acc); text-decoration: none; }
 }
 .grade-badge.is-signal { color: var(--acc); border-color: rgba(87, 201, 123, .5); }
 
-.card-links { margin-top: auto; padding-top: 4px; }
+.card-links { margin-top: 0; padding-top: 0; }
 .card-links a {
   display: inline-flex; align-items: baseline; gap: 6px;
   font: 500 .82rem/1 var(--mono);
@@ -446,6 +485,15 @@ a { color: var(--acc); text-decoration: none; }
   padding-block: 26px;
 }
 .colophon {
+  font: 400 .72rem/1.5 var(--mono);
+  color: var(--dim);
+  letter-spacing: .04em;
+}
+/* Canonical right-side tagline. The shared writing markup ships only the
+   left colophon, so the matching string is supplied here (space-between
+   pushes it to the right edge), identical to the home footer. */
+.footer-inner::after {
+  content: "no JavaScript \00B7\0020no analytics";
   font: 400 .72rem/1.5 var(--mono);
   color: var(--dim);
   letter-spacing: .04em;

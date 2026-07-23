@@ -23,10 +23,10 @@
 <style>
 /* ============================================================
    404, in the dossier voice.
-   Reuses the home design system verbatim: same tokens, same
-   masthead and footer, same framed terminal exhibit. A quiet
-   oversized 404 as the typographic mark; one accent, spent on
-   the prompt glyph. Zero JavaScript.
+   Reuses the home design system: same tokens, same masthead and
+   footer, same framed terminal exhibit. One quiet oversized 404
+   as the typographic mark, centred so the composition resolves.
+   One accent, spent on the prompt glyph. Zero JavaScript.
    ============================================================ */
 
 :root{
@@ -38,19 +38,13 @@
   --hair:    #1E211F;
   --line:    #2C302D;
   --acc:     #57C97B;
-  --refuse:  #D07C6E;
   --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
   --sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
 
-  --t-name:    clamp(2rem, 1.15rem + 2.9vw, 3.7rem);
-  --t-sect:    clamp(1.2rem, 1.05rem + .55vw, 1.45rem);
-  --t-body:    1rem;
   --t-small:   .8125rem;
   --t-label:   .6875rem;
 
   --maxw: 1280px;
-  --marg: 13rem;
-  --mgap: clamp(2.5rem, 4vw, 4rem);
   --gut: clamp(20px, 4.5vw, 56px);
   --ease: cubic-bezier(.22,.61,.36,1);
 }
@@ -121,41 +115,31 @@ a:hover{ text-decoration-color:var(--fg-hi) }
 .site-nav a:hover{ color:var(--fg-hi); text-decoration:underline;
   text-decoration-thickness:1px; text-underline-offset:.24em }
 
-/* ---------- the 404 section ---------- */
+/* ---------- the 404 section: one centred, resolved block ---------- */
 
 main{ flex:1 1 auto; display:flex; align-items:center }
-main section{ width:100%; padding:56px 0 64px }
+main section{ width:100%; padding: clamp(48px, 9vh, 104px) 0 }
 
-.sgrid{ display:block }
-.marg{
-  display:flex; justify-content:space-between; align-items:baseline;
-  border-bottom:1px solid var(--hair);
-  padding-bottom:10px; margin-bottom:20px;
-}
-.m-idx{
-  font-size:var(--t-label); letter-spacing:.16em; color:var(--dim);
-  order:2;
-}
-.m-path{ font-size:.75rem; color:var(--dim); letter-spacing:.02em }
-.m-note{ display:none }
+.nf{ max-width:34rem; margin:0 auto; text-align:center }
 
-.kicker{
-  font-size:var(--t-label); font-weight:500;
-  letter-spacing:.3em; text-transform:uppercase;
-  color:var(--dim);
-  margin-bottom:16px;
-}
-
-/* the big quiet mark: the ghost numeral, given hero scale */
+/* the big quiet mark: an outlined ghost numeral, drawn clean so
+   the 0 is a plain ring with no stray centre dot */
 .nf-num{
-  font:600 clamp(5.5rem, 3.4rem + 14vw, 14rem)/.92 var(--mono);
+  display:block;
+  width:clamp(230px, 42vw, 468px);
+  height:auto;
+  margin:0 auto;
   color:var(--ghost);
-  letter-spacing:-.02em;
-  margin:2px 0 8px -.02em;
+}
+
+.nf-line{
+  margin-top: clamp(22px, 3.2vh, 34px);
+  font:400 1.0625rem/1.65 var(--sans);
+  color:var(--fg);
 }
 
 /* framed terminal exhibit, same family as the home exhibits */
-.fig{ margin:26px 0 0; max-width:30rem }
+.fig{ margin: clamp(26px, 3.8vh, 42px) auto 0; max-width:30rem; text-align:left }
 .frame{ border:1px solid var(--line); background:#0D0F0E }
 .fbar{
   display:flex; justify-content:space-between; gap:1rem;
@@ -164,8 +148,7 @@ main section{ width:100%; padding:56px 0 64px }
   font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase;
   color:var(--dim);
 }
-.fbar span:first-child{ white-space:nowrap }
-.fbar-r{ white-space:nowrap }
+.fbar span{ white-space:nowrap }
 .term{
   padding:15px 16px 17px;
   font:400 13px/1.62 var(--mono);
@@ -179,20 +162,17 @@ main section{ width:100%; padding:56px 0 64px }
   padding-left:1.7ch; text-indent:-1.7ch;
 }
 .t-in .glyph{ color:var(--acc); font-weight:700; margin-right:.7ch }
-.t-notice{
+.t-err{
   color:var(--dim);
   border-left:1px solid var(--line);
   padding-left:1.1ch;
 }
 
-.nf-line{
-  margin-top:28px;
-  font:400 1.0625rem/1.65 var(--sans);
-  color:var(--fg);
-  max-width:44ch;
+.nf-links{
+  margin-top: clamp(24px, 3.4vh, 38px);
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap:1.2rem 2.5ch;
 }
-
-.nf-links{ margin-top:22px; display:flex; flex-wrap:wrap; gap:2.5ch }
 .nf-links a{ font-size:var(--t-small); font-weight:500 }
 
 /* ---------- footer (matches home) ---------- */
@@ -207,55 +187,20 @@ main section{ width:100%; padding:56px 0 64px }
 .site-foot .src{ letter-spacing:.08em }
 
 /* ============================================================
-   DESKTOP >= 1020px: the marginalia column, same as the home.
-   ============================================================ */
-
-@media (min-width:1020px){
-  main section{ padding:80px 0 88px }
-
-  .sgrid{
-    display:grid;
-    grid-template-columns:var(--marg) minmax(0,1fr);
-    column-gap:var(--mgap);
-    align-items:start;
-  }
-  .marg{
-    display:block;
-    border-bottom:0; padding-bottom:0; margin-bottom:0;
-  }
-  .m-idx{
-    font-size:2.6rem; font-weight:600; line-height:1;
-    letter-spacing:.01em; color:var(--ghost);
-    order:0;
-  }
-  .m-path{ margin-top:12px }
-  .m-note{
-    display:block;
-    margin-top:28px;
-    font:400 var(--t-small)/1.6 var(--sans);
-    color:var(--dim);
-    max-width:11.5rem;
-  }
-  .m-note .sx{
-    display:block;
-    font:500 var(--t-label)/1 var(--mono);
-    letter-spacing:.16em; text-transform:uppercase;
-    margin-bottom:7px;
-  }
-}
-
-/* ============================================================
    MOBILE <= 740px
    ============================================================ */
 
 @media (max-width:740px){
   body{ font-size:14px }
-  .site-nav{ gap:1.1rem }
+  .site-head .wrap{
+    height:auto; flex-direction:column; align-items:flex-start;
+    gap:9px; padding-top:12px; padding-bottom:12px;
+  }
+  .site-nav{ flex-wrap:wrap; gap:.5rem 1.1rem }
   .site-nav a{ font-size:.75rem }
 
-  main section{ padding:40px 0 44px }
-  .marg{ margin-bottom:16px }
-  .fig{ margin-top:20px }
+  main section{ padding: clamp(40px, 6vh, 64px) 0 }
+  .nf-line{ font-size:1rem }
   .term{ padding:13px 13px 15px }
 }
 
@@ -276,8 +221,10 @@ main section{ width:100%; padding:56px 0 64px }
   <div class="wrap">
     <a class="brand" href="/"><span class="tilde">~/</span>jnl</a>
     <nav class="site-nav" aria-label="Site">
+      <a href="/#whoami">whoami</a>
       <a href="/#projects">projects</a>
       <a href="/#ctf">ctf.log</a>
+      <a href="/#academics">academics</a>
       <a href="/writing">writing</a>
       <a href="/cv">cv</a>
       <a href="/#contact">contact</a>
@@ -287,27 +234,28 @@ main section{ width:100%; padding:56px 0 64px }
 
 <main id="main">
   <section aria-labelledby="h-404">
-    <div class="wrap sgrid">
-      <div class="marg">
-        <p class="m-idx" aria-hidden="true">~/</p>
-        <p class="m-path" aria-hidden="true">404 · not found</p>
-        <p class="m-note"><span class="sx" aria-hidden="true">note</span>The requested path is not part of this dossier. The links below return to the record.</p>
-      </div>
-      <div>
-        <p class="kicker">HTTP 404</p>
-        <h1 class="nf-num" id="h-404" aria-label="404, page not found">404</h1>
+    <div class="wrap">
+      <div class="nf">
+        <h1 id="h-404" class="sr">404, page not found</h1>
+
+        <svg class="nf-num" viewBox="0 0 300 148" fill="none" stroke="currentColor"
+             stroke-width="15" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M70 16 V132 M70 16 L14 90 H86"/>
+          <ellipse cx="150" cy="74" rx="34" ry="58"/>
+          <path d="M270 16 V132 M270 16 L214 90 H286"/>
+        </svg>
+
+        <p class="nf-line">That path is not part of the dossier.</p>
 
         <figure class="fig">
           <div class="frame">
-            <p class="fbar" aria-hidden="true"><span>error</span><span class="fbar-r">not found</span></p>
-            <div class="term" role="group" aria-label="Terminal reading the requested path">
-              <p class="t-in"><span class="glyph" aria-hidden="true">$</span>cat $REQUEST_URI</p>
-              <p class="t-notice">cat: no such file or directory</p>
+            <p class="fbar" aria-hidden="true"><span>shell</span><span>nordheimlarssen.no</span></p>
+            <div class="term" role="group" aria-label="A shell reading the requested path">
+              <p class="t-in"><span class="glyph" aria-hidden="true">$</span>cat ~/jnl/resume</p>
+              <p class="t-err">cat: ~/jnl/resume: No such file or directory</p>
             </div>
           </div>
         </figure>
-
-        <p class="nf-line">This page is not in the record.</p>
 
         <nav class="nf-links" aria-label="Back to the site">
           <a href="/">home</a>

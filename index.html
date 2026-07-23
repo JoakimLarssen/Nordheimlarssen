@@ -754,11 +754,9 @@ main > section + section{ border-top:1px solid var(--hair) }
     column-gap:clamp(3rem, 5vw, 5rem);
     align-items:start;
   }
-  /* the proof line bottom-aligns with the status register,
-     closing the dead zone under the tagline */
-  .cover-left{ align-self:stretch; display:flex; flex-direction:column }
-  .cover-left .tagline{ margin-bottom:28px }
-  .proof{ margin-top:auto; padding-top:16px }
+  /* ON RECORD sits directly below the tagline at normal spacing;
+     the left column is not stretched to the status register height,
+     so there is no dead band under the tagline */
   .status{
     margin-top:0;
     border:1px solid var(--line);
@@ -957,7 +955,7 @@ main > section + section{ border-top:1px solid var(--hair) }
 
 <header class="site-head">
   <div class="wrap">
-    <a class="brand" href="#top"><span class="tilde">~/</span>jnl</a>
+    <a class="brand" href="/"><span class="tilde">~/</span>jnl</a>
     <nav class="site-nav" aria-label="Site">
       <a href="/#whoami">whoami</a>
       <a href="/#projects">projects</a>
@@ -1004,7 +1002,6 @@ main > section + section{ border-top:1px solid var(--hair) }
 
       <p class="cov-meta" aria-hidden="true">
         <span>Oslo, Norway · 59.91° N, 10.75° E</span>
-        <span>contents: six sections</span>
       </p>
     </div>
   </section>
@@ -1018,16 +1015,9 @@ main > section + section{ border-top:1px solid var(--hair) }
       </div>
       <div>
         <h2 class="s-title" id="h-whoami">whoami</h2>
-        <div class="prose-grid">
-          <div class="prose">
-            <p>I am a cybersecurity student in my final year of a BSc at Høyskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gjøvik. I work across offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
-            <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
-          </div>
-          <aside class="snotes" aria-label="Margin notes">
-            <p class="snote"><span class="sx">cross-ref · 02</span>The thesis behind this focus was graded A. Full record under <a href="#projects">projects</a>.</p>
-            <p class="snote"><span class="sx">cross-ref · 03</span>Three CTF podium finishes, one win. Logged in <a href="#ctf">ctf.log</a>.</p>
-            <p class="snote"><span class="sx">cross-ref · 05</span>Seven pieces on security, AI risk, and critical infrastructure. Indexed in <a href="#writing">writing</a>.</p>
-          </aside>
+        <div class="prose">
+          <p>I am a cybersecurity student in my final year of a BSc at Høyskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gjøvik. I work across offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
+          <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
         </div>
       </div>
     </div>
@@ -1107,7 +1097,6 @@ main > section + section{ border-top:1px solid var(--hair) }
       <div class="marg">
         <p class="m-idx" aria-hidden="true">02</p>
         <p class="m-path" aria-hidden="true">~/jnl/projects</p>
-        <p class="m-note"><span class="sx" aria-hidden="true">exhibits</span>Exhibit A is a real Riposte session on a lab target: findings carry a validation status, and an out-of-scope target is refused by the scope gate. Exhibit B diagrams the Futtia pipeline, footage to answer.</p>
       </div>
       <div>
         <h2 class="s-title" id="h-projects">projects</h2>
