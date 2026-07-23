@@ -1,9 +1,10 @@
 <!doctype html>
-<!-- MOCKUP direction B, round 3: EVIDENCE CONSOLE. branch redesign/craft-density, not deployed.
-     Round-3 changes: real ledger grid (340px rail / 64px gutter / fluid), every section
-     resolves to the container right edge; two evidence frames (Riposte TUI, Futtia home);
-     three-line name lockup; repaired fourth strip cell; deliberate mobile nav; keyboard
-     chrome hidden on touch. No scroll-triggered motion anywhere. -->
+<!-- MOCKUP direction B, round 4: EVIDENCE CONSOLE. branch redesign/craft-density, not deployed.
+     Round-4 changes: real evidence (Riposte scoped interactive session incl. the scope-gate
+     denial; Futtia labelled match-moment view, ILLUSTRATION tag kept visible); AT A GLANCE
+     rail removed (restatement bloat) and About recomposed as lead line + offset prose;
+     mobile nav is now a 3x2 ledger menu at <=700px, all six destinations tappable at 390;
+     evidence frames go full-bleed on small screens. No scroll-triggered motion anywhere. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -105,7 +106,6 @@ body {
 .now-row .lbl,
 .strip-label,
 .sec-count,
-.rail-head,
 .evidence-bar .path,
 .windex .kind {
   font-size: var(--fs-label);
@@ -386,31 +386,36 @@ h2 {
   line-height: 1.75;
 }
 
-/* ---------- 01 about: prose + right rail on the ledger grid ---------- */
+/* ---------- 01 about: lead line, then prose offset to the fluid column ---------- */
 
-.about-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--rail);
-  gap: 28px var(--gutter);
-  align-items: start;
+.about-lead {
+  font-size: clamp(1.25rem, 1rem + 1.2vw, 1.5625rem);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  max-width: 46ch;
+}
+.about-lead::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin-top: 22px;
+  background: var(--accent-line);
 }
 
-.prose { max-width: 72ch; }
+.about-body {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  gap: 0 var(--gutter);
+}
+.about-body .prose { grid-column: 2; }
+
+.prose { max-width: 68ch; }
 .prose p { line-height: 1.75; }
 .prose p + p { margin-top: 14px; }
-
-.about-rail {
-  border: 1px solid var(--border);
-  background: var(--panel);
-  padding: 18px 22px 20px;
-}
-.rail-head {
-  display: block;
-  padding-bottom: 10px;
-  margin-bottom: 12px;
-  border-bottom: 1px solid var(--hairline);
-}
-.about-rail .meta > div { padding: 4px 0; }
 
 /* ---------- the one status treatment ---------- */
 
@@ -541,10 +546,11 @@ h3 {
   width: 100%;
   height: auto;
 }
-/* the Futtia frame crops to the sidebar + greeting region:
-   visible window is the top-left 1150x490 of the 1440x900 shot */
-.evidence-crop { aspect-ratio: 1150 / 490; overflow: hidden; }
-.evidence-crop img { width: 125.22%; max-width: none; }
+/* the Riposte frame clips the empty tail of the terminal shot:
+   full width, top 1113x556 of the 1113x764 capture. The whole
+   transcript through /exit and bye stays; only blank rows and the
+   idle composer bar fall outside the window. */
+.evidence-clip { aspect-ratio: 1113 / 556; overflow: hidden; }
 .evidence-cap {
   padding: 9px 12px 10px;
   border-top: 1px solid var(--hairline);
@@ -826,7 +832,8 @@ body.palette-open { overflow: hidden; }
   .sec { padding-block: 46px 54px; }
   #whoami { padding-top: 52px; }
 
-  .about-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .about-body { grid-template-columns: minmax(0, 1fr); }
+  .about-body .prose { grid-column: 1; }
 
   .entry-media { grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 28px 0; }
   .entry-media .evidence,
@@ -847,10 +854,12 @@ body.palette-open { overflow: hidden; }
   .kbtn, .contact-note { display: none; }
 }
 
-/* narrow header: brand row on top, one scrollable nav row beneath.
-   Kicks in at 700px, before the one-row header runs out of room. */
+/* narrow header: brand row on top, then a 3x2 ledger menu. Every
+   destination is visible and tappable (44px+ cells), nothing scrolls,
+   nothing hides. The header goes static so the menu scrolls away. */
 @media (max-width: 700px) {
-  html { scroll-padding-top: 108px; }
+  html { scroll-padding-top: 12px; }
+  .site-head { position: static; backdrop-filter: none; background: var(--bg); }
   .head-row { flex-wrap: wrap; gap: 0 24px; min-height: 0; }
   .brand { padding-block: 14px; }
   .kbtn { margin-left: auto; }
@@ -858,14 +867,22 @@ body.palette-open { overflow: hidden; }
     order: 3;
     width: calc(100% + var(--pad) * 2);
     margin-inline: calc(var(--pad) * -1);
-    padding-inline: calc(var(--pad) - 10px);
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
     border-top: 1px solid var(--hairline);
   }
-  .site-nav::-webkit-scrollbar { display: none; }
-  .site-nav a { padding: 13px 10px 13px calc(10px + 1.1ch); white-space: nowrap; }
+  .site-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 4px 10px 4px 14px;
+    border-left: 1px solid var(--hairline);
+    white-space: nowrap;
+  }
+  .site-nav a::before { display: none; }
+  .site-nav a:nth-child(3n + 1) { border-left: 0; padding-left: var(--pad); }
+  .site-nav a:nth-child(n + 4) { border-top: 1px solid var(--hairline); }
 }
 
 @media (max-width: 560px) {
@@ -896,6 +913,15 @@ body.palette-open { overflow: hidden; }
   .entry { padding: 22px 12px; margin-inline: -12px; }
   .entry-links { margin-left: 0; flex-basis: 100%; }
   .featured { padding: 20px 16px 22px; margin-inline: 0; }
+
+  /* evidence goes full-bleed so the screenshots keep real size */
+  .entry-media .evidence {
+    width: calc(100% + var(--pad) * 2);
+    margin-inline: calc(var(--pad) * -1);
+    border-left: 0;
+    border-right: 0;
+  }
+  .evidence-bar, .evidence-cap { padding-inline: var(--pad); }
 
   .tbl th, .tbl td { padding-right: 12px; font-size: var(--fs-small); }
   .ctf-tbl th:nth-child(3), .ctf-tbl td:nth-child(3) { width: 1%; white-space: nowrap; }
@@ -998,21 +1024,12 @@ body.palette-open { overflow: hidden; }
         <span class="sec-index" aria-hidden="true">01</span>
         <h2>About</h2>
       </header>
-      <div class="about-grid">
+      <p class="about-lead">I work at the intersection of offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
+      <div class="about-body">
         <div class="prose">
-          <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik. I work at the intersection of offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
+          <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik.</p>
           <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>.</p>
         </div>
-        <aside class="about-rail" aria-label="At a glance">
-          <span class="rail-head">at a glance</span>
-          <dl class="meta">
-            <div><dt>base</dt><dd>Oslo</dd></div>
-            <div><dt>bsc</dt><dd>Cybersecurity, H&oslash;yskolen Kristiania (Bergen), final year</dd></div>
-            <div><dt>msc</dt><dd>Information Security, NTNU Gj&oslash;vik, autumn 2026</dd></div>
-            <div><dt>ctf</dt><dd>crypto, pwn, web</dd></div>
-            <div><dt>also</dt><dd>volunteer developer, Kvarteret studenthus</dd></div>
-          </dl>
-        </aside>
       </div>
     </div>
   </section>
@@ -1046,12 +1063,14 @@ body.palette-open { overflow: hidden; }
           </div>
           <figure class="evidence">
             <div class="evidence-bar" aria-hidden="true">
-              <span class="path">evidence / riposte-tui</span>
+              <span class="path">evidence / riposte-session</span>
               <span class="path">001</span>
             </div>
-            <img src="assets/riposte-findings.png" width="840" height="551"
-                 alt="Riposte terminal UI: a findings and detections table from a lab run, five findings against one target, four marked validated">
-            <figcaption class="evidence-cap">Riposte TUI, findings panel from a lab run.</figcaption>
+            <div class="evidence-clip">
+              <img src="assets/riposte-session.png" width="1113" height="764"
+                   alt="Riposte interactive session on a lab target: a natural-language prompt asks for a scoped assessment of 172.22.0.3, findings print with validation status (one unvalidated, four validated), then a scan of 172.22.0.99 is denied by the scope gate as out of scope, and the session exits cleanly">
+            </div>
+            <figcaption class="evidence-cap">Riposte, a scoped interactive session: four of five findings validated, an out-of-scope target refused.</figcaption>
           </figure>
         </article>
 
@@ -1072,14 +1091,12 @@ body.palette-open { overflow: hidden; }
           </div>
           <figure class="evidence">
             <div class="evidence-bar" aria-hidden="true">
-              <span class="path">evidence / futtia-home</span>
+              <span class="path">evidence / futtia-pitch</span>
               <span class="path">002</span>
             </div>
-            <div class="evidence-crop">
-              <img src="assets/futtia-home.png" width="1440" height="900"
-                   alt="Futtia analysis room home screen: workspace sidebar with match day, squad and sources, and the morning greeting">
-            </div>
-            <figcaption class="evidence-cap">Futtia analysis room, product in development.</figcaption>
+            <img src="assets/futtia-pitch.png" width="966" height="541"
+                 alt="Futtia match-moment view: an annotated pitch with a labelled event (LB, 18.2 yards, 35.7 metres), a dashed pass trajectory into the box, and a verified clip window from 03:41 to 03:51, marked as an illustration in the corner">
+            <figcaption class="evidence-cap">Futtia, a labelled match-moment view (futtia.no).</figcaption>
           </figure>
         </article>
 

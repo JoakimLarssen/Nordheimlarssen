@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- MOCKUP: direction C "SESSION", round 3 rework, branch redesign/craft-density, not deployed -->
+<!-- MOCKUP: direction C "SESSION", round 4 evidence and polish, branch redesign/craft-density, not deployed -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -14,13 +14,15 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   PHOSPHOR FIELD / direction C "SESSION", round 3
+   PHOSPHOR FIELD / direction C "SESSION", round 4
    The machine metaphor, committed and consistent:
    - hero = terminal + log ledger side by side at desktop
    - the terminal keeps its own grammar: minimal frame, one
      title, shell comments live only inside the frame
-   - section headers are plain lowercase, no comment cosplay
-   - evidence: two real product screenshots in framed panes
+   - section headers: one identical treatment everywhere,
+     lowercase h2 + trailing hairline, at every breakpoint
+   - evidence: two real product artifacts in framed neutral
+     panes (a scoped Riposte session; a Futtia match view)
    - one status vocabulary: [ in dev ] brackets; wins are
      accent-bold; everything else is a key-value row
    No scroll animation. One status-dot pulse, reduced-motion safe.
@@ -248,10 +250,11 @@ noscript .t-hint{ margin-top:12px; }
 .logpane-head h2{ margin:0; font-size:0.82rem; font-weight:500; letter-spacing:0.04em; }
 .logpane-head .sec-note{ margin-left:auto; }
 
-.log{ list-style:none; margin:0; padding:0; flex:1; }
+.log{ list-style:none; margin:0; padding:0; flex:1; display:flex; flex-direction:column; }
 .log li{
+  flex:1 0 auto;
   display:grid; grid-template-columns:5ch minmax(0,1fr) auto;
-  gap:2px 14px; align-items:baseline;
+  gap:2px 14px; align-items:baseline; align-content:center;
   padding:9px 2px;
   border-bottom:1px solid var(--hairline);
   font-size:0.82rem;
@@ -271,10 +274,10 @@ noscript .t-hint{ margin-top:12px; }
   display:flex; justify-content:space-between; gap:12px;
 }
 @media (max-width:560px){
-  .log li{ grid-template-columns:5ch minmax(0,1fr); }
-  .log-ptr{ display:none; }
-  /* the pointer column is hidden here, so its explainer goes too */
-  .logpane-foot span + span{ display:none; }
+  /* the destination locators stay visible: smaller, but never removed */
+  .log li{ gap:2px 10px; }
+  .log-ptr{ font-size:0.68rem; }
+  .logpane-foot{ flex-wrap:wrap; }
 }
 
 /* ---------- sections ---------- */
@@ -288,14 +291,6 @@ noscript .t-hint{ margin-top:12px; }
 .sec-head .rule{ flex:1; height:1px; background:var(--hairline); order:3; }
 .sec-note{ font-size:0.72rem; color:var(--dim); white-space:nowrap; }
 @media (max-width:560px){ .sec-head .sec-note{ display:none; } }
-
-/* rail sections: header sits in a left rail at desktop */
-@media (min-width:1100px){
-  .rail .wrap{ display:grid; grid-template-columns:220px minmax(0,1fr); gap:0 48px; align-items:start; }
-  .rail .sec-head{ display:block; grid-column:1; margin:0; }
-  .rail .sec-head .rule{ display:none; }
-  .rail .sec-body{ grid-column:2; }
-}
 
 /* ---------- about ---------- */
 .prose p{
@@ -348,8 +343,6 @@ noscript .t-hint{ margin-top:12px; }
   color:var(--dim); font-size:0.7rem; letter-spacing:0.02em;
 }
 .shot-frame img{ display:block; width:100%; height:auto; }
-.shot-crop{ aspect-ratio:1440/490; overflow:hidden; }
-.shot-crop img{ width:100%; height:auto; object-fit:cover; object-position:top left; }
 .shot figcaption{ margin:8px 2px 0; font-size:0.72rem; color:var(--dim); }
 
 /* thesis grade box: the win, stated once, plainly */
@@ -566,8 +559,8 @@ noscript .t-hint{ margin-top:12px; }
     </div>
   </section>
 
-  <!-- ================= ABOUT: rail header, two-column prose ================= -->
-  <section id="whoami" class="sec rail">
+  <!-- ================= ABOUT: two-column prose ================= -->
+  <section id="whoami" class="sec">
     <div class="wrap">
       <div class="sec-head">
         <h2>about</h2>
@@ -610,10 +603,10 @@ noscript .t-hint{ margin-top:12px; }
         </div>
         <figure class="shot">
           <div class="shot-frame">
-            <div class="shot-bar" aria-hidden="true"><span>riposte: findings</span><span>lab run</span></div>
-            <img src="assets/riposte-findings.png" width="840" height="551" alt="Riposte TUI findings panel from a lab run: a table of findings with severity, title, target, and validated columns, and a detections pane below reporting a clean run">
+            <div class="shot-bar" aria-hidden="true"><span>riposte: session</span><span>lab target</span></div>
+            <img src="assets/riposte-session.png" width="1113" height="764" alt="Riposte interactive session on a lab target: a natural-language request to assess the web app at 172.22.0.3, findings listed with validation status including missing security headers and reflected input, then the scope gate denying a scan of 172.22.0.99 as out of scope, and a clean exit">
           </div>
-          <figcaption>Riposte TUI, findings panel from a lab run</figcaption>
+          <figcaption>Riposte, a scoped interactive session: findings with validation status, an out-of-scope target refused.</figcaption>
         </figure>
       </article>
 
@@ -634,12 +627,10 @@ noscript .t-hint{ margin-top:12px; }
         </div>
         <figure class="shot">
           <div class="shot-frame">
-            <div class="shot-bar" aria-hidden="true"><span>futtia: home</span><span>analysis room</span></div>
-            <div class="shot-crop">
-              <img src="assets/futtia-home.png" width="1440" height="900" alt="Futtia analysis room home: a sidebar with match day, match prep, squad, and sources, and a greeting reporting no upcoming fixture in the connected feed">
-            </div>
+            <div class="shot-bar" aria-hidden="true"><span>futtia: match view</span><span>labelled event</span></div>
+            <img src="assets/futtia-pitch.png" width="966" height="541" alt="Futtia match-moment view: a dark pitch diagram with a labelled left-back event reading 18.2y / 35.7m, a dashed pass trajectory into the box, a verified 03:41 to 03:51 clip window, and an illustration tag in the corner">
           </div>
-          <figcaption>Futtia analysis room, product in development</figcaption>
+          <figcaption>Futtia, a labelled match-moment view (futtia.no)</figcaption>
         </figure>
       </article>
 
@@ -784,8 +775,8 @@ noscript .t-hint{ margin-top:12px; }
     </div>
   </section>
 
-  <!-- ================= CONTACT: rail header, three cells ================= -->
-  <section id="contact" class="sec rail">
+  <!-- ================= CONTACT: three cells ================= -->
+  <section id="contact" class="sec">
     <div class="wrap">
       <div class="sec-head">
         <h2>contact</h2>

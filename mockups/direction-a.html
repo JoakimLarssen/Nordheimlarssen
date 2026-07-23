@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- MOCKUP direction A, round 3, branch redesign/craft-density, not deployed -->
+<!-- MOCKUP direction A, round 4, branch redesign/craft-density, not deployed -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -13,15 +13,15 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   DIRECTION A, ROUND 3: DOSSIER
+   DIRECTION A, ROUND 4: DOSSIER
    A typeset engineer dossier on a print-style asymmetric grid.
    Desktop: marginalia column (ghost section numerals, paths,
    margin notes) + wide content measure; every section resolves
    to the same right edge. Peaks: the 1st at Cybvest, and two
-   evidence exhibits (Riposte TUI, Futtia analysis room).
-   Mono carries structure, Plex Sans carries prose. Accent is
-   spent on the live dot, the win, and the thesis A. Zero
-   JavaScript. No scroll effects. Static top to bottom.
+   evidence exhibits (a real Riposte scoped session, a Futtia
+   match-moment view). Mono carries structure, Plex Sans
+   carries prose. Accent is spent on the live dot and the win.
+   Zero JavaScript. No scroll effects. Static top to bottom.
    ============================================================ */
 
 :root{
@@ -214,6 +214,19 @@ main > section + section{ border-top:1px solid var(--hair) }
   max-width:52ch;
 }
 
+/* dossier front matter: one line of hard evidence in the cover */
+.proof{
+  margin-top:26px; padding-top:14px;
+  border-top:1px solid var(--hair);
+  font-size:var(--t-small); color:var(--fg);
+}
+.proof .p-k{
+  display:block;
+  font-size:var(--t-label); font-weight:500; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--dim);
+  margin-bottom:6px;
+}
+
 /* the status register: now / next / open */
 .status{
   margin-top:28px;
@@ -333,9 +346,14 @@ main > section + section{ border-top:1px solid var(--hair) }
   font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase;
   color:var(--dim);
 }
+.fbar span:first-child{ white-space:nowrap }
+.fbar span + span{ text-align:right }
 .frame img{ display:block; width:100%; height:auto }
-.crop{ aspect-ratio:1440/492; overflow:hidden }
-.crop img{ height:100%; object-fit:cover; object-position:left top }
+/* trim: shaves the cream matte baked into the source PNG
+   (crop region 948x531 at x10 y6 of 966x541); the card's own
+   VERIFIED and ILLUSTRATION tags stay fully visible. */
+.trim{ aspect-ratio:948/531; overflow:hidden }
+.trim img{ width:101.8987%; max-width:none; margin:-.6329% 0 0 -1.0549% }
 .fig figcaption{
   margin-top:10px;
   font:400 var(--t-small)/1.55 var(--sans);
@@ -365,7 +383,7 @@ main > section + section{ border-top:1px solid var(--hair) }
 .rec-grade{
   margin-top:6px;
   font-size:2.6rem; font-weight:700; line-height:1;
-  color:var(--acc);
+  color:var(--fg-hi);
 }
 .rec-link{ margin-top:14px }
 .rec-link a{ font-size:var(--t-small); font-weight:500 }
@@ -423,8 +441,7 @@ main > section + section{ border-top:1px solid var(--hair) }
 .spec .num, .spec td.num, .spec th.num{ text-align:right }
 .spec .mid{ color:var(--dim) }
 
-/* accent: the win, echoed in the academics thesis row */
-.win{ color:var(--acc); font-weight:600 }
+/* letter grades: one neutral treatment, no second green moment */
 .g-a{ color:var(--fg-hi); font-weight:600 }
 .g-b{ color:var(--dim) }
 
@@ -580,6 +597,11 @@ main > section + section{ border-top:1px solid var(--hair) }
     column-gap:clamp(3rem, 5vw, 5rem);
     align-items:start;
   }
+  /* the proof line bottom-aligns with the status register,
+     closing the dead zone under the tagline */
+  .cover-left{ align-self:stretch; display:flex; flex-direction:column }
+  .cover-left .tagline{ margin-bottom:28px }
+  .proof{ margin-top:auto; padding-top:16px }
   .status{
     margin-top:0;
     border:1px solid var(--line);
@@ -738,8 +760,14 @@ main > section + section{ border-top:1px solid var(--hair) }
   .m-lead{ display:none }
   .msc-sub{ padding-bottom:20px; margin-bottom:20px }
 
-  .wlist li{ grid-template-columns:minmax(0,1fr) auto; column-gap:1.1rem }
+  /* writing index: stacked rows, no title/tag interleave */
+  .wlist li{ display:block; padding:12px 0 13px }
   .w-lead{ display:none }
+  .w-title{ display:block }
+  .w-kind{
+    display:block; margin-top:5px; text-align:left;
+    font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase;
+  }
 
   /* contact: stacked, email on one line */
   .cgrid a{ font-size:.8125rem }
@@ -777,11 +805,12 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section class="cover" aria-label="Identity">
     <div class="wrap">
       <div class="cover-grid">
-        <div>
+        <div class="cover-left">
           <p class="kicker">Dossier</p>
           <h1>Joakim Nordheim Larssen</h1>
           <p class="idline">Security researcher and developer, Oslo.</p>
           <p class="tagline">I work on software security, compete in CTFs, and ship products.</p>
+          <p class="proof"><span class="p-k">on record</span>3 CTF podium finishes · 1st at Cybvest · bachelor thesis graded A</p>
         </div>
 
         <dl class="status">
@@ -905,7 +934,7 @@ main > section + section{ border-top:1px solid var(--hair) }
       <div class="marg">
         <p class="m-idx" aria-hidden="true">02</p>
         <p class="m-path" aria-hidden="true">~/jnl/projects</p>
-        <p class="m-note"><span class="sx" aria-hidden="true">exhibits</span>Exhibits A and B are screenshots of the products in development.</p>
+        <p class="m-note"><span class="sx" aria-hidden="true">exhibits</span>Exhibit A is a real Riposte session on a lab target. Exhibit B is a match-moment view from futtia.no.</p>
       </div>
       <div>
         <h2 class="s-title" id="h-projects">projects</h2>
@@ -930,10 +959,10 @@ main > section + section{ border-top:1px solid var(--hair) }
             </div>
             <figure class="fig">
               <div class="frame">
-                <p class="fbar" aria-hidden="true"><span>exhibit a</span><span>riposte · tui</span></p>
-                <img src="assets/riposte-findings.png" alt="Riposte terminal UI: a findings and detections table from a lab run, listing one info and four low-severity findings with target and validation status">
+                <p class="fbar" aria-hidden="true"><span>exhibit a</span><span>riposte · interactive session</span></p>
+                <img src="assets/riposte-session.png" alt="Riposte interactive session on a lab target: a natural-language prompt asks for a scoped assessment of 172.22.0.3, findings are listed with validation status (one info, four low), then the scope gate denies a scan of the out-of-scope target 172.22.0.99 and the session exits">
               </div>
-              <figcaption><span class="fno" aria-hidden="true">fig. 1</span>Riposte TUI, findings panel from a lab run.</figcaption>
+              <figcaption><span class="fno" aria-hidden="true">fig. 1</span>Riposte, a scoped interactive session: four findings validated, an out-of-scope target refused.</figcaption>
             </figure>
           </div>
         </article>
@@ -945,12 +974,12 @@ main > section + section{ border-top:1px solid var(--hair) }
           </div>
           <figure class="fig">
             <div class="frame">
-              <p class="fbar" aria-hidden="true"><span>exhibit b</span><span>futtia · analysis room</span></p>
-              <div class="crop">
-                <img src="assets/futtia-home.png" alt="Futtia analysis room home screen: workspace sidebar with match day, match prep, squad and sources, next to a morning greeting and an open-chat action">
+              <p class="fbar" aria-hidden="true"><span>exhibit b</span><span>futtia · match moment</span></p>
+              <div class="trim">
+                <img src="assets/futtia-pitch.png" alt="Futtia match-moment view: an annotated pitch with a labelled event, LB 18.2y / 35.7m, a dashed pass trajectory into the box, and a verified clip window from 03:41 to 03:51, tagged as an illustration">
               </div>
             </div>
-            <figcaption><span class="fno" aria-hidden="true">fig. 2</span>Futtia analysis room, product in development.</figcaption>
+            <figcaption><span class="fno" aria-hidden="true">fig. 2</span>Futtia, a labelled match-moment view (futtia.no).</figcaption>
           </figure>
           <div class="fut-cols">
             <p class="e-desc">AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>
@@ -1055,7 +1084,7 @@ main > section + section{ border-top:1px solid var(--hair) }
                 <tr><th scope="col">Course</th><th scope="col" class="num">Grade</th></tr>
               </thead>
               <tbody>
-                <tr><td>Bachelor thesis</td><td class="num"><span class="win">A</span></td></tr>
+                <tr><td>Bachelor thesis</td><td class="num g-a">A</td></tr>
                 <tr><td>Cyber Defense</td><td class="num g-a">A</td></tr>
                 <tr><td>Agile Project</td><td class="num g-a">A</td></tr>
                 <tr><td>Ethical Hacking</td><td class="num g-b">B</td></tr>
