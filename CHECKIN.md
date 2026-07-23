@@ -39,10 +39,10 @@ Three zero-context critics and a comparative judge reviewed round 1 from screens
 3. **Oslo vs Bergen adjacency**: "Security researcher and developer, Oslo" sits near "Hoyskolen Kristiania, Bergen campus" and reads like a contradiction to a stranger even though both are true. Round 2 rewords the annotations to make the relationship obvious; flag if you want it stated differently.
 4. **How much terminal idiom to keep at all**: the critics would go further than your locked direction allows (one suggested a light "typeset dossier" variant with no terminal vocabulary). I stayed inside your lock; say the word if you want to see that fourth variant as a rendered mockup.
 
-## Status note (capacity pause)
+## Status note
 
-At about 02:16 the subagent fleet hit the account's monthly spend limit (claude.ai/settings/usage). Two things were mid-flight: direction A's round-3 rework (its agent died before touching the file, so A remains at its verified round-2 state; B and C completed and I verified them locally: renders clean at both widths, zero console errors, rule sweeps green) and the independent gate pass for B and C. The branch is committed and healthy at every checkpoint. I will keep probing and resume the paused workflow the moment capacity returns; raising the limit while I sleep costs you nothing until agents actually run.
+The subagent fleet briefly hit the monthly spend limit around 02:16 and paused round 3 mid-flight; capacity returned by morning and the paused workflow resumed from cache. Round 3 is now COMPLETE for all three directions and all three independent gates passed with zero violations (byte-scans, network captures, fact checks against the live site, measured right-edge resolution at 1440). Nothing was lost.
 
-## Next (resumes automatically when capacity returns)
+## Next (in flight)
 
-Finish A's round-3 rework (desktop marginalia grid, mobile label stacking, tame the chromatic aberration), independent gates for B and C, fresh-eyes critique round 3, then keep cycling until you wake up and pick.
+Fresh-eyes critique round 3 on the final mockups, fixes, and another render-verify cycle. Repeating until you pick a direction.
