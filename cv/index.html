@@ -143,10 +143,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   border-bottom:1px solid var(--hair);
   padding-bottom:10px; margin-bottom:20px;
 }
-.m-idx{
-  font-size:var(--t-label); letter-spacing:.16em; color:var(--dim);
-  order:2;
-}
 .m-path{ font-size:.75rem; color:var(--dim); letter-spacing:.02em }
 .m-note{ display:none }
 
@@ -483,12 +479,7 @@ main > section + section{ border-top:1px solid var(--hair) }
     display:block;
     border-bottom:0; padding-bottom:0; margin-bottom:0;
   }
-  .m-idx{
-    font-size:2.6rem; font-weight:600; line-height:1;
-    letter-spacing:.01em; color:var(--ghost);
-    order:0;
-  }
-  .m-path{ margin-top:12px }
+  .m-path{ margin-top:.55rem }
   .m-note{
     display:block;
     margin-top:24px;
@@ -602,10 +593,6 @@ main > section + section{ border-top:1px solid var(--hair) }
     display:flex; justify-content:flex-start; gap:1.5ch; align-items:baseline;
     border-bottom:1px solid var(--hair);
     padding-bottom:5px; margin-bottom:12px;
-  }
-  .m-idx{
-    order:0; font-size:8.5pt; font-weight:600; letter-spacing:.14em;
-    color:#7a7f7a;
   }
   .m-path{ font-size:8.5pt; color:#7a7f7a }
   .s-title{ font-size:14pt; margin-bottom:12px }
@@ -748,13 +735,12 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="summary" aria-labelledby="h-summary">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">01</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/summary</p>
       </div>
       <div>
         <h2 class="s-title" id="h-summary">summary</h2>
         <div class="prose">
-          <p>Final-year BSc Cybersecurity student at H&oslash;yskolen Kristiania, Bergen, graduating summer 2026, and continuing into an MSc in Information Security at NTNU, Gj&oslash;vik, from autumn 2026. I build security tooling and products, and I compete in CTFs. Open to security roles.</p>
+          <p>BSc in Cybersecurity from H&oslash;yskolen Kristiania (Bergen), graduated summer 2026, continuing into an MSc in Information Security at NTNU, Gj&oslash;vik, from autumn 2026. I build security tooling and products, and I compete in CTFs. Open to security roles.</p>
         </div>
       </div>
     </div>
@@ -764,7 +750,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="building" aria-labelledby="h-building">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">02</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/building</p>
       </div>
       <div>
@@ -775,7 +760,7 @@ main > section + section{ border-top:1px solid var(--hair) }
             <h3>Riposte</h3>
             <p class="e-status">[ in dev ]</p>
           </div>
-          <p class="e-desc">An agentic security CLI and AI purple-team platform, red and blue, built around a four-gate verified-detection loop. Co-built with Krister Eriksen.</p>
+          <p class="e-desc">An agentic security CLI and AI purple-team platform, red and blue, built around a four-gate verified-detection loop. Co-built with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/" target="_blank" rel="noopener">Krister Eriksen</a>.</p>
           <dl class="e-meta">
             <div><dt>role</dt><dd>builder / architect</dd></div>
             <div><dt>with</dt><dd>Krister Eriksen</dd></div>
@@ -807,7 +792,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="thesis" aria-labelledby="h-thesis">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">03</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/thesis</p>
       </div>
       <div>
@@ -818,7 +802,7 @@ main > section + section{ border-top:1px solid var(--hair) }
             <h3>Secure AI-Accelerated Development in Agile Workflows</h3>
             <p class="e-status">[ 2026 ]</p>
           </div>
-          <p class="e-desc">SAIF, a five-part framework for how small teams integrate AI-accelerated development into agile workflows while balancing security, architecture, and reliability. A group project with Krister Eriksen and Bendik Hagen.</p>
+          <p class="e-desc">SAIF, a five-part framework for how small teams integrate AI-accelerated development into agile workflows while balancing security, architecture, and reliability. A group project with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/" target="_blank" rel="noopener">Krister Eriksen</a> and <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/" target="_blank" rel="noopener">Bendik Hagen</a>.</p>
           <dl class="e-meta">
             <div><dt>with</dt><dd>Krister Eriksen, Bendik Hagen</dd></div>
             <div><dt>grade</dt><dd>A</dd></div>
@@ -836,7 +820,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="ctf" aria-labelledby="h-ctf">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">04</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/ctf.log</p>
       </div>
       <div>
@@ -879,7 +862,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="education" aria-labelledby="h-education">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">05</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/education</p>
       </div>
       <div>
@@ -901,7 +883,7 @@ main > section + section{ border-top:1px solid var(--hair) }
               <h3 class="a-ttl">BSc Cybersecurity</h3>
               <p class="a-sub">H&oslash;yskolen Kristiania, Bergen</p>
             </div>
-            <p class="edu-period">2023 to 2026 &middot; expected summer 2026</p>
+            <p class="edu-period">2023 to 2026 &middot; graduated summer 2026</p>
           </div>
         </div>
 
@@ -933,7 +915,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="involvement" aria-labelledby="h-involvement">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">06</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/involvement</p>
       </div>
       <div>
@@ -966,7 +947,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="writing" aria-labelledby="h-writing">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">07</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/writing</p>
       </div>
       <div>
@@ -975,13 +955,13 @@ main > section + section{ border-top:1px solid var(--hair) }
         <p class="lede">On security, AI risk, and critical infrastructure. Some research, some coursework, some from my own projects.</p>
 
         <ul class="wlist">
-          <li><span class="w-title">Secure AI-Accelerated Development in Agile Workflows</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">bachelor thesis</span></li>
-          <li><span class="w-title">The Power Grid is the Battlefield</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">cyberwarfare final project</span></li>
-          <li><span class="w-title">Building and Securing a Network from Scratch</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">data communications final project</span></li>
-          <li><span class="w-title">The Economics of a Zero-Day</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">analysis</span></li>
-          <li><span class="w-title">Marking the Machine</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">analysis + experiment</span></li>
-          <li><span class="w-title">Too Dangerous to Release</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">analysis</span></li>
-          <li><span class="w-title">Does AI Actually Write Insecure Code?</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">research review</span></li>
+          <li><span class="w-title"><a href="/thesis.pdf">Secure AI-Accelerated Development in Agile Workflows</a></span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">bachelor thesis</span></li>
+          <li><span class="w-title"><a href="/writing/the-power-grid-is-the-battlefield">The Power Grid is the Battlefield</a></span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">cyberwarfare final project</span></li>
+          <li><span class="w-title"><a href="/networking-final-project.pdf">Building and Securing a Network from Scratch</a></span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">data communications final project</span></li>
+          <li><span class="w-title"><a href="/writing/the-economics-of-a-zero-day">The Economics of a Zero-Day</a></span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">analysis</span></li>
+          <li><span class="w-title"><a href="/writing/marking-the-machine">Marking the Machine</a></span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">analysis + experiment</span></li>
+          <li><span class="w-title"><a href="/writing/too-dangerous-to-release">Too Dangerous to Release</a></span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">analysis</span></li>
+          <li><span class="w-title"><a href="/writing/does-ai-write-insecure-code">Does AI Actually Write Insecure Code?</a></span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">research review</span></li>
         </ul>
 
         <p class="more-row">
@@ -996,7 +976,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="skills" aria-labelledby="h-skills">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">08</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/skills</p>
       </div>
       <div>
@@ -1007,7 +986,9 @@ main > section + section{ border-top:1px solid var(--hair) }
             <p class="sg-label">Languages</p>
             <ul class="sg-items">
               <li>Python</li>
+              <li>Java</li>
               <li>TypeScript / JavaScript</li>
+              <li>C</li>
               <li>SQL</li>
             </ul>
           </div>
@@ -1016,12 +997,23 @@ main > section + section{ border-top:1px solid var(--hair) }
             <ul class="sg-items">
               <li>web application security (OWASP WSTG)</li>
               <li>penetration testing</li>
-              <li>detection engineering (Sigma)</li>
+              <li>detection engineering (Sigma, YARA)</li>
+              <li>MITRE ATT&amp;CK</li>
+              <li>steganography</li>
             </ul>
           </div>
           <div class="skill-group">
             <p class="sg-label">Tools</p>
             <ul class="sg-items">
+              <li>Kali Linux</li>
+              <li>Nmap</li>
+              <li>Wireshark</li>
+              <li>Burp Suite</li>
+              <li>OWASP ZAP</li>
+              <li>sqlmap</li>
+              <li>Hydra</li>
+              <li>John the Ripper</li>
+              <li>Splunk</li>
               <li>Docker</li>
               <li>Git</li>
             </ul>
@@ -1035,7 +1027,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="languages" aria-labelledby="h-languages">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">09</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/languages</p>
       </div>
       <div>
@@ -1052,7 +1043,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="earlier-work" aria-labelledby="h-earlier">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">10</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/earlier-work</p>
       </div>
       <div>
@@ -1079,7 +1069,6 @@ main > section + section{ border-top:1px solid var(--hair) }
   <section id="references" aria-labelledby="h-references">
     <div class="wrap sgrid">
       <div class="marg">
-        <p class="m-idx" aria-hidden="true">11</p>
         <p class="m-path" aria-hidden="true">~/jnl/cv/references</p>
       </div>
       <div>
