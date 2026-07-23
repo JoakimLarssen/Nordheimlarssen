@@ -1,7 +1,23 @@
-# Overnight check-in: nordheimlarssen.no redesign
+# Check-in: nordheimlarssen.no redesign
 
-Branch: `redesign/craft-density` (local only, nothing pushed, nothing touched main).
-Live site untouched. The `/writing` section untouched.
+Branch: `redesign/craft-density` (local only, nothing pushed to main, so nordheimlarssen.no is unchanged until you approve a merge).
+
+## Headline: the full site is now built in the dossier direction
+
+You picked A. It is now the real site on this branch, cohesive end to end:
+- **Home** (`index.html`): the dossier, self-contained, zero JavaScript, replacing the old scroll-reveal page.
+- **`/cv`** (`cv/index.html`): a styled dark CV that prints to a clean light PDF via a Download PDF button; every privacy and honesty rule enforced.
+- **`/writing`**: the hub and all six essays restyled into the same dossier system by rewriting only the shared `styles.css`/`main.js`, so all published prose is byte-identical and the scroll-reveals are gone.
+
+Everything is committed and verified at desktop, mobile, and (for the CV) print. Latest full-site shots: `C:\Users\joaki\.shots\nordheim-redesign\` (`home/`, `cv/`, `writing-after/`).
+
+## Still in flight (polish round)
+
+Unifying the nav across all pages so `/cv` is reachable everywhere, a dossier 404, a refreshed OG/social image, a favicon check, and a final full-site adversarial pass across home, `/cv`, and `/writing` together.
+
+---
+
+## How it got here (the record)
 
 ## What happened tonight
 
