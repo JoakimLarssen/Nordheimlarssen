@@ -1,10 +1,13 @@
 <!doctype html>
-<!-- MOCKUP direction B, round 4: EVIDENCE CONSOLE. branch redesign/craft-density, not deployed.
-     Round-4 changes: real evidence (Riposte scoped interactive session incl. the scope-gate
-     denial; Futtia labelled match-moment view, ILLUSTRATION tag kept visible); AT A GLANCE
-     rail removed (restatement bloat) and About recomposed as lead line + offset prose;
-     mobile nav is now a 3x2 ledger menu at <=700px, all six destinations tappable at 390;
-     evidence frames go full-bleed on small screens. No scroll-triggered motion anywhere. -->
+<!-- MOCKUP direction B, round 5: EVIDENCE CONSOLE. branch redesign/craft-density, not deployed.
+     Round-5 changes: the Riposte evidence is now a NATIVE transcript of the recorded scoped
+     session, typeset in this direction's mono and single amber accent (accent spent only on
+     the prompt glyph, the (validated) tokens, and the scope-gate denial line), replacing the
+     old screenshot; the Futtia screenshot exhibit is removed and Futtia is presented as prose
+     plus the futtia.no link and role/stack meta (the honest interim until a real capture
+     exists); copy fixes to the About lead line and the featured-writing line; the mobile nav
+     is rebuilt as a fully bordered 3x2 ledger of six closed 46px cells. No product screenshots,
+     no images at all now, no scroll-triggered motion anywhere. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -541,16 +544,63 @@ h3 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.evidence img {
-  display: block;
-  width: 100%;
-  height: auto;
+/* ---------- the transcript exhibit: the recorded session, typeset ----------
+   natively in this direction's mono and single amber accent. No screenshot.
+   Accent is spent only on the prompt glyph, the (validated) tokens, and the
+   scope-gate denial line; everything else rides the neutral text ramp. */
+.transcript {
+  padding: 15px 16px 17px;
+  font-size: var(--fs-meta);       /* 13px; stays >= 12px on mobile too */
+  line-height: 1.6;
+  color: var(--body);
+  overflow-wrap: break-word;
 }
-/* the Riposte frame clips the empty tail of the terminal shot:
-   full width, top 1113x556 of the 1113x764 capture. The whole
-   transcript through /exit and bye stays; only blank rows and the
-   idle composer bar fall outside the window. */
-.evidence-clip { aspect-ratio: 1113 / 556; overflow: hidden; }
+.transcript > * + * { margin-top: 8px; }
+
+.ts-head {
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding-bottom: 11px;
+  border-bottom: 1px solid var(--hairline);
+}
+.ts-head .ts-sep { color: var(--faint); padding: 0 3px; }
+
+.ts-dim   { color: var(--dim); }
+.ts-agent { color: var(--body); }
+
+/* the system notice: a quiet left-ruled block, never accent */
+.ts-notice {
+  color: var(--dim);
+  border-left: 2px solid var(--border);
+  padding: 1px 0 1px 11px;
+}
+
+/* operator input: accent glyph, brightest text, hanging indent on wrap */
+.ts-line { display: flex; gap: 0.85ch; }
+.ts-glyph { flex: none; color: var(--accent); font-weight: 700; }
+.ts-op { min-width: 0; color: var(--text); }
+
+.ts-findings { list-style: none; }
+.ts-findings li {
+  padding-left: 2.4ch;
+  text-indent: -2.4ch;            /* wrapped finding lines hang cleanly */
+  color: var(--body);
+}
+.ts-findings li + li { margin-top: 3px; }
+.ts-sev   { color: var(--dim); }
+.ts-val   { color: var(--accent); font-weight: 600; }
+.ts-unval { color: var(--faint); }
+
+/* the money line: the scope-gate refusal, given the accent + a denied block */
+.ts-deny {
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--accent-soft);
+  border-left: 2px solid var(--accent-line);
+  padding: 4px 11px;
+}
+
 .evidence-cap {
   padding: 9px 12px 10px;
   border-top: 1px solid var(--hairline);
@@ -854,9 +904,11 @@ body.palette-open { overflow: hidden; }
   .kbtn, .contact-note { display: none; }
 }
 
-/* narrow header: brand row on top, then a 3x2 ledger menu. Every
-   destination is visible and tappable (44px+ cells), nothing scrolls,
-   nothing hides. The header goes static so the menu scrolls away. */
+/* narrow header: brand row on top, then a 3x2 ledger menu. It is a fully
+   closed box: the container carries the outer frame on all four sides and
+   the cells carry the inner dividers, so no cell runs open to the screen
+   edge. Every destination, Contact included, is a tappable 46px cell.
+   The header goes static so the menu scrolls away. */
 @media (max-width: 700px) {
   html { scroll-padding-top: 12px; }
   .site-head { position: static; backdrop-filter: none; background: var(--bg); }
@@ -865,24 +917,27 @@ body.palette-open { overflow: hidden; }
   .kbtn { margin-left: auto; }
   .site-nav {
     order: 3;
-    width: calc(100% + var(--pad) * 2);
-    margin-inline: calc(var(--pad) * -1);
+    width: 100%;
+    margin: 2px 0 16px;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0;
-    border-top: 1px solid var(--hairline);
+    background: var(--panel);
+    border: 1px solid var(--border);
   }
   .site-nav a {
     display: flex;
     align-items: center;
     min-height: 46px;
-    padding: 4px 10px 4px 14px;
+    padding: 6px 12px;
     border-left: 1px solid var(--hairline);
+    border-top: 1px solid var(--hairline);
     white-space: nowrap;
   }
   .site-nav a::before { display: none; }
-  .site-nav a:nth-child(3n + 1) { border-left: 0; padding-left: var(--pad); }
-  .site-nav a:nth-child(n + 4) { border-top: 1px solid var(--hairline); }
+  /* first column and first row take their edge from the container frame */
+  .site-nav a:nth-child(3n + 1) { border-left: 0; }
+  .site-nav a:nth-child(-n + 3) { border-top: 0; }
 }
 
 @media (max-width: 560px) {
@@ -921,7 +976,7 @@ body.palette-open { overflow: hidden; }
     border-left: 0;
     border-right: 0;
   }
-  .evidence-bar, .evidence-cap { padding-inline: var(--pad); }
+  .evidence-bar, .evidence-cap, .transcript { padding-inline: var(--pad); }
 
   .tbl th, .tbl td { padding-right: 12px; font-size: var(--fs-small); }
   .ctf-tbl th:nth-child(3), .ctf-tbl td:nth-child(3) { width: 1%; white-space: nowrap; }
@@ -1024,7 +1079,7 @@ body.palette-open { overflow: hidden; }
         <span class="sec-index" aria-hidden="true">01</span>
         <h2>About</h2>
       </header>
-      <p class="about-lead">I work at the intersection of offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
+      <p class="about-lead">I work across offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
       <div class="about-body">
         <div class="prose">
           <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik.</p>
@@ -1066,38 +1121,44 @@ body.palette-open { overflow: hidden; }
               <span class="path">evidence / riposte-session</span>
               <span class="path">001</span>
             </div>
-            <div class="evidence-clip">
-              <img src="assets/riposte-session.png" width="1113" height="764"
-                   alt="Riposte interactive session on a lab target: a natural-language prompt asks for a scoped assessment of 172.22.0.3, findings print with validation status (one unvalidated, four validated), then a scan of 172.22.0.99 is denied by the scope gate as out of scope, and the session exits cleanly">
+            <div class="transcript">
+              <p class="ts-head">Riposte <span class="ts-sep" aria-hidden="true">.</span> demo-interactive-reflect (1 target, ceiling RECON)</p>
+              <p class="ts-dim">Type /help for commands, or just talk. Ctrl-Q to quit.</p>
+              <p class="ts-line"><span class="ts-glyph" aria-hidden="true">&#10095;</span><span class="ts-op">Assess the web app at 172.22.0.3 for security issues, and run a scoped scan of that target to confirm anything you find.</span></p>
+              <p class="ts-notice">running scan against 172.22.0.3 (this can take a while)...</p>
+              <p class="ts-agent">The findings from the web app at 172.22.0.3 are as follows:</p>
+              <ul class="ts-findings">
+                <li><span class="ts-sev">Info:</span> Open TCP/80 HTTP <span class="ts-unval">(unvalidated)</span></li>
+                <li><span class="ts-sev">Low:</span> Missing security header: Content-Security-Policy <span class="ts-val">(validated)</span></li>
+                <li><span class="ts-sev">Low:</span> Missing security header: X-Frame-Options <span class="ts-val">(validated)</span></li>
+                <li><span class="ts-sev">Low:</span> Missing security header: X-Content-Type-Options <span class="ts-val">(validated)</span></li>
+                <li><span class="ts-sev">Low:</span> Reflected input, reflection confirmed, escaping unverified <span class="ts-val">(validated)</span></li>
+              </ul>
+              <p class="ts-agent">No further actions can be taken without explicit operator authorization.</p>
+              <p class="ts-line"><span class="ts-glyph" aria-hidden="true">&#10095;</span><span class="ts-op">/scan 172.22.0.99</span></p>
+              <p class="ts-deny">denied by scope gate: 172.22.0.99 is out of scope</p>
+              <p class="ts-line"><span class="ts-glyph" aria-hidden="true">&#10095;</span><span class="ts-op">/exit</span></p>
+              <p class="ts-dim">bye</p>
             </div>
-            <figcaption class="evidence-cap">Riposte, a scoped interactive session: four of five findings validated, an out-of-scope target refused.</figcaption>
+            <figcaption class="evidence-cap">A Riposte session on a lab target. Findings carry a validation status; an out-of-scope target is refused by the scope gate.</figcaption>
           </figure>
         </article>
 
-        <article class="entry-media flip" id="futtia">
-          <div class="entry-text">
-            <header class="entry-head">
-              <h3>Futtia</h3>
-              <span class="status status-live">in dev</span>
-              <span class="entry-links">
-                <a href="https://futtia.no">futtia.no &#8599;</a>
-              </span>
-            </header>
+        <article class="entry" id="futtia">
+          <header class="entry-head">
+            <h3>Futtia</h3>
+            <span class="status status-live">in dev</span>
+            <span class="entry-links">
+              <a href="https://futtia.no">futtia.no &#8599;</a>
+            </span>
+          </header>
+          <div class="entry-body">
             <p class="entry-desc">AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>
             <dl class="meta">
               <div><dt>role</dt><dd>developer</dd></div>
               <div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
             </dl>
           </div>
-          <figure class="evidence">
-            <div class="evidence-bar" aria-hidden="true">
-              <span class="path">evidence / futtia-pitch</span>
-              <span class="path">002</span>
-            </div>
-            <img src="assets/futtia-pitch.png" width="966" height="541"
-                 alt="Futtia match-moment view: an annotated pitch with a labelled event (LB, 18.2 yards, 35.7 metres), a dashed pass trajectory into the box, and a verified clip window from 03:41 to 03:51, marked as an illustration in the corner">
-            <figcaption class="evidence-cap">Futtia, a labelled match-moment view (futtia.no).</figcaption>
-          </figure>
         </article>
 
         <article class="entry" id="thesis">
@@ -1239,7 +1300,7 @@ body.palette-open { overflow: hidden; }
             </span>
           </header>
           <div class="entry-body">
-            <p class="entry-desc">How an adversary actually takes down a power grid: the threat landscape from Industroyer-class ICS malware to supply-chain compromise and social engineering against operators. A look at what defense-in-depth for critical infrastructure really requires once the attacker is already inside. Built from my cyberwarfare coursework.</p>
+            <p class="entry-desc">How an adversary actually takes down a power grid: the threat landscape from Industroyer-class ICS malware to supply-chain compromise and social engineering against operators. What defense-in-depth for critical infrastructure actually demands once the attacker is already inside. Built from my cyberwarfare coursework.</p>
             <dl class="meta">
               <div><dt>type</dt><dd><a href="#academics">cyberwarfare final project</a></dd></div>
               <div><dt>year</dt><dd>2025</dd></div>

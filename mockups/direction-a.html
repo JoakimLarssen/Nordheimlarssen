@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- MOCKUP direction A, round 4, branch redesign/craft-density, not deployed -->
+<!-- MOCKUP direction A, round 5, branch redesign/craft-density, not deployed -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -13,13 +13,13 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   DIRECTION A, ROUND 4: DOSSIER
+   DIRECTION A, ROUND 5: DOSSIER
    A typeset engineer dossier on a print-style asymmetric grid.
    Desktop: marginalia column (ghost section numerals, paths,
    margin notes) + wide content measure; every section resolves
-   to the same right edge. Peaks: the 1st at Cybvest, and two
-   evidence exhibits (a real Riposte scoped session, a Futtia
-   match-moment view). Mono carries structure, Plex Sans
+   to the same right edge. Peaks: the 1st at Cybvest, and one
+   evidence exhibit, a real Riposte scoped session typeset
+   natively in the page mono. Mono carries structure, Plex Sans
    carries prose. Accent is spent on the live dot and the win.
    Zero JavaScript. No scroll effects. Static top to bottom.
    ============================================================ */
@@ -348,12 +348,46 @@ main > section + section{ border-top:1px solid var(--hair) }
 }
 .fbar span:first-child{ white-space:nowrap }
 .fbar span + span{ text-align:right }
-.frame img{ display:block; width:100%; height:auto }
-/* trim: shaves the cream matte baked into the source PNG
-   (crop region 948x531 at x10 y6 of 966x541); the card's own
-   VERIFIED and ILLUSTRATION tags stay fully visible. */
-.trim{ aspect-ratio:948/531; overflow:hidden }
-.trim img{ width:101.8987%; max-width:none; margin:-.6329% 0 0 -1.0549% }
+/* transcript exhibit: the recorded Riposte session rendered
+   natively in the dossier mono voice (no screenshot). Accent is
+   kept quiet, spent only on the prompt glyph, the (validated)
+   tokens, and the scope-gate refusal, so the 1st stays the one
+   loud green. Legible at 1440 and 390, reflows within the frame. */
+.term{
+  padding:15px 16px 17px;
+  font:400 13px/1.7 var(--mono);
+  color:var(--fg);
+  overflow-x:auto;
+}
+.term p{ overflow-wrap:break-word }
+.term > * + *{ margin-top:.38em }
+.t-head{
+  color:var(--fg-hi); font-weight:600; letter-spacing:.01em;
+  padding-bottom:11px; border-bottom:1px solid var(--hair);
+  margin-bottom:3px;
+}
+.t-dim{ color:var(--dim) }
+.t-in{
+  color:var(--fg-hi);
+  padding-left:1.7ch; text-indent:-1.7ch;
+}
+.t-in .glyph{ color:var(--acc); font-weight:700; margin-right:.7ch }
+.t-notice{
+  color:var(--dim);
+  border-left:1px solid var(--line);
+  padding-left:1.1ch;
+}
+.t-agent{ color:var(--fg) }
+.t-findings{ list-style:none; margin:0; padding:0 }
+.t-findings li{
+  color:var(--fg);
+  padding-left:2ch; text-indent:-2ch;
+}
+.t-findings li + li{ margin-top:.28em }
+.t-status{ white-space:nowrap }
+.t-unval{ color:var(--dim) }
+.t-val{ color:var(--acc) }
+.t-denied{ color:var(--acc); font-weight:500 }
 .fig figcaption{
   margin-top:10px;
   font:400 var(--t-small)/1.55 var(--sans);
@@ -716,6 +750,7 @@ main > section + section{ border-top:1px solid var(--hair) }
 
   .pentry{ padding:24px 0 }
   .fig{ margin-top:16px }
+  .term{ padding:13px 13px 15px }   /* 13px transcript holds at 390 */
   .fut-cols{ margin-top:16px }
   .rec{ padding:16px 18px 18px }
 
@@ -848,7 +883,7 @@ main > section + section{ border-top:1px solid var(--hair) }
         <h2 class="s-title" id="h-whoami">whoami</h2>
         <div class="prose-grid">
           <div class="prose">
-            <p>I am a cybersecurity student in my final year of a BSc at Høyskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gjøvik. I work at the intersection of offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
+            <p>I am a cybersecurity student in my final year of a BSc at Høyskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gjøvik. I work across offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
             <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
           </div>
           <aside class="snotes" aria-label="Margin notes">
@@ -934,7 +969,7 @@ main > section + section{ border-top:1px solid var(--hair) }
       <div class="marg">
         <p class="m-idx" aria-hidden="true">02</p>
         <p class="m-path" aria-hidden="true">~/jnl/projects</p>
-        <p class="m-note"><span class="sx" aria-hidden="true">exhibits</span>Exhibit A is a real Riposte session on a lab target. Exhibit B is a match-moment view from futtia.no.</p>
+        <p class="m-note"><span class="sx" aria-hidden="true">exhibit</span>Exhibit A is a real Riposte session on a lab target. Findings carry a validation status; an out-of-scope target is refused by the scope gate.</p>
       </div>
       <div>
         <h2 class="s-title" id="h-projects">projects</h2>
@@ -960,9 +995,27 @@ main > section + section{ border-top:1px solid var(--hair) }
             <figure class="fig">
               <div class="frame">
                 <p class="fbar" aria-hidden="true"><span>exhibit a</span><span>riposte · interactive session</span></p>
-                <img src="assets/riposte-session.png" alt="Riposte interactive session on a lab target: a natural-language prompt asks for a scoped assessment of 172.22.0.3, findings are listed with validation status (one info, four low), then the scope gate denies a scan of the out-of-scope target 172.22.0.99 and the session exits">
+                <div class="term" role="group" aria-label="Recorded Riposte session transcript">
+                  <p class="t-head">Riposte · demo-interactive-reflect (1 target, ceiling RECON)</p>
+                  <p class="t-dim">Type /help for commands, or just talk. Ctrl-Q to quit.</p>
+                  <p class="t-in"><span class="glyph" aria-hidden="true">&gt;</span>Assess the web app at 172.22.0.3 for security issues, and run a scoped scan of that target to confirm anything you find.</p>
+                  <p class="t-notice">running scan against 172.22.0.3 (this can take a while)...</p>
+                  <p class="t-agent">The findings from the web app at 172.22.0.3 are as follows:</p>
+                  <ul class="t-findings">
+                    <li>Info: Open TCP/80 HTTP <span class="t-status t-unval">(unvalidated)</span></li>
+                    <li>Low: Missing security header: Content-Security-Policy <span class="t-status t-val">(validated)</span></li>
+                    <li>Low: Missing security header: X-Frame-Options <span class="t-status t-val">(validated)</span></li>
+                    <li>Low: Missing security header: X-Content-Type-Options <span class="t-status t-val">(validated)</span></li>
+                    <li>Low: Reflected input, reflection confirmed, escaping unverified <span class="t-status t-val">(validated)</span></li>
+                  </ul>
+                  <p class="t-agent">No further actions can be taken without explicit operator authorization.</p>
+                  <p class="t-in"><span class="glyph" aria-hidden="true">&gt;</span>/scan 172.22.0.99</p>
+                  <p class="t-denied">denied by scope gate: 172.22.0.99 is out of scope</p>
+                  <p class="t-in"><span class="glyph" aria-hidden="true">&gt;</span>/exit</p>
+                  <p class="t-dim">bye</p>
+                </div>
               </div>
-              <figcaption><span class="fno" aria-hidden="true">fig. 1</span>Riposte, a scoped interactive session: four findings validated, an out-of-scope target refused.</figcaption>
+              <figcaption><span class="fno" aria-hidden="true">fig. 1</span>A Riposte session on a lab target. Findings carry a validation status; an out-of-scope target is refused by the scope gate.</figcaption>
             </figure>
           </div>
         </article>
@@ -972,15 +1025,6 @@ main > section + section{ border-top:1px solid var(--hair) }
             <h3>Futtia</h3>
             <p class="e-status">[ in dev ]</p>
           </div>
-          <figure class="fig">
-            <div class="frame">
-              <p class="fbar" aria-hidden="true"><span>exhibit b</span><span>futtia · match moment</span></p>
-              <div class="trim">
-                <img src="assets/futtia-pitch.png" alt="Futtia match-moment view: an annotated pitch with a labelled event, LB 18.2y / 35.7m, a dashed pass trajectory into the box, and a verified clip window from 03:41 to 03:51, tagged as an illustration">
-              </div>
-            </div>
-            <figcaption><span class="fno" aria-hidden="true">fig. 2</span>Futtia, a labelled match-moment view (futtia.no).</figcaption>
-          </figure>
           <div class="fut-cols">
             <p class="e-desc">AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>
             <div class="col-r">
@@ -1138,7 +1182,7 @@ main > section + section{ border-top:1px solid var(--hair) }
               <span class="badge">[ 2025 ]</span>
             </div>
             <h3>The Power Grid is the Battlefield</h3>
-            <p class="e-desc">How an adversary actually takes down a power grid: the threat landscape from Industroyer-class ICS malware to supply-chain compromise and social engineering against operators. A look at what defense-in-depth for critical infrastructure really requires once the attacker is already inside. Built from my cyberwarfare coursework.</p>
+            <p class="e-desc">How an adversary actually takes down a power grid: the threat landscape from Industroyer-class ICS malware to supply-chain compromise and social engineering against operators. What defense-in-depth for critical infrastructure actually demands once the attacker is already inside. Built from my cyberwarfare coursework.</p>
           </div>
           <aside class="rec">
             <dl>

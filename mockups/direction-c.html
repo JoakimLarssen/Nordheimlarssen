@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- MOCKUP: direction C "SESSION", round 4 evidence and polish, branch redesign/craft-density, not deployed -->
+<!-- MOCKUP: direction C "SESSION", round 5 evidence and copy, branch redesign/craft-density, not deployed -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -14,15 +14,17 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   PHOSPHOR FIELD / direction C "SESSION", round 4
+   PHOSPHOR FIELD / direction C "SESSION", round 5
    The machine metaphor, committed and consistent:
    - hero = terminal + log ledger side by side at desktop
    - the terminal keeps its own grammar: minimal frame, one
      title, shell comments live only inside the frame
    - section headers: one identical treatment everywhere,
      lowercase h2 + trailing hairline, at every breakpoint
-   - evidence: two real product artifacts in framed neutral
-     panes (a scoped Riposte session; a Futtia match view)
+   - evidence: a scoped Riposte session, typeset natively in
+     this direction's own mono + one accent, in the same
+     framed pane as the terminal; Futtia stays prose-only
+     until a real analysis can be captured honestly
    - one status vocabulary: [ in dev ] brackets; wins are
      accent-bold; everything else is a key-value row
    No scroll animation. One status-dot pulse, reduced-motion safe.
@@ -128,11 +130,11 @@ a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
 .brand{ font-weight:700; font-size:0.95rem; text-decoration:none; letter-spacing:-0.01em; }
 .brand .tilde{ color:var(--accent); }
 .brand:hover{ color:var(--text); }
-.site-nav{ margin-left:auto; display:flex; gap:clamp(12px,2.5vw,26px); }
+.site-nav{ margin-left:auto; display:flex; flex-wrap:wrap; gap:6px clamp(12px,2.5vw,26px); }
 .site-nav a{ font-size:0.75rem; color:var(--dim); text-decoration:none; }
 .site-nav a:hover{ color:var(--accent); }
 @media (max-width:480px){
-  .site-nav{ width:100%; margin-left:0; justify-content:flex-start; gap:16px; }
+  .site-nav{ width:100%; margin-left:0; justify-content:flex-start; flex-wrap:wrap; gap:6px 16px; }
   .site-nav a{ padding:6px 0; }
 }
 
@@ -345,6 +347,34 @@ noscript .t-hint{ margin-top:12px; }
 .shot-frame img{ display:block; width:100%; height:auto; }
 .shot figcaption{ margin:8px 2px 0; font-size:0.72rem; color:var(--dim); }
 
+/* riposte session, typeset natively in this direction's own type:
+   mono, one teal accent rationed to the prompt glyph, the (validated)
+   tokens, and the scope-gate denial. no image, legible at every width. */
+.xscript{
+  padding:16px 18px 18px;
+  font-family:var(--mono);
+  font-size:13px;
+  line-height:1.7;
+  color:var(--out);
+  overflow-wrap:break-word;
+  overflow-x:auto;
+}
+.xscript p{ margin:0; }
+.xs-head{ color:var(--dim); }
+.xs-intro{ color:var(--dim); margin-top:2px; }
+.xs-p{ margin-top:14px; color:var(--out); }
+.xs-ps{ color:var(--accent); font-weight:700; margin-right:1ch; user-select:none; }
+.xs-typed{ color:var(--text); font-weight:500; }
+.xs-note{ margin-top:10px; color:var(--dim); }
+.xs-reply{ margin-top:12px; color:var(--out); }
+.xs-find{ margin-top:3px; padding-left:2ch; text-indent:-2ch; color:var(--out); }
+.xs-find-first{ margin-top:6px; }
+.xs-valid{ color:var(--accent); }
+.xs-unvalid{ color:var(--dim); }
+.xs-close{ margin-top:10px; color:var(--out); }
+.xs-deny{ margin-top:10px; color:var(--accent); font-weight:500; }
+.xs-bye{ margin-top:10px; color:var(--dim); }
+
 /* thesis grade box: the win, stated once, plainly */
 .grade-box{
   border:1px solid var(--border); background:var(--elev-1);
@@ -473,8 +503,10 @@ noscript .t-hint{ margin-top:12px; }
     <a class="brand" href="#top"><span class="tilde">~/</span>jnl</a>
     <nav class="site-nav" aria-label="Site">
       <a href="#log">log</a>
+      <a href="#whoami">about</a>
       <a href="#projects">projects</a>
       <a href="#ctf">ctf</a>
+      <a href="#academics">academics</a>
       <a href="#writing">writing</a>
       <a href="#contact">contact</a>
     </nav>
@@ -568,7 +600,7 @@ noscript .t-hint{ margin-top:12px; }
       </div>
       <div class="sec-body">
         <div class="prose about-cols">
-          <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik. I work at the intersection of offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
+          <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik. I work across offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
           <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>.</p>
         </div>
       </div>
@@ -604,13 +636,34 @@ noscript .t-hint{ margin-top:12px; }
         <figure class="shot">
           <div class="shot-frame">
             <div class="shot-bar" aria-hidden="true"><span>riposte: session</span><span>lab target</span></div>
-            <img src="assets/riposte-session.png" width="1113" height="764" alt="Riposte interactive session on a lab target: a natural-language request to assess the web app at 172.22.0.3, findings listed with validation status including missing security headers and reflected input, then the scope gate denying a scan of 172.22.0.99 as out of scope, and a clean exit">
+            <div class="xscript">
+              <p class="xs-head">Riposte &middot; demo-interactive-reflect (1 target, ceiling RECON)</p>
+              <p class="xs-intro">Type /help for commands, or just talk. Ctrl-Q to quit.</p>
+
+              <p class="xs-p"><span class="xs-ps" aria-hidden="true">&gt;</span><span class="xs-typed">Assess the web app at 172.22.0.3 for security issues, and run a scoped scan of that target to confirm anything you find.</span></p>
+
+              <p class="xs-note">[ running scan against 172.22.0.3 (this can take a while)... ]</p>
+
+              <p class="xs-reply">The findings from the web app at 172.22.0.3 are as follows:</p>
+              <p class="xs-find xs-find-first">Info: Open TCP/80 HTTP <span class="xs-unvalid">(unvalidated)</span></p>
+              <p class="xs-find">Low: Missing security header: Content-Security-Policy <span class="xs-valid">(validated)</span></p>
+              <p class="xs-find">Low: Missing security header: X-Frame-Options <span class="xs-valid">(validated)</span></p>
+              <p class="xs-find">Low: Missing security header: X-Content-Type-Options <span class="xs-valid">(validated)</span></p>
+              <p class="xs-find">Low: Reflected input, reflection confirmed, escaping unverified <span class="xs-valid">(validated)</span></p>
+              <p class="xs-close">No further actions can be taken without explicit operator authorization.</p>
+
+              <p class="xs-p"><span class="xs-ps" aria-hidden="true">&gt;</span><span class="xs-typed">/scan 172.22.0.99</span></p>
+              <p class="xs-deny">denied by scope gate: 172.22.0.99 is out of scope</p>
+
+              <p class="xs-p"><span class="xs-ps" aria-hidden="true">&gt;</span><span class="xs-typed">/exit</span></p>
+              <p class="xs-bye">bye</p>
+            </div>
           </div>
-          <figcaption>Riposte, a scoped interactive session: findings with validation status, an out-of-scope target refused.</figcaption>
+          <figcaption>A Riposte session on a lab target. Findings carry a validation status; an out-of-scope target is refused by the scope gate.</figcaption>
         </figure>
       </article>
 
-      <article class="proj proj-media flip" id="futtia">
+      <article class="proj" id="futtia">
         <div class="proj-text">
           <div class="proj-head">
             <h3>Futtia</h3>
@@ -625,13 +678,6 @@ noscript .t-hint{ margin-top:12px; }
             <div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
           </dl>
         </div>
-        <figure class="shot">
-          <div class="shot-frame">
-            <div class="shot-bar" aria-hidden="true"><span>futtia: match view</span><span>labelled event</span></div>
-            <img src="assets/futtia-pitch.png" width="966" height="541" alt="Futtia match-moment view: a dark pitch diagram with a labelled left-back event reading 18.2y / 35.7m, a dashed pass trajectory into the box, a verified 03:41 to 03:51 clip window, and an illustration tag in the corner">
-          </div>
-          <figcaption>Futtia, a labelled match-moment view (futtia.no)</figcaption>
-        </figure>
       </article>
 
       <article class="proj proj-thesis" id="thesis">
@@ -752,7 +798,7 @@ noscript .t-hint{ margin-top:12px; }
                 <a href="/writing/the-power-grid-is-the-battlefield">read project &#8599;</a>
               </span>
             </div>
-            <p class="proj-desc">How an adversary actually takes down a power grid: the threat landscape from Industroyer-class ICS malware to supply-chain compromise and social engineering against operators. A look at what defense-in-depth for critical infrastructure really requires once the attacker is already inside. Built from my cyberwarfare coursework.</p>
+            <p class="proj-desc">How an adversary actually takes down a power grid: the threat landscape from Industroyer-class ICS malware to supply-chain compromise and social engineering against operators. What defense-in-depth for critical infrastructure actually demands once the attacker is already inside. Built from my cyberwarfare coursework.</p>
             <dl class="meta">
               <div><dt>type</dt><dd><a href="#academics">cyberwarfare final project</a></dd></div>
               <div><dt>year</dt><dd>2025</dd></div>
