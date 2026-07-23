@@ -1,5 +1,9 @@
 <!doctype html>
-<!-- MOCKUP direction B, round 2: EVIDENCE CONSOLE. branch redesign/craft-density, not deployed -->
+<!-- MOCKUP direction B, round 3: EVIDENCE CONSOLE. branch redesign/craft-density, not deployed.
+     Round-3 changes: real ledger grid (340px rail / 64px gutter / fluid), every section
+     resolves to the container right edge; two evidence frames (Riposte TUI, Futtia home);
+     three-line name lockup; repaired fourth strip cell; deliberate mobile nav; keyboard
+     chrome hidden on touch. No scroll-triggered motion anywhere. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -16,7 +20,14 @@
    DIRECTION B, EVIDENCE CONSOLE
    Dark, all-mono, dense, tabular. The page is a ledger of
    verifiable record: one status treatment, one key/value
-   anatomy, numbered sections, counted rows.
+   anatomy, numbered sections, counted rows, framed evidence.
+
+   THE GRID: a 1200px container. Sections compose on one ledger
+   grid: a 340px rail, a 64px gutter, and a fluid column, mirrored
+   left or right per section. Full-width elements (strip, tables,
+   index rows, contact cells) run rule to rule. Every section
+   resolves to the same right edge the section counters sit on.
+
    Terminal notes are limited to the ~/jnl wordmark and the
    single $ whoami kicker. Signature: the ctrl+K palette.
    No scroll-triggered motion anywhere. Interaction only.
@@ -41,8 +52,10 @@
   --accent-line: rgba(223, 168, 62, 0.45);
 
   --mono: "Spline Sans Mono", ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
-  --maxw: 1160px;
+  --maxw: 1200px;
   --pad: clamp(20px, 4vw, 48px);
+  --rail: 340px;
+  --gutter: 64px;
   --ease: cubic-bezier(0.25, 0.6, 0.3, 1);
   --fast: 120ms;
 
@@ -88,10 +101,12 @@ body {
 
 .key,
 .meta dt,
-.contact-list .lbl,
+.contact-cell .lbl,
 .now-row .lbl,
 .strip-label,
 .sec-count,
+.rail-head,
+.evidence-bar .path,
 .windex .kind {
   font-size: var(--fs-label);
   font-weight: 500;
@@ -108,7 +123,7 @@ a { color: inherit; }
 .prose a,
 .entry-desc a,
 .meta a,
-.contact-list a {
+.contact-cell a {
   color: var(--text);
   text-decoration: underline;
   text-decoration-color: var(--border-hi);
@@ -121,7 +136,7 @@ a { color: inherit; }
 .prose a:hover, .prose a:focus-visible,
 .entry-desc a:hover, .entry-desc a:focus-visible,
 .meta a:hover, .meta a:focus-visible,
-.contact-list a:hover, .contact-list a:focus-visible {
+.contact-cell a:hover, .contact-cell a:focus-visible {
   text-decoration-color: var(--accent);
   text-decoration-thickness: 2px;
 }
@@ -226,29 +241,33 @@ kbd {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: 36px 64px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 36px var(--gutter);
   align-items: start;
-  padding-top: clamp(44px, 7vh, 68px);
+  padding-top: clamp(40px, 6vh, 60px);
 }
 
 .kicker {
   font-size: var(--fs-meta);
   color: var(--dim);
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 .kicker .prompt { color: var(--accent); }
 
+/* the lockup: three stacked lines, no word-space holes.
+   Nordheim and Larssen_ are both 8ch, so the block squares off. */
 h1 {
-  font-size: clamp(2rem, 1.2rem + 3.2vw, 2.875rem);
+  font-size: clamp(2.25rem, 0.9rem + 4.2vw, 3.8rem);
   font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.015em;
+  line-height: 1.07;
+  letter-spacing: -0.02em;
   color: var(--text);
 }
+h1 .ln { display: block; }
+h1 .cursor { color: var(--accent); font-weight: 500; }
 
 .identity {
-  margin-top: 14px;
+  margin-top: 18px;
   font-size: 1rem;
   font-weight: 500;
   color: var(--text);
@@ -297,13 +316,14 @@ h1 {
 /* ============================================================
    THE CREDENTIAL STRIP: second focal point of the fold.
    Four evidence cells, big values, small keys underneath.
+   Runs rule to rule: the first full-width line of the ledger.
    ============================================================ */
 
 .strip {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 54px 0 0;
+  margin: 50px 0 0;
   background: var(--panel);
   border: 1px solid var(--border);
   border-top: 2px solid var(--accent-line);
@@ -364,14 +384,33 @@ h2 {
   color: var(--dim);
   font-size: var(--fs-body);
   line-height: 1.75;
-  max-width: 70ch;
 }
 
-/* ---------- about ---------- */
+/* ---------- 01 about: prose + right rail on the ledger grid ---------- */
 
-.prose { max-width: 66ch; }
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--rail);
+  gap: 28px var(--gutter);
+  align-items: start;
+}
+
+.prose { max-width: 72ch; }
 .prose p { line-height: 1.75; }
 .prose p + p { margin-top: 14px; }
+
+.about-rail {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  padding: 18px 22px 20px;
+}
+.rail-head {
+  display: block;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+.about-rail .meta > div { padding: 4px 0; }
 
 /* ---------- the one status treatment ---------- */
 
@@ -403,7 +442,7 @@ h2 {
 .meta dt { padding-top: 2px; }
 .meta dd { color: var(--body); }
 
-/* ---------- entries (projects + featured writing) ---------- */
+/* ---------- entries ---------- */
 
 .entry {
   padding: 26px 16px;
@@ -451,13 +490,66 @@ h3 {
 
 .entry-body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
-  gap: 8px 56px;
+  grid-template-columns: minmax(0, 1fr) var(--rail);
+  gap: 8px var(--gutter);
   margin-top: 12px;
 }
 .entry-desc {
   max-width: 68ch;
   line-height: 1.75;
+}
+
+/* ---------- 02 projects: evidence rows, text against framed proof ---------- */
+
+.entry-media {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px var(--gutter);
+  align-items: start;
+  padding: 36px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.entry-media:first-of-type { padding-top: 6px; }
+.entry-media .entry-text { min-width: 0; }
+.entry-media .entry-desc { max-width: 58ch; }
+.entry-media .meta { margin-top: 16px; }
+.entry-media .entry-head { margin-bottom: 12px; }
+.entry-media .evidence { grid-column: 2; grid-row: 1; }
+.entry-media.flip .evidence { grid-column: 1; }
+.entry-media.flip .entry-text { grid-column: 2; grid-row: 1; }
+
+/* the evidence frame: hairline chrome, ledger bar, true caption */
+.evidence {
+  min-width: 0;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+.evidence-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--hairline);
+}
+.evidence-bar .path {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.evidence img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* the Futtia frame crops to the sidebar + greeting region:
+   visible window is the top-left 1150x490 of the 1440x900 shot */
+.evidence-crop { aspect-ratio: 1150 / 490; overflow: hidden; }
+.evidence-crop img { width: 125.22%; max-width: none; }
+.evidence-cap {
+  padding: 9px 12px 10px;
+  border-top: 1px solid var(--hairline);
+  font-size: var(--fs-small);
+  color: var(--dim);
 }
 
 /* ---------- tables: ledger rows ---------- */
@@ -495,38 +587,49 @@ h3 {
 .tbl .num { text-align: right; white-space: nowrap; }
 .tbl td.wrap-ok { white-space: normal; }
 
-.ctf-lede { margin-bottom: 24px; }
-.ctf-tbl { max-width: 680px; }
+/* ---------- 03 ctf: left rail + full-width ledger table ---------- */
 
-/* ---------- academics ---------- */
+.ctf-grid {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  gap: 24px var(--gutter);
+  align-items: start;
+}
 
-.acad-lead {
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--hairline);
-  margin-bottom: 32px;
-}
-.acad-lead .meta { margin-top: 8px; }
-.acad-lead .acad-note-inline {
-  margin-top: 10px;
-  font-size: var(--fs-meta);
-  color: var(--dim);
-  max-width: 70ch;
-}
+/* the win: one quietly marked row */
+.tbl tr.win td { background: var(--accent-soft); color: var(--text); }
+.tbl tr.win td.ix { color: var(--accent); }
+.tbl tr.win:hover td { background: var(--accent-soft); }
+
+/* ---------- 04 academics: three records, three columns ---------- */
 
 .acad-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 36px 56px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px 48px;
+  align-items: start;
 }
-.acad-block .meta { margin: 6px 0 16px; }
-/* keep the two side-by-side grade tables on the same baseline:
-   reserve two meta rows in both columns */
+.acad-block .meta { margin: 8px 0 16px; }
+/* keep the two grade tables on the same baseline:
+   reserve two meta rows in every column */
 @media (min-width: 901px) {
   .acad-block .meta { min-height: 56px; }
 }
 
+.acad-panel {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  padding: 20px 22px 22px;
+}
+.acad-panel .entry-head { margin-bottom: 6px; }
+.acad-note {
+  margin-top: 10px;
+  font-size: var(--fs-meta);
+  color: var(--dim);
+}
+
 .notes {
-  margin-top: 36px;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -539,20 +642,32 @@ h3 {
   padding-left: 14px;
 }
 
-/* ---------- writing index: generous single-column rows ---------- */
+/* ---------- 05 writing: featured panel + full-width index ---------- */
+
+.featured {
+  margin-top: 28px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  padding: 24px 26px 26px;
+}
+.featured .entry-body { margin-top: 12px; }
+
+.wix {
+  color: var(--faint);
+  font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums;
+}
 
 .windex {
   list-style: none;
-  max-width: 760px;
-  margin-top: 30px;
+  margin-top: 36px;
 }
-.windex-label { margin-bottom: 4px; }
 .windex li {
-  display: flex;
+  display: grid;
+  grid-template-columns: 3ch minmax(0, 1fr) auto;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 28px;
-  padding: 15px 2px;
+  gap: 0 24px;
+  padding: 14px 2px;
   border-bottom: 1px solid var(--hairline);
 }
 .windex li:first-of-type { border-top: 1px solid var(--hairline); }
@@ -578,34 +693,31 @@ h3 {
 }
 .cta:hover, .cta:focus-visible { border-color: var(--accent); color: var(--accent); }
 
-/* ---------- contact ---------- */
+/* ---------- 06 contact: three cells, rule to rule ---------- */
 
-.contact-list {
+.contact-grid {
   list-style: none;
-  max-width: 620px;
-}
-.contact-list li {
   display: grid;
-  grid-template-columns: 10ch minmax(0, 1fr);
-  align-items: baseline;
-  overflow-wrap: anywhere;
-  gap: 16px;
-  padding: 11px 10px;
-  margin-inline: -10px;
-  border-bottom: 1px solid var(--hairline);
-  font-size: var(--fs-meta);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent-line);
+}
+.contact-cell {
+  min-width: 0;
+  padding: 18px 24px 20px;
+  border-left: 1px solid var(--hairline);
   transition: background-color var(--fast) var(--ease);
 }
-.contact-list li:first-child { border-top: 1px solid var(--hairline); }
-.contact-list li:hover { background: var(--sel); }
+.contact-cell:first-child { border-left: 0; }
+.contact-cell:hover { background: var(--sel); }
+.contact-cell .lbl { display: block; margin-bottom: 7px; }
+.contact-cell a { font-size: var(--fs-meta); overflow-wrap: anywhere; }
+
 .contact-note {
   margin-top: 24px;
   font-size: var(--fs-meta);
   color: var(--dim);
-}
-
-@media (hover: none) and (pointer: coarse) {
-  .contact-note { display: none; }
 }
 
 /* ---------- footer ---------- */
@@ -713,8 +825,26 @@ body.palette-open { overflow: hidden; }
   .strip-cell:nth-child(n+3) { border-top: 1px solid var(--hairline); }
   .sec { padding-block: 46px 54px; }
   #whoami { padding-top: 52px; }
+
+  .about-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+
+  .entry-media { grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 28px 0; }
+  .entry-media .evidence,
+  .entry-media.flip .evidence { grid-column: 1; grid-row: auto; }
+  .entry-media.flip .entry-text { grid-column: 1; grid-row: auto; }
+
   .entry-body { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .ctf-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .acad-grid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+
+  .contact-grid { grid-template-columns: minmax(0, 1fr); }
+  .contact-cell { border-left: 0; }
+  .contact-cell + .contact-cell { border-top: 1px solid var(--hairline); }
+}
+
+/* touch: no keyboard chrome */
+@media (hover: none) and (pointer: coarse) {
+  .kbtn, .contact-note { display: none; }
 }
 
 @media (max-width: 560px) {
@@ -722,9 +852,23 @@ body.palette-open { overflow: hidden; }
     --fs-h2: 1.25rem;
     --fs-h3: 1.0625rem;
   }
-  .head-row { flex-wrap: wrap; row-gap: 0; padding-block: 10px; }
-  .site-nav { order: 3; width: 100%; margin-left: -9px; flex-wrap: wrap; }
-  .kbtn { margin-left: auto; }
+
+  /* header: brand row on top, one scrollable nav row beneath */
+  .kbtn, .contact-note { display: none; }
+  .head-row { flex-wrap: wrap; gap: 0 24px; min-height: 0; }
+  .brand { padding-block: 14px; }
+  .site-nav {
+    order: 3;
+    width: calc(100% + var(--pad) * 2);
+    margin-inline: calc(var(--pad) * -1);
+    padding-inline: calc(var(--pad) - 10px);
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-top: 1px solid var(--hairline);
+  }
+  .site-nav::-webkit-scrollbar { display: none; }
+  .site-nav a { padding: 13px 10px 13px calc(10px + 1.1ch); white-space: nowrap; }
 
   /* strip becomes a ledger: one row per cell, value left, key right */
   .strip { grid-template-columns: minmax(0, 1fr); }
@@ -745,19 +889,14 @@ body.palette-open { overflow: hidden; }
 
   .entry { padding: 22px 12px; margin-inline: -12px; }
   .entry-links { margin-left: 0; flex-basis: 100%; }
+  .featured { padding: 20px 16px 22px; margin-inline: 0; }
 
   .tbl th, .tbl td { padding-right: 12px; font-size: var(--fs-small); }
   .ctf-tbl th:nth-child(3), .ctf-tbl td:nth-child(3) { width: 1%; white-space: nowrap; }
   .ctf-tbl td.num { white-space: normal; }
 
-  .windex li {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-    padding-block: 13px;
-  }
-
-  .contact-list li { grid-template-columns: minmax(0, 1fr); gap: 2px; padding-block: 9px; }
+  .windex li { grid-template-columns: 3ch minmax(0, 1fr); gap: 0 16px; padding-block: 13px; }
+  .windex .kind { grid-column: 2; margin-top: 3px; }
 
   .palette-hints { gap: 12px; }
 }
@@ -801,8 +940,8 @@ body.palette-open { overflow: hidden; }
       <div class="hero-grid">
         <div>
           <p class="kicker"><span class="prompt">$</span> whoami</p>
-          <h1>Joakim Nordheim&nbsp;Larssen</h1>
-          <p class="identity">Security researcher and developer,&nbsp;Oslo</p>
+          <h1><span class="ln">Joakim</span> <span class="ln">Nordheim</span> <span class="ln">Larssen<span class="cursor" aria-hidden="true">_</span></span></h1>
+          <p class="identity">Security researcher and developer, Oslo</p>
           <p class="tagline">I work on software security, compete in CTFs, and ship products.</p>
         </div>
         <div class="now-block">
@@ -839,8 +978,8 @@ body.palette-open { overflow: hidden; }
           <p class="strip-sub">autumn 2026</p>
         </li>
         <li class="strip-cell">
-          <p class="strip-value"><span class="hi">A</span></p>
-          <p class="strip-sub">bachelor thesis</p>
+          <p class="strip-value">Thesis: <span class="hi">A</span></p>
+          <p class="strip-sub">bachelor, 2026</p>
         </li>
       </ul>
     </div>
@@ -853,14 +992,26 @@ body.palette-open { overflow: hidden; }
         <span class="sec-index" aria-hidden="true">01</span>
         <h2>About</h2>
       </header>
-      <div class="prose">
-        <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik. I work at the intersection of offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
-        <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>.</p>
+      <div class="about-grid">
+        <div class="prose">
+          <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik. I work at the intersection of offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
+          <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>.</p>
+        </div>
+        <aside class="about-rail" aria-label="At a glance">
+          <span class="rail-head">at a glance</span>
+          <dl class="meta">
+            <div><dt>base</dt><dd>Oslo</dd></div>
+            <div><dt>bsc</dt><dd>Cybersecurity, H&oslash;yskolen Kristiania (Bergen), final year</dd></div>
+            <div><dt>msc</dt><dd>Information Security, NTNU Gj&oslash;vik, autumn 2026</dd></div>
+            <div><dt>ctf</dt><dd>crypto, pwn, web</dd></div>
+            <div><dt>also</dt><dd>volunteer developer, Kvarteret studenthus</dd></div>
+          </dl>
+        </aside>
       </div>
     </div>
   </section>
 
-  <!-- ========== 02 projects ========== -->
+  <!-- ========== 02 projects: text against framed evidence ========== -->
   <section class="sec" id="projects">
     <div class="wrap">
       <header class="sec-head">
@@ -870,16 +1021,16 @@ body.palette-open { overflow: hidden; }
       </header>
       <div>
 
-        <article class="entry" id="riposte">
-          <header class="entry-head">
-            <h3>Riposte</h3>
-            <span class="status status-live">in dev</span>
-            <span class="entry-links">
-              <a href="https://riposte.no">riposte.no &#8599;</a>
-              <a href="https://github.com/JoakimLarssen/Riposte">github &#8599;</a>
-            </span>
-          </header>
-          <div class="entry-body">
+        <article class="entry-media" id="riposte">
+          <div class="entry-text">
+            <header class="entry-head">
+              <h3>Riposte</h3>
+              <span class="status status-live">in dev</span>
+              <span class="entry-links">
+                <a href="https://riposte.no">riposte.no &#8599;</a>
+                <a href="https://github.com/JoakimLarssen/Riposte">github &#8599;</a>
+              </span>
+            </header>
             <p class="entry-desc">An agentic security CLI in the spirit of Claude Code and Codex. Where those drive coding, Riposte drives offensive and defensive work: real recon, exploitation, and detection engineering. Every action is scope-gated and audited, so the agent can't go off-leash.</p>
             <dl class="meta">
               <div><dt>role</dt><dd>builder / architect</dd></div>
@@ -887,23 +1038,43 @@ body.palette-open { overflow: hidden; }
               <div><dt>stack</dt><dd>Python, LiteLLM, Sigma, MITRE&nbsp;ATT&amp;CK, Docker</dd></div>
             </dl>
           </div>
+          <figure class="evidence">
+            <div class="evidence-bar" aria-hidden="true">
+              <span class="path">evidence / riposte-tui</span>
+              <span class="path">001</span>
+            </div>
+            <img src="assets/riposte-findings.png" width="840" height="551"
+                 alt="Riposte terminal UI: a findings and detections table from a lab run, five findings against one target, four marked validated">
+            <figcaption class="evidence-cap">Riposte TUI, findings panel from a lab run.</figcaption>
+          </figure>
         </article>
 
-        <article class="entry" id="futtia">
-          <header class="entry-head">
-            <h3>Futtia</h3>
-            <span class="status status-live">in dev</span>
-            <span class="entry-links">
-              <a href="https://futtia.no">futtia.no &#8599;</a>
-            </span>
-          </header>
-          <div class="entry-body">
+        <article class="entry-media flip" id="futtia">
+          <div class="entry-text">
+            <header class="entry-head">
+              <h3>Futtia</h3>
+              <span class="status status-live">in dev</span>
+              <span class="entry-links">
+                <a href="https://futtia.no">futtia.no &#8599;</a>
+              </span>
+            </header>
             <p class="entry-desc">AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>
             <dl class="meta">
               <div><dt>role</dt><dd>developer</dd></div>
               <div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
             </dl>
           </div>
+          <figure class="evidence">
+            <div class="evidence-bar" aria-hidden="true">
+              <span class="path">evidence / futtia-home</span>
+              <span class="path">002</span>
+            </div>
+            <div class="evidence-crop">
+              <img src="assets/futtia-home.png" width="1440" height="900"
+                   alt="Futtia analysis room home screen: workspace sidebar with match day, squad and sources, and the morning greeting">
+            </div>
+            <figcaption class="evidence-cap">Futtia analysis room, product in development.</figcaption>
+          </figure>
         </article>
 
         <article class="entry" id="thesis">
@@ -926,7 +1097,7 @@ body.palette-open { overflow: hidden; }
     </div>
   </section>
 
-  <!-- ========== 03 ctf ========== -->
+  <!-- ========== 03 ctf: rail + full-width ledger ========== -->
   <section class="sec" id="ctf">
     <div class="wrap">
       <header class="sec-head">
@@ -934,15 +1105,15 @@ body.palette-open { overflow: hidden; }
         <h2>CTF / Competitions</h2>
         <span class="sec-count">5 events</span>
       </header>
-      <div>
-        <p class="lede ctf-lede">Three podium finishes, including a win at Cybvest. I also co-hosted a Cybvest edition. Crypto, pwn, and web.</p>
+      <div class="ctf-grid">
+        <p class="lede">Three podium finishes, including a win at Cybvest. I also co-hosted a Cybvest edition. Crypto, pwn, and web.</p>
         <div class="table-wrap">
           <table class="tbl ctf-tbl">
             <thead>
               <tr><th scope="col" class="ix" aria-label="Row">#</th><th scope="col">Event</th><th scope="col">Role</th><th scope="col" class="num">Result</th></tr>
             </thead>
             <tbody>
-              <tr><td class="ix">01</td><td>Cybvest</td><td>team</td><td class="num g-sig">1st</td></tr>
+              <tr class="win"><td class="ix">01</td><td>Cybvest</td><td>team</td><td class="num g-sig">1st</td></tr>
               <tr><td class="ix">02</td><td>Helt Sikker CTF</td><td>solo</td><td class="num">3rd</td></tr>
               <tr><td class="ix">03</td><td>Kongsberg &times; Helt&nbsp;Sikker</td><td>team</td><td class="num">3rd</td></tr>
               <tr><td class="ix">04</td><td>EPT 2025</td><td>team</td><td class="num wrap-ok">16th overall, 4th&nbsp;student</td></tr>
@@ -954,7 +1125,7 @@ body.palette-open { overflow: hidden; }
     </div>
   </section>
 
-  <!-- ========== 04 academics ========== -->
+  <!-- ========== 04 academics: three records, three columns ========== -->
   <section class="sec" id="academics">
     <div class="wrap">
       <header class="sec-head">
@@ -963,15 +1134,6 @@ body.palette-open { overflow: hidden; }
         <span class="sec-count">3 records</span>
       </header>
       <div>
-
-        <div class="acad-lead">
-          <h3>MSc Information Security</h3>
-          <dl class="meta">
-            <div><dt>where</dt><dd>NTNU, Gj&oslash;vik</dd></div>
-            <div><dt>from</dt><dd>autumn 2026</dd></div>
-          </dl>
-          <p class="acad-note-inline">Two-year master's in Information Security. Incoming, autumn 2026.</p>
-        </div>
 
         <div class="acad-grid">
 
@@ -1010,6 +1172,18 @@ body.palette-open { overflow: hidden; }
             </table>
           </div>
 
+          <aside class="acad-block acad-panel">
+            <header class="entry-head">
+              <h3>MSc Information Security</h3>
+              <span class="status">incoming</span>
+            </header>
+            <dl class="meta">
+              <div><dt>where</dt><dd>NTNU, Gj&oslash;vik</dd></div>
+              <div><dt>from</dt><dd>autumn 2026</dd></div>
+            </dl>
+            <p class="acad-note">Two-year master's in Information Security. Incoming, autumn 2026.</p>
+          </aside>
+
         </div>
 
         <div class="notes">
@@ -1029,10 +1203,11 @@ body.palette-open { overflow: hidden; }
         <span class="sec-count">7 listed</span>
       </header>
       <div>
-        <p class="lede">I also write about security, AI risk, and critical infrastructure. Some research, some coursework, some from my own projects.</p>
+        <p class="lede" style="max-width: 70ch;">I also write about security, AI risk, and critical infrastructure. Some research, some coursework, some from my own projects.</p>
 
-        <article class="entry" style="margin-top: 24px;">
+        <article class="featured">
           <header class="entry-head">
+            <span class="wix" aria-hidden="true">01</span>
             <h3>The Power Grid is the Battlefield</h3>
             <span class="status status-hi">Featured</span>
             <span class="status">2025</span>
@@ -1050,12 +1225,12 @@ body.palette-open { overflow: hidden; }
         </article>
 
         <ul class="windex" aria-label="More writing">
-          <li><span class="title">Secure AI-Accelerated Development in Agile Workflows</span><span class="kind">bachelor thesis</span></li>
-          <li><span class="title">Building and Securing a Network from Scratch</span><span class="kind">coursework</span></li>
-          <li><span class="title">Does AI Actually Write Insecure Code?</span><span class="kind">research review</span></li>
-          <li><span class="title">The Economics of a Zero-Day</span><span class="kind">analysis</span></li>
-          <li><span class="title">Marking the Machine</span><span class="kind">analysis + experiment</span></li>
-          <li><span class="title">Too Dangerous to Release</span><span class="kind">analysis</span></li>
+          <li><span class="wix" aria-hidden="true">02</span><span class="title">Secure AI-Accelerated Development in Agile Workflows</span><span class="kind">bachelor thesis</span></li>
+          <li><span class="wix" aria-hidden="true">03</span><span class="title">Building and Securing a Network from Scratch</span><span class="kind">coursework</span></li>
+          <li><span class="wix" aria-hidden="true">04</span><span class="title">Does AI Actually Write Insecure Code?</span><span class="kind">research review</span></li>
+          <li><span class="wix" aria-hidden="true">05</span><span class="title">The Economics of a Zero-Day</span><span class="kind">analysis</span></li>
+          <li><span class="wix" aria-hidden="true">06</span><span class="title">Marking the Machine</span><span class="kind">analysis + experiment</span></li>
+          <li><span class="wix" aria-hidden="true">07</span><span class="title">Too Dangerous to Release</span><span class="kind">analysis</span></li>
         </ul>
 
         <a class="cta" href="/writing">read all writing &rarr;</a>
@@ -1071,10 +1246,10 @@ body.palette-open { overflow: hidden; }
         <h2>Contact</h2>
       </header>
       <div>
-        <ul class="contact-list">
-          <li><span class="lbl">email</span><a href="mailto:joakimnordheimlarssen@gmail.com">joakimnordheimlarssen@gmail.com</a></li>
-          <li><span class="lbl">github</span><a href="https://github.com/JoakimLarssen">github.com/JoakimLarssen</a></li>
-          <li><span class="lbl">linkedin</span><a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223">in/joakim-nordheim-larssen</a></li>
+        <ul class="contact-grid" aria-label="Contact channels">
+          <li class="contact-cell"><span class="lbl">email</span><a href="mailto:joakimnordheimlarssen@gmail.com">joakimnordheimlarssen@gmail.com</a></li>
+          <li class="contact-cell"><span class="lbl">github</span><a href="https://github.com/JoakimLarssen">github.com/JoakimLarssen</a></li>
+          <li class="contact-cell"><span class="lbl">linkedin</span><a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223">in/joakim-nordheim-larssen</a></li>
         </ul>
         <p class="contact-note">or press <kbd>ctrl</kbd> <kbd>k</kbd> anywhere on this site</p>
       </div>
@@ -1086,6 +1261,7 @@ body.palette-open { overflow: hidden; }
 <footer class="site-foot">
   <div class="wrap foot-row">
     <p>&copy; 2026 Joakim Nordheim Larssen</p>
+    <p>~/jnl &middot; Oslo</p>
   </div>
 </footer>
 
