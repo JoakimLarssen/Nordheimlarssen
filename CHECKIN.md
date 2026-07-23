@@ -11,7 +11,9 @@ Live site untouched. The `/writing` section untouched.
 
 2. **Research round.** Five agents studied the reference sites (peers, craft, restraint, evidence, cautionary) and a sixth built a content dossier from the live site so every fact stays exact. A synthesized design brief drove the drafts.
 
-3. **Three direction mockups, built and iterated three rounds.** They live in `mockups/direction-{a,b,c}.html` in this branch. Open them directly in a browser, or look at the rendered shots in `C:\Users\joaki\.shots\nordheim-redesign\round2\` (desktop fold, desktop full, mobile full for each).
+3. **Three direction mockups, built and iterated across four rounds.** They live in `mockups/direction-{a,b,c}.html` in this branch. Open them directly in a browser, or look at the rendered shots in `C:\Users\joaki\.shots\nordheim-redesign\round3\` (desktop fold, desktop full, mobile full for each; `round1` and `round2` show the evolution).
+
+**Round 3** answered the second fresh-eyes panel's hardest complaint (all three were an 800px column wasting the desktop) by rebuilding B and C on full-width grids, and embedded REAL product evidence: an actual Riposte TUI findings panel and an actual Futtia analysis-room screenshot, framed and captioned truthfully (`mockups/assets/`). The Futtia shot is real but weak (empty-state with an onboarding popover, cropped); capturing a better one is build-round work.
 
 ## The three directions (pick one, or mix)
 
@@ -37,6 +39,10 @@ Three zero-context critics and a comparative judge reviewed round 1 from screens
 3. **Oslo vs Bergen adjacency**: "Security researcher and developer, Oslo" sits near "Hoyskolen Kristiania, Bergen campus" and reads like a contradiction to a stranger even though both are true. Round 2 rewords the annotations to make the relationship obvious; flag if you want it stated differently.
 4. **How much terminal idiom to keep at all**: the critics would go further than your locked direction allows (one suggested a light "typeset dossier" variant with no terminal vocabulary). I stayed inside your lock; say the word if you want to see that fourth variant as a rendered mockup.
 
-## Next (already in flight, no waiting on you)
+## Status note (capacity pause)
 
-Fresh-eyes critique round 2, then fixes, then another render-verify cycle. Repeat until you wake up and pick.
+At about 02:16 the subagent fleet hit the account's monthly spend limit (claude.ai/settings/usage). Two things were mid-flight: direction A's round-3 rework (its agent died before touching the file, so A remains at its verified round-2 state; B and C completed and I verified them locally: renders clean at both widths, zero console errors, rule sweeps green) and the independent gate pass for B and C. The branch is committed and healthy at every checkpoint. I will keep probing and resume the paused workflow the moment capacity returns; raising the limit while I sleep costs you nothing until agents actually run.
+
+## Next (resumes automatically when capacity returns)
+
+Finish A's round-3 rework (desktop marginalia grid, mobile label stacking, tame the chromatic aberration), independent gates for B and C, fresh-eyes critique round 3, then keep cycling until you wake up and pick.
