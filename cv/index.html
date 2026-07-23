@@ -1,0 +1,1111 @@
+<!doctype html>
+<!--
+  ============================================================================
+  nordheimlarssen.no/cv  ::  Curriculum vitae, typeset as a dossier.
+  Native to Direction A: JetBrains Mono (structure) + IBM Plex Sans (prose),
+  the same colour tokens, marginalia section headers, meta-row and table
+  grammar. Dark on screen; the print stylesheet switches to a clean, light,
+  single-column, ink-friendly PDF. No scroll effects, no reveal animations.
+  The only JavaScript is the Download PDF (window.print) handler and the
+  footer year.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0D1011">
+<meta name="description" content="Curriculum vitae of Joakim Nordheim Larssen, security engineer and builder in Oslo.">
+<title>Joakim Nordheim Larssen, CV</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   /cv, DOSSIER. Same document family as Direction A.
+   Mono carries structure, Plex Sans carries prose. Accent is
+   spent only on the live dot and the CTF win. Zero scroll
+   effects, static top to bottom. Screen is dark; print is light.
+   ============================================================ */
+
+:root{
+  --bg:      #0D1011;
+  --fg-hi:   #E6E7E8;   /* level 1: headings, links, key data   */
+  --fg:      #C6CAC5;   /* level 2: body                        */
+  --dim:     #828B8F;   /* level 3: metadata                    */
+  --ghost:   #3B403C;   /* level 4: oversized margin numerals   */
+  --hair:    #1E211F;   /* hairline rules                       */
+  --line:    #2C302D;   /* stronger rule (table heads, frames)  */
+  --acc:     #57C97B;   /* the only colour, spent sparingly     */
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* type scale */
+  --t-name:    clamp(2rem, 1.15rem + 2.9vw, 3.7rem);
+  --t-sect:    clamp(1.2rem, 1.05rem + .55vw, 1.45rem);
+  --t-entry:   1.125rem;
+  --t-body:    1rem;
+  --t-small:   .8125rem;
+  --t-label:   .6875rem;
+
+  --maxw: 1280px;
+  --marg: 13rem;                          /* marginalia column   */
+  --mgap: clamp(2.5rem, 4vw, 4rem);       /* margin -> content   */
+  --keycol: 7rem;
+  --measure: 36rem;                       /* one content edge: every section resolves here */
+  --gut: clamp(20px, 4.5vw, 56px);
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+*{ box-sizing:border-box; margin:0; padding:0 }
+html{ color-scheme:dark }
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font:400 15px/1.65 var(--mono);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-variant-numeric: tabular-nums;
+}
+
+::selection{ background:var(--fg-hi); color:var(--bg) }
+
+a{
+  color:var(--fg-hi);
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-decoration-color:rgba(242,243,240,.32);
+  text-underline-offset:.24em;
+  transition: text-decoration-color .12s var(--ease), color .12s var(--ease);
+}
+a:hover{ text-decoration-color:var(--fg-hi) }
+
+:focus-visible{
+  outline:2px solid var(--fg-hi);
+  outline-offset:3px;
+  border-radius:1px;
+}
+
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--gut) }
+
+.sr{
+  position:absolute; width:1px; height:1px; overflow:hidden;
+  clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap;
+}
+
+.skip{
+  position:absolute; left:var(--gut); top:-48px;
+  background:var(--fg-hi); color:var(--bg);
+  padding:8px 14px; font-size:var(--t-small); font-weight:500;
+  text-decoration:none; z-index:10;
+  transition: top .12s var(--ease);
+}
+.skip:focus{ top:10px }
+
+/* ---------- masthead ---------- */
+
+.site-head{ border-bottom:1px solid var(--hair) }
+.site-head .wrap{
+  display:flex; align-items:center; justify-content:space-between;
+  height:3.5rem;
+}
+.brand{
+  font-size:.9375rem; font-weight:600; color:var(--fg-hi);
+  text-decoration:none; letter-spacing:.01em;
+}
+.brand .tilde{ color:var(--dim); font-weight:400 }
+.site-nav{ display:flex; gap:1.7rem }
+.site-nav a{
+  font-size:var(--t-small); color:var(--dim); text-decoration:none;
+}
+.site-nav a:hover{ color:var(--fg-hi); text-decoration:underline;
+  text-decoration-thickness:1px; text-underline-offset:.24em }
+.site-nav a.is-active{ color:var(--acc); font-weight:500 }
+.site-nav a.is-active:hover{ color:var(--acc) }
+
+/* ---------- sections: base is a single column ---------- */
+
+main section{ padding:44px 0 48px; scroll-margin-top:24px }
+main > section + section{ border-top:1px solid var(--hair) }
+
+/* one shared content measure: the section body (everything right of the
+   marginalia) resolves to a single right edge, so tables, metadata rows,
+   and prose all stop at the same margin instead of wandering. */
+.sgrid > :not(.marg){ max-width:var(--measure) }
+
+/* marginalia header. Base (narrow): a quiet header row.
+   Desktop (>=1020px): a true left margin column. */
+.sgrid{ display:block }
+.marg{
+  display:flex; justify-content:space-between; align-items:baseline;
+  border-bottom:1px solid var(--hair);
+  padding-bottom:10px; margin-bottom:20px;
+}
+.m-idx{
+  font-size:var(--t-label); letter-spacing:.16em; color:var(--dim);
+  order:2;
+}
+.m-path{ font-size:.75rem; color:var(--dim); letter-spacing:.02em }
+.m-note{ display:none }
+
+.s-title{
+  font-size:var(--t-sect); font-weight:600; color:var(--fg-hi);
+  letter-spacing:.01em;
+  margin-bottom:26px;
+}
+
+/* prose is sans; structure stays mono */
+.prose p{
+  font:400 var(--t-body)/1.75 var(--sans);
+  color:var(--fg);
+  max-width:64ch;
+}
+.prose p + p{ margin-top:15px }
+.prose a{ color:var(--fg-hi) }
+
+.lede{
+  font:400 var(--t-body)/1.7 var(--sans);
+  color:var(--fg);
+  max-width:62ch;
+  margin-bottom:24px;
+}
+
+.mini{
+  font-size:var(--t-label); font-weight:500; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--dim);
+  margin-bottom:12px;
+}
+
+/* ---------- cover: title block + download + contact ---------- */
+
+.cover{ padding: clamp(36px, 6vh, 64px) 0 clamp(28px, 4vh, 40px) }
+
+.cover-top{
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:1.5rem; margin-bottom:18px;
+}
+.kicker{
+  font-size:var(--t-label); font-weight:500;
+  letter-spacing:.3em; text-transform:uppercase;
+  color:var(--dim);
+}
+
+.dl{
+  flex:none;
+  display:inline-flex; align-items:center; gap:.6ch;
+  font:500 var(--t-small)/1 var(--mono);
+  letter-spacing:.04em;
+  color:var(--fg-hi);
+  background:transparent;
+  border:1px solid var(--line);
+  padding:10px 16px;
+  cursor:pointer;
+  transition: background .12s var(--ease), color .12s var(--ease), border-color .12s var(--ease);
+}
+.dl:hover{ background:var(--fg-hi); color:var(--bg); border-color:var(--fg-hi) }
+.dl .dlg{ font-size:.9em }
+
+.cover h1{
+  font-size:var(--t-name);
+  line-height:1.12;
+  font-weight:600;
+  letter-spacing:.005em;
+  color:var(--fg-hi);
+  text-wrap:balance;
+}
+.idline{
+  margin-top:14px;
+  font:400 1.0625rem/1.6 var(--sans);
+  color:var(--fg);
+}
+
+.contact-line{
+  margin-top:26px; padding-top:16px;
+  border-top:1px solid var(--line);
+  display:flex; flex-wrap:wrap; gap:.5ch 1.2ch;
+  align-items:baseline;
+  font-size:var(--t-small);
+}
+.contact-line .sep{ color:var(--ghost) }
+.contact-line a{ font-weight:500; white-space:nowrap }
+
+.cov-meta{
+  margin-top:26px; padding-top:14px;
+  border-top:1px solid var(--hair);
+  display:flex; justify-content:space-between; gap:1.5rem; flex-wrap:wrap;
+  font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase;
+  color:var(--dim);
+}
+
+/* ---------- entries and shared meta rows ---------- */
+
+.pentry{ padding:30px 0 }
+.pentry:first-of-type{ padding-top:2px }
+.pentry + .pentry{ border-top:1px solid var(--hair) }
+
+.p-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:14px; flex-wrap:wrap }
+.p-head h3{
+  font-size:var(--t-entry); font-weight:600; color:var(--fg-hi);
+  letter-spacing:.01em;
+}
+.e-status{
+  font-size:var(--t-label); letter-spacing:.1em; color:var(--dim);
+  white-space:nowrap;
+}
+.e-desc{
+  font:400 var(--t-body)/1.7 var(--sans);
+  max-width:64ch; color:var(--fg);
+}
+.e-desc .ttl{ color:var(--fg-hi); font-weight:600 }
+.e-desc a{ color:var(--fg-hi) }
+
+.e-meta{ margin-top:18px; display:grid; gap:8px }
+.e-meta > div{
+  display:grid; grid-template-columns:var(--keycol) 1fr; column-gap:1.5rem;
+}
+.e-meta dt{
+  font-size:var(--t-label); font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--dim); padding-top:.32em;
+}
+.e-meta dd{ font-size:var(--t-small); color:var(--fg) }
+
+.e-links{ margin-top:18px; display:flex; flex-wrap:wrap; gap:2.5ch }
+.e-links a{ font-size:var(--t-small); font-weight:500 }
+
+/* ---------- the typographic moment: the win ---------- */
+
+.win-call{
+  display:flex; align-items:baseline; gap:clamp(16px, 3vw, 30px);
+  padding:8px 0 30px;
+}
+.win-num{
+  font-size:clamp(1.85rem, 1.05rem + 2.55vw, 3.35rem);
+  font-weight:700; line-height:1;
+  letter-spacing:-.015em;
+  color:var(--acc);
+}
+.win-event{
+  font-size:1.3rem; font-weight:600; color:var(--fg-hi);
+  letter-spacing:.01em;
+}
+.win-role{ font-size:var(--t-small); font-weight:400; color:var(--dim); margin-left:.75ch }
+.win-note{
+  margin-top:8px;
+  font:400 .9375rem/1.6 var(--sans);
+  color:var(--dim);
+}
+
+/* ---------- tables ---------- */
+
+.spec{
+  width:100%; border-collapse:collapse;
+  font-size:var(--t-small);
+}
+.spec caption.cap{
+  text-align:left;
+  font-size:var(--t-label); font-weight:500; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--dim);
+  padding-bottom:12px;
+}
+.spec th{
+  text-align:left;
+  font-size:var(--t-label); font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--dim);
+  padding:0 0 10px;
+  border-bottom:1px solid var(--line);
+}
+.spec td{
+  padding:10px 0;
+  border-bottom:1px solid var(--hair);
+  vertical-align:top;
+  color:var(--fg);
+}
+.spec td:first-child{ color:var(--fg-hi) }
+.spec td:not(:last-child){ padding-right:1.25rem }
+.nb{ white-space:nowrap }
+.spec .num, .spec td.num, .spec th.num{ text-align:right }
+.spec .mid{ color:var(--dim) }
+.g-a{ color:var(--fg-hi); font-weight:600 }
+
+/* dim placeholder for a genuinely not-applicable cell (no invented data) */
+.spec td .na{ color:var(--ghost) }
+
+/* tighten the data-table columns so they read as designed tables, not
+   spreadsheets stretched across the measure: the event/employer column
+   takes the slack and the trailing value hugs the right edge, keeping the
+   role column close to its event rather than marooned mid-row. */
+.t-ctf td:first-child, .t-ctf th:first-child{ width:14.5rem }
+.t-ctf td:nth-child(2), .t-ctf th:nth-child(2){ width:6rem }
+.t-work td:first-child, .t-work th:first-child{ width:18rem }
+
+.tfoot{
+  margin-top:14px;
+  font:400 var(--t-small)/1.6 var(--sans); color:var(--dim);
+  max-width:62ch;
+}
+
+/* ---------- academics ---------- */
+
+.a-ttl{ font-size:1rem; font-weight:600; color:var(--fg-hi); letter-spacing:.01em }
+.a-sub{
+  margin-top:4px;
+  font-size:.75rem; color:var(--dim);
+}
+
+.edu-item{ padding:22px 0 }
+.edu-item + .edu-item{ border-top:1px solid var(--hair) }
+.edu-item:first-of-type{ padding-top:2px }
+.edu-head{
+  display:flex; justify-content:space-between; align-items:baseline;
+  gap:.75rem 1.5rem; flex-wrap:wrap;
+}
+.edu-period{
+  font-size:var(--t-label); font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--dim); white-space:nowrap;
+}
+.edu-courses{ margin-top:14px }
+
+.acad-foot{
+  margin-top:24px; padding-top:16px;
+  border-top:1px solid var(--hair);
+  max-width:62ch;
+  font:400 var(--t-small)/1.6 var(--sans); color:var(--dim);
+}
+
+/* ---------- involvement ---------- */
+
+.inv-item{ padding:20px 0 }
+.inv-item + .inv-item{ border-top:1px solid var(--hair) }
+.inv-item:first-of-type{ padding-top:2px }
+.inv-head{
+  display:flex; justify-content:space-between; align-items:baseline;
+  gap:.75rem 1.5rem; flex-wrap:wrap;
+}
+.inv-role{
+  font-size:var(--t-label); font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--fg-hi); white-space:nowrap;
+}
+
+/* ---------- writing ---------- */
+
+.wlist{ list-style:none; border-top:1px solid var(--line); border-bottom:1px solid var(--hair) }
+.wlist li{
+  display:grid; grid-template-columns:minmax(0,auto) 1fr auto; column-gap:1.5ch;
+  align-items:baseline;
+  padding:12px 0;
+}
+.wlist li + li{ border-top:1px solid var(--hair) }
+.w-title{ color:var(--fg-hi); font-weight:500; font-size:.9375rem }
+.w-lead{
+  border-bottom:1px dotted rgba(138,144,139,.45);
+  align-self:center; transform:translateY(.28em);
+  min-width:2ch;
+}
+.w-kind{ font-size:var(--t-small); color:var(--dim); text-align:right }
+
+.more-row{
+  margin-top:22px;
+  display:flex; justify-content:space-between; align-items:baseline; gap:1.5rem;
+}
+.more{ font-size:var(--t-small); font-weight:500 }
+.more-count{ font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase; color:var(--dim) }
+
+/* ---------- skills: three labelled categories ---------- */
+
+.skills{ display:grid; gap:0 }
+.skill-group{
+  display:grid; grid-template-columns:var(--keycol) 1fr; column-gap:1.5rem;
+  padding:16px 0;
+  border-bottom:1px solid var(--hair);
+}
+.skill-group:first-child{ border-top:1px solid var(--line) }
+.sg-label{
+  font-size:var(--t-label); font-weight:500; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--dim); padding-top:.28em;
+}
+.sg-items{ display:flex; flex-wrap:wrap; gap:.5ch 1.1ch; font-size:.9375rem }
+.sg-items li{ list-style:none; color:var(--fg-hi) }
+.sg-items li:not(:last-child)::after{ content:"·"; color:var(--ghost); margin-left:1.1ch }
+
+/* ---------- languages ---------- */
+
+.langs{ display:grid; gap:0 }
+.langs > div{
+  display:flex; justify-content:space-between; align-items:baseline; gap:1.5rem;
+  padding:13px 0;
+  border-bottom:1px solid var(--hair);
+}
+.langs > div:first-child{ border-top:1px solid var(--line) }
+.lang-name{ color:var(--fg-hi); font-weight:500; font-size:.9375rem }
+.lang-lvl{
+  font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase;
+  color:var(--dim);
+}
+
+/* ---------- references ---------- */
+
+.refs{
+  font:400 var(--t-body)/1.7 var(--sans);
+  color:var(--fg);
+}
+
+/* ---------- footer ---------- */
+
+.site-foot{ border-top:1px solid var(--hair); margin-top:26px }
+.site-foot .wrap{
+  display:flex; justify-content:space-between; align-items:baseline;
+  gap:1.5rem; flex-wrap:wrap;
+  padding-top:26px; padding-bottom:44px;
+  font-size:.75rem; color:var(--dim);
+}
+.site-foot .src{ letter-spacing:.08em }
+
+/* print-only document header (letterhead), hidden on screen */
+.print-header{ display:none }
+
+/* ============================================================
+   DESKTOP >= 1020px: the dossier grid.
+   Marginalia column left, content wide, one shared right edge.
+   ============================================================ */
+
+@media (min-width:1020px){
+
+  main section{ padding:56px 0 62px }
+
+  .sgrid{
+    display:grid;
+    grid-template-columns:var(--marg) minmax(0,1fr);
+    column-gap:var(--mgap);
+  }
+  .marg{
+    display:block;
+    border-bottom:0; padding-bottom:0; margin-bottom:0;
+  }
+  .m-idx{
+    font-size:2.6rem; font-weight:600; line-height:1;
+    letter-spacing:.01em; color:var(--ghost);
+    order:0;
+  }
+  .m-path{ margin-top:12px }
+  .m-note{
+    display:block;
+    margin-top:24px;
+    font:400 var(--t-small)/1.6 var(--sans);
+    color:var(--dim);
+    max-width:11.5rem;
+  }
+
+  .cover-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+  }
+
+  /* skills: label column + wide items, reads with the other meta rows */
+  .skill-group{ grid-template-columns:9rem 1fr }
+}
+
+/* ============================================================
+   MOBILE <= 740px
+   ============================================================ */
+
+@media (max-width:740px){
+  body{ font-size:14px }
+  .site-head .wrap{
+    height:auto; flex-direction:column; align-items:flex-start;
+    gap:9px; padding-top:12px; padding-bottom:12px;
+  }
+  .site-nav{ flex-wrap:wrap; gap:.5rem 1.1rem }
+  .site-nav a{ font-size:.75rem }
+
+  main section{ padding:34px 0 38px }
+  .cover{ padding:28px 0 24px }
+  .s-title{ margin-bottom:20px }
+  .marg{ margin-bottom:16px }
+
+  .cover-top{ flex-direction:column; gap:16px }
+  .dl{ align-self:flex-start }
+
+  /* stacked contact list: drop the inline separators so no line ends in a dot */
+  .contact-line{ flex-direction:column; gap:7px; align-items:flex-start }
+  .contact-line .sep{ display:none }
+
+  .e-meta{ gap:12px }
+  .e-meta > div{ grid-template-columns:1fr; row-gap:3px }
+  .e-meta dt{ padding-top:0 }
+
+  .win-call{ padding:4px 0 24px }
+
+  .skill-group{ grid-template-columns:1fr; row-gap:8px; padding:14px 0 }
+  .sg-label{ padding-top:0 }
+
+  .spec{ font-size:.75rem }
+  .spec td{ padding:9px 0 }
+
+  /* writing index: stacked rows */
+  .wlist li{ display:block; padding:12px 0 13px }
+  .w-lead{ display:none }
+  .w-title{ display:block }
+  .w-kind{
+    display:block; margin-top:5px; text-align:left;
+    font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation:none !important;
+    transition:none !important;
+  }
+  .skip{ transition:none }
+}
+
+/* ============================================================
+   PRINT: a clean, light, single-column, ink-friendly CV.
+   Dark chrome and interactive elements drop away; a document
+   header identifies the page. Entries never break across pages.
+   ============================================================ */
+
+@media print{
+  @page{ margin:16mm 15mm 15mm }
+
+  :root{
+    --bg:#ffffff;
+    --fg-hi:#111312;
+    --fg:#242726;
+    --dim:#5a5f5b;
+    --ghost:#c4c8c3;
+    --hair:#d9dcd7;
+    --line:#b7bcb5;
+    --acc:#111312;
+  }
+
+  html, body{
+    background:#fff !important;
+    color:#111312 !important;
+    font-size:10pt;
+    line-height:1.5;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+
+  /* drop the screen chrome */
+  .site-head, .site-foot, .skip, .dl, .cov-meta, .more-row, .m-note{ display:none !important }
+
+  a{ color:#111312 !important; text-decoration:none }
+
+  /* single column: dissolve the marginalia grid */
+  .wrap{ max-width:none; padding:0 }
+  .sgrid{ display:block }
+  .marg{
+    display:flex; justify-content:flex-start; gap:1.5ch; align-items:baseline;
+    border-bottom:1px solid var(--hair);
+    padding-bottom:5px; margin-bottom:12px;
+  }
+  .m-idx{
+    order:0; font-size:8.5pt; font-weight:600; letter-spacing:.14em;
+    color:#7a7f7a;
+  }
+  .m-path{ font-size:8.5pt; color:#7a7f7a }
+  .s-title{ font-size:14pt; margin-bottom:12px }
+
+  main section{ padding:9px 0 !important; border-top:1px solid var(--hair) }
+  main > section:first-of-type{ border-top:0 }
+
+  /* compress vertical rhythm so the CV paginates to a tight document */
+  .pentry{ padding:11px 0 }
+  .pentry:first-of-type{ padding-top:2px }
+  .edu-item, .inv-item{ padding:10px 0 }
+  .skill-group{ padding:8px 0 }
+  .langs > div{ padding:7px 0 }
+  .spec td{ padding:6px 0 }
+  .spec th{ padding-bottom:7px }
+  .spec caption.cap{ padding-bottom:8px }
+  .e-meta{ margin-top:10px; gap:5px }
+  .e-links{ margin-top:10px }
+  .win-call{ padding:2px 0 11px }
+  .wlist li{ padding:8px 0 }
+  .acad-foot{ margin-top:13px; padding-top:10px }
+  .tfoot{ margin-top:8px }
+  .lede{ margin-bottom:10px }
+  .edu-courses{ margin-top:10px }
+
+  /* cover */
+  .cover{ padding:0 0 12px }
+  .cover-top{ margin-bottom:8px }
+  .cover h1{ font-size:22pt }
+  .idline{ font-size:11pt; margin-top:6px }
+  .contact-line{ margin-top:12px; padding-top:10px; font-size:9pt }
+  .contact-line .sep{ color:#b7bcb5 }
+
+  /* prose + type */
+  .prose p, .e-desc, .lede, .refs{ font-size:10pt; line-height:1.5; max-width:none }
+  .lede{ margin-bottom:14px }
+  .win-num{ font-size:34pt }
+  .win-event{ font-size:13pt }
+  .win-call{ padding:4px 0 16px }
+
+  /* keep individual records intact, but let sections flow so pages
+     pack tightly (avoid on the whole section wastes pages) */
+  .pentry, .edu-item, .inv-item, .skill-group,
+  .win-call, .langs > div, .spec tr, .wlist li{
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  h1, h2, h3, .marg{ break-after:avoid; page-break-after:avoid }
+
+  .sg-items li, .lang-name, .w-title, .spec td:first-child,
+  .e-desc .ttl, .p-head h3{ color:#111312 !important }
+  .sg-items li:not(:last-child)::after,
+  .contact-line .sep{ color:#b7bcb5 !important }
+
+  /* the win keeps a quiet emphasis, no colour flood in print */
+  .win-num{ color:#111312 !important }
+
+  /* document header: identifies the printed CV */
+  .print-header{
+    display:block;
+    margin:0 0 14px;
+    padding-bottom:10px;
+    border-bottom:1.5px solid #111312;
+  }
+  .print-header .ph-name{
+    font:600 12pt/1.2 var(--mono);
+    color:#111312; letter-spacing:.01em;
+  }
+  .print-header .ph-meta{
+    margin-top:5px;
+    font:400 8.5pt/1.4 var(--mono);
+    color:#5a5f5b;
+  }
+  .print-header .ph-meta .sep{ color:#b7bcb5 }
+}
+</style>
+</head>
+<body id="top">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- document header, only rendered when printing -->
+<div class="print-header" aria-hidden="true">
+  <div class="ph-name">Joakim Nordheim Larssen &middot; Curriculum Vitae</div>
+  <div class="ph-meta">
+    Oslo, Norway
+    <span class="sep">&middot;</span> joakimnordheimlarssen@gmail.com
+    <span class="sep">&middot;</span> nordheimlarssen.no
+  </div>
+</div>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="tilde">~/</span>jnl</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/#whoami">whoami</a>
+      <a href="/#projects">projects</a>
+      <a href="/#ctf">ctf.log</a>
+      <a href="/#academics">academics</a>
+      <a href="/writing">writing</a>
+      <a href="/cv" class="is-active" aria-current="page">cv</a>
+      <a href="/#contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ cover ============ -->
+  <section class="cover" aria-label="Identity">
+    <div class="wrap">
+      <div class="cover-grid">
+        <div class="cover-top">
+          <p class="kicker">Curriculum Vitae</p>
+          <button type="button" class="dl" id="printBtn">
+            <span class="dlg" aria-hidden="true">&darr;</span> Download PDF
+          </button>
+        </div>
+        <h1>Joakim Nordheim Larssen</h1>
+        <p class="idline">Security engineer and builder, Oslo.</p>
+
+        <p class="contact-line">
+          <a href="mailto:joakimnordheimlarssen@gmail.com">joakimnordheimlarssen@gmail.com</a>
+          <span class="sep" aria-hidden="true">&middot;</span>
+          <a href="https://github.com/JoakimLarssen">github.com/JoakimLarssen</a>
+          <span class="sep" aria-hidden="true">&middot;</span>
+          <a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223">in/joakim-nordheim-larssen</a>
+          <span class="sep" aria-hidden="true">&middot;</span>
+          <a href="/">nordheimlarssen.no</a>
+        </p>
+
+        <p class="cov-meta" aria-hidden="true">
+          <span>Oslo, Norway</span>
+          <span>eleven sections</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 summary ============ -->
+  <section id="summary" aria-labelledby="h-summary">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">01</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/summary</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-summary">summary</h2>
+        <div class="prose">
+          <p>Final-year BSc Cybersecurity student at H&oslash;yskolen Kristiania, Bergen, graduating summer 2026, and continuing into an MSc in Information Security at NTNU, Gj&oslash;vik, from autumn 2026. I build security tooling and products, and I compete in CTFs. Open to security roles.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 building ============ -->
+  <section id="building" aria-labelledby="h-building">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">02</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/building</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-building">building</h2>
+
+        <article class="pentry">
+          <div class="p-head">
+            <h3>Riposte</h3>
+            <p class="e-status">[ in dev ]</p>
+          </div>
+          <p class="e-desc">An agentic security CLI and AI purple-team platform, red and blue, built around a four-gate verified-detection loop. Co-built with Krister Eriksen.</p>
+          <dl class="e-meta">
+            <div><dt>role</dt><dd>builder / architect</dd></div>
+            <div><dt>with</dt><dd>Krister Eriksen</dd></div>
+            <div><dt>year</dt><dd>2026</dd></div>
+          </dl>
+          <p class="e-links">
+            <a href="https://riposte.no">riposte.no &#8599;</a>
+          </p>
+        </article>
+
+        <article class="pentry">
+          <div class="p-head">
+            <h3>Futtia</h3>
+            <p class="e-status">[ in dev ]</p>
+          </div>
+          <p class="e-desc">An AI football-analysis product.</p>
+          <dl class="e-meta">
+            <div><dt>role</dt><dd>founder</dd></div>
+          </dl>
+          <p class="e-links">
+            <a href="https://futtia.no">futtia.no &#8599;</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 bachelor thesis ============ -->
+  <section id="thesis" aria-labelledby="h-thesis">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">03</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/thesis</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-thesis">bachelor thesis</h2>
+
+        <article class="pentry">
+          <div class="p-head">
+            <h3>Secure AI-Accelerated Development in Agile Workflows</h3>
+            <p class="e-status">[ 2026 ]</p>
+          </div>
+          <p class="e-desc">SAIF, a five-part framework for how small teams integrate AI-accelerated development into agile workflows while balancing security, architecture, and reliability. A group project with Krister Eriksen and Bendik Hagen.</p>
+          <dl class="e-meta">
+            <div><dt>with</dt><dd>Krister Eriksen, Bendik Hagen</dd></div>
+            <div><dt>grade</dt><dd>A</dd></div>
+            <div><dt>year</dt><dd>2026</dd></div>
+          </dl>
+          <p class="e-links">
+            <a href="/thesis.pdf">read thesis &#8599;</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 ctf ============ -->
+  <section id="ctf" aria-labelledby="h-ctf">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">04</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/ctf.log</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-ctf">ctf</h2>
+
+        <p class="lede">Three podium finishes, one win. Crypto, pwn, and web.</p>
+
+        <p class="mini">highest placement</p>
+        <div class="win-call">
+          <p class="win-num">1st</p>
+          <div class="win-body">
+            <p class="win-event">Cybvest CTF<span class="win-role">team</span></p>
+            <p class="win-note">I also co-hosted a Cybvest edition, once.</p>
+          </div>
+        </div>
+
+        <table class="spec t-ctf">
+          <caption class="cap">further results</caption>
+          <thead>
+            <tr>
+              <th scope="col">Event</th>
+              <th scope="col">Role</th>
+              <th scope="col" class="num">Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Helt Sikker CTF</td><td class="mid">solo</td><td class="num">3rd</td></tr>
+            <tr><td><span class="nb">Kongsberg Gruppen &times;</span> <span class="nb">Helt Sikker CTF</span></td><td class="mid">team</td><td class="num">3rd</td></tr>
+            <tr><td>EPT 2025</td><td class="mid">team</td><td class="num"><span class="nb">16th overall,</span> <span class="nb">4th student</span></td></tr>
+            <tr><td>EPT 2024</td><td class="mid">team</td><td class="num"><span class="nb">34th overall,</span> <span class="nb">8th student</span></td></tr>
+            <tr><td>Cyberlandslaget Christmas CTF</td><td class="mid"><span class="na" aria-hidden="true">&ndash;</span></td><td class="num">participant</td></tr>
+          </tbody>
+        </table>
+        <p class="tfoot">Kongsberg Gruppen &times; Helt Sikker CTF was my first CTF.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 education ============ -->
+  <section id="education" aria-labelledby="h-education">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">05</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/education</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-education">education</h2>
+
+        <div class="edu-item">
+          <div class="edu-head">
+            <div>
+              <h3 class="a-ttl">MSc Information Security</h3>
+              <p class="a-sub">NTNU, Gj&oslash;vik</p>
+            </div>
+            <p class="edu-period">incoming &middot; autumn 2026</p>
+          </div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-head">
+            <div>
+              <h3 class="a-ttl">BSc Cybersecurity</h3>
+              <p class="a-sub">H&oslash;yskolen Kristiania, Bergen</p>
+            </div>
+            <p class="edu-period">2023 to 2026 &middot; expected summer 2026</p>
+          </div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-head">
+            <div>
+              <h3 class="a-ttl">Exchange</h3>
+              <p class="a-sub">Southern Utah University, USA</p>
+            </div>
+            <p class="edu-period">spring 2025</p>
+          </div>
+          <table class="spec edu-courses">
+            <caption class="sr">Exchange course grades, all A</caption>
+            <tbody>
+              <tr><td>Cyber Warfare</td><td class="num g-a">A</td></tr>
+              <tr><td>Data Communications and Networking</td><td class="num g-a">A</td></tr>
+              <tr><td>Algorithms and Data Structures</td><td class="num g-a">A</td></tr>
+              <tr><td>Technology and Ethics</td><td class="num g-a">A</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="acad-foot">Full transcript and verified record available on request.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 involvement ============ -->
+  <section id="involvement" aria-labelledby="h-involvement">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">06</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/involvement</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-involvement">involvement</h2>
+
+        <div class="inv-item">
+          <div class="inv-head">
+            <div>
+              <h3 class="a-ttl">Cybvest</h3>
+              <p class="a-sub">Cybersecurity student association, H&oslash;yskolen Kristiania Bergen</p>
+            </div>
+            <p class="inv-role">Leader</p>
+          </div>
+        </div>
+
+        <div class="inv-item">
+          <div class="inv-head">
+            <div>
+              <h3 class="a-ttl"><a href="https://kvarteret.no">Kvarteret studenthus</a></h3>
+              <p class="a-sub">Bergen</p>
+            </div>
+            <p class="inv-role">Volunteer developer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 writing ============ -->
+  <section id="writing" aria-labelledby="h-writing">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">07</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/writing</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-writing">writing</h2>
+
+        <p class="lede">On security, AI risk, and critical infrastructure. Some research, some coursework, some from my own projects.</p>
+
+        <ul class="wlist">
+          <li><span class="w-title">Secure AI-Accelerated Development in Agile Workflows</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">bachelor thesis</span></li>
+          <li><span class="w-title">The Power Grid is the Battlefield</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">cyberwarfare final project</span></li>
+          <li><span class="w-title">Building and Securing a Network from Scratch</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">data communications final project</span></li>
+          <li><span class="w-title">The Economics of a Zero-Day</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">analysis</span></li>
+          <li><span class="w-title">Marking the Machine</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">analysis + experiment</span></li>
+          <li><span class="w-title">Too Dangerous to Release</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">analysis</span></li>
+          <li><span class="w-title">Does AI Actually Write Insecure Code?</span><span class="w-lead" aria-hidden="true"></span><span class="w-kind">research review</span></li>
+        </ul>
+
+        <p class="more-row">
+          <a class="more" href="/writing">read all writing &rarr;</a>
+          <span class="more-count" aria-hidden="true">7 pieces</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 skills ============ -->
+  <section id="skills" aria-labelledby="h-skills">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">08</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/skills</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-skills">skills</h2>
+
+        <div class="skills">
+          <div class="skill-group">
+            <p class="sg-label">Languages</p>
+            <ul class="sg-items">
+              <li>Python</li>
+              <li>TypeScript / JavaScript</li>
+              <li>SQL</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <p class="sg-label">Security</p>
+            <ul class="sg-items">
+              <li>web application security (OWASP WSTG)</li>
+              <li>penetration testing</li>
+              <li>detection engineering (Sigma)</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <p class="sg-label">Tools</p>
+            <ul class="sg-items">
+              <li>Docker</li>
+              <li>Git</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 languages ============ -->
+  <section id="languages" aria-labelledby="h-languages">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">09</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/languages</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-languages">languages</h2>
+        <div class="langs">
+          <div><span class="lang-name">Norwegian</span><span class="lang-lvl">native</span></div>
+          <div><span class="lang-name">English</span><span class="lang-lvl">fluent</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10 earlier work ============ -->
+  <section id="earlier-work" aria-labelledby="h-earlier">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">10</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/earlier-work</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-earlier">earlier work</h2>
+        <table class="spec t-work">
+          <caption class="sr">Earlier work history</caption>
+          <thead>
+            <tr>
+              <th scope="col">Employer</th>
+              <th scope="col" class="num">Period</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Avarn Aviation Security</td><td class="num">summers 2024 and 2025</td></tr>
+            <tr><td>Travel Retail Norway</td><td class="num">2023</td></tr>
+            <tr><td>Best Western Plus Oslo Airport</td><td class="num">2022</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11 references ============ -->
+  <section id="references" aria-labelledby="h-references">
+    <div class="wrap sgrid">
+      <div class="marg">
+        <p class="m-idx" aria-hidden="true">11</p>
+        <p class="m-path" aria-hidden="true">~/jnl/cv/references</p>
+      </div>
+      <div>
+        <h2 class="s-title" id="h-references">references</h2>
+        <p class="refs">Available on request.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p>&copy; 2026 Joakim Nordheim Larssen</p>
+    <p class="src">no cookies &middot; no analytics</p>
+  </div>
+</footer>
+
+<script>
+  // The only script on this page: the Download PDF handler (window.print),
+  // kept deliberately so the printed CV is always the live page, with no
+  // separate PDF file to drift. No analytics, no cookies, no tracking.
+  document.getElementById("printBtn").addEventListener("click", function(){
+    window.print();
+  });
+</script>
+
+</body>
+</html>
