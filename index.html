@@ -839,7 +839,11 @@ main > section + section{ border-top:1px solid var(--hair) }
 
 @media (max-width:740px){
   body{ font-size:14px }
-  .site-nav{ gap:1.1rem }
+  .site-head .wrap{
+    height:auto; flex-direction:column; align-items:flex-start;
+    gap:9px; padding-top:12px; padding-bottom:12px;
+  }
+  .site-nav{ flex-wrap:wrap; gap:.5rem 1.1rem }
   .site-nav a{ font-size:.75rem }
 
   main section{ padding:34px 0 38px }
@@ -955,11 +959,13 @@ main > section + section{ border-top:1px solid var(--hair) }
   <div class="wrap">
     <a class="brand" href="#top"><span class="tilde">~/</span>jnl</a>
     <nav class="site-nav" aria-label="Site">
-      <a href="#projects">projects</a>
-      <a href="#ctf">ctf.log</a>
+      <a href="/#whoami">whoami</a>
+      <a href="/#projects">projects</a>
+      <a href="/#ctf">ctf.log</a>
+      <a href="/#academics">academics</a>
       <a href="/writing">writing</a>
       <a href="/cv">cv</a>
-      <a href="#contact">contact</a>
+      <a href="/#contact">contact</a>
     </nav>
   </div>
 </header>
