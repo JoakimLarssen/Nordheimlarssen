@@ -6,8 +6,8 @@
   the same colour tokens, marginalia section headers, meta-row and table
   grammar. Dark on screen; the print stylesheet switches to a clean, light,
   single-column, ink-friendly PDF. No scroll effects, no reveal animations.
-  The only JavaScript is the Download PDF (window.print) handler and the
-  footer year.
+  There is no JavaScript: the Download PDF button links directly to a
+  pre-rendered PDF of this page, and Ctrl+P still prints the live page.
   ============================================================================
 -->
 <html lang="en">
@@ -198,6 +198,7 @@ main > section + section{ border-top:1px solid var(--hair) }
   border:1px solid var(--line);
   padding:10px 16px;
   cursor:pointer;
+  text-decoration:none;
   transition: background .12s var(--ease), color .12s var(--ease), border-color .12s var(--ease);
 }
 .dl:hover{ background:var(--fg-hi); color:var(--bg); border-color:var(--fg-hi) }
@@ -706,9 +707,9 @@ main > section + section{ border-top:1px solid var(--hair) }
       <div class="cover-grid">
         <div class="cover-top">
           <p class="kicker">Curriculum Vitae</p>
-          <button type="button" class="dl" id="printBtn">
+          <a class="dl" href="/cv.pdf" download="Joakim Nordheim Larssen - CV.pdf">
             <span class="dlg" aria-hidden="true">&darr;</span> Download PDF
-          </button>
+          </a>
         </div>
         <h1>Joakim Nordheim Larssen</h1>
         <p class="idline">Security engineer and builder, Oslo.</p>
@@ -1084,15 +1085,6 @@ main > section + section{ border-top:1px solid var(--hair) }
     <p class="src">no cookies &middot; no analytics</p>
   </div>
 </footer>
-
-<script>
-  // The only script on this page: the Download PDF handler (window.print),
-  // kept deliberately so the printed CV is always the live page, with no
-  // separate PDF file to drift. No analytics, no cookies, no tracking.
-  document.getElementById("printBtn").addEventListener("click", function(){
-    window.print();
-  });
-</script>
 
 </body>
 </html>
