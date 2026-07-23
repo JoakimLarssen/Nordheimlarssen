@@ -13,7 +13,7 @@ Live site untouched. The `/writing` section untouched.
 
 3. **Three direction mockups, built and iterated across four full cycles.** They live in `mockups/direction-{a,b,c}.html` in this branch. Open them directly in a browser, or look at the latest rendered shots in `C:\Users\joaki\.shots\nordheim-redesign\round4\` (desktop fold, desktop full, mobile full for each; `round1` through `round3` show the evolution).
 
-**Round 3** answered the second fresh-eyes panel's hardest complaint (all three were an 800px column wasting the desktop) by rebuilding all three on full-width grids. **Round 4** replaced the weak product screenshots with strong evidence: a real Riposte scoped session (natural-language prompt, findings with validation status, and the scope gate refusing an out-of-scope target, which proves the "cannot go off-leash" claim) and a dark Futtia labelled match-moment view, both from the actual products. The gate caught and fixed a caption that overclaimed ("findings validated" became "four of five validated"). Round 4 also cleared the third critique panel's complaints: A's hero dead zone now carries an ON RECORD line and its grades are one neutral color, B has a real mobile nav to all six sections and dropped a redundant rail, C's exhibit chrome and captions match their artifacts.
+**Round 3** answered the second fresh-eyes panel's hardest complaint (all three were an 800px column wasting the desktop) by rebuilding all three on full-width grids. **Round 4** embedded product screenshots and cleared the third panel's complaints (hero dead zones, grade colors, a real mobile nav, matching captions). **Round 5** made the decisive evidence call: the fourth critique panel was unanimous that pasted product screenshots were now the weak point, since a terminal capture goes illegible when scaled into a content column, imports its own off-palette colors, and can catch a blocked state. So the Riposte evidence is now a native HTML rendering of the real lab session, typeset in each page's own mono and single accent (accent used only on the prompt glyph, the validated tokens, and the scope-gate denial line). It is legible at every width, on-palette, honest, and more in-spirit than a screenshot. Futtia dropped the self-contradictory illustration and is presented text-first with its link, like the thesis. A copy audit found the writing unusually clean (zero AI vocabulary, zero em dashes, every fact matching the live site); the only fixes were killing "at the intersection of" and tightening one blurb.
 
 ## The three directions (pick one, or mix)
 
@@ -47,6 +47,8 @@ Your only real Futtia app screenshot is a weak empty-state (it even shows a "Goo
 
 The subagent fleet briefly hit the monthly spend limit around 02:16 and paused a round mid-flight; capacity returned and the paused workflow resumed from cache with nothing lost. Every checkpoint builds and the branch is healthy.
 
-## Next (in flight)
+## Where this stands
 
-A fourth adversarial critique focused on the new exhibits, plus a direction-agnostic copy and factual-precision audit whose results carry into whichever direction you pick. Then more cycles until you choose.
+Five full build/critique/gate cycles in, all three directions are at a "would a top studio ship this" bar: differentiated by metaphor (document / evidence console / machine), evidence-backed by a real Riposte session, rule-clean, and verified at desktop and mobile. The honest next step is your pick. I will keep running lighter verification passes until you choose a direction, then build that one out to the full multi-page site (case-study pages, 404, OG images, favicon check, a real Futtia capture if you want one).
+
+Latest renders: `C:\Users\joaki\.shots\nordheim-redesign\round5\`.
