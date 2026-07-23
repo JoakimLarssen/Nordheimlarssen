@@ -55,6 +55,12 @@
   --accent-soft: rgba(223, 168, 62, 0.11);
   --accent-line: rgba(223, 168, 62, 0.45);
 
+  /* the one extra semantic hue: a restrained rust, spent ONLY on the
+     scope-gate refusal so success (accent) and refusal never share a color */
+  --deny:      #D2745A;
+  --deny-soft: rgba(210, 116, 90, 0.10);
+  --deny-line: rgba(210, 116, 90, 0.50);
+
   --mono: "Spline Sans Mono", ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
   --maxw: 1200px;
   --pad: clamp(20px, 4vw, 48px);
@@ -413,8 +419,27 @@ h2 {
   display: grid;
   grid-template-columns: var(--rail) minmax(0, 1fr);
   gap: 0 var(--gutter);
+  align-items: start;
 }
 .about-body .prose { grid-column: 2; }
+
+/* the rail is no longer empty: a compact "at a glance" record, drawn from
+   the prose, that fills the left quadrant as a discrete ledger module */
+.about-card {
+  grid-column: 1;
+  grid-row: 1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent-line);
+  padding: 16px 18px 18px;
+}
+.about-card-key { display: block; margin-bottom: 12px; }
+.about-card .meta > div {
+  grid-template-columns: 4.75rem minmax(0, 1fr);
+  gap: 0 14px;
+  padding: 4px 0;
+}
+.about-card .meta dd { color: var(--body); }
 
 .prose { max-width: 68ch; }
 .prose p { line-height: 1.75; }
@@ -544,6 +569,8 @@ h3 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.evidence-bar .path:first-child { min-width: 0; flex: 1 1 auto; }
+.evidence-bar .path:last-child  { flex: 0 0 auto; }
 /* ---------- the transcript exhibit: the recorded session, typeset ----------
    natively in this direction's mono and single amber accent. No screenshot.
    Accent is spent only on the prompt glyph, the (validated) tokens, and the
@@ -565,6 +592,10 @@ h3 {
   border-bottom: 1px solid var(--hairline);
 }
 .ts-head .ts-sep { color: var(--faint); padding: 0 3px; }
+/* keep each logical unit whole so narrow widths break BETWEEN them,
+   never orphaning a fragment like "RECON)" onto its own line */
+.ts-head .ts-title,
+.ts-head .ts-scope { white-space: nowrap; }
 
 .ts-dim   { color: var(--dim); }
 .ts-agent { color: var(--body); }
@@ -592,13 +623,23 @@ h3 {
 .ts-val   { color: var(--accent); font-weight: 600; }
 .ts-unval { color: var(--faint); }
 
-/* the money line: the scope-gate refusal, given the accent + a denied block */
+/* the money line: the scope-gate refusal. A DISTINCT rust treatment, never
+   the accent, so a refusal never reads like the (validated) success tokens.
+   The small marker + rust hue mark it as a different class of event. */
 .ts-deny {
-  color: var(--accent);
+  display: flex;
+  gap: 0.85ch;
+  color: var(--deny);
   font-weight: 600;
-  background: var(--accent-soft);
-  border-left: 2px solid var(--accent-line);
+  background: var(--deny-soft);
+  border-left: 2px solid var(--deny-line);
   padding: 4px 11px;
+}
+.ts-deny::before {
+  content: "\2716";           /* heavy multiplication x: a refusal marker */
+  flex: none;
+  font-weight: 700;
+  color: var(--deny);
 }
 
 .evidence-cap {
@@ -607,6 +648,100 @@ h3 {
   font-size: var(--fs-small);
   color: var(--dim);
 }
+
+/* ---------- the Futtia pipeline exhibit: a typographic schematic ----------
+   an honest diagram of the architecture the copy describes. No numbers, no
+   screenshot: three labelled nodes, one accent, connected top to bottom. */
+.pipeline {
+  padding: 18px 16px 20px;
+  display: flex;
+  flex-direction: column;
+}
+.pl-step {
+  display: grid;
+  grid-template-columns: 2.4ch minmax(0, 1fr);
+  gap: 0 12px;
+  align-items: baseline;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+.pl-ix {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.pl-txt {
+  font-size: var(--fs-meta);
+  line-height: 1.45;
+  color: var(--text);
+}
+.pl-arrow {
+  position: relative;
+  height: 24px;
+}
+.pl-arrow::before {           /* the connector segment, under the index */
+  content: "";
+  position: absolute;
+  left: 21px;
+  top: 0;
+  height: 15px;
+  border-left: 1px solid var(--accent-line);
+}
+.pl-arrow::after {            /* down triangle: flow direction */
+  content: "\25BE";
+  position: absolute;
+  left: 21px;
+  top: 11px;
+  transform: translateX(-50%);
+  color: var(--accent-line);
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+/* ---------- the thesis grade card exhibit: a framed grade record ---------- */
+.gradecard { padding: 20px 18px 20px; }
+.gc-eyebrow { display: block; }
+.gc-grade {
+  font-size: 3.25rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  margin: 8px 0 16px;
+}
+.gc-rows {
+  border-top: 1px solid var(--hairline);
+  padding-top: 14px;
+}
+
+/* the three exhibits are one component. Text tops align with the exhibit
+   chrome; the last entry drops its divider so the section closes clean. */
+.entry-media:last-of-type { border-bottom: 0; }
+
+/* Riposte pairs a short text block with a tall transcript. Rather than leave
+   a dead quadrant, the text stretches full height and a decode legend anchors
+   to the bottom, so the negative space reads as intentional framing and the
+   left column doubles as a key to the exhibit's amber / faint / rust states. */
+#riposte { align-items: stretch; }
+#riposte .entry-text { display: flex; flex-direction: column; }
+.ev-legend { margin-top: auto; padding-top: 26px; }
+.ev-legend-key { display: block; margin-bottom: 12px; }
+.lg-row {
+  display: grid;
+  grid-template-columns: 12ch minmax(0, 1fr);
+  gap: 0 16px;
+  align-items: baseline;
+  padding: 4px 0;
+  font-size: var(--fs-meta);
+}
+.lg-tok { font-weight: 600; white-space: nowrap; }
+.lg-val   { color: var(--accent); }
+.lg-unval { color: var(--faint); }
+.lg-deny  { color: var(--deny); }
+.lg-def   { color: var(--dim); }
 
 /* ---------- tables: ledger rows ---------- */
 
@@ -657,27 +792,43 @@ h3 {
 .tbl tr.win td.ix { color: var(--accent); }
 .tbl tr.win:hover td { background: var(--accent-soft); }
 
+/* two-part results (the EPT lines): inline "main, sub" on desktop; a clean
+   two-line pattern on mobile, so nothing wraps raggedly */
+.result { white-space: nowrap; }
+.result .r-sub::before { content: ",\00A0"; color: var(--dim); }
+
 /* ---------- 04 academics: three records, three columns ---------- */
+
+/* the incoming MSc is a full-width banner, not a short third column that
+   would bottom out a table-height above its neighbours */
+.acad-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 32px;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent-line);
+  background: var(--panel);
+  padding: 16px 22px 17px;
+  margin-bottom: 42px;
+}
+.acad-banner-lead { display: flex; align-items: baseline; gap: 14px; }
+.acad-banner-facts { font-size: var(--fs-meta); color: var(--body); }
+.acad-banner-facts .fdot { color: var(--faint); padding: 0 6px; }
 
 .acad-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 36px 48px;
   align-items: start;
 }
 .acad-block .meta { margin: 8px 0 16px; }
 /* keep the two grade tables on the same baseline:
-   reserve two meta rows in every column */
+   reserve two meta rows in each column */
 @media (min-width: 901px) {
   .acad-block .meta { min-height: 56px; }
 }
-
-.acad-panel {
-  border: 1px solid var(--border);
-  background: var(--panel);
-  padding: 20px 22px 22px;
-}
-.acad-panel .entry-head { margin-bottom: 6px; }
 .acad-note {
   margin-top: 10px;
   font-size: var(--fs-meta);
@@ -969,18 +1120,52 @@ body.palette-open { overflow: hidden; }
   .entry-links { margin-left: 0; flex-basis: 100%; }
   .featured { padding: 20px 16px 22px; margin-inline: 0; }
 
-  /* evidence goes full-bleed so the screenshots keep real size */
+  /* evidence goes full-bleed so the exhibits keep real size */
   .entry-media .evidence {
     width: calc(100% + var(--pad) * 2);
     margin-inline: calc(var(--pad) * -1);
     border-left: 0;
     border-right: 0;
   }
-  .evidence-bar, .evidence-cap, .transcript { padding-inline: var(--pad); }
+  .evidence-bar, .evidence-cap,
+  .transcript, .pipeline, .gradecard { padding-inline: var(--pad); }
+
+  /* the grade card lays out horizontally on mobile: the big A beside the
+     record rows, so it is never a mostly-empty stretched box */
+  .gradecard {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+  .gc-eyebrow { flex-basis: 100%; }
+  .gc-grade { margin: 6px 0; }
+  .gc-rows {
+    flex: 1 1 auto;
+    min-width: 12ch;
+    border-top: 0;
+    padding-top: 0;
+    border-left: 1px solid var(--hairline);
+    padding-left: 22px;
+  }
 
   .tbl th, .tbl td { padding-right: 12px; font-size: var(--fs-small); }
   .ctf-tbl th:nth-child(3), .ctf-tbl td:nth-child(3) { width: 1%; white-space: nowrap; }
-  .ctf-tbl td.num { white-space: normal; }
+
+  /* designed mobile state: every row the same height (single- and two-line
+     alike), long EPT results become a deliberate main/sub stack, no wraps. */
+  .ctf-tbl tbody td {
+    height: 3.9em;
+    padding-top: 0;
+    padding-bottom: 0;
+    vertical-align: middle;
+  }
+  .ctf-tbl td.num { white-space: nowrap; }
+  .ctf-tbl .result { white-space: normal; text-align: right; }
+  .ctf-tbl .result .r-main,
+  .ctf-tbl .result .r-sub { display: block; line-height: 1.35; white-space: nowrap; }
+  .ctf-tbl .result .r-sub { color: var(--dim); }
+  .ctf-tbl .result .r-sub::before { content: ""; }
 
   .windex li { grid-template-columns: 3ch minmax(0, 1fr); gap: 0 16px; padding-block: 13px; }
   .windex .kind { grid-column: 2; margin-top: 3px; }
@@ -1081,6 +1266,15 @@ body.palette-open { overflow: hidden; }
       </header>
       <p class="about-lead">I work across offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
       <div class="about-body">
+        <aside class="about-card">
+          <p class="key about-card-key">at a glance</p>
+          <dl class="meta">
+            <div><dt>work</dt><dd>offensive security, software development</dd></div>
+            <div><dt>ctf</dt><dd>crypto, pwn, web</dd></div>
+            <div><dt>studying</dt><dd>BSc Cybersecurity, Bergen</dd></div>
+            <div><dt>volunteer</dt><dd><a href="https://kvarteret.no">Kvarteret studenthus</a></dd></div>
+          </dl>
+        </aside>
         <div class="prose">
           <p>I am a cybersecurity student in my final year of a BSc at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik.</p>
           <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>.</p>
@@ -1115,6 +1309,12 @@ body.palette-open { overflow: hidden; }
               <div><dt>with</dt><dd><a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a></dd></div>
               <div><dt>stack</dt><dd>Python, LiteLLM, Sigma, MITRE&nbsp;ATT&amp;CK, Docker</dd></div>
             </dl>
+            <div class="ev-legend">
+              <p class="key ev-legend-key">reading the exhibit</p>
+              <div class="lg-row"><span class="lg-tok lg-val">validated</span><span class="lg-def">confirmed by a scoped check</span></div>
+              <div class="lg-row"><span class="lg-tok lg-unval">unvalidated</span><span class="lg-def">reported, not yet confirmed</span></div>
+              <div class="lg-row"><span class="lg-tok lg-deny">&#10006;&#8201;denied</span><span class="lg-def">blocked by the scope gate</span></div>
+            </div>
           </div>
           <figure class="evidence">
             <div class="evidence-bar" aria-hidden="true">
@@ -1122,7 +1322,7 @@ body.palette-open { overflow: hidden; }
               <span class="path">001</span>
             </div>
             <div class="transcript">
-              <p class="ts-head">Riposte <span class="ts-sep" aria-hidden="true">.</span> demo-interactive-reflect (1 target, ceiling RECON)</p>
+              <p class="ts-head"><span class="ts-title">Riposte <span class="ts-sep" aria-hidden="true">.</span> demo-interactive-reflect</span> <span class="ts-scope">(1 target, ceiling RECON)</span></p>
               <p class="ts-dim">Type /help for commands, or just talk. Ctrl-Q to quit.</p>
               <p class="ts-line"><span class="ts-glyph" aria-hidden="true">&#10095;</span><span class="ts-op">Assess the web app at 172.22.0.3 for security issues, and run a scoped scan of that target to confirm anything you find.</span></p>
               <p class="ts-notice">running scan against 172.22.0.3 (this can take a while)...</p>
@@ -1144,37 +1344,77 @@ body.palette-open { overflow: hidden; }
           </figure>
         </article>
 
-        <article class="entry" id="futtia">
-          <header class="entry-head">
-            <h3>Futtia</h3>
-            <span class="status status-live">in dev</span>
-            <span class="entry-links">
-              <a href="https://futtia.no">futtia.no &#8599;</a>
-            </span>
-          </header>
-          <div class="entry-body">
+        <article class="entry-media" id="futtia">
+          <div class="entry-text">
+            <header class="entry-head">
+              <h3>Futtia</h3>
+              <span class="status status-live">in dev</span>
+              <span class="entry-links">
+                <a href="https://futtia.no">futtia.no &#8599;</a>
+              </span>
+            </header>
             <p class="entry-desc">AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>
             <dl class="meta">
               <div><dt>role</dt><dd>developer</dd></div>
               <div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
             </dl>
           </div>
+          <figure class="evidence">
+            <div class="evidence-bar" aria-hidden="true">
+              <span class="path">evidence / futtia-pipeline</span>
+              <span class="path">002</span>
+            </div>
+            <div class="pipeline">
+              <div class="pl-step">
+                <span class="pl-ix" aria-hidden="true">01</span>
+                <span class="pl-txt">raw match footage</span>
+              </div>
+              <span class="pl-arrow" aria-hidden="true"></span>
+              <div class="pl-step">
+                <span class="pl-ix" aria-hidden="true">02</span>
+                <span class="pl-txt">structured, searchable events</span>
+              </div>
+              <span class="pl-arrow" aria-hidden="true"></span>
+              <div class="pl-step">
+                <span class="pl-ix" aria-hidden="true">03</span>
+                <span class="pl-txt">the exact clips that back a plain-language answer</span>
+              </div>
+            </div>
+            <figcaption class="evidence-cap">The pipeline, in three steps. A schematic of the architecture, not a screen capture.</figcaption>
+          </figure>
         </article>
 
-        <article class="entry" id="thesis">
-          <header class="entry-head">
-            <h3>Bachelor thesis</h3>
-            <span class="status">2026</span>
-            <span class="entry-links">
-              <a href="/thesis.pdf">read thesis &#8599;</a>
-            </span>
-          </header>
-          <div class="entry-body">
-            <p class="entry-desc">Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams. How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup. A group thesis with <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik&nbsp;Hagen</a> and <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a>.</p>
+        <article class="entry-media" id="thesis">
+          <div class="entry-text">
+            <header class="entry-head">
+              <h3>Bachelor thesis</h3>
+              <span class="status">2026</span>
+              <span class="entry-links">
+                <a href="/thesis.pdf">read thesis &#8599;</a>
+              </span>
+            </header>
+            <p class="entry-desc">Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams. How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup.</p>
             <dl class="meta">
-              <div><dt>grade</dt><dd><span class="g-sig">A</span></dd></div>
+              <div><dt>role</dt><dd>co-author</dd></div>
+              <div><dt>with</dt><dd><a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik&nbsp;Hagen</a>, <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister&nbsp;Eriksen</a></dd></div>
             </dl>
           </div>
+          <figure class="evidence">
+            <div class="evidence-bar" aria-hidden="true">
+              <span class="path">evidence / thesis-grade</span>
+              <span class="path">003</span>
+            </div>
+            <div class="gradecard">
+              <p class="key gc-eyebrow">final grade</p>
+              <p class="gc-grade">A</p>
+              <dl class="meta gc-rows">
+                <div><dt>work</dt><dd>Bachelor thesis</dd></div>
+                <div><dt>award</dt><dd>H&oslash;yskolen Kristiania</dd></div>
+                <div><dt>year</dt><dd>2026</dd></div>
+              </dl>
+            </div>
+            <figcaption class="evidence-cap">The final grade for the bachelor thesis.</figcaption>
+          </figure>
         </article>
 
       </div>
@@ -1200,8 +1440,8 @@ body.palette-open { overflow: hidden; }
               <tr class="win"><td class="ix">01</td><td>Cybvest</td><td>team</td><td class="num g-sig">1st</td></tr>
               <tr><td class="ix">02</td><td>Helt Sikker CTF</td><td>solo</td><td class="num">3rd</td></tr>
               <tr><td class="ix">03</td><td>Kongsberg &times; Helt&nbsp;Sikker</td><td>team</td><td class="num">3rd</td></tr>
-              <tr><td class="ix">04</td><td>EPT 2025</td><td>team</td><td class="num wrap-ok">16th overall, 4th&nbsp;student</td></tr>
-              <tr><td class="ix">05</td><td>EPT 2024</td><td>team</td><td class="num wrap-ok">34th overall, 8th&nbsp;student</td></tr>
+              <tr><td class="ix">04</td><td>EPT 2025</td><td>team</td><td class="num result"><span class="r-main">16th overall</span><span class="r-sub">4th&nbsp;student</span></td></tr>
+              <tr><td class="ix">05</td><td>EPT 2024</td><td>team</td><td class="num result"><span class="r-main">34th overall</span><span class="r-sub">8th&nbsp;student</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -1218,6 +1458,14 @@ body.palette-open { overflow: hidden; }
         <span class="sec-count">3 records</span>
       </header>
       <div>
+
+        <aside class="acad-banner">
+          <div class="acad-banner-lead">
+            <h3>MSc Information Security</h3>
+            <span class="status">incoming</span>
+          </div>
+          <p class="acad-banner-facts">NTNU, Gj&oslash;vik <span class="fdot" aria-hidden="true">&middot;</span> two-year master's <span class="fdot" aria-hidden="true">&middot;</span> from autumn 2026</p>
+        </aside>
 
         <div class="acad-grid">
 
@@ -1255,18 +1503,6 @@ body.palette-open { overflow: hidden; }
               </tbody>
             </table>
           </div>
-
-          <aside class="acad-block acad-panel">
-            <header class="entry-head">
-              <h3>MSc Information Security</h3>
-              <span class="status">incoming</span>
-            </header>
-            <dl class="meta">
-              <div><dt>where</dt><dd>NTNU, Gj&oslash;vik</dd></div>
-              <div><dt>from</dt><dd>autumn 2026</dd></div>
-            </dl>
-            <p class="acad-note">Two-year master's in Information Security. Incoming, autumn 2026.</p>
-          </aside>
 
         </div>
 

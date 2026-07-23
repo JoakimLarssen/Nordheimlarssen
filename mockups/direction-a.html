@@ -33,6 +33,7 @@
   --hair:    #1E211F;   /* hairline rules                       */
   --line:    #2C302D;   /* stronger rule (table heads, frames)  */
   --acc:     #57C97B;   /* the only color, spent sparingly      */
+  --refuse:  #D07C6E;   /* lone semantic: a scope-gate refusal  */
   --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
   --sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
 
@@ -348,19 +349,22 @@ main > section + section{ border-top:1px solid var(--hair) }
 }
 .fbar span:first-child{ white-space:nowrap }
 .fbar span + span{ text-align:right }
+.fbar-r{ white-space:nowrap }
+.fbar-short{ display:none }
 /* transcript exhibit: the recorded Riposte session rendered
    natively in the dossier mono voice (no screenshot). Accent is
-   kept quiet, spent only on the prompt glyph, the (validated)
-   tokens, and the scope-gate refusal, so the 1st stays the one
-   loud green. Legible at 1440 and 390, reflows within the frame. */
+   kept quiet, spent only on the prompt glyph and the (validated)
+   tokens (a positive state); the scope-gate refusal carries its
+   own restrained rust so success and refusal never share a hue.
+   The 1st stays the one loud green. Legible at 1440 and 390. */
 .term{
   padding:15px 16px 17px;
-  font:400 13px/1.7 var(--mono);
+  font:400 13px/1.62 var(--mono);
   color:var(--fg);
   overflow-x:auto;
 }
 .term p{ overflow-wrap:break-word }
-.term > * + *{ margin-top:.38em }
+.term > * + *{ margin-top:.32em }
 .t-head{
   color:var(--fg-hi); font-weight:600; letter-spacing:.01em;
   padding-bottom:11px; border-bottom:1px solid var(--hair);
@@ -387,7 +391,13 @@ main > section + section{ border-top:1px solid var(--hair) }
 .t-status{ white-space:nowrap }
 .t-unval{ color:var(--dim) }
 .t-val{ color:var(--acc) }
-.t-denied{ color:var(--acc); font-weight:500 }
+/* the one refusal, marked distinctly from every green success */
+.t-denied{
+  color:var(--refuse); font-weight:500;
+  border-left:2px solid var(--refuse);
+  padding-left:1.1ch;
+}
+.nw{ white-space:nowrap }
 .fig figcaption{
   margin-top:10px;
   font:400 var(--t-small)/1.55 var(--sans);
@@ -399,11 +409,98 @@ main > section + section{ border-top:1px solid var(--hair) }
   margin-right:.9ch;
 }
 
-/* futtia: banner exhibit + two-column body (desktop) */
-.fut-cols{ margin-top:22px }
-.fut-cols .col-r{ margin-top:18px }
+/* a compact key to the exhibit's two states: it legends the green
+   success and the rust refusal, and gives the text column presence
+   next to the taller transcript */
+.t-legend{
+  margin-top:24px; padding-top:16px;
+  border-top:1px solid var(--hair);
+  display:grid; gap:10px; max-width:36ch;
+}
+.t-legend > div{
+  display:grid; grid-template-columns:13ch minmax(0,1fr);
+  column-gap:1rem; align-items:baseline;
+}
+.t-legend dt{
+  display:flex; align-items:center; gap:.7ch;
+  font-size:var(--t-small); font-weight:500; color:var(--fg-hi);
+  white-space:nowrap;
+}
+.t-legend dd{ font:400 var(--t-small)/1.5 var(--sans); color:var(--dim) }
+.sw{ width:8px; height:8px; border-radius:2px; flex:none }
+.sw-val{ background:var(--acc) }
+.sw-deny{ background:var(--refuse) }
 
-/* thesis record card */
+/* frames that fill their column: the artifact centres when the
+   text column is the taller of the pair, so no empty quadrant */
+.frame-flex{ display:flex; flex-direction:column }
+
+/* futtia exhibit b: an honest typographic pipeline schematic,
+   footage -> events -> the clips behind an answer. One quiet
+   accent, on the flow connectors only. No screenshot, no metric. */
+.pipe{
+  flex:1 1 auto;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:22px 18px;
+}
+.pipe-stage{
+  display:grid; grid-template-columns:2.5rem minmax(0,1fr);
+  column-gap:1rem; align-items:start;
+}
+.pipe-idx{
+  font:600 var(--t-small)/1 var(--mono); color:var(--dim);
+  letter-spacing:.04em; text-align:center;
+  border:1px solid var(--line); padding:7px 0;
+}
+.pipe-text{ display:flex; flex-direction:column; gap:5px; padding-top:1px }
+.pipe-lbl{
+  font-size:var(--t-label); font-weight:500; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--dim);
+}
+.pipe-val{ font:400 .9375rem/1.45 var(--sans); color:var(--fg-hi) }
+.pipe-arrow{
+  display:grid; grid-template-columns:2.5rem minmax(0,1fr);
+  column-gap:1rem;
+}
+.pipe-arrow .conn{
+  grid-column:1; justify-self:center;
+  display:flex; flex-direction:column; align-items:center;
+  color:var(--acc);
+}
+.pipe-arrow .conn::before{
+  content:""; width:1px; height:30px;
+  background:currentColor; opacity:.55;
+}
+.pipe-arrow .conn::after{ content:"\25BC"; font-size:.62rem; line-height:.7 }
+
+/* thesis record: the grade, in the same frame family (exhibit A/B).
+   A big A carries the frame so it reads as a stamped record, not
+   an empty box, when it fills the taller text column. */
+.grade-frame{ text-align:left }
+.grade-body{
+  flex:1 1 auto;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:26px 22px;
+}
+.grade-body .rec-grade{
+  font-size:clamp(3rem, 1.7rem + 4.6vw, 5rem);
+  margin-top:10px; letter-spacing:-.01em;
+}
+.grade-sub{
+  margin-top:16px; padding-top:14px;
+  border-top:1px solid var(--hair);
+  font:400 var(--t-small)/1.5 var(--sans); color:var(--dim);
+}
+.grade-cap{
+  margin-top:12px;
+  font:400 var(--t-small)/1.55 var(--sans); color:var(--dim);
+}
+.grade-cap .fno{
+  font-family:var(--mono); font-size:var(--t-label);
+  letter-spacing:.14em; text-transform:uppercase; margin-right:.9ch;
+}
+
+/* record card (writing featured piece) */
 .rec{
   border:1px solid var(--line);
   padding:18px 20px 20px;
@@ -481,47 +578,48 @@ main > section + section{ border-top:1px solid var(--hair) }
 
 /* ---------- academics ---------- */
 
-.msc{ display:flex; align-items:baseline; gap:1.25rem; padding-bottom:8px }
 .a-ttl{ font-size:1rem; font-weight:600; color:var(--fg-hi); letter-spacing:.01em }
-.m-lead{
-  flex:1 1 2ch; min-width:2ch;
-  border-bottom:1px dotted rgba(138,144,139,.45);
-  align-self:center; transform:translateY(.28em);
-}
-.msc-tag{
-  font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase;
-  color:var(--dim); white-space:nowrap;
-}
-.msc-sub{
-  font:400 var(--t-small)/1.6 var(--sans);
-  color:var(--dim);
-  padding-bottom:26px;
-  border-bottom:1px solid var(--hair);
-  margin-bottom:26px;
-}
-.acad-pair > div + div{ margin-top:30px }
 .a-sub{
   margin-top:4px;
   font-size:.75rem; color:var(--dim);
   margin-bottom:14px;
 }
 
-/* footnotes, dossier-style */
-.fnotes{
+/* incoming MSc, given presence as a bordered record banner so it
+   no longer reads as a lone line above two tall grade tables */
+.msc-block{
+  display:flex; justify-content:space-between; align-items:baseline;
+  gap:.75rem 2rem; flex-wrap:wrap;
+  border:1px solid var(--line);
+  padding:18px 22px 20px;
+  margin-bottom:34px;
+}
+.msc-block .a-ttl{ font-size:1.0625rem }
+.msc-sub{
+  margin-top:7px;
+  font:400 var(--t-small)/1.6 var(--sans);
+  color:var(--dim); max-width:54ch;
+}
+.msc-tag{
+  font-size:var(--t-label); font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--dim); white-space:nowrap;
+}
+.acad-pair > div + div{ margin-top:30px }
+
+/* the Gary Wallace note belongs to the exchange courses; sitting it
+   under that table also closes the shorter column's dead air */
+.acad-fn{
+  margin-top:18px; padding-top:14px;
+  border-top:1px solid var(--hair);
+  font:400 var(--t-small)/1.6 var(--sans); color:var(--dim);
+}
+.acad-foot{
   margin-top:26px; padding-top:16px;
   border-top:1px solid var(--hair);
   max-width:62ch;
-  list-style-position:outside;
-  padding-left:1.5rem;
+  font:400 var(--t-small)/1.6 var(--sans); color:var(--dim);
 }
-.fnotes li{
-  font:400 var(--t-small)/1.65 var(--sans);
-  color:var(--dim);
-}
-.fnotes li::marker{
-  font-family:var(--mono); font-size:.75rem; color:var(--dim);
-}
-.fnotes li + li{ margin-top:7px }
 
 /* ---------- writing ---------- */
 
@@ -652,53 +750,38 @@ main > section + section{ border-top:1px solid var(--hair) }
   }
   .snotes{ margin-top:6px }
 
-  /* projects */
+  /* projects: ONE grammar for all three entries.
+     Left = head / desc / meta / links. Right = a framed artifact
+     (transcript, pipeline, grade). The three read as siblings. */
   .pentry{ padding:38px 0 }
   .pentry:first-of-type{ padding-top:6px }
 
-  /* riposte: text left, exhibit right */
   .p-split{
     display:grid;
-    grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+    grid-template-columns:minmax(0,0.82fr) minmax(0,1.18fr);
     column-gap:var(--mgap);
     align-items:start;
   }
-  .p-split .fig{ margin-top:4px }
-
-  /* futtia: full-width banner exhibit, then desc | meta columns */
-  .fut-cols{
-    display:grid;
-    grid-template-columns:minmax(0,62ch) minmax(0,1fr);
-    column-gap:var(--mgap);
-    margin-top:26px;
+  .p-split .fig{
+    margin:4px 0 0;
+    display:flex; flex-direction:column;
   }
-  .fut-cols .col-r{
-    margin-top:0;
-    border-left:1px solid var(--hair);
-    padding-left:2rem;
-  }
-  .fut-cols .e-meta{ margin-top:2px }
-
-  /* thesis: text left, record card right edge */
-  .thesis{
-    display:grid;
-    grid-template-columns:minmax(0,1fr) 14rem;
-    column-gap:var(--mgap);
-    align-items:start;
-  }
-  .rec{ margin-top:4px; max-width:none }
+  /* futtia's compact pipeline fills its column so the entry does
+     not end in a void; transcript and grade keep natural height */
+  .p-split .fig.fig-fill{ align-self:stretch }
+  .p-split .fig.fig-fill .frame-flex{ flex:1 1 auto }
 
   /* ctf: the display win, then a full-width table */
   .win-call{ padding:12px 0 42px }
 
-  /* academics: BSc and exchange records side by side */
+  /* academics: incoming MSc record, then paired transcripts,
+     each grade table carrying its own contextual note */
   .acad-pair{
     display:grid;
     grid-template-columns:1fr 1fr;
     column-gap:var(--mgap);
   }
   .acad-pair > div + div{ margin-top:0 }
-  .fnotes{ max-width:none }
 
   /* writing: featured piece + record card, then full-width list */
   .feat{
@@ -708,7 +791,7 @@ main > section + section{ border-top:1px solid var(--hair) }
     align-items:start;
     padding:6px 0 38px;
   }
-  .feat .rec{ margin-top:2px }
+  .feat .rec{ margin-top:2px; max-width:none }
   .feat .e-desc{ max-width:58ch }
 
   /* contact: three registers across the full width */
@@ -751,8 +834,29 @@ main > section + section{ border-top:1px solid var(--hair) }
   .pentry{ padding:24px 0 }
   .fig{ margin-top:16px }
   .term{ padding:13px 13px 15px }   /* 13px transcript holds at 390 */
-  .fut-cols{ margin-top:16px }
+  .pipe{ padding:18px 14px }
   .rec{ padding:16px 18px 18px }
+
+  /* exhibit headers: swap to short labels so no fragment orphans */
+  .fbar-full{ display:none }
+  .fbar-short{ display:inline }
+
+  /* grade record: a compact horizontal record on mobile, big A at
+     left, label + institution stacked at right, no empty box */
+  .grade-body{
+    display:grid; grid-template-columns:auto 1fr;
+    align-items:center; gap:2px 16px;
+    padding:16px 18px;
+  }
+  .grade-body .rec-lbl{ grid-column:2; grid-row:1; align-self:end }
+  .grade-body .rec-grade{
+    grid-column:1; grid-row:1 / span 2;
+    margin-top:0; font-size:2.7rem;
+  }
+  .grade-body .grade-sub{
+    grid-column:2; grid-row:2; align-self:start;
+    margin-top:2px; padding-top:0; border-top:0;
+  }
 
   /* all label/value registers stack vertically */
   .e-meta{ gap:12px }
@@ -782,18 +886,19 @@ main > section + section{ border-top:1px solid var(--hair) }
     margin-top:4px;
     font-size:var(--t-label); letter-spacing:.14em; text-transform:uppercase;
   }
+  /* long results (EPT) stack to two clean right-aligned lines;
+     short results stay one line, both centred against the row */
   .spec-ctf td.num{
     grid-column:2; grid-row:1 / span 2;
     align-self:center;
-    max-width:11rem;
+    text-align:right; line-height:1.5;
   }
+  .spec-ctf td.num .nb{ display:block }
 
   /* academics grade tables keep the two-column table form */
   .spec{ font-size:.75rem }
   .spec td{ padding:9px 0 }
-  .msc{ flex-wrap:wrap; gap:.6rem 1.25rem }
-  .m-lead{ display:none }
-  .msc-sub{ padding-bottom:20px; margin-bottom:20px }
+  .msc-block{ padding:16px 16px 18px }
 
   /* writing index: stacked rows, no title/tag interleave */
   .wlist li{ display:block; padding:12px 0 13px }
@@ -889,6 +994,7 @@ main > section + section{ border-top:1px solid var(--hair) }
           <aside class="snotes" aria-label="Margin notes">
             <p class="snote"><span class="sx">cross-ref · 02</span>The thesis behind this focus was graded A. Full record under <a href="#projects">projects</a>.</p>
             <p class="snote"><span class="sx">cross-ref · 03</span>Three CTF podium finishes, one win. Logged in <a href="#ctf">ctf.log</a>.</p>
+            <p class="snote"><span class="sx">cross-ref · 05</span>Seven pieces on security, AI risk, and critical infrastructure. Indexed in <a href="#writing">writing</a>.</p>
           </aside>
         </div>
       </div>
@@ -969,14 +1075,14 @@ main > section + section{ border-top:1px solid var(--hair) }
       <div class="marg">
         <p class="m-idx" aria-hidden="true">02</p>
         <p class="m-path" aria-hidden="true">~/jnl/projects</p>
-        <p class="m-note"><span class="sx" aria-hidden="true">exhibit</span>Exhibit A is a real Riposte session on a lab target. Findings carry a validation status; an out-of-scope target is refused by the scope gate.</p>
+        <p class="m-note"><span class="sx" aria-hidden="true">exhibits</span>Exhibit A is a real Riposte session on a lab target: findings carry a validation status, and an out-of-scope target is refused by the scope gate. Exhibit B diagrams the Futtia pipeline, footage to answer.</p>
       </div>
       <div>
         <h2 class="s-title" id="h-projects">projects</h2>
 
         <article class="pentry">
           <div class="p-split">
-            <div>
+            <div class="p-body">
               <div class="p-head">
                 <h3>Riposte</h3>
                 <p class="e-status">[ in dev ]</p>
@@ -991,12 +1097,22 @@ main > section + section{ border-top:1px solid var(--hair) }
                 <a href="https://riposte.no">riposte.no ↗</a>
                 <a href="https://github.com/JoakimLarssen/Riposte">github ↗</a>
               </p>
+              <dl class="t-legend" aria-label="How to read the exhibit">
+                <div>
+                  <dt><span class="sw sw-val" aria-hidden="true"></span>validated</dt>
+                  <dd>the finding was confirmed by the scoped scan</dd>
+                </div>
+                <div>
+                  <dt><span class="sw sw-deny" aria-hidden="true"></span>out of scope</dt>
+                  <dd>the target was refused by the scope gate</dd>
+                </div>
+              </dl>
             </div>
             <figure class="fig">
               <div class="frame">
-                <p class="fbar" aria-hidden="true"><span>exhibit a</span><span>riposte · interactive session</span></p>
+                <p class="fbar" aria-hidden="true"><span>exhibit a</span><span class="fbar-r"><span class="fbar-full">riposte · interactive session</span><span class="fbar-short">session</span></span></p>
                 <div class="term" role="group" aria-label="Recorded Riposte session transcript">
-                  <p class="t-head">Riposte · demo-interactive-reflect (1 target, ceiling RECON)</p>
+                  <p class="t-head"><span class="nw">Riposte · demo-interactive-reflect</span> <span class="nw">(1 target, ceiling RECON)</span></p>
                   <p class="t-dim">Type /help for commands, or just talk. Ctrl-Q to quit.</p>
                   <p class="t-in"><span class="glyph" aria-hidden="true">&gt;</span>Assess the web app at 172.22.0.3 for security issues, and run a scoped scan of that target to confirm anything you find.</p>
                   <p class="t-notice">running scan against 172.22.0.3 (this can take a while)...</p>
@@ -1021,13 +1137,13 @@ main > section + section{ border-top:1px solid var(--hair) }
         </article>
 
         <article class="pentry">
-          <div class="p-head">
-            <h3>Futtia</h3>
-            <p class="e-status">[ in dev ]</p>
-          </div>
-          <div class="fut-cols">
-            <p class="e-desc">AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>
-            <div class="col-r">
+          <div class="p-split">
+            <div class="p-body">
+              <div class="p-head">
+                <h3>Futtia</h3>
+                <p class="e-status">[ in dev ]</p>
+              </div>
+              <p class="e-desc">AI football analysis. A TypeScript and Bun monorepo that turns raw match footage into something you can ask questions of: upload a game or connect your usual analytic source, prompt it in plain language, and get answers anchored to the exact clips that back them. The hard part is the pipeline underneath, turning unstructured video into structured, searchable events and then back into watchable highlights.</p>
               <dl class="e-meta">
                 <div><dt>role</dt><dd>developer</dd></div>
                 <div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
@@ -1036,23 +1152,67 @@ main > section + section{ border-top:1px solid var(--hair) }
                 <a href="https://futtia.no">futtia.no ↗</a>
               </p>
             </div>
+            <figure class="fig fig-fill">
+              <div class="frame frame-flex">
+                <p class="fbar" aria-hidden="true"><span>exhibit b</span><span class="fbar-r"><span class="fbar-full">futtia · analysis pipeline</span><span class="fbar-short">pipeline</span></span></p>
+                <div class="pipe" role="img" aria-label="The Futtia pipeline in three steps: raw match footage becomes structured, searchable events, which become the exact clips that back a plain-language answer.">
+                  <div class="pipe-stage">
+                    <span class="pipe-idx" aria-hidden="true">01</span>
+                    <span class="pipe-text">
+                      <span class="pipe-lbl">input</span>
+                      <span class="pipe-val">raw match footage</span>
+                    </span>
+                  </div>
+                  <div class="pipe-arrow" aria-hidden="true"><span class="conn"></span></div>
+                  <div class="pipe-stage">
+                    <span class="pipe-idx" aria-hidden="true">02</span>
+                    <span class="pipe-text">
+                      <span class="pipe-lbl">structure</span>
+                      <span class="pipe-val">structured, searchable events</span>
+                    </span>
+                  </div>
+                  <div class="pipe-arrow" aria-hidden="true"><span class="conn"></span></div>
+                  <div class="pipe-stage">
+                    <span class="pipe-idx" aria-hidden="true">03</span>
+                    <span class="pipe-text">
+                      <span class="pipe-lbl">answer</span>
+                      <span class="pipe-val">the exact clips that back a plain-language answer</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <figcaption><span class="fno" aria-hidden="true">fig. 2</span>The Futtia pipeline, in three steps: footage to answer. A schematic of the architecture, not a screenshot.</figcaption>
+            </figure>
           </div>
         </article>
 
         <article class="pentry">
-          <div class="thesis">
-            <div>
+          <div class="p-split">
+            <div class="p-body">
               <div class="p-head">
                 <h3>Bachelor thesis</h3>
                 <p class="e-status">[ 2026 ]</p>
               </div>
               <p class="e-desc"><span class="ttl">Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams.</span> How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup. A group thesis with <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik Hagen</a> and <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a>.</p>
+              <dl class="e-meta">
+                <div><dt>with</dt><dd><a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/">Bendik Hagen</a>, <a href="https://www.linkedin.com/in/krister-eriksen-774963300/">Krister Eriksen</a></dd></div>
+                <div><dt>context</dt><dd>built inside the ToSee AS startup</dd></div>
+              </dl>
+              <p class="e-links">
+                <a href="/thesis.pdf">read thesis ↗</a>
+              </p>
             </div>
-            <aside class="rec">
-              <p class="rec-lbl">grade</p>
-              <p class="rec-grade">A</p>
-              <p class="rec-link"><a href="/thesis.pdf">read thesis →</a></p>
-            </aside>
+            <figure class="fig fig-fill">
+              <div class="frame frame-flex grade-frame">
+                <p class="fbar" aria-hidden="true"><span>record</span><span class="fbar-r"><span class="fbar-full">bachelor thesis · 2026</span><span class="fbar-short">2026</span></span></p>
+                <div class="grade-body">
+                  <p class="rec-lbl">final grade</p>
+                  <p class="rec-grade">A</p>
+                  <p class="grade-sub">Høyskolen Kristiania, Bergen</p>
+                </div>
+              </div>
+              <figcaption class="grade-cap"><span class="fno" aria-hidden="true">fig. 3</span>The thesis, graded A.</figcaption>
+            </figure>
           </div>
         </article>
       </div>
@@ -1111,12 +1271,13 @@ main > section + section{ border-top:1px solid var(--hair) }
       <div>
         <h2 class="s-title" id="h-academics">academics</h2>
 
-        <div class="msc">
-          <h3 class="a-ttl">MSc Information Security</h3>
-          <span class="m-lead" aria-hidden="true"></span>
+        <div class="msc-block">
+          <div class="msc-main">
+            <h3 class="a-ttl">MSc Information Security</h3>
+            <p class="msc-sub">NTNU, Gjøvik. A two-year master's in Information Security, and the next step after the BSc below.</p>
+          </div>
           <p class="msc-tag">incoming · autumn 2026</p>
         </div>
-        <p class="msc-sub">NTNU, Gjøvik. Two-year master's in Information Security, from autumn 2026.</p>
 
         <div class="acad-pair">
           <div>
@@ -1146,19 +1307,17 @@ main > section + section{ border-top:1px solid var(--hair) }
                 <tr><th scope="col">Course</th><th scope="col" class="num">Grade</th></tr>
               </thead>
               <tbody>
-                <tr><td>Cyber Warfare<sup aria-hidden="true">1</sup></td><td class="num g-a">A</td></tr>
-                <tr><td>Data Communications &amp; Networking<sup aria-hidden="true">1</sup></td><td class="num g-a">A</td></tr>
+                <tr><td>Cyber Warfare</td><td class="num g-a">A</td></tr>
+                <tr><td>Data Communications &amp; Networking</td><td class="num g-a">A</td></tr>
                 <tr><td>Algorithms &amp; Data Structures</td><td class="num g-a">A</td></tr>
                 <tr><td>Technology &amp; Ethics</td><td class="num g-a">A</td></tr>
               </tbody>
             </table>
+            <p class="acad-fn">Cyber Warfare and Data Communications &amp; Networking were taught by Gary Wallace, a former U.S. Navy commander and head of IT for the U.S. Navy.</p>
           </div>
         </div>
 
-        <ol class="fnotes">
-          <li>Cyber Warfare and Data Communications &amp; Networking were taught by Gary Wallace, a former U.S. Navy commander and head of IT for the U.S. Navy.</li>
-          <li>Full transcript and verified record available on request.</li>
-        </ol>
+        <p class="acad-foot">Full transcript and verified record available on request.</p>
       </div>
     </div>
   </section>
