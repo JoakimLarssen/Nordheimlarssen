@@ -11,9 +11,19 @@ You picked A. It is now the real site on this branch, cohesive end to end:
 
 Everything is committed and verified at desktop, mobile, and (for the CV) print. Latest full-site shots: `C:\Users\joaki\.shots\nordheim-redesign\` (`home/`, `cv/`, `writing-after/`).
 
-## Still in flight (polish round)
+## State: review-ready on the branch
 
-Unifying the nav across all pages so `/cv` is reachable everywhere, a dossier 404, a refreshed OG/social image, a favicon check, and a final full-site adversarial pass across home, `/cv`, and `/writing` together.
+Two adversarial full-site critique rounds (five zero-context reviewers each) have run and their real findings are fixed and committed. The verdict across rounds is consistent: serious, human, not AI-slop, and cohesive. Highlights of what the critiques caught and I fixed: the CV had drifted to a teal accent and lost its nav (both fixed); the home over-narrated itself (redundant wayfinding and duplicate captions cut); the essay's data chart was a raw white matplotlib export (regenerated from the real experiment data into the dossier palette, colors now matching the caption); the 404 had a fake shell line and a too-faint numeral (both fixed); and the giant "1st" was moderated so it no longer dwarfs the name.
+
+One flagged "ship-blocker" (a "Crypts" typo on the CV) was a critic misread; the source cleanly says "Crypto".
+
+I am now running an objective accessibility, contrast, performance, and link-integrity pass (things that do not depend on your taste), then holding for your review at a slower cadence.
+
+## Your calls (whenever, none blocking)
+
+1. **CV standfirst**: you specified "Security engineer and builder, Oslo" for the CV; the home says "Security researcher and developer, Oslo". Both true. Unify, or keep the distinction?
+2. **"ship products" verb** on the home hero sits next to the `[ in dev ]` project badges. Soften to "build products", or leave it?
+3. **Genre ceiling**: reviewers agree the terminal aesthetic, executed well, still reads as a known genre rather than singular. That is inherent to the direction you locked. If you want to push past it, I can explore one more distinctive signature element; otherwise this is the best-executed version of your chosen direction.
 
 ---
 
