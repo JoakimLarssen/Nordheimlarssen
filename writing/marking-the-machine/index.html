@@ -127,7 +127,7 @@
           <p class="prose">Two things surprised me, and both cut against my own expectation. First, the strong detector did not beat the weak one: with a 0.5B scorer pair, Binoculars scored slightly below the plain perplexity baseline before the attack and landed in the same place after it, because its paper edge comes from much larger scorers. Second, the collapse was symmetric: I had expected perplexity to crater while Binoculars degraded more gracefully, but both converged on the same near-useless AUROC, because the attack moves the text itself toward the human distribution and does not care which statistic you compute.</p>
 
           <figure>
-            <img src="figure_distributions.png" alt="Detector score distributions for human, AI-original, and AI-paraphrased passages, under the log-perplexity and Binoculars detectors. Lower score means more machine-like. After paraphrase, the AI distribution slides off the machine-like side and settles on top of the human distribution." />
+            <img src="figure_distributions.png" width="1280" height="1593" alt="Detector score distributions for human, AI-original, and AI-paraphrased passages, under the log-perplexity and Binoculars detectors. Lower score means more machine-like. After paraphrase, the AI distribution slides off the machine-like side and settles on top of the human distribution." />
             <figcaption>Score distributions for both detectors. Lower is more machine-like. The green AI-paraphrased distribution slides off the orange AI-original pile and onto the blue human one.</figcaption>
           </figure>
 
