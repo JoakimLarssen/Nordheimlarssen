@@ -522,8 +522,11 @@ img, svg { display: block; max-width: 100%; }
 }
 .grades{ font-size: 0.82rem; }
 .grades td:first-child, .grades th:first-child{ width: 78%; }
-.g-a{ color: var(--text); font-weight: 700; }
-.g-b{ color: var(--dim); font-weight: 700; }
+.gr{ font-family: var(--mono); font-weight: 700; font-size: 0.72rem; color: var(--dim);
+  border: 1px solid var(--line); background: transparent; border-radius: 2px;
+  padding: 1px 7px; display: inline-block; min-width: 22px; text-align: center;
+  font-feature-settings: "tnum" 1; }
+.gr.on{ color: var(--accent); border-color: rgba(87,201,123,0.4); background: rgba(87,201,123,0.08); }
 .acad-note{
   font-family: var(--mono);
   font-size: 0.78rem;
@@ -827,7 +830,7 @@ img, svg { display: block; max-width: 100%; }
               Secure AI-Accelerated Development in Agile Workflows: A Framework for Small Teams. How small teams can fold AI-accelerated development into an agile workflow while balancing security, architecture, and reliability without losing innovation or parallel collaboration. The answer is SAIF, a five-part framework, grounded in a security experiment across four AI coding models and a semester building inside the ToSee AS startup. A group thesis with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/" target="_blank" rel="noopener">Krister Eriksen</a> and <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/" target="_blank" rel="noopener">Bendik Hagen</a>.
             </p>
             <dl class="card-meta">
-              <div><dt>grade</dt><dd>A</dd></div>
+              <div><dt>grade</dt><dd><span class="gr on">A</span></dd></div>
               <div><dt>with</dt><dd><a href="https://www.linkedin.com/in/krister-eriksen-774963300/" target="_blank" rel="noopener">Krister Eriksen</a>, <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/" target="_blank" rel="noopener">Bendik Hagen</a></dd></div>
             </dl>
             <div class="card-links">
@@ -927,12 +930,12 @@ img, svg { display: block; max-width: 100%; }
               </tr>
             </thead>
             <tbody>
-              <tr><td>Bachelor thesis</td><td class="num g-a">A</td></tr>
-              <tr><td>Cyber Defense</td><td class="num g-a">A</td></tr>
-              <tr><td>Agile Project</td><td class="num g-a">A</td></tr>
-              <tr><td>Ethical Hacking</td><td class="num g-b">B</td></tr>
-              <tr><td>IoT / OT Security</td><td class="num g-b">B</td></tr>
-              <tr><td>Governance, Risk &amp; Compliance</td><td class="num g-b">B</td></tr>
+              <tr><td>Bachelor thesis</td><td class="num"><span class="gr on">A</span></td></tr>
+              <tr><td>Cyber Defense</td><td class="num"><span class="gr on">A</span></td></tr>
+              <tr><td>Agile Project</td><td class="num"><span class="gr on">A</span></td></tr>
+              <tr><td>Ethical Hacking</td><td class="num"><span class="gr">B</span></td></tr>
+              <tr><td>IoT / OT Security</td><td class="num"><span class="gr">B</span></td></tr>
+              <tr><td>Governance, Risk &amp; Compliance</td><td class="num"><span class="gr">B</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -950,10 +953,10 @@ img, svg { display: block; max-width: 100%; }
               </tr>
             </thead>
             <tbody>
-              <tr><td>Cyber Warfare</td><td class="num g-a">A</td></tr>
-              <tr><td>Data Communications &amp; Networking</td><td class="num g-a">A</td></tr>
-              <tr><td>Algorithms &amp; Data Structures</td><td class="num g-a">A</td></tr>
-              <tr><td>Technology &amp; Ethics</td><td class="num g-a">A</td></tr>
+              <tr><td>Cyber Warfare</td><td class="num"><span class="gr on">A</span></td></tr>
+              <tr><td>Data Communications &amp; Networking</td><td class="num"><span class="gr on">A</span></td></tr>
+              <tr><td>Algorithms &amp; Data Structures</td><td class="num"><span class="gr on">A</span></td></tr>
+              <tr><td>Technology &amp; Ethics</td><td class="num"><span class="gr on">A</span></td></tr>
             </tbody>
           </table>
         </div>
