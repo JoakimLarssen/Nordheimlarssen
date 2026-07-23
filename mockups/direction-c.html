@@ -273,6 +273,8 @@ noscript .t-hint{ margin-top:12px; }
 @media (max-width:560px){
   .log li{ grid-template-columns:5ch minmax(0,1fr); }
   .log-ptr{ display:none; }
+  /* the pointer column is hidden here, so its explainer goes too */
+  .logpane-foot span + span{ display:none; }
 }
 
 /* ---------- sections ---------- */

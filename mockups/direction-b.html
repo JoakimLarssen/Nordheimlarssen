@@ -847,16 +847,13 @@ body.palette-open { overflow: hidden; }
   .kbtn, .contact-note { display: none; }
 }
 
-@media (max-width: 560px) {
-  :root {
-    --fs-h2: 1.25rem;
-    --fs-h3: 1.0625rem;
-  }
-
-  /* header: brand row on top, one scrollable nav row beneath */
-  .kbtn, .contact-note { display: none; }
+/* narrow header: brand row on top, one scrollable nav row beneath.
+   Kicks in at 700px, before the one-row header runs out of room. */
+@media (max-width: 700px) {
+  html { scroll-padding-top: 108px; }
   .head-row { flex-wrap: wrap; gap: 0 24px; min-height: 0; }
   .brand { padding-block: 14px; }
+  .kbtn { margin-left: auto; }
   .site-nav {
     order: 3;
     width: calc(100% + var(--pad) * 2);
@@ -869,6 +866,15 @@ body.palette-open { overflow: hidden; }
   }
   .site-nav::-webkit-scrollbar { display: none; }
   .site-nav a { padding: 13px 10px 13px calc(10px + 1.1ch); white-space: nowrap; }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --fs-h2: 1.25rem;
+    --fs-h3: 1.0625rem;
+  }
+
+  .kbtn, .contact-note { display: none; }
 
   /* strip becomes a ledger: one row per cell, value left, key right */
   .strip { grid-template-columns: minmax(0, 1fr); }
