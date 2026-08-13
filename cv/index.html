@@ -424,7 +424,7 @@ main > section + section{ border-top:1px solid var(--hair) }
 }
 .sg-items{ display:flex; flex-wrap:wrap; gap:.5ch 1.1ch; font-size:.9375rem }
 .sg-items li{ list-style:none; color:var(--fg-hi) }
-.sg-items li:not(:last-child)::after{ content:"·"; color:var(--ghost); margin-left:1.1ch }
+.sg-items li:not(:last-child)::after{ content:","; color:var(--ghost) }
 
 /* ---------- languages ---------- */
 
@@ -676,11 +676,11 @@ main > section + section{ border-top:1px solid var(--hair) }
 
 <!-- document header, only rendered when printing -->
 <div class="print-header" aria-hidden="true">
-  <div class="ph-name">Joakim Nordheim Larssen &middot; Curriculum Vitae</div>
+  <div class="ph-name">Joakim Nordheim Larssen &mdash; Curriculum Vitae</div>
   <div class="ph-meta">
     Oslo, Norway
-    <span class="sep">&middot;</span> joakimnordheimlarssen@gmail.com
-    <span class="sep">&middot;</span> nordheimlarssen.no
+    <span class="sep">|</span> joakimnordheimlarssen@gmail.com
+    <span class="sep">|</span> nordheimlarssen.no
   </div>
 </div>
 
@@ -716,11 +716,11 @@ main > section + section{ border-top:1px solid var(--hair) }
 
         <p class="contact-line">
           <a href="mailto:joakimnordheimlarssen@gmail.com">joakimnordheimlarssen@gmail.com</a>
-          <span class="sep" aria-hidden="true">&middot;</span>
+          <span class="sep" aria-hidden="true">|</span>
           <a href="https://github.com/JoakimLarssen">github.com/JoakimLarssen</a>
-          <span class="sep" aria-hidden="true">&middot;</span>
+          <span class="sep" aria-hidden="true">|</span>
           <a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223">in/joakim-nordheim-larssen</a>
-          <span class="sep" aria-hidden="true">&middot;</span>
+          <span class="sep" aria-hidden="true">|</span>
           <a href="/">nordheimlarssen.no</a>
         </p>
 
@@ -873,7 +873,7 @@ main > section + section{ border-top:1px solid var(--hair) }
               <h3 class="a-ttl">MSc Information Security</h3>
               <p class="a-sub">NTNU, Gj&oslash;vik</p>
             </div>
-            <p class="edu-period">incoming &middot; autumn 2026</p>
+            <p class="edu-period">2026 to 2028</p>
           </div>
         </div>
 
@@ -883,7 +883,7 @@ main > section + section{ border-top:1px solid var(--hair) }
               <h3 class="a-ttl">BSc Cybersecurity</h3>
               <p class="a-sub">H&oslash;yskolen Kristiania, Bergen</p>
             </div>
-            <p class="edu-period">2023 to 2026 &middot; graduated summer 2026</p>
+            <p class="edu-period">2023 to 2026, graduated summer 2026</p>
           </div>
         </div>
 
@@ -1082,7 +1082,7 @@ main > section + section{ border-top:1px solid var(--hair) }
 <footer class="site-foot">
   <div class="wrap">
     <p>&copy; 2026 Joakim Nordheim Larssen</p>
-    <p class="src">no cookies &middot; no analytics</p>
+    <p class="src">no cookies, no analytics</p>
   </div>
 </footer>
 
