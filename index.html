@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0B0C0B">
-<meta name="description" content="Joakim Nordheim Larssen, security researcher and developer in Oslo. I work on software security, compete in CTFs, and ship products (Riposte, Futtia).">
+<meta name="description" content="Joakim Nordheim Larssen, security researcher, developer, and MSc Information Security student at NTNU in Gjøvik.">
 <meta name="author" content="Joakim Nordheim Larssen">
 <title>Joakim Nordheim Larssen</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -22,7 +22,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Joakim Nordheim Larssen">
-<meta property="og:description" content="Security researcher and developer, Oslo. I work on software security, compete in CTFs, and ship products.">
+<meta property="og:description" content="Security researcher, developer, and MSc Information Security student at NTNU in Gjøvik.">
 <meta property="og:url" content="https://nordheimlarssen.no/">
 <meta property="og:image" content="https://nordheimlarssen.no/og.png">
 <meta property="og:image:width" content="1200">
@@ -31,7 +31,7 @@
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Joakim Nordheim Larssen">
-<meta name="twitter:description" content="Security researcher and developer, Oslo. I work on software security, compete in CTFs, and ship products.">
+<meta name="twitter:description" content="Security researcher, developer, and MSc Information Security student at NTNU in Gjøvik.">
 <meta name="twitter:image" content="https://nordheimlarssen.no/og.png">
 
 <!-- Fonts: JetBrains Mono (structure/brand) + IBM Plex Sans (prose only) -->
@@ -244,14 +244,14 @@ img, svg { display: block; max-width: 100%; }
   margin-bottom: 40px;
 }
 
-/* status register: now / next / open */
+/* status register: study / projects / available */
 .status-block{
   display: grid; gap: 12px;
   max-width: 660px;
 }
 .now-line{
   display: grid;
-  grid-template-columns: 5.4em minmax(0, 1fr);
+  grid-template-columns: 7em minmax(0, 1fr);
   column-gap: 16px;
   align-items: baseline;
   font-family: var(--mono);
@@ -652,7 +652,7 @@ img, svg { display: block; max-width: 100%; }
 @media (max-width: 560px){
   .header-inner{ height: 56px; }
   .brand{ font-size: 0.88rem; }
-  .now-line{ grid-template-columns: 4.4em minmax(0, 1fr); column-gap: 12px; padding: 12px 14px; }
+  .now-line{ grid-template-columns: 1fr; row-gap: 7px; padding: 12px 14px; }
   .contact-list li{ grid-template-columns: 76px minmax(0, 1fr); gap: 10px; }
   .card-meta > div{ grid-template-columns: 48px minmax(0, 1fr); }
   .hero-tagline{ max-width: none; }
@@ -740,15 +740,15 @@ img, svg { display: block; max-width: 100%; }
 
       <div class="status-block">
         <p class="now-line is-live">
-          <span class="now-label"><span class="status-dot" aria-hidden="true"></span>now</span>
-          <span class="now-text">building <a href="https://riposte.no" target="_blank" rel="noopener">Riposte</a> (an agentic security CLI) and <a href="https://futtia.no" target="_blank" rel="noopener">Futtia</a> (AI football analysis)</span>
+          <span class="now-label"><span class="status-dot" aria-hidden="true"></span>study</span>
+          <span class="now-text">studying MSc Information Security at NTNU, Gj&oslash;vik &middot; 2026&ndash;2028</span>
         </p>
-        <p class="now-line">
-          <span class="now-label"><span class="status-dot" aria-hidden="true"></span>next</span>
-          <span class="now-text">MSc in Information Security at NTNU, Gj&oslash;vik, from autumn 2026</span>
+        <p class="now-line is-live">
+          <span class="now-label"><span class="status-dot" aria-hidden="true"></span>projects</span>
+          <span class="now-text"><a href="https://riposte.no" target="_blank" rel="noopener">Riposte</a> (an agentic security CLI) and <a href="https://futtia.no" target="_blank" rel="noopener">Futtia</a> (AI football analysis)</span>
         </p>
-        <p class="now-line">
-          <span class="now-label"><span class="status-dot" aria-hidden="true"></span>open</span>
+        <p class="now-line is-live">
+          <span class="now-label"><span class="status-dot" aria-hidden="true"></span>available</span>
           <span class="now-text">recently earned a BSc in Cybersecurity, open to security roles (Oslo, Gj&oslash;vik, or remote)</span>
         </p>
       </div>
@@ -763,7 +763,7 @@ img, svg { display: block; max-width: 100%; }
         <span class="rule" aria-hidden="true"></span>
       </div>
       <div class="prose">
-        <p>I recently earned a BSc in Cybersecurity at H&oslash;yskolen Kristiania, Bergen campus, and this autumn I begin an MSc in Information Security at NTNU, Gj&oslash;vik. I work across offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
+        <p>I recently earned a BSc in Cybersecurity at H&oslash;yskolen Kristiania, Bergen campus, and I am now pursuing an MSc in Information Security at NTNU, Gj&oslash;vik. I work across offensive security and software development: I like understanding exactly how a system fails, and then writing the code that makes the next failure visible.</p>
         <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no" target="_blank" rel="noopener">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no" target="_blank" rel="noopener">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/" target="_blank" rel="noopener">Krister Eriksen</a>.</p>
       </div>
     </div>
@@ -910,11 +910,11 @@ img, svg { display: block; max-width: 100%; }
       </div>
 
       <div class="academics-grid">
-        <!-- Incoming MSc -->
+        <!-- Current MSc -->
         <div class="acad-block">
           <h3 class="acad-title">MSc Information Security</h3>
-          <p class="acad-sub">NTNU, Gj&oslash;vik &middot; from autumn 2026</p>
-          <p class="acad-lead">A two-year master's in Information Security. Incoming, autumn 2026.</p>
+          <p class="acad-sub">NTNU, Gj&oslash;vik &middot; 2026 to 2028</p>
+          <p class="acad-lead">A two-year master's in Information Security, started autumn 2026.</p>
         </div>
 
         <!-- BSc Kristiania -->
