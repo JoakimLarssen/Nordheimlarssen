@@ -51,9 +51,12 @@
 /* ---------- TOKENS ---------- */
 :root{
   --bg:        #0B0C0B;   /* canvas                                   */
-  --text:      #F2F3F0;   /* primary: headings, links, key data       */
-  --body:      #C6CAC5;   /* body prose                               */
-  --dim:       #8A908B;   /* metadata workhorse                       */
+  /* Measured with APCA against --elev-1 #0D0F0E, the ground these sit on. Body floor is Lc 75.
+     The previous ramp put prose at 73.4 and the metadata workhorse at 41.4, and the metadata is
+     set at 11px, where APCA needs more contrast than body rather than less. */
+  --text:      #ECECEC;   /* primary: headings, links, key data   Lc 95 */
+  --body:      #DDDDDD;   /* body prose                           Lc 85 */
+  --dim:       #CECECE;   /* metadata workhorse                   Lc 76 */
   --accent:    #57C97B;   /* the only accent, green, rationed         */
 
   --elev-1:    #0D0F0E;   /* card / raised surface                    */
@@ -109,7 +112,7 @@ img, svg { display: block; max-width: 100%; }
   position: absolute; left: 12px; top: -48px;
   background: var(--text); color: var(--bg);
   padding: 8px 14px; z-index: 100;
-  font-family: var(--mono); font-size: 0.8rem; font-weight: 500;
+  font-family: var(--mono); font-size: 0.82rem; font-weight: 500;
   transition: top var(--dur) var(--ease);
 }
 .skip-link:focus{ top: 12px; }
@@ -154,7 +157,7 @@ img, svg { display: block; max-width: 100%; }
 .nav ul{ display: flex; gap: clamp(14px, 2.5vw, 30px); }
 .nav a{
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   letter-spacing: 0.01em;
   color: var(--dim);
   padding: 6px 2px;
@@ -247,25 +250,26 @@ img, svg { display: block; max-width: 100%; }
 /* status register: study / projects / available */
 .status-block{
   display: grid; gap: 12px;
-  max-width: 660px;
+  max-width: 900px;
 }
 .now-line{
   display: grid;
   grid-template-columns: 7em minmax(0, 1fr);
-  column-gap: 16px;
+  column-gap: 22px;
   align-items: baseline;
   font-family: var(--mono);
-  font-size: 0.85rem;
+  font-size: 1rem;
+  line-height: 1.55;
   border: 1px solid var(--border);
   background: var(--elev-1);
   border-radius: 3px;
-  padding: 13px 16px;
+  padding: 20px 24px;
 }
 .now-label{
   display: inline-flex; align-items: center; gap: 9px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   color: var(--dim);
 }
 .now-text{ color: var(--body); overflow-wrap: anywhere; }
@@ -276,7 +280,7 @@ img, svg { display: block; max-width: 100%; }
 }
 .now-text a:hover{ color: var(--accent); border-bottom-color: var(--accent); }
 .status-dot{
-  width: 7px; height: 7px; border-radius: 50%;
+  width: 8px; height: 8px; border-radius: 50%;
   background: var(--dim);
   flex: 0 0 auto;
 }
@@ -313,8 +317,8 @@ img, svg { display: block; max-width: 100%; }
 }
 .mini{
   font-family: var(--mono);
-  font-size: 0.7rem; font-weight: 500;
-  letter-spacing: 0.16em; text-transform: uppercase;
+  font-size: 0.82rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--dim);
   margin-bottom: 12px;
 }
@@ -375,7 +379,7 @@ img, svg { display: block; max-width: 100%; }
 }
 .card-meta dt{
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--dim);
@@ -383,7 +387,7 @@ img, svg { display: block; max-width: 100%; }
 .card-meta dd{
   margin: 0;
   font-family: var(--mono);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--body);
   overflow-wrap: anywhere;
 }
@@ -402,7 +406,7 @@ img, svg { display: block; max-width: 100%; }
 /* ---------- STATUS BADGES ---------- */
 .badge{
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   letter-spacing: 0.04em;
   color: var(--dim);
   white-space: nowrap;
@@ -410,7 +414,9 @@ img, svg { display: block; max-width: 100%; }
 }
 /* the single green signal in the projects view: the flagship's live dot */
 .badge-live{
-  color: var(--accent);
+  /* The accent stays the dot. The label reads at Lc 75 instead of 61, because a mid green at
+     16px is decoration doing a reading job. Same hue, lifted until it clears the body floor. */
+  color: #63E48C;
   display: inline-flex; align-items: center; gap: 6px;
 }
 .badge-live::before{
@@ -436,7 +442,7 @@ img, svg { display: block; max-width: 100%; }
   font-size: 1.25rem; font-weight: 700; color: var(--text);
   letter-spacing: 0.01em;
 }
-.win-role{ font-size: 0.8rem; font-weight: 400; color: var(--dim); margin-left: 0.75ch; }
+.win-role{ font-size: 0.82rem; font-weight: 400; color: var(--dim); margin-left: 0.75ch; }
 
 /* ---------- SPEC TABLES ---------- */
 .table-wrap{ overflow-x: auto; }
@@ -450,7 +456,7 @@ img, svg { display: block; max-width: 100%; }
 .spec-table th{
   text-align: left;
   font-weight: 500;
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--dim);
@@ -487,7 +493,7 @@ img, svg { display: block; max-width: 100%; }
   .ctf-table td:nth-child(2){
     grid-column: 1; grid-row: 2;
     margin-top: 4px;
-    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
   }
   .ctf-table td:nth-child(3){
     grid-column: 2; grid-row: 1 / span 2;
@@ -511,7 +517,7 @@ img, svg { display: block; max-width: 100%; }
 }
 .acad-sub{
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: var(--dim);
   margin-bottom: 16px;
 }
@@ -522,14 +528,14 @@ img, svg { display: block; max-width: 100%; }
 }
 .grades{ font-size: 0.82rem; }
 .grades td:first-child, .grades th:first-child{ width: 78%; }
-.gr{ font-family: var(--mono); font-weight: 700; font-size: 0.72rem; color: var(--dim);
+.gr{ font-family: var(--mono); font-weight: 700; font-size: 0.82rem; color: var(--dim);
   border: 1px solid var(--line); background: transparent; border-radius: 2px;
   padding: 1px 7px; display: inline-block; min-width: 22px; text-align: center;
   font-feature-settings: "tnum" 1; }
 .gr.on{ color: var(--accent); border-color: rgba(87,201,123,0.4); background: rgba(87,201,123,0.08); }
 .acad-note{
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   line-height: 1.6;
   color: var(--dim);
   margin-top: 26px;
@@ -544,7 +550,7 @@ img, svg { display: block; max-width: 100%; }
   display: inline-flex; align-items: center;
   align-self: flex-start; width: fit-content;
   font-family: var(--mono);
-  font-size: 0.64rem; font-weight: 700;
+  font-size: 0.82rem; font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: var(--text);
@@ -579,7 +585,7 @@ img, svg { display: block; max-width: 100%; }
 .wm-title:hover{ color: var(--accent); }
 .wm-kind{
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--dim);
@@ -616,7 +622,7 @@ img, svg { display: block; max-width: 100%; }
 }
 .contact-key{
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--dim);
@@ -644,7 +650,7 @@ img, svg { display: block; max-width: 100%; }
 }
 .colophon{
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   color: var(--dim);
 }
 

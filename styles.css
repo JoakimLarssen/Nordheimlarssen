@@ -17,9 +17,12 @@
 /* ---------- TOKENS (matched to the home dossier) ---------- */
 :root {
   --bg:      #0B0C0B;   /* canvas                              */
-  --fg-hi:   #F2F3F0;   /* level 1: headings, links, key data  */
-  --fg:      #C6CAC5;   /* level 2: body prose                 */
-  --dim:     #8A908B;   /* level 3: metadata, labels           */
+  /* Ramp re-spaced against APCA on --panel #0D0F0E, which is the ground these actually sit on.
+     Body floor is Lc 75. The old ramp put prose at 73.4 and metadata at 41.4, and metadata is set
+     at 11px, where APCA needs more contrast than body, not less. Levels now read 95 / 85 / 76. */
+  --fg-hi:   #ECECEC;   /* level 1: headings, links, key data   Lc 95 */
+  --fg:      #DDDDDD;   /* level 2: body prose                  Lc 85 */
+  --dim:     #CECECE;   /* level 3: metadata, labels            Lc 76 */
   --ghost:   #3B403C;   /* level 4: faint marks                */
   --hair:    #1E211F;   /* hairline rules                      */
   --line:    #2C302D;   /* stronger rule (frames, borders)     */
@@ -507,7 +510,7 @@ a { color: var(--acc); text-decoration: none; }
   }
   .nav { width: 100%; }
   .nav ul { flex-wrap: wrap; gap: 10px 16px; }
-  .nav a { font-size: .78rem; padding: 2px 0; }
+  .nav a { font-size: 0.82rem; padding: 2px 0; }
 
   .card > article { padding: 20px; }
   .card-meta > div { grid-template-columns: 4rem minmax(0, 1fr); gap: 10px; }
@@ -519,7 +522,7 @@ a { color: var(--acc); text-decoration: none; }
 
 @media (max-width: 420px) {
   .nav ul { gap: 8px 14px; }
-  .nav a { font-size: .74rem; }
+  .nav a { font-size: 0.82rem; }
 }
 
 /* ---------- MOTION ---------- */
