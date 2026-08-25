@@ -1,4 +1,17 @@
+# www.nordheimlarssen.no -- the dossier is public. crawl it.
+
 User-agent: *
 Allow: /
 
 Sitemap: https://www.nordheimlarssen.no/sitemap.xml
+
+#
+#          _       __
+#         (_)___  / /
+#        / / __ \/ /
+#       / / / / / /
+#    __/ /_/ /_/_/
+#   /___/
+#
+#        ~/jnl
+#
