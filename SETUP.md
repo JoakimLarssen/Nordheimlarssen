@@ -25,6 +25,6 @@ Static site, no build step. Hosted on **Vercel**, repo `JoakimLarssen/Nordheimla
 - Propagation is usually minutes, up to ~24h. Vercel issues HTTPS automatically once the records resolve.
 
 ## 4. Notes
-- `thesis.pdf` lives at the repo root, so `https://nordheimlarssen.no/thesis.pdf` works.
+- `thesis.pdf` lives at the repo root, so `https://www.nordheimlarssen.no/thesis.pdf` works.
 - Optional later: redirect `joakimlarssen.github.io` to `nordheimlarssen.no` so there is one canonical URL.
 - No `CNAME` file or `.nojekyll` is needed for Vercel (those are GitHub Pages artifacts).
