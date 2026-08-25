@@ -75,16 +75,15 @@
           <p class="article-byline">Joakim Nordheim Larssen</p>
 
           <div class="article-summary">
-            <span class="label">the short version</span>
             <p class="prose">If you read the headlines, AI writes insecure code somewhere between "40% of the time" and "constantly." If you read the vendor counter-marketing, AI makes code faster and better. Both are selective. Here is what the primary sources actually support:</p>
             <ul>
               <li>Across very different methods, the rate at which AI <em>emits</em> a vulnerable pattern converges around 30 to 45 percent [1][3][4][9]. But that is an upper bound on <em>hazard</em>, not a measure of how much insecure code ships; it depends most of all on what the human does next [2][10][11].</li>
               <li>The most durable finding is not about the model but the human: people with AI assistance write less secure code while believing it is <em>more</em> secure, and trust correlates inversely with security [2].</li>
               <li>"Smarter models will fix this" is contradicted twice over: security pass rates stayed flat across two years of releases even as functional correctness climbed past 95 percent [4][5], and the models better at reproducing training patterns were <em>more</em> likely to reproduce insecure ones [3].</li>
-              <li>There are genuinely new failure modes: hallucinated package names attackers can pre-register [13], a bump in leaked secrets [16], and degradation when you keep asking the model to "improve" its own code [18].</li>
+              <li>There are new failure modes: hallucinated package names attackers can pre-register [13], a bump in leaked secrets [16], and degradation when you keep asking the model to "improve" its own code [18].</li>
               <li>And there is honest counter-evidence: at least two rigorous studies found the model alone is <em>not</em> uniquely dangerous [10][11], and AI is a real defensive tool for fixing known issues fast [19].</li>
             </ul>
-            <p class="prose">The synthesis: AI does not write uniquely evil code. It writes roughly as flawed as the corpus it learned from, confidently and quickly, which makes over-trusting humans the actual security problem. The fix is process, not abstinence.</p>
+            <p class="prose">AI writes roughly as flawed as the corpus it learned from, confidently and quickly. Over-trusting humans is the security problem. The fix is process, not abstinence.</p>
           </div>
 
           <h2>// why this question is worth getting right</h2>
