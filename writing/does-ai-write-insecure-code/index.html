@@ -86,7 +86,7 @@
             <p class="prose">AI writes roughly as flawed as the corpus it learned from, confidently and quickly. Over-trusting humans is the security problem. The fix is process, not abstinence.</p>
           </div>
 
-          <h2>// why this question is worth getting right</h2>
+          <h2>// why the rates matter</h2>
 
           <p class="prose">This is no longer academic. Satya Nadella said in April 2025 that 20 to 30 percent of code in Microsoft's repositories is now AI-written, and Sundar Pichai said AI generates more than 30 percent of new code at Google [21]. Take those with salt: it is unclear how either company measures "AI-generated," and these are CEO talking points, not audited metrics [21]. But the direction is corroborated by Stack Overflow's 2025 survey, which found 84 percent of developers use or plan to use AI tools, up from 76 percent the year before [23].</p>
 
@@ -191,8 +191,6 @@
           <p class="prose">The evidence points at a specific division of labor between deterministic tools and AI. AI is a good <em>fixer</em> of known issues: GitHub's Copilot Autofix, which pairs CodeQL with a model, reported median remediation in 28 minutes versus 1.5 hours manually [19]. The <em>deterministic scanner</em> finds the issue, the <em>model</em> drafts the fix; that pairing produces the speedup, not the model alone (and GitHub's data measures fix speed, not correctness [19]). But AI as a <em>detector</em> on its own is weak: a 2025 study, "Can AI Spot Security Flaws Before You Commit?", found Copilot's review frequently failed to detect SQL injection, XSS, and insecure deserialization, and missed configuration-file security flaws [17]. Deterministic SAST to find, LLM to fix.</p>
 
           <p class="prose">The standing recommendations are unglamorous and correct: pair AI generation with SAST and policy gates, run secrets scanning, pin and review dependencies (which defuses slopsquatting), keep changesets small, and put security requirements into prompts. OWASP has a Top 10 for LLM applications [24], and NIST published a Generative AI Profile (SP 800-218A) in July 2024 [25]. None of this is "stop using AI." It is "do not skip the review just because the code came out fast and looks confident."</p>
-
-          <h2>// my reasoned position</h2>
 
           <p class="prose">The "AI writes insecure code" claim is true in a narrow sense: models emit a vulnerable pattern roughly 30 to 45 percent of the time, and that has not improved as models got larger [3][4][5][9]. But the alarmist version, that AI is a uniquely dangerous menace, does not survive Lost at C and the Asare study, which found the model alone is no worse, and in head-to-head reproduction actually <em>better</em>, than the human baseline [10][11].</p>
 
