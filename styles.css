@@ -403,7 +403,7 @@ a { color: var(--acc); text-decoration: none; }
   background: #fff;
   border: 1px solid var(--line);
   padding: 8px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 .article figcaption {
   margin-top: 10px;
