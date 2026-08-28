@@ -83,7 +83,7 @@ a { color: var(--acc); text-decoration: none; }
 :focus-visible {
   outline: 2px solid var(--fg-hi);
   outline-offset: 3px;
-  border-radius: 1px;
+  border-radius: 6px;
 }
 
 /* ---------- LAYOUT ---------- */
