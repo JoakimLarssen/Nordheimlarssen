@@ -444,15 +444,6 @@ img, svg { display: block; max-width: 100%; }
   letter-spacing: 0.01em;
 }
 .win-role{ font-size: 0.82rem; font-weight: 400; color: var(--dim); margin-left: 0.75ch; }
-.ctf-event{ padding: 0 0 30px; }
-.ctf-event h3{ font-size: 1.1rem; color: var(--text); }
-.ctf-event p{ margin-top: 12px; max-width: 76ch; font-family: var(--sans); }
-.ctf-event a{ text-decoration: underline; text-underline-offset: 3px; }
-.ctf-evidence{ margin-top: 18px; border: 1px solid var(--border); padding: 16px; }
-.ctf-evidence summary{ cursor: pointer; color: var(--text); }
-.ctf-evidence figure{ margin-top: 20px; }
-.ctf-evidence img{ display: block; max-width: 100%; height: auto; }
-.ctf-evidence figcaption{ margin-top: 8px; font-size: 0.8rem; color: var(--dim); }
 
 /* ---------- SPEC TABLES ---------- */
 .table-wrap{ overflow-x: auto; }
@@ -869,40 +860,6 @@ img, svg { display: block; max-width: 100%; }
 
       <p class="lede">Mostly crypto, pwn, and web. Three podium finishes and 4th-place student finishes at NNS CTF 2026 and EPT 2025.</p>
 
-      <article class="ctf-event" aria-labelledby="nns-ctf-h" id="nns-ctf-2026">
-        <h3 id="nns-ctf-h">4th in the student division &mdash; NNS CTF 2026</h3>
-        <p><time datetime="2026-09-04">4</time>&ndash;<time datetime="2026-09-06">6 September 2026</time>. Our team Quorra finished <strong>4th in the student division</strong> (77th overall), with <strong>3,208 points</strong> and <strong>46 solves</strong>.</p>
-        <p>We earned <strong>six first bloods in the Students (Norway) category</strong>: Keyboard and Embedded encryptor (misc), PHP is my passion (web), small guy (rev), Crypto Party 2 (crypto), and Feedback (sanity).</p>
-        <p><a href="https://www.linkedin.com/posts/joakim-nordheim-larssen_ctf-cybersecurity-infosec-activity-7502405095851020288-4NTP" target="_blank" rel="noopener">Read my NNS CTF recap on LinkedIn</a>.</p>
-        <details class="ctf-evidence">
-          <summary>View the scoreboard and first-blood screenshots</summary>
-          <figure>
-            <a href="/images/ctf/nns-2026/nns-ctf-2026-scoreboard.png"><img src="/images/ctf/nns-2026/nns-ctf-2026-scoreboard.png" alt="NNS CTF 2026 scoreboard highlighting Quorra at rank 77 with 3,208 points and 46 solves." width="2112" height="1649" loading="lazy" decoding="async"></a>
-            <figcaption>Quorra on the NNS CTF 2026 scoreboard. Select the image to view it at full size.</figcaption>
-          </figure>
-          <figure>
-            <img src="/images/ctf/nns-2026/nns-ctf-2026-firstblood-keyboard-encryptor.png" alt="Quorra earns Norwegian student first bloods on misc/Keyboard and misc/Embedded encryptor." width="581" height="152" loading="lazy" decoding="async">
-            <figcaption>Keyboard and Embedded encryptor &mdash; misc.</figcaption>
-          </figure>
-          <figure>
-            <img src="/images/ctf/nns-2026/nns-ctf-2026-firstblood-php-passion.png" alt="Quorra earns the Norwegian student first blood on web/PHP is my passion." width="524" height="42" loading="lazy" decoding="async">
-            <figcaption>PHP is my passion &mdash; web.</figcaption>
-          </figure>
-          <figure>
-            <img src="/images/ctf/nns-2026/nns-ctf-2026-firstblood-small-guy.png" alt="Quorra earns the Norwegian student first blood on rev/small guy." width="467" height="24" loading="lazy" decoding="async">
-            <figcaption>small guy &mdash; reverse engineering.</figcaption>
-          </figure>
-          <figure>
-            <img src="/images/ctf/nns-2026/nns-ctf-2026-firstblood-crypto-party-2.png" alt="Quorra earns the Norwegian student first blood on crypto/Crypto Party 2." width="523" height="30" loading="lazy" decoding="async">
-            <figcaption>Crypto Party 2 &mdash; crypto.</figcaption>
-          </figure>
-          <figure>
-            <img src="/images/ctf/nns-2026/nns-ctf-2026-firstblood-feedback.png" alt="Quorra earns the Norwegian student first blood on sanity/Feedback." width="526" height="45" loading="lazy" decoding="async">
-            <figcaption>Feedback &mdash; sanity.</figcaption>
-          </figure>
-        </details>
-      </article>
-
       <div class="win-call">
         <span class="win-num">4th</span>
         <span class="win-event"><span class="nb">student team,</span> <span class="nb">EPT 2025</span><span class="win-role">16th overall</span></span>
@@ -919,6 +876,11 @@ img, svg { display: block; max-width: 100%; }
             </tr>
           </thead>
           <tbody>
+            <tr id="nns-ctf-2026">
+              <td>NNS CTF 2026</td>
+              <td class="role-cell">team</td>
+              <td class="num"><span class="nb">4th student team,</span> <span class="nb">77th overall</span></td>
+            </tr>
             <tr>
               <td>Cybvest CTF</td>
               <td class="role-cell">team</td>
