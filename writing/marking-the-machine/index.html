@@ -42,7 +42,7 @@
   <script>document.documentElement.classList.add("js");</script>
 <link rel="stylesheet" href="/theme.css">
 <script src="/theme.js" defer></script>
-</head>
+<link href="/nav-motion.css?v=20260908" rel="stylesheet"/></head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
@@ -54,13 +54,13 @@
       </a>
       <nav class="nav" aria-label="Primary">
         <ul>
-          <li><a href="/#whoami">About</a></li>
-          <li><a href="/#projects">Projects</a></li>
-          <li><a href="/#ctf">CTF results</a></li>
-          <li><a href="/#academics">Education</a></li>
-          <li><a href="/writing" class="is-active" aria-current="page">Writing</a></li>
-          <li><a href="/cv">CV</a></li>
-          <li><a href="/#contact">Contact</a></li>
+          <li><a href="/#whoami"><span class="nav-label" data-nav-label="about">About</span></a></li>
+          <li><a href="/#projects"><span class="nav-label" data-nav-label="projects">Projects</span></a></li>
+          <li><a href="/#ctf"><span class="nav-label" data-nav-label="ctf">CTF results</span></a></li>
+          <li><a href="/#academics"><span class="nav-label" data-nav-label="education">Education</span></a></li>
+          <li><a href="/writing" class="is-active" aria-current="page"><span aria-hidden="true" class="nav-pill"></span><span class="nav-label" data-nav-label="writing">Writing</span></a></li>
+          <li><a href="/cv"><span class="nav-label" data-nav-label="cv">CV</span></a></li>
+          <li><a href="/#contact"><span class="nav-label" data-nav-label="contact">Contact</span></a></li>
         </ul>
       </nav>
     </div>

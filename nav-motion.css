@@ -1,0 +1,99 @@
+:is(.site-top .site-nav, .site-header .nav) a {
+  position: relative;
+  isolation: isolate;
+}
+:is(.site-top .site-nav, .site-header .nav) .nav-label {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+}
+:is(.site-top .site-nav, .site-header .nav) .nav-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.site-top .site-nav a[aria-current=page] {
+  background: transparent;
+  box-shadow: none;
+}
+.site-top .site-nav .nav-pill {
+  background: var(--surface);
+  box-shadow: 0 1px 5px #00000009;
+}
+.site-header .nav a {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 99px;
+}
+.site-header .nav .nav-pill {
+  background: var(--panel);
+}
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+
+  :is(.site-top .site-nav, .site-header .nav) .nav-pill { view-transition-name: jnl-nav-pill; }
+  :is(.site-top .site-nav, .site-header .nav) [data-nav-label=home] { view-transition-name: jnl-nav-home; }
+  :is(.site-top .site-nav, .site-header .nav) [data-nav-label=portfolio] { view-transition-name: jnl-nav-portfolio; }
+  :is(.site-top .site-nav, .site-header .nav) [data-nav-label=writing] { view-transition-name: jnl-nav-writing; }
+  :is(.site-top .site-nav, .site-header .nav) [data-nav-label=about] { view-transition-name: jnl-nav-about; }
+  :is(.site-top .site-nav, .site-header .nav) [data-nav-label=projects] { view-transition-name: jnl-nav-projects; }
+  :is(.site-top .site-nav, .site-header .nav) [data-nav-label=ctf] { view-transition-name: jnl-nav-ctf; }
+  :is(.site-top .site-nav, .site-header .nav) [data-nav-label=education] { view-transition-name: jnl-nav-education; }
+  :is(.site-top .site-nav, .site-header .nav) [data-nav-label=cv] { view-transition-name: jnl-nav-cv; }
+  :is(.site-top .site-nav, .site-header .nav) [data-nav-label=contact] { view-transition-name: jnl-nav-contact; }
+
+  ::view-transition { pointer-events: none; }
+  ::view-transition-group(root) { animation: none; z-index: 0; }
+  ::view-transition-old(root) { display: none; }
+  ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+  ::view-transition-group(jnl-nav-pill),
+  ::view-transition-group(jnl-nav-home),
+  ::view-transition-group(jnl-nav-portfolio),
+  ::view-transition-group(jnl-nav-writing),
+  ::view-transition-group(jnl-nav-about),
+  ::view-transition-group(jnl-nav-projects),
+  ::view-transition-group(jnl-nav-ctf),
+  ::view-transition-group(jnl-nav-education),
+  ::view-transition-group(jnl-nav-cv),
+  ::view-transition-group(jnl-nav-contact) {
+    animation-duration: 360ms;
+    animation-timing-function: cubic-bezier(.22, 1, .36, 1);
+    z-index: 2;
+  }
+  ::view-transition-group(jnl-nav-pill) { z-index: 1; }
+
+  ::view-transition-old(jnl-nav-pill),
+  ::view-transition-old(jnl-nav-home),
+  ::view-transition-old(jnl-nav-portfolio),
+  ::view-transition-old(jnl-nav-writing),
+  ::view-transition-old(jnl-nav-about),
+  ::view-transition-old(jnl-nav-projects),
+  ::view-transition-old(jnl-nav-ctf),
+  ::view-transition-old(jnl-nav-education),
+  ::view-transition-old(jnl-nav-cv),
+  ::view-transition-old(jnl-nav-contact) {
+    animation: none;
+    display: none;
+  }
+  ::view-transition-new(jnl-nav-pill),
+  ::view-transition-new(jnl-nav-home),
+  ::view-transition-new(jnl-nav-portfolio),
+  ::view-transition-new(jnl-nav-writing),
+  ::view-transition-new(jnl-nav-about),
+  ::view-transition-new(jnl-nav-projects),
+  ::view-transition-new(jnl-nav-ctf),
+  ::view-transition-new(jnl-nav-education),
+  ::view-transition-new(jnl-nav-cv),
+  ::view-transition-new(jnl-nav-contact) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  :is(.site-top .site-nav, .site-header .nav) :is(.nav-pill, .nav-label) {
+    view-transition-name: none;
+  }
+}
