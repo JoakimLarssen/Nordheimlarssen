@@ -24,17 +24,4 @@
   updateClock();
   setInterval(updateClock, 1000);
   document.getElementById('year').textContent = String(new Date().getFullYear());
-  const copyButton = document.getElementById('copy-discord');
-  const copyStatus = document.getElementById('copy-status');
-  if (navigator.clipboard?.writeText) {
-    copyButton.hidden = false;
-    copyButton.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(document.getElementById('discord-username').textContent);
-        copyStatus.textContent = 'Discord username copied.';
-      } catch {
-        copyStatus.textContent = 'Select the username above to copy it.';
-      }
-    });
-  }
 })();

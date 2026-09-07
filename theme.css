@@ -32,6 +32,9 @@
   body { background: var(--bg); color: var(--fg); font-family: var(--sans); }
   .site-header, .site-head { background: var(--panel); border-bottom: 1px solid var(--line); }
   .header-inner, .site-head .wrap { min-height: 72px; height: auto; padding-block: 14px; gap: 24px; }
+  .header-inner, .site-head .wrap { display: grid; grid-template-columns: 1fr auto 1fr; }
+  .brand { justify-self: start; }
+  .nav, .site-nav { grid-column: 2; justify-self: center; }
   .brand { color: var(--fg-hi); font-size: 29px; font-weight: 700; letter-spacing: -2px;  }
   .brand::after { content: '.'; color: var(--acc); }
   .brand-prompt, .tilde { display: none; }
@@ -67,6 +70,9 @@
   .frame, .fig .frame { background: var(--panel); border-color: var(--line); border-radius: 14px; }
   .nf-num { color: var(--acc); }
   @media (max-width: 740px) {
+    .header-inner, .site-head .wrap { grid-template-columns: 1fr; }
+    .nav, .site-nav { grid-column: 1; }
+    .brand { justify-self: center; }
     .header-inner, .site-head .wrap { flex-wrap: wrap; gap: 15px; }
     .nav ul { flex-wrap: wrap; gap: 10px 18px; }
     .site-nav { flex-wrap: wrap; gap: 10px 18px; }
