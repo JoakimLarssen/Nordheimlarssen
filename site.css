@@ -130,3 +130,61 @@ h1[tabindex="-1"]:focus{outline:none}
 .academic-record{margin-bottom:20px;break-inside:avoid}
 .grade-table{font-size:10pt}
 .grade-table tr{break-inside:avoid}}
+
+/* Riposte covers: the September 2026 monochrome identity, not the old serif r.
+   Mark copied unchanged from Riposte-webapp public/icon.svg at 299f067.
+   These selectors apply only to the two decorative project-cover surfaces. */
+.stage.riposte-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32%;
+  align-items: center;
+  gap: 24px;
+  background: #ffffff;
+  color: #141414;
+}
+.stage.riposte-stage .stage-title {
+  margin: 0;
+  max-width: none;
+  font-family: 'IBM Plex Sans', var(--sans);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.14;
+  letter-spacing: -0.035em;
+  color: #141414;
+}
+/* The existing aria-hidden emblem is decorative. Replace its placeholder
+   glyph with the actual vector asset, with no runtime script dependency. */
+.stage.riposte-stage .riposte-emblem {
+  position: static;
+  display: block;
+  justify-self: end;
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  aspect-ratio: 1;
+  transform: none;
+  opacity: 1;
+  font-size: 0;
+  line-height: 0;
+  color: transparent;
+  background: url('/images/projects/riposte-logo.svg') center / 140% no-repeat;
+}
+.stage.riposte-stage .riposte-emblem::before,
+.stage.riposte-stage .riposte-emblem::after { content: none; }
+.case .stage.riposte-stage { gap: 40px; }
+.case .stage.riposte-stage .stage-title { font-size: clamp(34px, 4.8vw, 64px); }
+.case .stage.riposte-stage .riposte-emblem { max-width: 300px; }
+.project-link:hover .stage.riposte-stage { filter: none; }
+@media (max-width: 1000px) {
+  .stage.riposte-stage { gap: 16px; }
+}
+@media (max-width: 740px) {
+  .stage.riposte-stage,
+  .case .stage.riposte-stage { grid-template-columns: minmax(0, 1fr) 30%; gap: 16px; }
+  .stage.riposte-stage .stage-title { font-size: clamp(28px, 5.6vw, 40px); }
+  .case .stage.riposte-stage .stage-title { font-size: clamp(28px, 6vw, 42px); }
+}
+@media (forced-colors: active) {
+  .stage.riposte-stage { forced-color-adjust: none; }
+}
