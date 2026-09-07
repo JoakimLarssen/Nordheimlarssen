@@ -67,7 +67,15 @@ h1[tabindex="-1"]:focus{outline:none}
 .hero h1,.page-heading h1,.setup-card h2,.hardware-card h2,
 .research-strip h2,.contact-strip h2{margin-top:0}
 .now-updated{grid-column:1/-1;font-size:12px;line-height:1.6;color:var(--muted);margin-top:22px}
-.ctf-title{font-size:17px;font-weight:550;line-height:1.4;letter-spacing:0;margin-bottom:17px}
+.ctf-tile .ctf-heading{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;margin-bottom:14px}
+.ctf-tile .ctf-title{margin:0;font-size:17px;font-weight:550;line-height:1.3;letter-spacing:0}
+.ctf-tile .ctf-placement{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.ctf-tile .ctf-placement strong{font-size:53px;font-weight:550;line-height:1;letter-spacing:-.055em}
+.ctf-tile .ctf-placement span{font-size:13px;line-height:1.35;color:var(--text)}
+.ctf-tile .ctf-team{margin:0;font-size:12px;font-weight:400;line-height:1.35;color:var(--text)}
+.ctf-tile .ctf-results{display:flex;flex-wrap:wrap;gap:4px 14px;margin:10px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.4;color:var(--text)}
+.ctf-tile .ctf-results li{white-space:nowrap}
+.ctf-tile .tile-bottom{font-size:11px;line-height:1.4}
 .publication-context,.document-type{font-size:14px;line-height:1.7;font-weight:400;letter-spacing:0;text-transform:none;color:var(--text)}
 .writing-feature-text .publication-context{margin:0 0 12px}
 .cv-heading .document-type{margin-top:14px}
@@ -80,7 +88,7 @@ h1[tabindex="-1"]:focus{outline:none}
 @media (max-width:740px){.now-updated{margin-top:0}
 .setup-card .desk-objects,.setup-card>.text-link{grid-row:3}
 .case .stage-title{margin-top:27px}
-.ctf-title{font-size:15px}}
+}
 .profile-socials{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:18px}
 .profile-socials a{display:inline-flex;align-items:center;gap:6px;min-height:40px;color:var(--text);font-size:13px}
 .profile-socials a:hover,.now-item h2 a:hover{color:var(--accent)}
@@ -218,3 +226,6 @@ h1[tabindex="-1"]:focus{outline:none}
 @media (forced-colors: active) {
   .stage.riposte-stage { forced-color-adjust: none; }
 }
+@media screen{.footer-clock{display:inline-flex;flex-wrap:wrap;gap:4px 10px}}
+@media (max-width:480px){.home-small{grid-column:1/-1;min-height:0}
+.home-small>.tile-link{min-height:0}}

@@ -501,7 +501,7 @@ a { color: var(--acc); text-decoration: none; }
    left colophon, so the matching string is supplied here (space-between
    pushes it to the right edge), identical to the home footer. */
 .footer-inner::after {
-  content: "no JavaScript \00B7\0020no analytics";
+  content: "No analytics";
   font: 400 .72rem/1.5 var(--mono);
   color: var(--dim);
   letter-spacing: .04em;
