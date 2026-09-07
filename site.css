@@ -229,3 +229,4 @@ h1[tabindex="-1"]:focus{outline:none}
 @media screen{.footer-clock{display:inline-flex;flex-wrap:wrap;gap:4px 10px}}
 @media (max-width:480px){.home-small{grid-column:1/-1;min-height:0}
 .home-small>.tile-link{min-height:0}}
+.about-page .page-heading{padding-bottom:16px}
