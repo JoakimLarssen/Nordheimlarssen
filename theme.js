@@ -1,5 +1,7 @@
+/* Run in the head, before paint; storage is optional. */
 (() => {
-  try {
-    document.documentElement.dataset.theme = localStorage.getItem('jnl-theme') === 'light' ? 'light' : 'dark';
-  } catch {}
+  let saved;
+  try { saved = localStorage.getItem('jnl-theme'); } catch {}
+  const dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.dataset.theme = saved === 'light' || saved === 'dark' ? saved : dark ? 'dark' : 'light';
 })();
