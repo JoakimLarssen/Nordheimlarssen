@@ -3,6 +3,8 @@
 .hero h1 em{letter-spacing:-2.7px;line-height:1.13}
 .hero{grid-template-columns:1.5fr 1fr;gap:64px}
 .hero-intro{max-width:46ch}
+.hero-facts{max-width:46ch;margin:16px 0 0;padding-left:18px;list-style:disc;font-size:14px;line-height:1.65;color:var(--text)}
+.hero-facts li+li{margin-top:6px}
 .research-strip{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin:38px 0;padding:38px 0;border-block:1px solid var(--line)}
 .research-strip h2{font-size:34px;letter-spacing:-1px;margin-top:16px;line-height:1.18}
 .research-strip h2 em{font-family:var(--serif);font-weight:400}
