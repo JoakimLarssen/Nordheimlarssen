@@ -33,13 +33,15 @@
   <!-- Fonts: JetBrains Mono (structure) + IBM Plex Sans (prose). No serif. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/styles.css" />
 
   <!-- Gate reveal animations on JS BEFORE first paint, so no-JS users see
        all content and JS users never get a flash of un-animated content. -->
   <script>document.documentElement.classList.add("js");</script>
+<link rel="stylesheet" href="/theme.css">
+<script src="/theme.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -52,13 +54,13 @@
       </a>
       <nav class="nav" aria-label="Primary">
         <ul>
-          <li><a href="/#whoami">whoami</a></li>
-          <li><a href="/#projects">projects</a></li>
-          <li><a href="/#ctf">ctf.log</a></li>
-          <li><a href="/#academics">academics</a></li>
-          <li><a href="/writing" class="is-active" aria-current="page">writing</a></li>
-          <li><a href="/cv">cv</a></li>
-          <li><a href="/#contact">contact</a></li>
+          <li><a href="/#whoami">About</a></li>
+          <li><a href="/#projects">Projects</a></li>
+          <li><a href="/#ctf">CTF results</a></li>
+          <li><a href="/#academics">Education</a></li>
+          <li><a href="/writing" class="is-active" aria-current="page">Writing</a></li>
+          <li><a href="/cv">CV</a></li>
+          <li><a href="/#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
@@ -86,7 +88,7 @@
             <p class="prose">AI writes roughly as flawed as the corpus it learned from, confidently and quickly. Over-trusting humans is the security problem. The fix is process, not abstinence.</p>
           </div>
 
-          <h2>// why the rates matter</h2>
+          <h2>why the rates matter</h2>
 
           <p class="prose">This is no longer academic. Satya Nadella said in April 2025 that 20 to 30 percent of code in Microsoft's repositories is now AI-written, and Sundar Pichai said AI generates more than 30 percent of new code at Google [21]. Take those with salt: it is unclear how either company measures "AI-generated," and these are CEO talking points, not audited metrics [21]. But the direction is corroborated by Stack Overflow's 2025 survey, which found 84 percent of developers use or plan to use AI tools, up from 76 percent the year before [23].</p>
 
@@ -94,13 +96,13 @@
 
           <p class="prose">One-sentence thesis: the security risk of AI-generated code is real and measurable, but it concentrates in human over-trust and weak review loops, not in the model being categorically worse than the humans it learned from.</p>
 
-          <h2>// the scary headline, and what it actually measured</h2>
+          <h2>the scary headline, and what it actually measured</h2>
 
           <p class="prose">The single most-cited statistic comes from a 2021 NYU study (published at IEEE S&amp;P 2022), "Asleep at the Keyboard? Assessing the Security of GitHub Copilot's Code Contributions," by Pearce and colleagues [1]. They built 89 scenarios deliberately targeting high-risk weaknesses from MITRE's "Top 25" CWE list, had Copilot generate completions, and ended up with roughly 1,689 programs; about 40 percent contained security vulnerabilities, the origin of "40% of AI code is insecure" [1].</p>
 
           <p class="prose">But read the denominator. This measured Copilot's raw completions on <em>deliberately security-sensitive prompts</em>, in 2021, in the Codex era, engineered to steer the model toward risky patterns, not typical day-to-day code. The authors' own explanation is garbage in, garbage out: Copilot reproduces insecure patterns common in its training data, and they recommend pairing it with security tooling rather than trusting it raw [1]. So the 40 percent measures how often a model emits a vulnerable pattern when you push it toward one: the upper bound, not the production rate.</p>
 
-          <h2>// the actual mechanism: the over-trusting human</h2>
+          <h2>the actual mechanism: the over-trusting human</h2>
 
           <p class="prose">If "Asleep at the Keyboard" is the famous study, the keystone is from Stanford: "Do Users Write More Insecure Code with AI Assistants?" by Perry, Srivastava, Kumar, and Boneh, at ACM CCS 2023 [2]. It studies people, not just the model: 47 participants (33 with AI access, 14 control), an assistant built on OpenAI's codex-davinci-002, across five security tasks in Python, JavaScript, and C [2].</p>
 
@@ -110,7 +112,7 @@
 
           <p class="prose">N is small (47) and codex-davinci-002 is now old, so do not generalize the exact percentages. But the <em>mechanism</em>, over-trust producing under-review, is the durable finding.</p>
 
-          <h2>// the honest counter-evidence: the model alone is not uniquely evil</h2>
+          <h2>the honest counter-evidence: the model alone is not uniquely evil</h2>
 
           <p class="prose">Two rigorous studies cut against the alarmist reading. The first is "Lost at C," from NYU, at USENIX Security 2023: 58 participants implementing a singly-linked list in C, with an assistant based on code-cushman-001 [10]. AI-assisted users produced critical security bugs at a rate no more than about 10 percent higher than the control, with no statistically significant difference per line of code. The authors concluded the LLM "does not introduce new security risks" [10].</p>
 
@@ -118,7 +120,7 @@
 
           <p class="prose">How do you reconcile Stanford with these? Effect size depends heavily on task, language, model, and user behavior. Cryptography and path validation (Stanford's hard tasks) are the subtle domains where a confident wrong suggestion does damage; pointer juggling in C (Lost at C) is where the human was already going to struggle. That variance is the argument: if the model were uniformly dangerous, you would not get this spread. The spread tells you the risk is contextual and mediated by the human and the task.</p>
 
-          <h2>// the modern, large-scale evidence: real, and not improving</h2>
+          <h2>the modern, large-scale evidence: real, and not improving</h2>
 
           <p class="prose">The recent evidence is large-scale and sharpens two points: the problem is real, and bigger models are not solving it. The headline benchmark is Veracode's 2025 GenAI Code Security Report, which tested more than 100 LLMs across four languages [4]. Across the test cases, 45 percent of code samples failed security tests by introducing an OWASP Top 10 vulnerability, from Java worst at roughly 72 percent down to roughly 38 percent for the lowest-risk languages (Python, JavaScript, C#) [4]. And the finding that matters most for the "wait for better models" crowd: while the models got better at writing functional code, security performance stayed flat regardless of model size [4].</p>
 
@@ -128,7 +130,7 @@
 
           <p class="prose">But the flat-security finding is more than one vendor's claim: it converges with a peer-reviewed result. Meta's CyberSecEval, covering 50 CWEs across 8 languages, found models suggested insecure code roughly 30 percent of the time on average, and a <em>negative</em> correlation between coding capability and security: models better at reproducing training patterns were <em>more</em> likely to produce insecure code [3]. The better a model learns its training data, the more faithfully it learns the insecure parts. Two independent sources agree that capability gains do not buy you security.</p>
 
-          <h2>// the rates converge (which is the actual signal)</h2>
+          <h2>the rates converge (which is the actual signal)</h2>
 
           <p class="prose">Look at the spread of "how often does AI emit insecure code":</p>
 
@@ -142,13 +144,13 @@
 
           <p class="prose">Different methodologies, roughly agreeing on a 30 to 45 percent band. When a synthetic benchmark, a vendor scan, and a study of shipped code all land in the same neighborhood, you are looking at a genuine property, not an artifact. Denominators still matter: the high end comes from prompts stressed toward risky CWEs (NYU at 40; SecurityEval's 68 to 74 percent) [1][7], while the in-the-wild number is closer to 30 [9].</p>
 
-          <h2>// "it works" and "it's safe" are different axes</h2>
+          <h2>"it works" and "it's safe" are different axes</h2>
 
           <p class="prose">One benchmark nails the core conceptual error people make: BaxBench, "Can LLMs Generate Correct and Secure Backends?", from ETH Zurich and LogicStar, at ICML 2025 [6]. It is 392 backend tasks, each with both functional tests <em>and</em> expert-written exploits, run against 11 models including reasoning models like o1 and DeepSeek-R1 [6]. Even the best do not exceed roughly 35 percent correct-and-secure [6]. OpenAI's o1 hit about 62 percent on correctness alone, but roughly half of those functionally correct programs were still exploitable [6].</p>
 
           <p class="prose">This is the cleanest demonstration that "it passes the tests" and "it is safe" are orthogonal: the more you rely on correctness-only benchmarks like HumanEval, the more you overstate how production-ready the output is. And reasoning models, the great hope for closing the gap, did not on BaxBench [6].</p>
 
-          <h2>// the new failure modes that are unique to AI</h2>
+          <h2>the new failure modes that are unique to AI</h2>
 
           <p class="prose">So far, "AI writes the same bugs humans write, just at scale." But three failure modes exist <em>because</em> the code came from a model.</p>
 
@@ -170,7 +172,7 @@
 
           <p class="prose">If you have ever sat in a "vibe coding" loop telling a model "fix it, try again" a dozen times, this should give you pause: the loop you think is converging on quality may be drifting away from it, and you would not know unless something outside it checked.</p>
 
-          <h2>// the enterprise telemetry: where this goes at scale</h2>
+          <h2>the enterprise telemetry: where this goes at scale</h2>
 
           <p class="prose">Studies are clean but synthetic. What happens in real companies? Apiiro, an application-security vendor, published telemetry in September 2025, "4x Velocity, 10x Vulnerabilities," from tens of thousands of repositories across Fortune 50 enterprises [12]. AI-assisted developers produced 3 to 4 times more commits, and by June 2025 AI-generated code drove more than 10,000 new security findings per month, a 10x spike in six months [12].</p>
 
@@ -178,7 +180,7 @@
 
           <p class="prose">This is Veracode's pattern-matchable-versus-dataflow split at enterprise scale: AI is <em>fixing the shallow bugs and multiplying the deep ones</em>. The risk migrates to exactly the places where humans were the last line of defense and are now reviewing least because the volume is 4x. (Apiiro sells code-risk tooling and the data is self-reported, but the qualitative shift corroborates an independent pattern.)</p>
 
-          <h2>// the process evidence: it's the batch size, not the model</h2>
+          <h2>the process evidence: it's the batch size, not the model</h2>
 
           <p class="prose">Google's DORA team, in the 2024 Accelerate State of DevOps report, found that a 25 percent increase in AI adoption was associated with an estimated 1.5 percent decrease in delivery throughput and a 7.2 percent decrease in stability, even as around 75 percent of respondents reported individual productivity gains [20]. DORA's interpretation is the punchline: AI makes it easy to produce more code in larger batches, and large changesets are the real risk driver [20].</p>
 
@@ -186,7 +188,7 @@
 
           <p class="prose">That perception gap is the same one Stanford measured for security. When you overestimate <em>speed</em>, you ship a bit too eagerly; when you overestimate <em>security</em>, you ship something exploitable while feeling safe. (Caveat: METR's N is 16, on complex mature repos with early-2025 tooling.)</p>
 
-          <h2>// what actually helps</h2>
+          <h2>what actually helps</h2>
 
           <p class="prose">The evidence points at a specific division of labor between deterministic tools and AI. AI is a good <em>fixer</em> of known issues: GitHub's Copilot Autofix, which pairs CodeQL with a model, reported median remediation in 28 minutes versus 1.5 hours manually [19]. The <em>deterministic scanner</em> finds the issue, the <em>model</em> drafts the fix; that pairing produces the speedup, not the model alone (and GitHub's data measures fix speed, not correctness [19]). But AI as a <em>detector</em> on its own is weak: a 2025 study, "Can AI Spot Security Flaws Before You Commit?", found Copilot's review frequently failed to detect SQL injection, XSS, and insecure deserialization, and missed configuration-file security flaws [17]. Deterministic SAST to find, LLM to fix.</p>
 
@@ -199,7 +201,7 @@
           <p class="prose">So the headline I would write is not "AI writes insecure code." It is: <em>AI writes about as insecure as its training data, confidently and quickly, and confident-and-quick is precisely the combination that erodes human review.</em> The vulnerability is in the loop, not the model. AI did not invent insecure code; it learned from us, and just learned to do it faster and to sound sure of itself. The job now is to stay un-sure on its behalf.</p>
 
           <div class="references">
-            <h2>// references</h2>
+            <h2>references</h2>
             <ol>
               <li>Pearce, Ahmad, Tan et al. "Asleep at the Keyboard? Assessing the Security of GitHub Copilot's Code Contributions." IEEE S&amp;P 2022. <a href="https://arxiv.org/abs/2108.09293" rel="noopener" target="_blank">https://arxiv.org/abs/2108.09293</a></li>
               <li>Perry, Srivastava, Kumar, Boneh. "Do Users Write More Insecure Code with AI Assistants?" CCS 2023. <a href="https://arxiv.org/abs/2211.03622" rel="noopener" target="_blank">https://arxiv.org/abs/2211.03622</a></li>

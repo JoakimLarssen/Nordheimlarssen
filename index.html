@@ -1,1105 +1,282 @@
 <!doctype html>
-<!--
-  nordheimlarssen.no :: static home page.
-  Self-contained: all CSS inlined in one <style> block. The only script is a
-  small inline one for the mobile hamburger nav and the footer year. Google
-  Fonts is the only external request; no external stylesheet or script files
-  are linked. Vercel-served static file, no build step.
-  Every section renders fully on load; motion happens only on interaction.
--->
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0B0C0B">
-<meta name="description" content="Joakim Nordheim Larssen, security researcher, developer, and MSc Information Security student at NTNU in Gjøvik.">
-<meta name="author" content="Joakim Nordheim Larssen">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="dark light" name="color-scheme"/>
+<meta content="#131316" name="theme-color"/>
+<meta content="Joakim Nordheim Larssen, security researcher, developer, and MSc Information Security student at NTNU in Gjøvik." name="description"/>
+<meta content="Joakim Nordheim Larssen" name="author"/>
 <title>Joakim Nordheim Larssen</title>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="canonical" href="https://www.nordheimlarssen.no/">
-
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://www.nordheimlarssen.no/" rel="canonical"/>
 <!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Joakim Nordheim Larssen">
-<meta property="og:description" content="Security researcher, developer, and MSc Information Security student at NTNU in Gjøvik.">
-<meta property="og:url" content="https://www.nordheimlarssen.no/">
-<meta property="og:image" content="https://www.nordheimlarssen.no/og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-
+<meta content="website" property="og:type"/>
+<meta content="Joakim Nordheim Larssen" property="og:title"/>
+<meta content="Security researcher, developer, and MSc Information Security student at NTNU in Gjøvik." property="og:description"/>
+<meta content="https://www.nordheimlarssen.no/" property="og:url"/>
+<meta content="https://www.nordheimlarssen.no/og.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
 <!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Joakim Nordheim Larssen">
-<meta name="twitter:description" content="Security researcher, developer, and MSc Information Security student at NTNU in Gjøvik.">
-<meta name="twitter:image" content="https://www.nordheimlarssen.no/og.png">
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Joakim Nordheim Larssen" name="twitter:title"/>
+<meta content="Security researcher, developer, and MSc Information Security student at NTNU in Gjøvik." name="twitter:description"/>
+<meta content="https://www.nordheimlarssen.no/og.png" name="twitter:image"/>
 
-<!-- Fonts: JetBrains Mono (structure/brand) + IBM Plex Sans (prose only) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-
-<style>
-/* ==========================================================================
-   nordheimlarssen.no :: home
-   Restrained dark mono terminal aesthetic. JetBrains Mono carries structure,
-   IBM Plex Sans carries prose. Green (#57C97B) is the ONE accent, rationed to
-   a single signal: the $ prompt glyph, the live status dot, the win, and the
-   colour a key link takes on hover. Everything renders on load.
-   ========================================================================== */
-
-/* ---------- TOKENS ---------- */
-:root{
-  --bg:        #0B0C0B;   /* canvas                                   */
-  /* Measured with APCA against --elev-1 #0D0F0E, the ground these sit on. Body floor is Lc 75.
-     The previous ramp put prose at 73.4 and the metadata workhorse at 41.4, and the metadata is
-     set at 11px, where APCA needs more contrast than body rather than less. */
-  --text:      #ECECEC;   /* primary: headings, links, key data   Lc 95 */
-  --body:      #DDDDDD;   /* body prose                           Lc 85 */
-  --dim:       #CECECE;   /* metadata workhorse                   Lc 76 */
-  --accent:    #57C97B;   /* the only accent, green, rationed         */
-
-  --elev-1:    #0D0F0E;   /* card / raised surface                    */
-  --elev-2:    #111412;   /* card hover                               */
-  --elev-3:    #141613;   /* table header fill                        */
-
-  --hairline:  #1E211F;   /* faint structural rules                   */
-  --border:    #2C302D;   /* visible 1px border, table heads          */
-  --border-hi: #3A403C;   /* hover border, pre-accent                 */
-
-  --accent-dim:  #21402C;                       /* low green fill/border  */
-  --accent-glow: rgba(87, 201, 123, 0.14);      /* subtle green tint      */
-
-  --mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
-  --sans: "IBM Plex Sans", system-ui, sans-serif;
-
-  --maxw: 1080px;
-  --gutter: clamp(20px, 5vw, 64px);
-  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --dur:  140ms;
-  --focus: #57C97B;
-}
-
-/* ---------- RESET ---------- */
-*, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; color-scheme: dark; }
-@media (prefers-reduced-motion: reduce){ html { scroll-behavior: auto; } }
-body{
-  margin: 0;
-  background: var(--bg);
-  color: var(--body);
-  font-family: var(--mono);
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-variant-numeric: tabular-nums;
-}
-h1, h2, h3, p, ul, dl, figure { margin: 0; }
-ul { list-style: none; padding: 0; }
-a { color: inherit; text-decoration: none; }
-img, svg { display: block; max-width: 100%; }
-
-::selection{ background: var(--text); color: var(--bg); }
-
-/* ---------- ACCESSIBILITY ---------- */
-.sr-only{
-  position: absolute; width: 1px; height: 1px;
-  padding: 0; margin: -1px; overflow: hidden;
-  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-}
-.skip-link{
-  position: absolute; left: 12px; top: -48px;
-  background: var(--text); color: var(--bg);
-  border-radius: 5px;
-  padding: 8px 14px; z-index: 100;
-  font-family: var(--mono); font-size: 0.82rem; font-weight: 500;
-  transition: top var(--dur) var(--ease);
-}
-.skip-link:focus{ top: 12px; }
-:focus-visible{ outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 5px; }
-
-/* ---------- LAYOUT ---------- */
-.wrap{
-  width: 100%;
-  max-width: var(--maxw);
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-}
-.section{
-  padding-block: clamp(52px, 9vw, 100px);
-  border-top: 1px solid var(--hairline);
-}
-.section:first-of-type{ border-top: 0; }
-
-/* ---------- HEADER / NAV ---------- */
-.site-header{
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(11, 12, 11, 0.85);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--hairline);
-}
-.header-inner{
-  display: flex; align-items: center; justify-content: space-between;
-  height: 60px;
-}
-.brand{
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
-  display: inline-flex; align-items: baseline;
-}
-.brand-prompt{ color: var(--dim); font-weight: 400; }
-.brand-name{ color: var(--text); }
-.brand:hover .brand-name{ color: var(--accent); }
-
-.nav ul{ display: flex; gap: clamp(14px, 2.5vw, 30px); }
-.nav a{
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  letter-spacing: 0.01em;
-  color: var(--dim);
-  padding: 6px 2px;
-  transition: color var(--dur) var(--ease);
-}
-.nav a:hover{ color: var(--accent); }
-
-/* Mobile hamburger. Hidden on desktop; shown on small screens only when JS
-   has enhanced the nav (html.nav-enhanced). Without JS the nav wraps instead. */
-.nav-toggle{
-  display: none;
-  -webkit-appearance: none; appearance: none;
-  align-items: center; justify-content: center;
-  width: 42px; height: 36px; padding: 0;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  cursor: pointer;
-  transition: border-color var(--dur) var(--ease);
-}
-.nav-toggle:hover{ border-color: var(--border-hi); }
-.nav-toggle-bars,
-.nav-toggle-bars::before,
-.nav-toggle-bars::after{
-  display: block; width: 18px; height: 2px;
-  background: var(--text); border-radius: 2px;
-  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-}
-.nav-toggle-bars{ position: relative; }
-.nav-toggle-bars::before,
-.nav-toggle-bars::after{ content: ""; position: absolute; left: 0; }
-.nav-toggle-bars::before{ top: -6px; }
-.nav-toggle-bars::after { top: 6px; }
-.site-header.nav-open .nav-toggle-bars{ background: transparent; }
-.site-header.nav-open .nav-toggle-bars::before{ transform: translateY(6px) rotate(45deg); }
-.site-header.nav-open .nav-toggle-bars::after { transform: translateY(-6px) rotate(-45deg); }
-
-/* ---------- SECTION HEADS ---------- */
-.section-head{
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: clamp(26px, 4vw, 42px);
-}
-.section-title{
-  font-family: var(--mono);
-  font-weight: 500;
-  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
-  letter-spacing: 0.01em;
-  color: var(--text);
-  white-space: nowrap;
-}
-.section-title::before{ content: "// "; color: var(--dim); font-weight: 400; }
-.rule{ flex: 1; height: 1px; background: var(--hairline); }
-
-/* ---------- HERO ---------- */
-.hero{ padding-block: clamp(64px, 15vh, 140px); border-top: 0; }
-.kicker{
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  color: var(--dim);
-  margin-bottom: 18px;
-  letter-spacing: 0.02em;
-}
-.prompt{ color: var(--accent); margin-right: 8px; font-weight: 700; }
-.hero-name{
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: clamp(2rem, 6.4vw, 3.7rem);
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  color: var(--text);
-  margin-bottom: 14px;
-  text-wrap: balance;
-}
-.hero-identity{
-  font-family: var(--mono);
-  font-size: clamp(0.95rem, 2vw, 1.1rem);
-  color: var(--dim);
-  letter-spacing: 0.01em;
-  margin-bottom: 26px;
-}
-.hero-tagline{
-  font-family: var(--sans);
-  font-size: clamp(1.15rem, 3.2vw, 1.7rem);
-  line-height: 1.35;
-  color: var(--text);
-  max-width: 26ch;
-  margin-bottom: 40px;
-}
-
-/* status register: study / projects / available */
-.status-block{
-  display: grid; gap: 12px;
-  max-width: 900px;
-}
-.now-line{
-  display: grid;
-  grid-template-columns: 7em minmax(0, 1fr);
-  column-gap: 22px;
-  align-items: baseline;
-  font-family: var(--mono);
-  font-size: 1rem;
-  line-height: 1.55;
-  border: 1px solid var(--border);
-  background: var(--elev-1);
-  border-radius: 5px;
-  padding: 20px 24px;
-}
-.now-label{
-  display: inline-flex; align-items: center; gap: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.82rem;
-  color: var(--dim);
-}
-.now-text{ color: var(--body); overflow-wrap: anywhere; }
-.now-text a{
-  color: var(--text);
-  border-bottom: 1px solid rgba(242, 243, 240, 0.28);
-  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
-}
-.now-text a:hover{ color: var(--accent); border-bottom-color: var(--accent); }
-.status-dot{
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--dim);
-  flex: 0 0 auto;
-}
-.now-line.is-live .status-dot{ background: var(--accent); }
-
-/* ---------- PROSE ---------- */
-.prose{
-  font-family: var(--sans);
-  color: var(--body);
-  max-width: 64ch;
-}
-.prose p{ font-family: var(--sans); }
-.prose p + p{ margin-top: 1.15em; }
-.prose a,
-.card-desc a,
-.card-meta a,
-.acad-note a{
-  color: var(--text);
-  text-decoration: underline;
-  text-decoration-color: rgba(242, 243, 240, 0.28);
-  text-underline-offset: 0.2em;
-  transition: color var(--dur) var(--ease), text-decoration-color var(--dur) var(--ease);
-}
-.prose a:hover,
-.card-desc a:hover,
-.card-meta a:hover,
-.acad-note a:hover{ color: var(--accent); text-decoration-color: var(--accent); }
-.lede{
-  font-family: var(--sans);
-  font-size: 1.05rem;
-  color: var(--body);
-  margin-bottom: 26px;
-  max-width: 62ch;
-}
-.mini{
-  font-family: var(--mono);
-  font-size: 0.82rem; font-weight: 500;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--dim);
-  margin-bottom: 12px;
-}
-
-/* ---------- PROJECT CARDS ---------- */
-.project-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-  gap: 20px;
-}
-.card{
-  background: var(--elev-1);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  transition: border-color var(--dur) var(--ease),
-              background-color var(--dur) var(--ease);
-}
-.card > article{
-  display: flex; flex-direction: column;
-  height: 100%;
-  padding: 22px 22px 18px;
-}
-.card:hover,
-.card:focus-within{
-  border-color: var(--border-hi);
-  background: var(--elev-2);
-}
-.card-top{
-  display: flex; align-items: baseline; justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-.card-title{
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 1.1rem;
-  letter-spacing: 0.01em;
-  color: var(--text);
-}
-.card-desc{
-  font-family: var(--sans);
-  font-size: 0.94rem;
-  line-height: 1.6;
-  color: var(--body);
-  margin-bottom: 18px;
-}
-.card-meta{
-  display: grid; gap: 8px;
-  margin-bottom: 18px;
-  border-top: 1px solid var(--hairline);
-  padding-top: 14px;
-}
-.card-meta > div{
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  gap: 12px;
-  align-items: baseline;
-}
-.card-meta dt{
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--dim);
-}
-.card-meta dd{
-  margin: 0;
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  color: var(--body);
-  overflow-wrap: anywhere;
-}
-.card-links{ margin-top: auto; padding-top: 4px; }
-.card-links a{
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  color: var(--dim);
-  display: inline-flex; align-items: center; gap: 6px;
-  transition: color var(--dur) var(--ease);
-}
-.card-links a:hover{ color: var(--accent); }
-.arrow{ transition: transform var(--dur) var(--ease); }
-.card-links a:hover .arrow{ transform: translate(2px, -2px); }
-
-/* ---------- STATUS BADGES ---------- */
-.badge{
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  letter-spacing: 0.04em;
-  color: var(--dim);
-  white-space: nowrap;
-  flex: 0 0 auto;
-}
-/* the single green signal in the projects view: the flagship's live dot */
-.badge-live{
-  /* The accent stays the dot. The label reads at Lc 75 instead of 61, because a mid green at
-     16px is decoration doing a reading job. Same hue, lifted until it clears the body floor. */
-  color: #63E48C;
-  display: inline-flex; align-items: center; gap: 6px;
-}
-.badge-live::before{
-  content: "";
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--accent);
-}
-
-/* ---------- CTF: the win, then the record ---------- */
-.win-call{
-  display: flex; align-items: baseline; gap: clamp(14px, 3vw, 28px);
-  padding: 4px 0 30px;
-}
-.win-num{
-  font-family: var(--mono);
-  font-size: clamp(1.9rem, 1.1rem + 2.5vw, 3.2rem);
-  font-weight: 700; line-height: 1;
-  letter-spacing: -0.015em;
-  color: var(--accent);
-}
-.win-event{
-  font-family: var(--mono);
-  font-size: 1.25rem; font-weight: 700; color: var(--text);
-  letter-spacing: 0.01em;
-}
-.win-role{ font-size: 0.82rem; font-weight: 400; color: var(--dim); margin-left: 0.75ch; }
-
-/* ---------- SPEC TABLES ---------- */
-.table-wrap{ overflow-x: auto; }
-.spec-table{
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--mono);
-  font-size: 0.86rem;
-}
-.spec-table caption{ text-align: left; }
-.spec-table th{
-  text-align: left;
-  font-weight: 500;
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--dim);
-  padding: 10px 16px 10px 0;
-  border-bottom: 1px solid var(--border);
-}
-.spec-table td{
-  padding: 11px 16px 11px 0;
-  border-bottom: 1px solid var(--hairline);
-  color: var(--body);
-  vertical-align: top;
-}
-.spec-table td:first-child{ color: var(--text); }
-.spec-table .num{ text-align: right; padding-right: 0; }
-.spec-table th.num{ text-align: right; padding-right: 0; }
-.role-cell{ color: var(--dim); }
-.result-win{ color: var(--accent); font-weight: 700; }
-.nb{ white-space: nowrap; }
-
-/* CTF table reflows to stacked cards on narrow screens (no horizontal scroll) */
-@media (max-width: 560px){
-  .ctf-table thead{ display: none; }
-  .ctf-table, .ctf-table tbody, .ctf-table tr, .ctf-table td{ display: block; }
-  .ctf-table{ border-top: 1px solid var(--border); }
-  .ctf-table tr{
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    column-gap: 1.25rem;
-    padding: 12px 0 13px;
-    border-bottom: 1px solid var(--hairline);
-  }
-  .ctf-table td{ border: 0; padding: 0; }
-  .ctf-table td:nth-child(1){ grid-column: 1; grid-row: 1; font-size: 0.9rem; }
-  .ctf-table td:nth-child(2){
-    grid-column: 1; grid-row: 2;
-    margin-top: 4px;
-    font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
-  }
-  .ctf-table td:nth-child(3){
-    grid-column: 2; grid-row: 1 / span 2;
-    align-self: center; text-align: right; line-height: 1.5;
-  }
-  .ctf-table td.num .nb{ display: block; }
-}
-
-/* ---------- ACADEMICS ---------- */
-.academics-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: clamp(24px, 4vw, 44px);
-}
-.acad-title{
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 0.98rem;
-  color: var(--text);
-  margin-bottom: 4px;
-}
-.acad-sub{
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  color: var(--dim);
-  margin-bottom: 16px;
-}
-.acad-lead{
-  font-family: var(--sans);
-  font-size: 0.9rem;
-  color: var(--body);
-}
-.grades{ font-size: 0.82rem; }
-.grades td:first-child, .grades th:first-child{ width: 78%; }
-.gr{ font-family: var(--mono); font-weight: 700; font-size: 0.82rem; color: var(--dim);
-  border: 1px solid var(--line); background: transparent; border-radius: 5px;
-  padding: 1px 7px; display: inline-block; min-width: 22px; text-align: center;
-  font-feature-settings: "tnum" 1; }
-.gr.on{ color: var(--accent); border-color: rgba(87,201,123,0.4); background: rgba(87,201,123,0.08); }
-.acad-note{
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  line-height: 1.6;
-  color: var(--dim);
-  margin-top: 26px;
-  max-width: 66ch;
-  letter-spacing: 0.01em;
-}
-.acad-note::before{ content: "# "; color: var(--border-hi); }
-
-/* ---------- WRITING ---------- */
-.card.is-featured{ border-color: var(--border); }
-.card-flag{
-  display: inline-flex; align-items: center;
-  align-self: flex-start; width: fit-content;
-  font-family: var(--mono);
-  font-size: 0.82rem; font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 4px 11px;
-  margin-bottom: 16px;
-}
-.card-title a{ color: var(--text); transition: color var(--dur) var(--ease); }
-.card-title a:hover{ color: var(--accent); }
-
-.writing-more{
-  max-width: 660px;
-  margin-top: 24px;
-  border-top: 1px solid var(--border);
-}
-.writing-more li{
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 16px;
-  align-items: baseline;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--hairline);
-}
-.wm-title{
-  font-family: var(--mono);
-  font-size: 0.9rem;
-  color: var(--text);
-  overflow-wrap: anywhere;
-  transition: color var(--dur) var(--ease);
-}
-.wm-title:hover{ color: var(--accent); }
-.wm-kind{
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--dim);
-  white-space: nowrap;
-  text-align: right;
-}
-.writing-cta{
-  display: inline-flex; align-items: center; gap: 8px;
-  margin-top: 28px;
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  color: var(--dim);
-  background: var(--elev-1);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 11px 18px;
-  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
-}
-.writing-cta:hover{ color: var(--accent); border-color: var(--accent); }
-.writing-cta:hover .arrow{ transform: translate(2px, 0); }
-
-/* ---------- CONTACT ---------- */
-.contact-list{
-  display: grid; gap: 2px;
-  max-width: 640px;
-}
-.contact-list li{
-  display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
-  gap: 16px;
-  align-items: baseline;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--hairline);
-}
-.contact-key{
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--dim);
-}
-.contact-list a{
-  font-family: var(--mono);
-  font-size: 0.92rem;
-  color: var(--text);
-  width: fit-content;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-  border-bottom: 1px solid transparent;
-  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
-}
-.contact-list a:hover{ color: var(--accent); border-bottom-color: var(--accent); }
-
-/* ---------- FOOTER ---------- */
-.site-footer{
-  border-top: 1px solid var(--hairline);
-  padding-block: 28px;
-}
-.footer-inner{
-  display: flex; flex-wrap: wrap; gap: 8px 24px;
-  justify-content: space-between;
-}
-.colophon{
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  color: var(--dim);
-}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 560px){
-  .header-inner{ height: 56px; }
-  .brand{ font-size: 0.88rem; }
-  .now-line{ grid-template-columns: 1fr; row-gap: 7px; padding: 12px 14px; }
-  .contact-list li{ grid-template-columns: 76px minmax(0, 1fr); gap: 10px; }
-  .card-meta > div{ grid-template-columns: 48px minmax(0, 1fr); }
-  .hero-tagline{ max-width: none; }
-  .writing-more li{ grid-template-columns: 1fr; gap: 3px; padding: 12px 0; }
-  .wm-kind{ text-align: left; }
-}
-
-/* ---------- MOBILE NAV (hamburger, <= 640px) ---------- */
-@media (max-width: 640px){
-  /* JS present: show the toggle, turn the nav into a dropdown panel */
-  .nav-enhanced .nav-toggle{ display: inline-flex; }
-  .nav-enhanced .site-header .nav{
-    position: absolute; top: 100%; left: 0; right: 0;
-    display: none;
-    background: var(--elev-1);
-    border-top: 1px solid var(--hairline);
-    border-bottom: 1px solid var(--border);
-    border-radius: 5px;
-    box-shadow: 0 16px 30px -16px rgba(0, 0, 0, 0.7);
-  }
-  .nav-enhanced .site-header.nav-open .nav{ display: block; }
-  .nav-enhanced .site-header .nav ul{
-    flex-direction: column;
-    gap: 0;
-    padding: 6px var(--gutter) 14px;
-  }
-  .nav-enhanced .site-header .nav li{ width: 100%; }
-  .nav-enhanced .site-header .nav a{
-    display: block;
-    font-size: 0.95rem;
-    padding: 13px 0;
-    color: var(--text);
-    border-bottom: 1px solid var(--hairline);
-  }
-  .nav-enhanced .site-header .nav li:last-child a{ border-bottom: 0; }
-
-  /* No JS: let the nav wrap onto its own line instead of overflowing */
-  html:not(.nav-enhanced) .header-inner{
-    flex-wrap: wrap; height: auto;
-    padding-top: 10px; padding-bottom: 10px; gap: 6px 0;
-  }
-  html:not(.nav-enhanced) .nav{ width: 100%; }
-  html:not(.nav-enhanced) .nav ul{ flex-wrap: wrap; gap: 10px 18px; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  .arrow, .card, .now-text a, .contact-list a { transition: none !important; }
-}
-</style>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/home.css">
+<script src="/home.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-
-<!-- ===================== HEADER / NAV ===================== -->
-<header class="site-header" id="top">
-  <div class="wrap header-inner">
-    <a class="brand" href="#top" aria-label="Joakim Nordheim Larssen, home">
-      <span class="brand-prompt" aria-hidden="true">~/</span><span class="brand-name">jnl</span>
-    </a>
-    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
-      <span class="nav-toggle-bars" aria-hidden="true"></span>
-    </button>
-    <nav class="nav" id="primary-nav" aria-label="Primary">
-      <ul>
-        <li><a href="#whoami">whoami</a></li>
-        <li><a href="#projects">projects</a></li>
-        <li><a href="#ctf">ctf.log</a></li>
-        <li><a href="#academics">academics</a></li>
-        <li><a href="/writing">writing</a></li>
-        <li><a href="/cv">cv</a></li>
-        <li><a href="#contact">contact</a></li>
-      </ul>
-    </nav>
-  </div>
+<header class="masthead" id="top">
+  <a class="wordmark" href="/" aria-label="Joakim Nordheim Larssen, home">jnl<span>.</span></a>
+  <nav aria-label="Primary"><a href="#projects">Projects</a><a href="#ctf">CTF results</a><a href="/writing">Writing</a><a href="/cv">CV</a></nav>
+  <button class="theme-toggle" type="button" aria-label="Switch to light theme" hidden><span aria-hidden="true">&#9680;</span></button>
 </header>
-
-<main id="main">
-
-  <!-- ===================== HERO / WHOAMI ===================== -->
-  <section class="hero section" id="whoami" aria-labelledby="hero-name">
-    <div class="wrap">
-      <p class="kicker"><span class="prompt" aria-hidden="true">$</span>whoami</p>
-      <h1 class="hero-name" id="hero-name">Joakim Nordheim Larssen</h1>
-      <p class="hero-identity">Security researcher and developer, Oslo</p>
-      <p class="hero-tagline">I work on software security, compete in CTFs, and ship products.</p>
-
-      <div class="status-block">
-        <p class="now-line is-live">
-          <span class="now-label"><span class="status-dot" aria-hidden="true"></span>study</span>
-          <span class="now-text">studying MSc Information Security at NTNU, Gj&oslash;vik (2026&ndash;2028)</span>
-        </p>
-        <p class="now-line is-live">
-          <span class="now-label"><span class="status-dot" aria-hidden="true"></span>projects</span>
-          <span class="now-text"><a href="https://riposte.no" target="_blank" rel="noopener">Riposte</a> (an agentic security CLI) and <a href="https://futtia.no" target="_blank" rel="noopener">Futtia</a> (match footage you can query)</span>
-        </p>
-        <p class="now-line is-live">
-          <span class="now-label"><span class="status-dot" aria-hidden="true"></span>available</span>
-          <span class="now-text">recently earned a BSc in Cybersecurity, open to security roles (Oslo, Gj&oslash;vik, or remote)</span>
-        </p>
-      </div>
+<div class="site-layout">
+  <aside class="profile" aria-labelledby="profile-name" id="whoami">
+    <div class="profile-intro">
+      <div class="monogram" aria-hidden="true">jnl<span>_</span></div>
+      <h1 id="profile-name">Joakim<br>Nordheim Larssen<span>.</span></h1>
+      <p class="profile-role">Security researcher &amp; developer.</p>
+      <p>I work on software security, compete in CTFs, and build products. Based in Oslo, studying in Gj&oslash;vik.</p>
+      <div class="social-links"><a href="https://github.com/JoakimLarssen" target="_blank" rel="noopener">GitHub &#8599;</a><a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223" target="_blank" rel="noopener">LinkedIn &#8599;</a></div>
     </div>
-  </section>
-
-  <!-- ===================== ABOUT ===================== -->
-  <section class="section" id="about" aria-labelledby="about-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 class="section-title" id="about-h">about</h2>
-        <span class="rule" aria-hidden="true"></span>
-      </div>
-      <div class="prose">
-        <p>I recently earned a BSc in Cybersecurity at H&oslash;yskolen Kristiania, Bergen campus, and I am now pursuing an MSc in Information Security at NTNU, Gj&oslash;vik. I work across offensive security and software development. Most of my recent work starts from a concrete failure mode: AI coding assistants that reproduce vulnerable patterns from training data faster than anyone reviews them.</p>
-        <p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no" target="_blank" rel="noopener">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no" target="_blank" rel="noopener">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/" target="_blank" rel="noopener">Krister Eriksen</a>.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== PROJECTS ===================== -->
-  <section class="section" id="projects" aria-labelledby="projects-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 class="section-title" id="projects-h">projects</h2>
-        <span class="rule" aria-hidden="true"></span>
-      </div>
-
+    <section class="profile-section" id="about" aria-labelledby="about-h">
+      <h2 id="about-h">A little about me</h2>
+      <ul class="fact-list"><li>MSc Information Security at NTNU</li><li>BSc Cybersecurity from Kristiania</li><li>Crypto, pwn, and web challenges</li><li>Volunteer developer at Kvarteret</li></ul>
+      <details class="about-more"><summary>More about my work</summary><div class="prose">
+<p>I recently earned a BSc in Cybersecurity at Høyskolen Kristiania, Bergen campus, and I am now pursuing an MSc in Information Security at NTNU, Gjøvik. I work across offensive security and software development. Most of my recent work starts from a concrete failure mode: AI coding assistants that reproduce vulnerable patterns from training data faster than anyone reviews them.</p>
+<p>I compete in CTFs, mostly crypto, pwn, and web, and I volunteer as a developer at <a href="https://kvarteret.no" rel="noopener" target="_blank">Kvarteret studenthus</a>. My current focus is whether AI coding tools actually produce secure code, the subject of my bachelor thesis and the idea behind <a href="https://riposte.no" rel="noopener" target="_blank">Riposte</a>, an agentic security CLI for offensive and defensive work that I build with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/" rel="noopener" target="_blank">Krister Eriksen</a>.</p>
+</div></details>
+    </section>
+    <section class="profile-section contact" id="contact" aria-labelledby="contact-h">
+      <h2 id="contact-h">Let&#8217;s talk</h2>
+      <p>Open to security roles in Oslo, Gj&oslash;vik, or remotely. Get in touch about work, a project, or a good challenge.</p>
+      <a class="email-link" href="mailto:joakimnordheimlarssen@gmail.com">joakimnordheimlarssen@gmail.com <span aria-hidden="true">&#8599;</span></a>
+      <a class="cv-link" href="/cv">View my CV <span aria-hidden="true">&#8599;</span></a>
+    </section>
+    <p class="profile-footer">&copy; <span id="year">2026</span> Joakim Nordheim Larssen</p>
+  </aside>
+  <main class="dashboard" id="main">
+    <section class="tile status-tile" aria-labelledby="status-h">
+      <h2 id="status-h"><span class="status-dot" aria-hidden="true"></span>Open to security roles</h2>
+      <p>Security research<br>and software development.</p>
+      <a class="text-link" href="mailto:joakimnordheimlarssen@gmail.com">Get in touch <span aria-hidden="true">&#8599;</span></a>
+    </section>
+    <section class="tile clock-tile" aria-labelledby="location-h">
+      <div class="orbit" aria-hidden="true"><span></span><i></i></div>
+      <h2 id="location-h">Oslo, Norway</h2>
+      <p class="local-time"><time id="oslo-time">Europe / Oslo</time></p>
+      <p class="muted">Home base</p>
+    </section>
+    <section class="tile study-tile" aria-labelledby="study-h">
+      <div class="study-mark" aria-hidden="true">N</div>
+      <h2 id="study-h">Information Security</h2>
+      <p>MSc at NTNU, Gj&oslash;vik</p>
+      <p class="muted">2026&ndash;2028</p>
+      <a class="text-link" href="#academics">My education <span aria-hidden="true">&#8595;</span></a>
+    </section>
+    <section class="projects-section" id="projects" aria-labelledby="projects-h">
+      <div class="section-heading"><h2 id="projects-h">What I&#8217;m building</h2><a href="https://github.com/JoakimLarssen" target="_blank" rel="noopener">GitHub &#8599;</a></div>
       <ul class="project-grid">
-        <!-- RIPOSTE -->
-        <li class="card">
-          <article>
-            <div class="card-top">
-              <h3 class="card-title">Riposte</h3>
-              <span class="badge-live">[ in dev ]</span>
-            </div>
-            <p class="card-desc">
+<!-- RIPOSTE -->
+<li class="card">
+<article>
+<div class="card-top">
+<h3 class="card-title">Riposte</h3>
+<span class="badge-live">In development</span>
+</div>
+<p class="card-desc">
               An agentic security CLI in the spirit of Claude Code and Codex. Where those drive coding, Riposte drives offensive and defensive work: real recon, exploitation, and detection engineering. Every action is scope-gated and audited, so the agent can't go off-leash.
             </p>
-            <dl class="card-meta">
-              <div><dt>role</dt><dd>builder / architect</dd></div>
-              <div><dt>with</dt><dd><a href="https://www.linkedin.com/in/krister-eriksen-774963300/" target="_blank" rel="noopener">Krister Eriksen</a></dd></div>
-              <div><dt>stack</dt><dd>Python, LiteLLM, Sigma, MITRE ATT&amp;CK, Docker</dd></div>
-            </dl>
-            <div class="card-links">
-              <a href="https://riposte.no" target="_blank" rel="noopener">riposte.no <span class="arrow" aria-hidden="true">&#8599;</span></a>
-            </div>
-          </article>
-        </li>
-
-        <!-- FUTTIA -->
-        <li class="card">
-          <article>
-            <div class="card-top">
-              <h3 class="card-title">Futtia</h3>
-              <span class="badge">[ in dev ]</span>
-            </div>
-            <p class="card-desc">
+<dl class="card-meta">
+<div><dt>role</dt><dd>builder / architect</dd></div>
+<div><dt>with</dt><dd><a href="https://www.linkedin.com/in/krister-eriksen-774963300/" rel="noopener" target="_blank">Krister Eriksen</a></dd></div>
+<div><dt>stack</dt><dd>Python, LiteLLM, Sigma, MITRE ATT&amp;CK, Docker</dd></div>
+</dl>
+<div class="card-links">
+<a href="https://riposte.no" rel="noopener" target="_blank">riposte.no <span aria-hidden="true" class="arrow">↗</span></a>
+</div>
+</article>
+</li>
+<!-- FUTTIA -->
+<li class="card">
+<article>
+<div class="card-top">
+<h3 class="card-title">Futtia</h3>
+<span class="badge">In development</span>
+</div>
+<p class="card-desc">
               Football video in, clip-anchored answers out. TypeScript/Bun monorepo: upload match footage, ask questions in plain language, get answers tied to the clips that back them.
             </p>
-            <dl class="card-meta">
-              <div><dt>role</dt><dd>developer</dd></div>
-              <div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
-            </dl>
-            <div class="card-links">
-              <a href="https://futtia.no" target="_blank" rel="noopener">futtia.no <span class="arrow" aria-hidden="true">&#8599;</span></a>
-            </div>
-          </article>
-        </li>
-
-        <!-- BACHELOR THESIS -->
-        <li class="card">
-          <article>
-            <div class="card-top">
-              <h3 class="card-title">Bachelor thesis</h3>
-              <span class="badge">[ 2026 ]</span>
-            </div>
-            <p class="card-desc">
-              SAIF, a five-part framework for folding AI-accelerated development into a small-team agile workflow. Security experiment across four AI coding models, a semester inside ToSee AS. Group thesis with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/" target="_blank" rel="noopener">Krister Eriksen</a> and <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/" target="_blank" rel="noopener">Bendik Hagen</a>. Grade A.
+<dl class="card-meta">
+<div><dt>role</dt><dd>developer</dd></div>
+<div><dt>stack</dt><dd>React, Hono, Bun, Python, Supabase, Vercel</dd></div>
+</dl>
+<div class="card-links">
+<a href="https://futtia.no" rel="noopener" target="_blank">futtia.no <span aria-hidden="true" class="arrow">↗</span></a>
+</div>
+</article>
+</li>
+<!-- BACHELOR THESIS -->
+<li class="card">
+<article>
+<div class="card-top">
+<h3 class="card-title">Bachelor thesis</h3>
+<span class="badge">2026</span>
+</div>
+<p class="card-desc">
+              SAIF, a five-part framework for folding AI-accelerated development into a small-team agile workflow. Security experiment across four AI coding models, a semester inside ToSee AS. Group thesis with <a href="https://www.linkedin.com/in/krister-eriksen-774963300/" rel="noopener" target="_blank">Krister Eriksen</a> and <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/" rel="noopener" target="_blank">Bendik Hagen</a>. Grade A.
             </p>
-            <dl class="card-meta">
-              <div><dt>grade</dt><dd><span class="gr on">A</span></dd></div>
-              <div><dt>with</dt><dd><a href="https://www.linkedin.com/in/krister-eriksen-774963300/" target="_blank" rel="noopener">Krister Eriksen</a>, <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/" target="_blank" rel="noopener">Bendik Hagen</a></dd></div>
-            </dl>
-            <div class="card-links">
-              <a href="/thesis.pdf" target="_blank" rel="noopener">read thesis <span class="arrow" aria-hidden="true">&#8599;</span></a>
-            </div>
-          </article>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ===================== CTF / COMPETITIONS ===================== -->
-  <section class="section" id="ctf" aria-labelledby="ctf-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 class="section-title" id="ctf-h">ctf.log</h2>
-        <span class="rule" aria-hidden="true"></span>
-      </div>
-
-      <p class="lede">Mostly crypto, pwn, and web. Three podium finishes and 4th-place student finishes at NNS CTF 2026 and EPT 2025.</p>
-
-      <div class="win-call">
-        <span class="win-num">4th</span>
-        <span class="win-event"><span class="nb">student team,</span> <span class="nb">EPT 2025</span><span class="win-role">16th overall</span></span>
-      </div>
-
-      <div class="table-wrap" role="region" aria-label="Further CTF results">
-        <table class="spec-table ctf-table">
-          <caption class="sr-only">Capture the flag results and roles</caption>
-          <thead>
-            <tr>
-              <th scope="col">Event</th>
-              <th scope="col">Role</th>
-              <th scope="col" class="num">Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr id="nns-ctf-2026">
-              <td>NNS CTF 2026</td>
-              <td class="role-cell">team</td>
-              <td class="num"><span class="nb">4th student team</span></td>
-            </tr>
-            <tr>
-              <td>Cybvest CTF</td>
-              <td class="role-cell">team</td>
-              <td class="num">1st</td>
-            </tr>
-            <tr>
-              <td>Helt Sikker CTF</td>
-              <td class="role-cell">solo</td>
-              <td class="num">3rd</td>
-            </tr>
-            <tr>
-              <td><span class="nb">Kongsberg Gruppen &times;</span> <span class="nb">Helt Sikker CTF</span></td>
-              <td class="role-cell">team</td>
-              <td class="num">3rd</td>
-            </tr>
-            <tr>
-              <td>EPT 2024</td>
-              <td class="role-cell">team</td>
-              <td class="num"><span class="nb">8th student team,</span> <span class="nb">34th overall</span></td>
-            </tr>
-            <tr>
-              <td>Cyberlandslaget Christmas CTF</td>
-              <td class="role-cell"></td>
-              <td class="num">participant</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== ACADEMICS ===================== -->
-  <section class="section" id="academics" aria-labelledby="academics-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 class="section-title" id="academics-h">academics</h2>
-        <span class="rule" aria-hidden="true"></span>
-      </div>
-
-      <div class="academics-grid">
-        <!-- Current MSc -->
-        <div class="acad-block">
-          <h3 class="acad-title">MSc Information Security</h3>
-          <p class="acad-sub">NTNU, Gj&oslash;vik (2026 to 2028)</p>
-          <p class="acad-lead">A two-year master's in Information Security, started autumn 2026.</p>
-        </div>
-
-        <!-- BSc Kristiania -->
-        <div class="acad-block">
-          <h3 class="acad-title">BSc Cybersecurity</h3>
-          <p class="acad-sub">H&oslash;yskolen Kristiania, Bergen (2023 to 2026)</p>
-          <table class="spec-table grades">
-            <caption class="sr-only">Selected coursework, H&oslash;yskolen Kristiania</caption>
-            <thead>
-              <tr>
-                <th scope="col">Course</th>
-                <th scope="col" class="num">Grade</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Bachelor thesis</td><td class="num"><span class="gr on">A</span></td></tr>
-              <tr><td>Cyber Defense</td><td class="num"><span class="gr on">A</span></td></tr>
-              <tr><td>Agile Project</td><td class="num"><span class="gr on">A</span></td></tr>
-              <tr><td>Ethical Hacking</td><td class="num"><span class="gr">B</span></td></tr>
-              <tr><td>IoT / OT Security</td><td class="num"><span class="gr">B</span></td></tr>
-              <tr><td>Governance, Risk &amp; Compliance</td><td class="num"><span class="gr">B</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Exchange -->
-        <div class="acad-block">
-          <h3 class="acad-title">Exchange</h3>
-          <p class="acad-sub">Southern Utah University, USA (Spring 2025)</p>
-          <table class="spec-table grades">
-            <caption class="sr-only">Selected coursework, Southern Utah University</caption>
-            <thead>
-              <tr>
-                <th scope="col">Course</th>
-                <th scope="col" class="num">Grade</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Cyber Warfare</td><td class="num"><span class="gr on">A</span></td></tr>
-              <tr><td>Data Communications &amp; Networking</td><td class="num"><span class="gr on">A</span></td></tr>
-              <tr><td>Algorithms &amp; Data Structures</td><td class="num"><span class="gr on">A</span></td></tr>
-              <tr><td>Technology &amp; Ethics</td><td class="num"><span class="gr on">A</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <p class="acad-note">Cyber Warfare and Data Communications &amp; Networking were taught by Gary Wallace, a former U.S. Navy commander and head of IT for the U.S. Navy.</p>
-      <p class="acad-note">Full transcript and verified record available on request.</p>
-    </div>
-  </section>
-
-  <!-- ===================== WRITING ===================== -->
-  <section class="section" id="writing" aria-labelledby="writing-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 class="section-title" id="writing-h">writing</h2>
-        <span class="rule" aria-hidden="true"></span>
-      </div>
-
-      <p class="lede">I also write about security, AI risk, and critical infrastructure. Some research, some coursework, some from my own projects.</p>
-
-      <ul class="project-grid">
-        <li class="card is-featured">
-          <article>
-            <span class="card-flag">Featured</span>
-            <div class="card-top">
-              <h3 class="card-title"><a href="/writing/the-power-grid-is-the-battlefield">the power grid is the battlefield</a></h3>
-              <span class="badge">[ 2025 ]</span>
-            </div>
-            <p class="card-desc">
-              How an adversary actually takes down a power grid: Industroyer-class ICS malware, supply-chain compromise, social engineering against operators. What defense-in-depth for critical infrastructure requires once the attacker is already inside. Built from my cyberwarfare coursework.
-            </p>
-            <dl class="card-meta">
-              <div><dt>type</dt><dd>cyberwarfare final project</dd></div>
-              <div><dt>year</dt><dd>2025</dd></div>
-            </dl>
-            <div class="card-links">
-              <a href="/writing/the-power-grid-is-the-battlefield">read project <span class="arrow" aria-hidden="true">&#8599;</span></a>
-            </div>
-          </article>
-        </li>
-      </ul>
-
+<dl class="card-meta">
+<div><dt>grade</dt><dd><span class="gr on">A</span></dd></div>
+<div><dt>with</dt><dd><a href="https://www.linkedin.com/in/krister-eriksen-774963300/" rel="noopener" target="_blank">Krister Eriksen</a>, <a href="https://www.linkedin.com/in/bendik-hagen-12a5a8123/" rel="noopener" target="_blank">Bendik Hagen</a></dd></div>
+</dl>
+<div class="card-links">
+<a href="/thesis.pdf" rel="noopener" target="_blank">read thesis <span aria-hidden="true" class="arrow">↗</span></a>
+</div>
+</article>
+</li>
+</ul>
+    </section>
+    <section class="tile results-tile" id="ctf" aria-labelledby="ctf-h">
+      <div class="section-heading"><h2 id="ctf-h">CTF results</h2><span class="small-icon" aria-hidden="true">&#9873;</span></div>
+      <p class="tile-intro">Mostly crypto, pwn, and web. Three podium finishes, and plenty still to solve.</p>
+      <div class="table-wrap"><table class="spec-table ctf-table">
+<caption class="sr-only">Capture the flag results and roles</caption>
+<thead>
+<tr>
+<th scope="col">Event</th>
+<th scope="col">Role</th>
+<th class="num" scope="col">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr id="nns-ctf-2026">
+<td>NNS CTF 2026</td>
+<td class="role-cell">team</td>
+<td class="num"><span class="nb">4th student team</span></td>
+</tr><tr><td>EPT 2025</td><td class="role-cell">team</td><td class="num"><span class="nb">4th student team,</span> <span class="nb">16th overall</span></td></tr>
+<tr>
+<td>Cybvest CTF</td>
+<td class="role-cell">team</td>
+<td class="num">1st</td>
+</tr>
+<tr>
+<td>Helt Sikker CTF</td>
+<td class="role-cell">solo</td>
+<td class="num">3rd</td>
+</tr>
+<tr>
+<td><span class="nb">Kongsberg Gruppen ×</span> <span class="nb">Helt Sikker CTF</span></td>
+<td class="role-cell">team</td>
+<td class="num">3rd</td>
+</tr>
+<tr>
+<td>EPT 2024</td>
+<td class="role-cell">team</td>
+<td class="num"><span class="nb">8th student team,</span> <span class="nb">34th overall</span></td>
+</tr>
+<tr>
+<td>Cyberlandslaget Christmas CTF</td>
+<td class="role-cell"></td>
+<td class="num">participant</td>
+</tr>
+</tbody>
+</table></div>
+    </section>
+    <section class="tile writing-tile" id="writing" aria-labelledby="writing-h">
+      <div class="section-heading"><h2 id="writing-h">From my notebook</h2><span class="small-icon" aria-hidden="true">&#9998;</span></div>
+      <a class="featured-essay" href="/writing/the-power-grid-is-the-battlefield"><div class="grid-art" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div><h3>The power grid is the battlefield</h3><p>Cyberwarfare, critical infrastructure, and what it takes to defend it.</p><span class="text-link">Read the essay &#8599;</span></a>
       <ul class="writing-more">
-        <li>
-          <a class="wm-title" href="/thesis.pdf" target="_blank" rel="noopener">secure AI-accelerated development in agile workflows</a>
-          <span class="wm-kind">bachelor thesis</span>
-        </li>
-        <li>
-          <a class="wm-title" href="/networking-final-project.pdf" target="_blank" rel="noopener">building and securing a network from scratch</a>
-          <span class="wm-kind">coursework</span>
-        </li>
-        <li>
-          <a class="wm-title" href="/writing/does-ai-write-insecure-code">does AI actually write insecure code?</a>
-          <span class="wm-kind">research review</span>
-        </li>
-        <li>
-          <a class="wm-title" href="/writing/the-economics-of-a-zero-day">the economics of a zero-day</a>
-          <span class="wm-kind">analysis</span>
-        </li>
-        <li>
-          <a class="wm-title" href="/writing/marking-the-machine">marking the machine</a>
-          <span class="wm-kind">analysis + experiment</span>
-        </li>
-        <li>
-          <a class="wm-title" href="/writing/too-dangerous-to-release">too dangerous to release</a>
-          <span class="wm-kind">analysis</span>
-        </li>
-      </ul>
-
-      <a class="writing-cta" href="/writing">read all writing <span class="arrow" aria-hidden="true">&rarr;</span></a>
-    </div>
-  </section>
-
-  <!-- ===================== CONTACT ===================== -->
-  <section class="section" id="contact" aria-labelledby="contact-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 class="section-title" id="contact-h">contact</h2>
-        <span class="rule" aria-hidden="true"></span>
-      </div>
-
-      <ul class="contact-list">
-        <li>
-          <span class="contact-key">email</span>
-          <a href="mailto:joakimnordheimlarssen@gmail.com">joakimnordheimlarssen@gmail.com</a>
-        </li>
-        <li>
-          <span class="contact-key">github</span>
-          <a href="https://github.com/JoakimLarssen" target="_blank" rel="noopener">github.com/JoakimLarssen</a>
-        </li>
-        <li>
-          <span class="contact-key">linkedin</span>
-          <a href="https://www.linkedin.com/in/joakim-nordheim-larssen-772614223" target="_blank" rel="noopener">in/joakim-nordheim-larssen</a>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="wrap footer-inner">
-    <span class="colophon">&copy; <span id="year">2026</span> Joakim Nordheim Larssen</span>
-    <span class="colophon">Oslo, Norway</span>
-  </div>
-</footer>
-
-<!-- Minimal script: (a) mobile hamburger nav toggle, (b) footer year. -->
-<script>
-(function () {
-  document.documentElement.classList.add("nav-enhanced");
-
-  var header = document.querySelector(".site-header");
-  var toggle = document.querySelector(".nav-toggle");
-  if (header && toggle) {
-    toggle.addEventListener("click", function () {
-      var open = header.classList.toggle("nav-open");
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-    var links = header.querySelectorAll(".nav a");
-    for (var i = 0; i < links.length; i++) {
-      links[i].addEventListener("click", function () {
-        header.classList.remove("nav-open");
-        toggle.setAttribute("aria-expanded", "false");
-      });
-    }
-  }
-
-  var year = document.getElementById("year");
-  if (year) year.textContent = String(new Date().getFullYear());
-})();
-</script>
-
+<li>
+<a class="wm-title" href="/thesis.pdf" rel="noopener" target="_blank">secure AI-accelerated development in agile workflows</a>
+<span class="wm-kind">bachelor thesis</span>
+</li>
+<li>
+<a class="wm-title" href="/networking-final-project.pdf" rel="noopener" target="_blank">building and securing a network from scratch</a>
+<span class="wm-kind">coursework</span>
+</li>
+<li>
+<a class="wm-title" href="/writing/does-ai-write-insecure-code">does AI actually write insecure code?</a>
+<span class="wm-kind">research review</span>
+</li>
+<li>
+<a class="wm-title" href="/writing/the-economics-of-a-zero-day">the economics of a zero-day</a>
+<span class="wm-kind">analysis</span>
+</li>
+<li>
+<a class="wm-title" href="/writing/marking-the-machine">marking the machine</a>
+<span class="wm-kind">analysis + experiment</span>
+</li>
+<li>
+<a class="wm-title" href="/writing/too-dangerous-to-release">too dangerous to release</a>
+<span class="wm-kind">analysis</span>
+</li>
+</ul>
+      <a class="text-link writing-all" href="/writing">All writing <span aria-hidden="true">&#8599;</span></a>
+    </section>
+    <section class="tile education-tile" id="academics" aria-labelledby="academics-h">
+      <div class="section-heading"><h2 id="academics-h">Education</h2><a href="/cv">Full CV &#8599;</a></div>
+      <div class="academics-grid">
+<!-- Current MSc -->
+<div class="acad-block">
+<h3 class="acad-title">MSc Information Security</h3>
+<p class="acad-sub">NTNU, Gjøvik (2026 to 2028)</p>
+<p class="acad-lead">A two-year master's in Information Security, started autumn 2026.</p>
+</div>
+<!-- BSc Kristiania -->
+<div class="acad-block">
+<h3 class="acad-title">BSc Cybersecurity</h3>
+<p class="acad-sub">Høyskolen Kristiania, Bergen (2023 to 2026)</p>
+<table class="spec-table grades">
+<caption class="sr-only">Selected coursework, Høyskolen Kristiania</caption>
+<thead>
+<tr>
+<th scope="col">Course</th>
+<th class="num" scope="col">Grade</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Bachelor thesis</td><td class="num"><span class="gr on">A</span></td></tr>
+<tr><td>Cyber Defense</td><td class="num"><span class="gr on">A</span></td></tr>
+<tr><td>Agile Project</td><td class="num"><span class="gr on">A</span></td></tr>
+<tr><td>Ethical Hacking</td><td class="num"><span class="gr">B</span></td></tr>
+<tr><td>IoT / OT Security</td><td class="num"><span class="gr">B</span></td></tr>
+<tr><td>Governance, Risk &amp; Compliance</td><td class="num"><span class="gr">B</span></td></tr>
+</tbody>
+</table>
+</div>
+<!-- Exchange -->
+<div class="acad-block">
+<h3 class="acad-title">Exchange</h3>
+<p class="acad-sub">Southern Utah University, USA (Spring 2025)</p>
+<table class="spec-table grades">
+<caption class="sr-only">Selected coursework, Southern Utah University</caption>
+<thead>
+<tr>
+<th scope="col">Course</th>
+<th class="num" scope="col">Grade</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Cyber Warfare</td><td class="num"><span class="gr on">A</span></td></tr>
+<tr><td>Data Communications &amp; Networking</td><td class="num"><span class="gr on">A</span></td></tr>
+<tr><td>Algorithms &amp; Data Structures</td><td class="num"><span class="gr on">A</span></td></tr>
+<tr><td>Technology &amp; Ethics</td><td class="num"><span class="gr on">A</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+      <div class="education-notes"><p class="acad-note">Cyber Warfare and Data Communications &amp; Networking were taught by Gary Wallace, a former U.S. Navy commander and head of IT for the U.S. Navy.</p><p class="acad-note">Full transcript and verified record available on request.</p></div>
+    </section>
+    <footer class="dashboard-footer"><span>Security, software, and the things in between.</span><a href="#top">Back to top &#8593;</a></footer>
+  </main>
+</div>
 </body>
 </html>

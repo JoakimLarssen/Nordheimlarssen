@@ -1,15 +1,5 @@
 <!doctype html>
-<!--
-  ============================================================================
-  nordheimlarssen.no/cv  ::  Curriculum vitae, typeset as a dossier.
-  Native to Direction A: JetBrains Mono (structure) + IBM Plex Sans (prose),
-  the same colour tokens, marginalia section headers, meta-row and table
-  grammar. Dark on screen; the print stylesheet switches to a clean, light,
-  single-column, ink-friendly PDF. No scroll effects, no reveal animations.
-  There is no JavaScript: the Download PDF button links directly to a
-  pre-rendered PDF of this page, and Ctrl+P still prints the live page.
-  ============================================================================
--->
+<!-- Curriculum vitae. Screen styling is shared with the site; print styles remain local. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -38,7 +28,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    /cv, DOSSIER. Same document family as Direction A.
@@ -688,6 +678,8 @@ main > section + section{ border-top:1px solid var(--hair) }
   .print-header .ph-meta .sep{ color:#b7bcb5 }
 }
 </style>
+<link rel="stylesheet" href="/theme.css">
+<script src="/theme.js" defer></script>
 </head>
 <body id="top">
 
@@ -707,13 +699,13 @@ main > section + section{ border-top:1px solid var(--hair) }
   <div class="wrap">
     <a class="brand" href="/"><span class="tilde">~/</span>jnl</a>
     <nav class="site-nav" aria-label="Site">
-      <a href="/#whoami">whoami</a>
-      <a href="/#projects">projects</a>
-      <a href="/#ctf">ctf.log</a>
-      <a href="/#academics">academics</a>
-      <a href="/writing">writing</a>
-      <a href="/cv" class="is-active" aria-current="page">cv</a>
-      <a href="/#contact">contact</a>
+      <a href="/#whoami">About</a>
+      <a href="/#projects">Projects</a>
+      <a href="/#ctf">CTF results</a>
+      <a href="/#academics">Education</a>
+      <a href="/writing">Writing</a>
+      <a href="/cv" class="is-active" aria-current="page">CV</a>
+      <a href="/#contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -725,7 +717,6 @@ main > section + section{ border-top:1px solid var(--hair) }
     <div class="wrap">
       <div class="cover-grid">
         <div class="cover-top">
-          <p class="kicker">Curriculum Vitae</p>
           <a class="dl" href="/cv.pdf" download="Joakim Nordheim Larssen - CV.pdf">
             <span class="dlg" aria-hidden="true">&darr;</span> Download PDF
           </a>
@@ -847,7 +838,6 @@ main > section + section{ border-top:1px solid var(--hair) }
 
         <p class="lede">Mostly crypto, pwn, and web. Three podium finishes and 4th-place student finishes at NNS CTF 2026 and EPT 2025. I also co-hosted a Cybvest edition once.</p>
 
-        <p class="mini">strongest showing</p>
         <div class="win-call">
           <p class="win-num">4th</p>
           <div class="win-body">

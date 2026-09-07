@@ -33,13 +33,15 @@
   <!-- Fonts: JetBrains Mono (structure) + IBM Plex Sans (prose). No serif. -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/styles.css" />
 
   <!-- Gate reveal animations on JS BEFORE first paint, so no-JS users see
        all content and JS users never get a flash of un-animated content. -->
   <script>document.documentElement.classList.add("js");</script>
+<link rel="stylesheet" href="/theme.css">
+<script src="/theme.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -52,13 +54,13 @@
       </a>
       <nav class="nav" aria-label="Primary">
         <ul>
-          <li><a href="/#whoami">whoami</a></li>
-          <li><a href="/#projects">projects</a></li>
-          <li><a href="/#ctf">ctf.log</a></li>
-          <li><a href="/#academics">academics</a></li>
-          <li><a href="/writing" class="is-active" aria-current="page">writing</a></li>
-          <li><a href="/cv">cv</a></li>
-          <li><a href="/#contact">contact</a></li>
+          <li><a href="/#whoami">About</a></li>
+          <li><a href="/#projects">Projects</a></li>
+          <li><a href="/#ctf">CTF results</a></li>
+          <li><a href="/#academics">Education</a></li>
+          <li><a href="/writing" class="is-active" aria-current="page">Writing</a></li>
+          <li><a href="/cv">CV</a></li>
+          <li><a href="/#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
@@ -82,7 +84,7 @@
             </ul>
           </div>
 
-          <h2>// why the grid is a soft target</h2>
+          <h2>why the grid is a soft target</h2>
 
           <p class="prose">Start with the architecture, because the vulnerabilities follow from it directly.</p>
 
@@ -96,7 +98,7 @@
 
           <p class="prose">The result is a network where the front door is a corporate IT environment full of email and the back room is a set of legacy controllers that will faithfully execute any command they receive. Connect the two carelessly and you have built a path from a phishing email to a circuit breaker.</p>
 
-          <h2>// the kill chain, walked</h2>
+          <h2>the kill chain, walked</h2>
 
           <p class="prose">The cleanest way to think about a grid attack is the cyber kill chain: reconnaissance, weaponization, delivery, exploitation, installation, command and control, and finally actions on objectives. I will walk it with Industroyer2 as the worked example, because it is the threat I modeled and because it is real.</p>
 
@@ -112,7 +114,7 @@
 
           <p class="prose">The reason to map an attack this way is that it shows defense is not one wall. It is seven chances to catch the same intruder. Miss them at delivery and you might still catch them at installation. Miss them there and monitoring might flag the C2 traffic. The attacker has to win every step. The defender has to win once.</p>
 
-          <h2>// it was not hypothetical: Ukraine</h2>
+          <h2>it was not hypothetical: Ukraine</h2>
 
           <p class="prose">The kill chain above is not a textbook abstraction. It is a description of attacks that happened.</p>
 
@@ -124,7 +126,7 @@
 
           <p class="prose">Three attempts, escalating in sophistication, against civilian power infrastructure. The 2016 malware was dissected publicly, which is exactly how the threat I studied for the Western Interconnection came to exist as a known, documented capability rather than a worst-case guess. This is the central uncomfortable fact: grid-attack tooling is real, it has been used, and once used it gets analyzed and the techniques spread.</p>
 
-          <h2>// who is actually trying</h2>
+          <h2>who is actually trying</h2>
 
           <p class="prose">The Industroyer family is the nation-state case, and nation-states are the most capable adversary. But the grid faces a wider field, and the others matter because they are more numerous and, in some ways, harder to predict.</p>
 
@@ -136,7 +138,7 @@
 
           <p class="prose">The practical takeaway across all three is that the defenses overlap. Segmentation, MFA, monitoring, and phishing-resistant staff raise the cost for a ransomware crew, a hacktivist, and a state actor alike. You do not build a separate grid for each adversary. You build one that is hard for all of them.</p>
 
-          <h2>// the human layer keeps losing</h2>
+          <h2>the human layer keeps losing</h2>
 
           <p class="prose">Every kill chain above has the same first move that actually works: a person gets tricked. Social engineering exploits psychology, not software, and it is the most reliable way past technical controls because it goes around them.</p>
 
@@ -146,7 +148,7 @@
 
           <p class="prose">None of this eliminates the risk. Humans will keep clicking. What it does is shrink the success rate and shorten the time between the click and the response, which is often the difference between a contained incident and a blackout.</p>
 
-          <h2>// the supply chain is somebody else's network</h2>
+          <h2>the supply chain is somebody else's network</h2>
 
           <p class="prose">Even a hardened utility inherits the weaknesses of its vendors. The grid depends on a small number of suppliers for critical components like large transformers, and on third-party maintenance firms with legitimate access to control networks.</p>
 
@@ -154,7 +156,7 @@
 
           <p class="prose">Supply chain risk is not only cyber. The 2021 Texas freeze showed how fragile component and fuel dependencies are under stress, with natural gas supply failures cascading into massive outages [11]. The defenses are vendor audits, testing components before they enter critical systems, treating remote vendor access as the privileged risk it is with jump hosts and one-time approvals rather than standing connections, and keeping spares of long-lead-time hardware like transformers staged for recovery.</p>
 
-          <h2>// defense in depth, made concrete</h2>
+          <h2>defense in depth, made concrete</h2>
 
           <p class="prose">Now the constructive part. The grid cannot be made un-hackable, so the goal is layered defense: enough independent controls that a single failure does not become a catastrophe. Three technical layers carry most of the weight.</p>
 
@@ -166,7 +168,7 @@
 
           <p class="prose">Above these sit the standards and the cryptography. NERC CIP supplies the mandatory floor. The NSA's defense-in-depth guidance pushes the same logic, segmentation, least-privilege access, continuous monitoring, treated as an integrated whole rather than a checklist [16]. And where the legacy protocols allow it, the IEC 62351 series adds encryption and mutual authentication, TLS and a public-key infrastructure, so that a command on the wire is trusted because it is cryptographically verified, not merely because it arrived [17]. Retrofitting that onto decades-old equipment is slow, but it closes the gap that makes a captured network so dangerous.</p>
 
-          <h2>// technology is not enough</h2>
+          <h2>technology is not enough</h2>
 
           <p class="prose">Tools fail when the discipline around them lapses, so the operational practices matter as much as the boxes.</p>
 
@@ -178,7 +180,7 @@
 
           <p class="prose">That manual-operation fallback is the quiet keystone of the whole plan. The reason the Ukraine attacks lasted hours rather than days is that operators could revert to manual control. The grid's analog bones are its last and most reliable defense, which is a strange thing to say about a cyber strategy and also true.</p>
 
-          <h2>// mission assurance, or why this is a national problem</h2>
+          <h2>mission assurance, or why this is a national problem</h2>
 
           <p class="prose">The reason to invest in all of this beyond keeping the lights on is that the grid is not just civilian infrastructure. It is the foundation national defense runs on.</p>
 
@@ -186,7 +188,7 @@
 
           <p class="prose">So mission assurance cannot stop at the fence line. It requires deep coordination with the utilities themselves, through information sharing via the E-ISAC, joint exercises, and aligning defense needs with the NERC CIP framework that already governs the bulk power system. The grid's security is a shared problem between government and a private sector that owns most of the assets, and neither side can solve it alone.</p>
 
-          <h2>// the realistic close</h2>
+          <h2>the realistic close</h2>
 
           <p class="prose">I do not think the grid can be made invulnerable, and I do not think pretending otherwise helps. The honest position is the one the evidence supports: the attacks are real, the tooling exists and has been used in Ukraine three times, and the threat field runs from nation-states down to lone extremists. That is the world the Western Interconnection operates in.</p>
 
@@ -195,7 +197,7 @@
           <p class="prose">The attacker has to win every step of the kill chain. The defender has to win one. Defense in depth is just the discipline of making sure there is always a next step where the defender can win. The grid is the battlefield now whether we like it or not, and the work is to make it terrain that favors the side keeping the lights on.</p>
 
           <div class="references">
-            <h2>// references</h2>
+            <h2>references</h2>
             <ol>
               <li>Claroty Team82, "Industroyer2 Variant Surfaces in Foiled Attack Against Ukraine Electricity Provider." <a href="https://claroty.com/team82/blog/industroyer2-variant-surfaces-in-foiled-attack-against-ukraine-electricity-provider" rel="noopener" target="_blank">https://claroty.com/team82/blog/industroyer2-variant-surfaces-in-foiled-attack-against-ukraine-electricity-provider</a> ; CISA, "APT Cyber Tools Targeting ICS/SCADA Devices" (AA22-103A), <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-103a" rel="noopener" target="_blank">https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-103a</a></li>
               <li>DOJ, indictment of six GRU Unit 74455 officers (Oct 19, 2020), tying the Ukraine grid attacks, NotPetya, and Olympic Destroyer. <a href="https://www.justice.gov/archives/opa/press-release/file/1328521/dl" rel="noopener" target="_blank">https://www.justice.gov/archives/opa/press-release/file/1328521/dl</a> ; Sandworm overview, <a href="https://en.wikipedia.org/wiki/Sandworm_(hacker_group)" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Sandworm_(hacker_group)</a></li>
