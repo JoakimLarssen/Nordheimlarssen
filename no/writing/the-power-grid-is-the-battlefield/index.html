@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  nordheimlarssen.no/writing/the-power-grid-is-the-battlefield
+  Standalone article page. Static, no build step. Asset paths absolute.
+  ============================================================================
+-->
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Strømnettet er slagmarken | Joakim Nordheim Larssen</title>
+  <meta name="description" content="Hvordan en angriper slår av strømmen, og hva som faktisk skal til for å stoppe angrepet." />
+  <meta name="author" content="Joakim Nordheim Larssen" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0D1011" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260908" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Strømnettet er slagmarken | Joakim Nordheim Larssen" />
+  <meta property="og:description" content="Hvordan en angriper slår av strømmen, og hva som faktisk skal til for å stoppe angrepet." />
+  <meta property="og:url" content="https://www.nordheimlarssen.no/no/writing/the-power-grid-is-the-battlefield" />
+  <meta property="og:image" content="https://www.nordheimlarssen.no/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Strømnettet er slagmarken | Joakim Nordheim Larssen" />
+  <meta name="twitter:description" content="Hvordan en angriper slår av strømmen, og hva som faktisk skal til for å stoppe angrepet." />
+  <meta name="twitter:image" content="https://www.nordheimlarssen.no/og.png" />
+  <link href="https://www.nordheimlarssen.no/no/writing/the-power-grid-is-the-battlefield" rel="canonical"/>
+
+  <!-- Fonts: JetBrains Mono (structure) + IBM Plex Sans (prose). No serif. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Gate reveal animations on JS BEFORE first paint, so no-JS users see
+       all content and JS users never get a flash of un-animated content. -->
+  <script>document.documentElement.classList.add("js");</script>
+<link rel="stylesheet" href="/theme.css">
+<script src="/theme.js?v=20260908-language"></script>
+<link href="/nav-motion.css?v=20260908" rel="stylesheet"/><link rel="alternate" hreflang="en" href="https://www.nordheimlarssen.no/writing/the-power-grid-is-the-battlefield"/><link rel="alternate" hreflang="nb" href="https://www.nordheimlarssen.no/no/writing/the-power-grid-is-the-battlefield"/><link rel="alternate" hreflang="x-default" href="https://www.nordheimlarssen.no/writing/the-power-grid-is-the-battlefield"/><meta property="og:locale" content="nb_NO"/><meta property="og:locale:alternate" content="en_GB"/><link href="/language.css?v=20260908-language" rel="stylesheet"/><script src="/site.js?v=20260908-language" defer></script></head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a class="brand" href="/no/" aria-label="Joakim Nordheim Larssen, forsiden">
+        <span class="brand-prompt" aria-hidden="true">~/</span><span class="brand-name">jnl</span>
+      </a><div class="top-actions article-actions"><a aria-label="Read this page in English" class="language-toggle" data-language-toggle="" href="/writing/the-power-grid-is-the-battlefield" hreflang="en" lang="en">English</a><button aria-label="Bytt til mørkt tema" aria-pressed="false" class="icon-button" data-theme-toggle="" hidden="" type="button"><svg aria-hidden="true" class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"></path></svg></button></div>
+      <nav class="nav" aria-label="Hovednavigasjon">
+        <ul>
+          <li><a href="/no/#whoami"><span class="nav-label" data-nav-label="about">Om meg</span></a></li>
+          <li><a href="/no/#projects"><span class="nav-label" data-nav-label="projects">Prosjekter</span></a></li>
+          <li><a href="/no/#ctf"><span class="nav-label" data-nav-label="ctf">CTF-resultater</span></a></li>
+          <li><a href="/no/#academics"><span class="nav-label" data-nav-label="education">Utdanning</span></a></li>
+          <li><a href="/no/writing" class="is-active" aria-current="page"><span aria-hidden="true" class="nav-pill"></span><span class="nav-label" data-nav-label="writing">Artikler</span></a></li>
+          <li><a href="/no/cv"><span class="nav-label" data-nav-label="cv">CV</span></a></li>
+          <li><a href="/no/#contact"><span class="nav-label" data-nav-label="contact">Kontakt</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <article class="article">
+          <a class="article-back" href="/no/writing">&#8592; artikler</a>
+          <h1>Strømnettet er slagmarken</h1>
+          <p class="article-lede">Hvordan en angriper slår av strømmen, og hva som faktisk skal til for å stoppe angrepet</p>
+          <p class="article-byline">Joakim Nordheim Larssen</p>
+
+          <div class="article-summary">
+            <ul>
+              <li>Det amerikanske strømnettet drives av industrielle kontrollsystemer som ble utviklet for pålitelighet og sikker drift, ikke for å stå imot statlige hackere. Det misforholdet er hele problemet. De samme systemene som lar en operatør åpne en effektbryter fra et kontrollrom flere hundre engelske mil unna, lar også en angriper åpne den hvis angriperen får tilgang.</li>
+              <li>Dette er ikke hypotetisk. I 2015 og igjen i 2016 slo angripere av strømmen i deler av Ukraina ved hjelp av strømnettets egne kontrollprotokoller. Skadevaren de bygde til det andre angrepet, Industroyer, var den første koden som var spesiallaget for å snakke strømnettutstyrets eget språk. Etterfølgeren, Industroyer2, dukket opp i 2022.</li>
+              <li>Forsvaret er ikke ett enkelt produkt, men flere lag: Del opp nettverket slik at et innbrudd i ett system ikke blir et innbrudd i alle. Overvåk trafikken for kommandoer som ikke skal være der. Gjør menneskene som stadig blir lurt av phishing, bedre rustet. Og planlegg for dagen et lag likevel svikter. Ingenting av dette er eksotisk. Det meste er lite glamorøs disiplin, konsekvent anvendt på systemer som aldri ble bygd med dette i tankene.</li>
+              <li>Denne artikkelen følger veien en angriper tar, fra rekognosering til øyeblikket effektbryterne løser ut, og viser hva som kan stoppe angriperen i hvert ledd. Jeg bruker Western Interconnection, strømnettet som dekker det vestlige USA og deler av Canada og Mexico, som gjennomgående eksempel, fordi det er systemet jeg brukte et semester på å studere.</li>
+            </ul>
+          </div>
+
+          <h2>Hvorfor strømnettet er et sårbart mål</h2>
+
+          <p class="prose">Vi begynner med arkitekturen, for sårbarhetene følger direkte av den.</p>
+
+          <p class="prose">Et strømnett er bygd opp i flere lag: kraftverk, høyspentlinjer for overføring og lokal distribusjon. Hvert lag er avhengig av operasjonell teknologi, eller OT, for å fungere. Styringen domineres av to typer systemer: SCADA, som gir operatørene sentralisert overvåking og overordnet kontroll over anlegg spredt over tusenvis av engelske mil, og distribuerte kontrollsystemer og programmerbare logiske styringer, som gjør det lokale arbeidet med å regulere en generator eller en transformator.</p>
+
+          <p class="prose">SCADA er den delen som gjør strømnettet mulig å angripe på avstand. En hovedstasjon i et kontrollsenter henter jevnlig data fra fjernterminaler på transformatorstasjoner, og operatørene bruker forbindelsen til å åpne og lukke effektbrytere, justere spenninger og håndtere feil over et enormt område. Hele poenget er å kunne nå anleggene på avstand. Der ligger også hele risikoen.</p>
+
+          <p class="prose">Disse systemene ble ikke bygd med cybersikkerhet som hovedhensyn. De ble bygd for tilgjengelighet og sikker drift. Det er ikke bare å ta en transformatorstasjon ut av drift for å installere sikkerhetsoppdateringer. Mange enheter har begrenset regnekraft og kan derfor ikke kjøre moderne sikkerhetsagenter. Protokollene de bruker, DNP3, Modbus, IEC 61850 og IEC 60870-5-104, mangler ofte innebygd kryptering eller autentisering. Det betyr at en kommando som kommer over nettverket, blir stolt på ganske enkelt fordi den kom frem.</p>
+
+          <p class="prose">I flere tiår hadde dette liten betydning, fordi OT-nettverkene var isolerte, fysisk frakoblet andre nettverk og basert på proprietære løsninger. Den tiden er forbi. Kraftselskapene har koblet sammen IT og OT for fjernadministrasjon og datadeling, og kontrollsystemene kjører nå på kommersielle operativsystemer og standard Ethernet. Det gir reelle fordeler. Konsekvensene er like reelle: vanlige IT-problemer som programvare uten sikkerhetsoppdateringer, svak autentisering og skadevare når nå frem til maskinene som styrer strømmen.</p>
+
+          <p class="prose">Resultatet er et nettverk der inngangsdøren er et IT-miljø fullt av e-post, mens bakrommet består av eldre kontrollenheter som lydig utfører enhver kommando de mottar. Kobler du de to sammen uten nødvendig omtanke, har du laget en vei fra en phishing-e-post til en effektbryter.</p>
+
+          <h2>Gjennom angrepskjeden</h2>
+
+          <p class="prose">Den mest oversiktlige måten å forstå et angrep mot strømnettet på er angrepskjeden, eller «cyber kill chain»: rekognosering, klargjøring av angrepsverktøy, levering, utnyttelse, installasjon, kommando og kontroll, og til slutt gjennomføring av angrepsmålet. Jeg går gjennom den med Industroyer2 som eksempel, fordi det er trusselen jeg modellerte, og fordi den er reell.</p>
+
+          <p class="prose">Industroyer2 er etterfølgeren til Industroyer fra 2016, skadevaren bak et strømbrudd i Ukraina. Den angriper industrielle kontrollsystemer ved å misbruke protokollen IEC 60870-5-104 til å manipulere effektbrytere direkte og utløse ukontrollerte strømbrudd. Trusselaktøren som passer denne profilen, er en statsstøttet gruppe med solid kompetanse på industrielle kontrollsystemer, ICS. Originalen fra 2016 knyttes til Sandworm, en enhet i Russlands militære etterretning [1][2].</p>
+
+          <p class="prose"><strong>Rekognosering.</strong> Angriperen samler informasjon fra åpne kilder om målets infrastruktur: hvilke kraftselskaper, hvilke leverandører, hvilke ansatte og hvilke innganger for fjerntilgang. Mottiltaket er å begrense hva som eksponeres, og se etter skanningen som går forut for et innbrudd. Du kan ikke hindre noen i å lese offentlig tilgjengelige rapporter, men du kan la være å publisere nettverksdiagrammer og oppdage når noen kartlegger nettverkets yttergrense.</p>
+
+          <p class="prose"><strong>Klargjøring og levering.</strong> Angrepskoden tilpasses ICS-protokoller og leveres deretter til målet. To pålitelige leveringsveier er målrettede phishing-e-poster med ondsinnede vedlegg og misbruk av en leverandørs tilgang. Det er her menneskene og leverandørkjeden blir angrepsflaten. Jeg kommer tilbake til begge.</p>
+
+          <p class="prose"><strong>Utnyttelse og installasjon.</strong> Angriperen utnytter en VPN uten sikkerhetsoppdateringer eller svake innloggingsopplysninger for å komme inn, og sikrer seg deretter varig tilgang gjennom en bakdør. Mottiltakene er de kjedelige grunnprinsippene: systematisk håndtering av sikkerhetsoppdateringer, flerfaktorautentisering, nettverkssegmentering og deteksjon på endepunktene. At det er kjedelig, betyr ikke at det er valgfritt. Innbruddet hos Colonial Pipeline i 2021 begynte med én VPN-konto som hadde et gjenbrukt passord og manglet MFA [3].</p>
+
+          <p class="prose"><strong>Kommando og kontroll, deretter gjennomføring av angrepsmålet.</strong> Skadevaren kommuniserer med dem som styrer den, ofte over krypterte kanaler, og gjør deretter det den ble bygd for: Den sender kommandoene til effektbryterne. Den siste forsvarslinjen på dette stadiet er sanntidsovervåking av kontrollnettverket og muligheten til å gå over til manuell drift, der operatørene styrer strømnettet for hånd når de automatiserte systemene ikke lenger er til å stole på.</p>
+
+          <p class="prose">Poenget med å kartlegge et angrep slik er at det viser at forsvaret består av mer enn én mur. Det er sju muligheter til å oppdage den samme inntrengeren. Overser du angriperen under leveringen, kan du fortsatt oppdage vedkommende under installasjonen. Overser du også det, kan overvåkingen varsle om C2-trafikken. Angriperen må lykkes i hvert ledd. Forsvareren trenger bare å lykkes én gang.</p>
+
+          <h2>Angrepene i Ukraina var virkelige</h2>
+
+          <p class="prose">Angrepskjeden over er ikke en abstraksjon fra en lærebok. Den beskriver angrep som faktisk har skjedd.</p>
+
+          <p class="prose">I desember 2015 kuttet angripere strømmen til omtrent 230 000 mennesker i Ukraina i én til seks timer. Det var det første offentlig bekreftede cyberangrepet som førte til et strømbrudd. De kom seg inn med skadevaren BlackEnergy og betjente deretter effektbrytere manuelt gjennom kaprede operatørarbeidsstasjoner. De slettet systemer med KillDisk for å forsinke gjenopprettingen og oversvømte kundesentrene med et tjenestenektangrep mot telefonlinjene, slik at kundene ikke kunne melde fra om strømbruddet. Angrepet ble knyttet til Sandworm [4].</p>
+
+          <p class="prose">Et år senere, i desember 2016, skjedde det igjen i den nordlige delen av Kyiv, denne gangen med Industroyer, også kalt CRASHOVERRIDE. Det var dette som var det avgjørende spranget. Angrepet i 2015 var en manuell kapring: mennesker som klikket seg gjennom stjålne økter. Industroyer var den første skadevaren som var spesialbygd for å manipulere strømnettets kontrollprotokoller på egen hånd, helt uten operatørenes programvare. Kapasiteten hadde utviklet seg fra å bryte seg inn og betjene kontrollene manuelt til et gjenbrukbart, automatisert våpen mot strømnettet [5].</p>
+
+          <p class="prose">Og i 2022, under fullskalainvasjonen, forsøkte Sandworm en tredje gang med Industroyer2. Angrepet ble oppdaget og avverget før det førte til strømbrudd [1].</p>
+
+          <p class="prose">Tre forsøk med stadig mer avanserte metoder, rettet mot sivil kraftinfrastruktur. Skadevaren fra 2016 ble analysert offentlig, og det var nettopp slik trusselen jeg studerte for Western Interconnection, ble en kjent og dokumentert kapasitet fremfor en antakelse om det verst tenkelige. Dette er det sentrale, ubehagelige faktumet: Verktøy for å angripe strømnettet finnes, de har blitt brukt, og når de først er brukt, blir de analysert og teknikkene spres.</p>
+
+          <h2>Hvem som faktisk forsøker</h2>
+
+          <p class="prose">Industroyer-familien er eksempelet på statlige angrep, og stater er de mest kapable motstanderne. Men strømnettet står overfor et bredere trusselbilde. De andre aktørene er viktige fordi de er flere og på noen måter vanskeligere å forutse.</p>
+
+          <p class="prose"><strong>Kriminelle grupper som bruker løsepengevirus, er den mest aktive trusselen.</strong> De er økonomisk motiverte og ser på kraftselskaper som mål som vil betale for å gjenopprette driften raskt. De ønsker vanligvis ikke et langvarig strømbrudd, for ødeleggelse betaler ingen løsepenger. Likevel forstyrrer angrepene driften. Colonial Pipeline er det tydeligste eksempelet: DarkSide-gruppen rammet Colonials IT- og faktureringssystemer, ikke driftssystemene som flytter drivstoff. Colonial stengte rørledningen som et føre-var-tiltak fordi selskapet ikke kunne fakturere. Den største drivstoffrørledningen i USA, som frakter rundt 45 % av forsyningene til østkysten, stanset i omtrent seks dager [3]. Løsepengevirus trenger ikke å nå kontrollenhetene for å sette strømnettet ut av drift. Det holder at operatørene ikke vil fortsette driften uten oversikt.</p>
+
+          <p class="prose"><strong>Hacktivister er mindre kapable, men mindre forutsigbare.</strong> De foretrekker den digitale inngangsdøren: DDoS, manipulering av nettsider, datalekkasjer og phishing for å sette noen i forlegenhet fremfor å kreve løsepenger. Historisk har de ikke forsøkt å utløse strømbrudd. I 2012 advarte NSA om at Anonymous en dag kunne bli i stand til å slå ut deler av strømnettet. Anonymous avviste ideen som meningsløs, siden det ikke tjente noe formål å slå av folks strøm [6]. Den egentlige bekymringen er eskalering og spredning: En hacktivist som får tak i lekket ICS-skadevare, eller bruker et botnett av nettilkoblede apparater med høyt effektforbruk til å skape svingninger i strømforbruket, kan gjøre reell skade med andres verktøy.</p>
+
+          <p class="prose"><strong>Terrorister og ekstremister har sterk vilje, men begrenset evne.</strong> De ønsker størst mulig forstyrrelse og lar seg ikke avskrekke av skade på sivile; det er nettopp hensikten. Så langt har cyberforsøkene deres strandet på manglende ferdigheter. Hackere med tilknytning til ISIS forsøkte å bryte seg inn hos amerikanske kraftselskaper uten å lykkes. En FBI-relatert vurdering fra denne perioden ble oppsummert som «sterk intensjon, lav kapasitet» [7]. Faren oppstår den dagen viljen møter evnen, enten gjennom en lekkasje eller fordi en statlig støttespiller gir verktøy til en stedfortreder for å skjule sin egen innblanding.</p>
+
+          <p class="prose">Den praktiske lærdommen på tvers av alle tre gruppene er at forsvarstiltakene overlapper. Segmentering, MFA, overvåking og ansatte som står bedre imot phishing, øker kostnaden for både løsepengegrupper, hacktivister og statlige aktører. Du bygger ikke et eget strømnett for hver motstander. Du bygger ett som er vanskelig å angripe for dem alle.</p>
+
+          <h2>Det menneskelige forsvarslaget fortsetter å svikte</h2>
+
+          <p class="prose">Alle angrepskjedene over har det samme første trekket som faktisk virker: Et menneske blir lurt. Sosial manipulering utnytter psykologi, ikke programvare, og er den mest pålitelige veien forbi tekniske sikkerhetstiltak fordi den omgår dem.</p>
+
+          <p class="prose">Tre teknikker dekker det meste. Phishing og målrettet phishing bruker en overbevisende melding, ofte forkledd som en henvendelse fra et tilsynsorgan som NERC eller det amerikanske energidepartementet, for å samle inn påloggingsopplysninger gjennom en falsk innloggingsportal. Den målrettede varianten bygger også på rekognosering, slik at e-posten viser til et virkelig prosjekt eller en faktisk kollega og virker ekte. Påskudd, eller «pretexting», bygger på en oppdiktet historie: En angriper utgir seg for å være en revisor eller en innleid leverandør som raskt trenger tilgang for å kontrollere regelverksetterlevelse, og utnytter respekten for autoriteter. Lokkemidler, eller «baiting», spiller på nysgjerrighet. Det klassiske eksempelet er en infisert minnepinne med en uimotståelig merkelapp, etterlatt et sted en ansatt vil finne den [8][9].</p>
+
+          <p class="prose">Forsvaret er konkret og målrettet opplæring. Lær operatørene i kontrollrommet hvordan et cyberangrep fremstår i et operatørgrensesnitt, HMI, sammenlignet med en vanlig utstyrsfeil. Gjennomfør phishing-simuleringer. Innfør en regel om at enhver forespørsel om påloggingsopplysninger eller tilgang skal bekreftes gjennom en uavhengig kanal, aldri ved å svare på meldingen som ba om det. Gjør det enkelt å melde fra uten å bli klandret, slik at den ansatte som klikket på lenken, sier fra med en gang i stedet for å skjule det.</p>
+
+          <p class="prose">Ingenting av dette fjerner risikoen. Mennesker vil fortsette å klikke. Det tiltakene gjør, er å redusere andelen angrep som lykkes, og korte ned tiden fra klikket til responsen. Det er ofte forskjellen mellom en avgrenset hendelse og et strømbrudd.</p>
+
+          <h2>Leverandørkjeden er noen andres nettverk</h2>
+
+          <p class="prose">Selv et godt sikret kraftselskap arver svakhetene til leverandørene sine. Strømnettet er avhengig av et lite antall leverandører av kritiske komponenter som store transformatorer, og av eksterne vedlikeholdsfirmaer med legitim tilgang til kontrollnettverkene.</p>
+
+          <p class="prose">Denne tilgangen er en angrepsvei. Et målrettet phishing-angrep mot en leverandør med en vedlikeholdsforbindelse kan gi en vei inn i kraftselskapet som selskapets eget ytre forsvar aldri oppdager, fordi trafikken kommer gjennom en betrodd inngang. SolarWinds-angrepet i 2021 er det klassiske eksempelet på prinsippet: Angripere la inn trojanere i signerte programvareoppdateringer, og rundt 18 000 organisasjoner lastet ned den forgiftede versjonen. Den videre, manuelle utnyttelsen rammet imidlertid et langt mindre utvalg [10]. Lærdommen ligger ikke i antallet. Den er at en betrodd oppdateringskanal også er en angrepskanal.</p>
+
+          <p class="prose">Risiko i leverandørkjeden handler ikke bare om cyberangrep. Kuldebølgen i Texas i 2021 viste hvor sårbare avhengighetene av komponenter og drivstoff er under press, da svikt i naturgassforsyningen utløste omfattende strømbrudd [11]. Forsvarstiltakene er leverandørrevisjoner, testing av komponenter før de tas inn i kritiske systemer, og håndtering av leverandørers fjerntilgang som den privilegerte risikoen den er: med mellomtjenere for tilgang og godkjenning for hver økt, fremfor permanente forbindelser. I tillegg trengs reservedeler til utstyr med lang leveringstid, som transformatorer, klare til bruk ved gjenoppretting.</p>
+
+          <h2>Dybdeforsvar i praksis</h2>
+
+          <p class="prose">Så til det konstruktive. Strømnettet kan ikke gjøres umulig å hacke. Målet er derfor forsvar i flere lag: nok uavhengige sikkerhetstiltak til at én svikt ikke blir en katastrofe. Tre tekniske lag bærer det meste av vekten.</p>
+
+          <p class="prose"><strong>Segmentering og brannmurer.</strong> Dette er den første og viktigste forsvarslinjen. OT-nettverket må isoleres fra virksomhetens IT-nettverk og internett ved hjelp av demilitariserte soner og brannmurer som bare slipper gjennom den konkrete trafikken som er nødvendig, som SCADA-forespørsler og svar eller trafikk fra en bestemt ingeniørarbeidsstasjon, og blokkerer alt annet. CISAs veiledning for ICS sier uttrykkelig at trafikken mellom ICS- og virksomhetsnettverk må kontrolleres strengt [12]. Mikrosegmentering inne i OT-miljøet går et skritt videre: Releer, fjernterminaler og bærbare vedlikeholdsmaskiner plasseres i egne soner. Det begrenser angriperens mulighet til å bevege seg videre i nettverket, selv etter at vedkommende har fått fotfeste. NERC CIP, de obligatoriske minstekravene for det amerikanske hovedkraftsystemet, krever definerte elektroniske sikkerhetsgrenser rundt kritiske digitale ressurser av nettopp denne grunnen [13]. God segmentering gjør «de brøt seg inn på en arbeidsstasjon» til en avgrenset hendelse i stedet for en hendelse som rammer hele strømnettet.</p>
+
+          <p class="prose"><strong>Deteksjon og forebygging av inntrenging.</strong> Når en angriper har passert den ytre sikkerhetsgrensen, må du kunne oppdage vedkommende. IDS-sensorer inne i OT-miljøets demilitariserte sone undersøker trafikken for kjente angrepssignaturer og avvik, som kommandoer som bryter med normale mønstre. Utfordringen er at vanlige deteksjonssystemer for IT ofte ikke engang kan tolke strømnettets protokoller. Det kreves derfor verktøy utviklet for ICS for å gjenkjenne for eksempel en sekvens av utkoblingskommandoer til effektbrytere som sendes utenfor vanlige driftsperioder [14]. I kritisk OT foretrekkes deteksjon som regel fremfor automatisk blokkering, fordi en falsk alarm som blokkerer en legitim kommando, i seg selv kan utløse et strømbrudd. Forebygging tas i bruk selektivt, for de tydeligste signaturene og i de minst kritiske nettverkssegmentene.</p>
+
+          <p class="prose"><strong>Sentralisert overvåking med SIEM.</strong> Enkeltvarsler er støy til de blir satt i sammenheng. Et SIEM-system samler logger fra brannmurer, IDS, operatørarbeidsstasjoner og VPN-gatewayer i én oversikt. Dermed kan sikkerhetsteamet koble en uvanlig innlogging på et HMI til en nettverksskanning og en uautorisert skriving til en programmerbar logisk styring, PLC, og se at alt skyldes ett og samme innbrudd [15]. Det er dette som gjør hendelseshåndtering mulig: Når noe går galt, kan analytikerne følge angriperens vei fra inngang til handling og fastslå skadeomfanget i stedet for å gjette.</p>
+
+          <p class="prose">Over disse lagene ligger standardene og kryptografien. NERC CIP setter det obligatoriske minimumsnivået. NSAs veiledning om dybdeforsvar bygger på samme logikk: segmentering, tilgang etter minste privilegiums prinsipp og kontinuerlig overvåking, behandlet som en helhet fremfor en sjekkliste [16]. Og der de eldre protokollene tillater det, tilfører IEC 62351-serien kryptering og gjensidig autentisering gjennom TLS og en infrastruktur for offentlige nøkler. Da blir en kommando i nettverket stolt på fordi den er kryptografisk bekreftet, ikke bare fordi den kom frem [17]. Det tar tid å ettermontere dette på utstyr som er flere tiår gammelt, men det lukker gapet som gjør et overtatt nettverk så farlig.</p>
+
+          <h2>Teknologi er ikke nok</h2>
+
+          <p class="prose">Verktøy svikter når disiplinen rundt dem glipper. Derfor er driftsrutinene like viktige som utstyret.</p>
+
+          <p class="prose">Systematisk håndtering av sikkerhetsoppdateringer er den lite glamorøse kjernen. Kraftselskaper bør ha oversikt over alt utstyr og alle programvareversjoner og oppdatere etter en fast plan. Oppdateringene må først testes i et laboratorium eller et vedlikeholdsvindu, fordi uplanlagt nedetid er uakseptabelt. Når en eldre enhet faktisk ikke kan oppdateres, må den få kompenserende sikkerhetstiltak: isolasjon bak strenge brannmurregler eller en virtuell sikkerhetsoppdatering i form av en IPS-signatur. Colonials VPN uten sikkerhetsoppdateringer er det advarende eksempelet [3].</p>
+
+          <p class="prose">Sikker konfigurasjon og tilgangskontroll betyr minste privilegium overalt: egne operatørkontoer, ingen delte innlogginger, MFA, atskilte roller slik at en operatør ikke kan gjøre endringer som krever ingeniørtilgang, utskiftede standardpassord, deaktiverte ubrukte porter og tjenester, og godkjente, tidsbegrensede økter via mellomtjenere i stedet for permanent fjerntilgang til OT-nettverket. Fysisk sikring hører også hjemme her. En inntrenger som kan koble en uautorisert enhet til en nettverkssvitsj på en transformatorstasjon, har omgått nettverksforsvaret fullstendig.</p>
+
+          <p class="prose">Hendelseshåndtering må planlegges og øves på, ikke improviseres. En målbevisst motstander vil før eller siden komme seg gjennom et av forsvarslagene. Planen trenger derfor tydelige roller, kriterier for når systemer skal isoleres eller kobles fysisk fra, og rutiner for ren gjenoppretting. Systemene må bygges opp igjen fra betrodde sikkerhetskopier fremfor bare å startes på nytt, slik at skjult skadevare ikke overlever. Bransjen øver på dette i stor skala gjennom NERCs GridEx-øvelse annethvert år. Der trener tusenvis av deltakere fra kraftselskaper, myndigheter og det amerikanske forsvarsdepartementet på å håndtere kombinerte cyberangrep og fysiske angrep [18]. Alle organisasjoner bør gjennomføre egne diskusjonsøvelser og tekniske øvelser, også på scenariet der SCADA er borte og operatørene må styre strømnettet for hånd.</p>
+
+          <p class="prose">Muligheten til å gå over til manuell drift er den stillferdige bærebjelken i hele planen. Grunnen til at angrepene i Ukraina førte til strømbrudd som varte i timer fremfor dager, er at operatørene kunne gå tilbake til manuell styring. Strømnettets analoge grunnstruktur er det siste og mest pålitelige forsvaret. Det er en underlig ting å si om en cyberstrategi, men det er også sant.</p>
+
+          <h2>Oppdragsevne gjør strømnettet til et nasjonalt sikkerhetsspørsmål</h2>
+
+          <p class="prose">Grunnen til å investere i alt dette handler om mer enn å holde lysene på. Strømnettet er også fundamentet som landets forsvar er avhengig av.</p>
+
+          <p class="prose">Det amerikanske forsvarsdepartementet er svært avhengig av kommersiell strømforsyning for funksjoner som er avgjørende for oppdragene. Derfor er cybersikkerhet i strømnettet en nasjonal sikkerhetsprioritet, og derfor er «mission assurance», arbeidet med å holde kritiske oppdrag i gang under angrep, relevant for strømnettet. Militærets delvise svar er lokal motstandsdyktighet: Baser installerer egne generatorer og mikronett som kan koble seg fra hovednettet og forsyne kritiske funksjoner gjennom et regionalt strømbrudd. Men det virker bare en viss tid. Et langvarig strømbrudd over et stort område tømmer de lokale reservene og svekker den sivile infrastrukturen rundt basen, som vannforsyning og transport, som personellet også er avhengig av [19].</p>
+
+          <p class="prose">Arbeidet med å sikre oppdragsevnen kan derfor ikke stoppe ved gjerdet. Det krever tett koordinering med kraftselskapene gjennom informasjonsdeling via E-ISAC, felles øvelser og samordning av forsvarsbehovene med NERC CIP-rammeverket som allerede regulerer hovedkraftsystemet. Strømnettets sikkerhet er et felles ansvar for myndighetene og en privat sektor som eier størstedelen av anleggene. Ingen av partene kan løse det alene.</p>
+
+          <h2>Et realistisk forsvar av strømnettet</h2>
+
+          <p class="prose">Jeg tror ikke strømnettet kan gjøres usårbart, og jeg tror ikke det hjelper å late som noe annet. Den ærlige vurderingen er den dokumentasjonen støtter: Angrepene er reelle, verktøyene finnes og har blitt brukt i Ukraina tre ganger, og trusselbildet strekker seg fra stater til enkeltstående ekstremister. Det er denne verdenen Western Interconnection opererer i.</p>
+
+          <p class="prose">Men avstanden mellom «sårbart» og «fortapt» er stor, og den fylles av arbeid vi allerede vet hvordan vi skal gjøre. Segmenter nettverkene slik at ett innbrudd ikke rammer alt. Overvåk OT-trafikken for kommandoer som ikke hører hjemme der. Oppdater det du kan, og isoler det du ikke kan oppdatere. Gjør menneskene bedre rustet, for det er hos dem angrepskjeden begynner. Øv på responsen, og behold evnen til å styre strømnettet manuelt når det digitale laget svikter. Ingen enkelttiltak løser alt. Samlet utgjør de forskjellen mellom en avgrenset hendelse og et regionalt strømbrudd.</p>
+
+          <p class="prose">Angriperen må lykkes i hvert ledd av angrepskjeden. Forsvareren trenger bare å lykkes i ett. Dybdeforsvar er ganske enkelt disiplinen som sikrer at det alltid finnes et neste ledd der forsvareren kan vinne. Strømnettet er slagmarken nå, enten vi liker det eller ikke. Arbeidet består i å gjøre det til et terreng som gir fordelen til dem som holder lysene på.</p>
+
+          <div class="references">
+            <h2>Kilder</h2>
+            <ol>
+              <li>Claroty Team82, "Industroyer2 Variant Surfaces in Foiled Attack Against Ukraine Electricity Provider." <a href="https://claroty.com/team82/blog/industroyer2-variant-surfaces-in-foiled-attack-against-ukraine-electricity-provider" rel="noopener" target="_blank">https://claroty.com/team82/blog/industroyer2-variant-surfaces-in-foiled-attack-against-ukraine-electricity-provider</a> ; CISA, "APT Cyber Tools Targeting ICS/SCADA Devices" (AA22-103A), <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-103a" rel="noopener" target="_blank">https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-103a</a></li>
+              <li>DOJ, tiltale mot seks offiserer i GRU-enhet 74455 (19. oktober 2020), som knytter sammen angrepene mot Ukrainas strømnett, NotPetya og Olympic Destroyer. <a href="https://www.justice.gov/archives/opa/press-release/file/1328521/dl" rel="noopener" target="_blank">https://www.justice.gov/archives/opa/press-release/file/1328521/dl</a> ; Oversikt over Sandworm, <a href="https://en.wikipedia.org/wiki/Sandworm_(hacker_group)" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Sandworm_(hacker_group)</a></li>
+              <li>"Colonial Pipeline ransomware attack" (DarkSide, IT- og faktureringssystemer, VPN uten sikkerhetsoppdateringer med gjenbrukt passord og uten MFA, ~45 % av drivstoffet til østkysten, ~6 dagers driftsstans). <a href="https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack</a> ; GAO, "Colonial Pipeline Cyberattack Highlights Need for Better Federal and Private-Sector Preparedness" (18. mai 2021), <a href="https://www.gao.gov/blog/colonial-pipeline-cyberattack-highlights-need-better-federal-and-private-sector-preparedness-infographic" rel="noopener" target="_blank">https://www.gao.gov/blog/colonial-pipeline-cyberattack-highlights-need-better-federal-and-private-sector-preparedness-infographic</a></li>
+              <li>E-ISAC / SANS, "Analysis of the Cyber Attack on the Ukrainian Power Grid" (18. mars 2016). <a href="https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2016/05/20081514/E-ISAC_SANS_Ukraine_DUC_5.pdf" rel="noopener" target="_blank">https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2016/05/20081514/E-ISAC_SANS_Ukraine_DUC_5.pdf (engelsk)</a> ; CISA-varsel IR-ALERT-H-16-056-01, <a href="https://www.cisa.gov/news-events/ics-alerts/ir-alert-h-16-056-01" rel="noopener" target="_blank">https://www.cisa.gov/news-events/ics-alerts/ir-alert-h-16-056-01</a></li>
+              <li>Oversikt over «Industroyer» / CRASHOVERRIDE. <a href="https://en.wikipedia.org/wiki/Industroyer" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Industroyer</a> ; CISA, "CrashOverride Malware" (TA17-163A), <a href="https://www.cisa.gov/news-events/alerts/2017/06/12/crashoverride-malware" rel="noopener" target="_blank">https://www.cisa.gov/news-events/alerts/2017/06/12/crashoverride-malware</a></li>
+              <li>"Anonymous (hacker group)" og bakgrunnen for NSA-varselet fra 2012 om hacktivisters trusler mot strømnettet. <a href="https://en.wikipedia.org/wiki/Anonymous_(hacker_group)" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Anonymous_(hacker_group)</a></li>
+              <li>Infosec Institute, "ISIS Cyber Capabilities" (mislykkede forsøk mot amerikansk energiinfrastruktur; «sterk intensjon, lav kapasitet»). <a href="https://www.infosecinstitute.com/resources/threat-intelligence/isis-cyber-capabilities/" rel="noopener" target="_blank">https://www.infosecinstitute.com/resources/threat-intelligence/isis-cyber-capabilities/</a></li>
+              <li>IBM, "Spear phishing vs. phishing: what's the difference?" <a href="https://www.ibm.com/think/topics/spear-phishing-vs-standard-phishing" rel="noopener" target="_blank">https://www.ibm.com/think/topics/spear-phishing-vs-standard-phishing</a> ; IBM, "What is pretexting?" <a href="https://www.ibm.com/think/topics/pretexting" rel="noopener" target="_blank">https://www.ibm.com/think/topics/pretexting</a></li>
+              <li>Carnegie Mellon University, Information Security Office, "Social Engineering" (lokkemidler). <a href="https://www.cmu.edu/iso/aware/dont-take-the-bait/social-engineering.html" rel="noopener" target="_blank">https://www.cmu.edu/iso/aware/dont-take-the-bait/social-engineering.html</a></li>
+              <li>MITRE ATT&amp;CK, kampanje C0024 (SolarWinds Compromise). <a href="https://attack.mitre.org/campaigns/C0024/" rel="noopener" target="_blank">https://attack.mitre.org/campaigns/C0024/</a></li>
+              <li>"2021 Texas power crisis" (svikt i leverandørkjeder og drivstofforsyning under ekstrem kulde). <a href="https://en.wikipedia.org/wiki/2021_Texas_power_crisis" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/2021_Texas_power_crisis</a></li>
+              <li>CISA, "Cybersecurity Best Practices for Industrial Control Systems" (nettverkssegmentering og kontroll av trafikk mellom ICS- og virksomhetsnettverk). <a href="https://www.cisa.gov/sites/default/files/publications/Cybersecurity_Best_Practices_for_Industrial_Control_Systems.pdf" rel="noopener" target="_blank">https://www.cisa.gov/sites/default/files/publications/Cybersecurity_Best_Practices_for_Industrial_Control_Systems.pdf (engelsk)</a></li>
+              <li>NERC CIP Standards (elektroniske sikkerhetsgrenser og obligatoriske minstekrav). <a href="https://www.nerc.com/pa/Stand/Pages/CIPStandards.aspx" rel="noopener" target="_blank">https://www.nerc.com/pa/Stand/Pages/CIPStandards.aspx</a></li>
+              <li>Kostadinov, D., "Intrusion Detection and Prevention for ICS/SCADA Environments," Infosec Institute (behovet for deteksjon tilpasset ICS). <a href="https://www.infosecinstitute.com/resources/scada-ics-security/intrusion-detection-and-prevention-for-ics-scada-environments/" rel="noopener" target="_blank">https://www.infosecinstitute.com/resources/scada-ics-security/intrusion-detection-and-prevention-for-ics-scada-environments/</a></li>
+              <li>Industrial Defender, "How to Centralize OT Security Data in a SIEM" (samling og sammenstilling av OT-data i SIEM). <a href="https://www.industrialdefender.com/blog/how-to-centralize-ot-security-data-in-siem" rel="noopener" target="_blank">https://www.industrialdefender.com/blog/how-to-centralize-ot-security-data-in-siem</a></li>
+              <li>NSA, "NSA's Top Ten Cybersecurity Mitigation Strategies" (veiledning om informasjonssikring gjennom forsvar i flere lag). <a href="https://media.defense.gov/2019/Jul/16/2002158046/-1/-1/0/CSI-NSAS-TOP10-CYBERSECURITY-MITIGATION-STRATEGIES.PDF" rel="noopener" target="_blank">https://media.defense.gov/2019/Jul/16/2002158046/-1/-1/0/CSI-NSAS-TOP10-CYBERSECURITY-MITIGATION-STRATEGIES.PDF</a> ; CISA &amp; NSA, "Control System Defense: Know the Opponent" (AA22-265A), <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-265a" rel="noopener" target="_blank">https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-265a</a></li>
+              <li>Nozomi Networks, "IEC 62351 Standards for Securing Power System Communications" (TLS, PKI og gjensidig autentisering for SCADA/EMS). <a href="https://www.nozominetworks.com/blog/iec-62351-standards-for-securing-power-system-communications" rel="noopener" target="_blank">https://www.nozominetworks.com/blog/iec-62351-standards-for-securing-power-system-communications</a></li>
+              <li>NERC, "GridEx" (sikkerhetsøvelse for strømnettet annethvert år). <a href="https://www.nerc.com/pa/CI/ESISAC/Pages/GridEx.aspx" rel="noopener" target="_blank">https://www.nerc.com/pa/CI/ESISAC/Pages/GridEx.aspx</a></li>
+              <li>Stockton, P. N., &amp; Paczkowski, J. P., "Strengthening Mission Assurance Against Emerging Threats," Joint Force Quarterly 95 (2019). <a href="https://ndupress.ndu.edu/Portals/68/Documents/jfq/jfq-95/jfq-95.pdf" rel="noopener" target="_blank">https://ndupress.ndu.edu/Portals/68/Documents/jfq/jfq-95/jfq-95.pdf (engelsk)</a></li>
+            </ol>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="colophon">&copy; <span id="year">2026</span> Joakim Nordheim Larssen</span>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>

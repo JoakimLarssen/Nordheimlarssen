@@ -1,0 +1,80 @@
+:is(.site-top, .site-header) .top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+.site-top .top-contact { margin-right: 8px; }
+:is(.site-top, .site-header) .language-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  color: var(--ink, var(--fg-hi));
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+:is(.site-top, .site-header) .language-toggle:hover {
+  border-color: var(--muted, var(--dim));
+}
+.site-header .article-actions { order: 2; }
+.site-header .nav { order: 1; }
+.site-header .article-actions .icon-button {
+  display: grid;
+  place-items: center;
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--fg-hi);
+  background: transparent;
+  cursor: pointer;
+}
+.site-header .article-actions .icon {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.site-header .article-actions [hidden] { display: none; }
+html[lang=nb] .footer-inner::after { content: 'Ingen analyseverktøy'; }
+@media (max-width: 1000px) {
+  .site-top .top-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 18px;
+  }
+  .site-top .site-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: center;
+  }
+  .site-top .top-actions {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .site-header .article-actions { margin-left: auto; }
+  .site-header .nav { order: 3; width: 100%; }
+}
+@media (max-width: 480px) {
+  .site-top .top-contact { display: none; }
+  .site-top .top-inner { column-gap: 10px; }
+  .site-header .header-inner { column-gap: 12px; }
+}
+@media (max-width: 390px) {
+  .site-top .site-nav a { padding-inline: 8px; }
+  .site-top .site-nav .nav-label { white-space: nowrap; }
+}
+@media print {
+  :is(.site-top, .site-header) .top-actions { display: none; }
+}

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  nordheimlarssen.no/writing/does-ai-write-insecure-code  ::  article
+  Static page, no build step. All asset paths are absolute.
+  ============================================================================
+-->
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Skriver KI egentlig usikker kode? Dette sier forskningen | Joakim Nordheim Larssen</title>
+  <meta name="description" content="En gjennomgang av studiene, testene og driftsdataene fra store virksomheter, og hva de faktisk gir grunnlag for å si." />
+  <meta name="author" content="Joakim Nordheim Larssen" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0D1011" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260908" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Skriver KI egentlig usikker kode? Dette sier forskningen | Joakim Nordheim Larssen" />
+  <meta property="og:description" content="En gjennomgang av studiene, testene og driftsdataene fra store virksomheter, og hva de faktisk gir grunnlag for å si." />
+  <meta property="og:url" content="https://www.nordheimlarssen.no/no/writing/does-ai-write-insecure-code" />
+  <meta property="og:image" content="https://www.nordheimlarssen.no/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Skriver KI egentlig usikker kode? Dette sier forskningen | Joakim Nordheim Larssen" />
+  <meta name="twitter:description" content="En gjennomgang av studiene, testene og driftsdataene fra store virksomheter, og hva de faktisk gir grunnlag for å si." />
+  <meta name="twitter:image" content="https://www.nordheimlarssen.no/og.png" />
+  <link href="https://www.nordheimlarssen.no/no/writing/does-ai-write-insecure-code" rel="canonical"/>
+
+  <!-- Fonts: JetBrains Mono (structure) + IBM Plex Sans (prose). No serif. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Gate reveal animations on JS BEFORE first paint, so no-JS users see
+       all content and JS users never get a flash of un-animated content. -->
+  <script>document.documentElement.classList.add("js");</script>
+<link rel="stylesheet" href="/theme.css">
+<script src="/theme.js?v=20260908-language"></script>
+<link href="/nav-motion.css?v=20260908" rel="stylesheet"/><link rel="alternate" hreflang="en" href="https://www.nordheimlarssen.no/writing/does-ai-write-insecure-code"/><link rel="alternate" hreflang="nb" href="https://www.nordheimlarssen.no/no/writing/does-ai-write-insecure-code"/><link rel="alternate" hreflang="x-default" href="https://www.nordheimlarssen.no/writing/does-ai-write-insecure-code"/><meta property="og:locale" content="nb_NO"/><meta property="og:locale:alternate" content="en_GB"/><link href="/language.css?v=20260908-language" rel="stylesheet"/><script src="/site.js?v=20260908-language" defer></script></head>
+<body>
+  <a class="skip-link" href="#main">Hopp til innhold</a>
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a class="brand" href="/no/" aria-label="Joakim Nordheim Larssen, hjem">
+        <span class="brand-prompt" aria-hidden="true">~/</span><span class="brand-name">jnl</span>
+      </a><div class="top-actions article-actions"><a aria-label="Read this page in English" class="language-toggle" data-language-toggle="" href="/writing/does-ai-write-insecure-code" hreflang="en" lang="en">English</a><button aria-label="Bytt til mørkt tema" aria-pressed="false" class="icon-button" data-theme-toggle="" hidden="" type="button"><svg aria-hidden="true" class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"></path></svg></button></div>
+      <nav class="nav" aria-label="Hovedmeny">
+        <ul>
+          <li><a href="/no/#whoami"><span class="nav-label" data-nav-label="about">Om meg</span></a></li>
+          <li><a href="/no/#projects"><span class="nav-label" data-nav-label="projects">Prosjekter</span></a></li>
+          <li><a href="/no/#ctf"><span class="nav-label" data-nav-label="ctf">CTF-resultater</span></a></li>
+          <li><a href="/no/#academics"><span class="nav-label" data-nav-label="education">Utdanning</span></a></li>
+          <li><a href="/no/writing" class="is-active" aria-current="page"><span aria-hidden="true" class="nav-pill"></span><span class="nav-label" data-nav-label="writing">Artikler</span></a></li>
+          <li><a href="/no/cv"><span class="nav-label" data-nav-label="cv">CV</span></a></li>
+          <li><a href="/no/#contact"><span class="nav-label" data-nav-label="contact">Kontakt</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <article class="article">
+          <a class="article-back" href="/no/writing">&#8592; artikler</a>
+
+          <h1>Skriver KI egentlig usikker kode? Dette sier forskningen</h1>
+          <p class="article-lede">En gjennomgang av studiene, testene og driftsdataene fra store virksomheter, og hva de faktisk gir grunnlag for å si</p>
+          <p class="article-byline">Joakim Nordheim Larssen</p>
+
+          <div class="article-summary">
+            <p class="prose">Leser du overskriftene, skriver KI usikker kode et sted mellom «40 % av tiden» og «hele tiden». Leser du leverandørenes motsvar, gjør KI kodearbeidet raskere og bedre. Begge fremstillingene er selektive. Her er det primærkildene faktisk gir grunnlag for å si:</p>
+            <ul>
+              <li>På tvers av svært ulike metoder ligger andelen tilfeller der KI <em>produserer</em> et sårbart mønster, rundt 30 til 45 prosent [1][3][4][9]. Men dette er en øvre grense for <em>potensiell fare</em>, ikke et mål på hvor mye usikker kode som settes i produksjon. Det avhenger fremfor alt av hva mennesket gjør etterpå [2][10][11].</li>
+              <li>Det mest robuste funnet handler om mennesket, ikke modellen: Folk med KI-hjelp skriver mindre sikker kode, samtidig som de tror den er <em>sikrere</em>. Jo større tillit, desto lavere sikkerhet [2].</li>
+              <li>Påstanden om at «smartere modeller vil løse dette», motsies av to funn: Andelen som besto sikkerhetstestene, sto stille gjennom to år med nye modellutgivelser, selv om funksjonell korrekthet passerte 95 prosent [4][5]. Modellene som var best til å gjenskape mønstre fra treningsdataene, hadde dessuten <em>større</em> sannsynlighet for å gjenskape usikre mønstre [3].</li>
+              <li>Det finnes nye måter dette kan gå galt på: oppdiktede pakkenavn som angripere kan registrere på forhånd [13], flere lekkede hemmeligheter [16], og dårligere sikkerhet når du fortsetter å be modellen «forbedre» sin egen kode [18].</li>
+              <li>Det finnes også solide motfunn: Minst to grundige studier fant at modellen alene <em>ikke</em> er spesielt farlig [10][11], og KI er et nyttig forsvarsverktøy for å rette kjente problemer raskt [19].</li>
+            </ul>
+            <p class="prose">KI skriver kode med omtrent like mange feil som materialet den lærte av, selvsikkert og raskt. Sikkerhetsproblemet er mennesker som stoler for mye på den. Løsningen er bedre arbeidsprosesser, ikke å avstå fra KI.</p>
+          </div>
+
+          <h2>Hvorfor andelene er viktige</h2>
+
+          <p class="prose">Dette er ikke lenger bare et akademisk spørsmål. Satya Nadella sa i april 2025 at 20 til 30 prosent av koden i Microsofts kodelagre nå er skrevet av KI, og Sundar Pichai sa at KI genererer mer enn 30 prosent av den nye koden hos Google [21]. Ta tallene med en klype salt: Det er uklart hvordan selskapene måler «KI-generert», og dette er uttalelser fra toppsjefer, ikke reviderte måltall [21]. Men retningen støttes av Stack Overflows undersøkelse fra 2025: 84 prosent av utviklerne bruker eller planlegger å bruke KI-verktøy, opp fra 76 prosent året før [23].</p>
+
+          <p class="prose">Men tilliten faller mens omfanget vokser. I samme undersøkelse <em>falt</em> tilliten til at KI gir korrekte svar, til rundt 30 prosent, fra omtrent 40 prosent året før [23]. Den største frustrasjonen, oppgitt av 66 prosent, var KI-løsninger som er nesten riktige, men ikke helt. I tillegg sa 45 prosent at feilsøking i KI-generert kode tar mer tid [23]. Nesten alle tar verktøyene i bruk, tilliten stuper, og kontrollarbeidet vokser.</p>
+
+          <p class="prose">Hovedpoenget i én setning: Sikkerhetsrisikoen ved KI-generert kode er reell og målbar, men den er særlig knyttet til overdreven tillit og mangelfull kontroll hos mennesker, ikke til at modellen gjennomgående er dårligere enn menneskene den lærte av.</p>
+
+          <h2>Den skremmende overskriften, og hva studien faktisk målte</h2>
+
+          <p class="prose">Det mest siterte tallet kommer fra en NYU-studie fra 2021, publisert på IEEE S&amp;P 2022: «Asleep at the Keyboard? Assessing the Security of GitHub Copilot's Code Contributions», av Pearce og kolleger [1]. De laget 89 scenarioer som bevisst tok sikte på svakheter med høy risiko fra MITREs «Top 25»-liste over CWE-er, lot Copilot generere kodeforslag og endte opp med omtrent 1 689 programmer. Rundt 40 prosent inneholdt sikkerhetssårbarheter. Det er opphavet til påstanden om at «40 % av KI-kode er usikker» [1].</p>
+
+          <p class="prose">Men se på hva prosentandelen regnes av. Studien målte Copilots ubearbeidede kodeforslag som svar på <em>bevisst sikkerhetssensitive instrukser</em>, i 2021, i Codex-perioden. Instruksene var utformet for å styre modellen mot risikable mønstre, og representerte ikke vanlig kodearbeid i hverdagen. Forfatternes egen forklaring er søppel inn, søppel ut: Copilot gjenskaper usikre mønstre som er vanlige i treningsdataene. De anbefaler derfor å kombinere verktøyet med sikkerhetsverktøy, fremfor å stole på forslagene uten videre [1]. De 40 prosentene måler altså hvor ofte en modell produserer et sårbart mønster når den presses i den retningen: en øvre grense, ikke andelen i produksjon.</p>
+
+          <h2>Den egentlige mekanismen: Mennesket som stoler for mye på KI</h2>
+
+          <p class="prose">Hvis «Asleep at the Keyboard» er den berømte studien, kommer nøkkelstudien fra Stanford: «Do Users Write More Insecure Code with AI Assistants?», av Perry, Srivastava, Kumar og Boneh, presentert på ACM CCS 2023 [2]. Den undersøker mennesker, ikke bare modellen: 47 deltakere, hvorav 33 med tilgang til KI og 14 i kontrollgruppen, brukte en assistent bygget på OpenAIs codex-davinci-002 til fem sikkerhetsoppgaver i Python, JavaScript og C [2].</p>
+
+          <p class="prose">Deltakerne med tilgang til KI skrev betydelig mindre sikker kode, med statistisk signifikante forskjeller i fire av de fem oppgavene. Ved meldingssignering med ECDSA leverte bare 3 prosent av KI-gruppen en sikker løsning, mot 21 prosent av kontrollgruppen (p = 0,039) [2]. Ved en SQL-innsetting i JavaScript var 36 prosent av koden sårbar for SQL-injeksjon med KI, mot 7 prosent i kontrollgruppen (p = 0,041) [2].</p>
+
+          <p class="prose">Det viktigste funnet: Deltakerne med KI var <em>mer tilbøyelige til å tro at de hadde skrevet sikker kode</em>, selv om de ofte ikke hadde det [2]. Det som beskyttet dem, handlet om atferd, ikke teknikk: De som stolte mindre på KI og arbeidet mer aktivt med instruksene sine, produserte færre sårbarheter [2]. Det som forutsa sikkerheten, var ikke modellen, men hvor mye man tvilte på den.</p>
+
+          <p class="prose">Utvalget er lite (47), og codex-davinci-002 er nå gammel, så ikke generaliser de nøyaktige prosentandelene. Men <em>mekanismen</em>, at overdreven tillit fører til for lite kontroll, er det robuste funnet.</p>
+
+          <h2>Solide motfunn: Modellen alene er ikke spesielt farlig</h2>
+
+          <p class="prose">To grundige studier taler mot den alarmistiske tolkningen. Den første er «Lost at C», fra NYU, presentert på USENIX Security 2023: 58 deltakere implementerte en enkeltlenket liste i C, med en assistent basert på code-cushman-001 [10]. Brukerne med KI-hjelp produserte kritiske sikkerhetsfeil med en hyppighet som var høyst omtrent 10 prosent høyere enn kontrollgruppens, uten statistisk signifikant forskjell per kodelinje. Forfatterne konkluderte med at språkmodellen «ikke innfører nye sikkerhetsrisikoer» [10].</p>
+
+          <p class="prose">Den andre er «Is GitHub's Copilot as Bad as Humans at Introducing Vulnerabilities?», av Asare og kolleger [11]. De tok utgangspunkt i faktiske kodeendringer i C/C++ der mennesker hadde innført sårbarheter, ba Copilot foreslå kode på akkurat samme punkt og undersøkte resultatet. Modellen gjenskapte den opprinnelige sårbare koden omtrent 33 prosent av gangene og den rettede versjonen omtrent 25 prosent [11]. I rundt to tredeler av tilfellene gjenskapte den <em>ikke</em> menneskets sårbarhet. Konklusjonen deres var at Copilot «ikke er like dårlig som menneskelige utviklere når det gjelder å innføre sårbarheter» [11].</p>
+
+          <p class="prose">Hvordan kan disse funnene forenes med Stanford-studien? Effektstørrelsen avhenger sterkt av oppgave, programmeringsspråk, modell og brukeratferd. Kryptografi og validering av filstier, de vanskelige oppgavene i Stanford-studien, er områder med subtile fallgruver der et selvsikkert, feilaktig forslag gjør skade. Håndtering av pekere i C, som i «Lost at C», er noe mennesker uansett ville strevd med. Denne variasjonen er selve poenget: Hvis modellen var farlig på samme måte overalt, ville resultatene ikke sprikt slik. Spredningen viser at risikoen avhenger av sammenhengen og formes av mennesket og oppgaven.</p>
+
+          <h2>Nyere studier i stor skala: Et reelt problem som ikke blir mindre</h2>
+
+          <p class="prose">Nyere undersøkelser dekker et stort omfang og tydeliggjør to poenger: Problemet er reelt, og større modeller løser det ikke. Den mest omtalte testen er Veracodes «2025 GenAI Code Security Report», som testet mer enn 100 store språkmodeller på fire programmeringsspråk [4]. På tvers av testtilfellene strøk 45 prosent av kodeeksemplene på sikkerhetstestene ved å innføre en sårbarhet fra OWASP Top 10. Java kom dårligst ut med omtrent 72 prosent, mens språkene med lavest risiko, Python, JavaScript og C#, lå på omtrent 38 prosent [4]. Og det viktigste funnet for dem som vil vente på bedre modeller: Selv om modellene ble bedre til å skrive kode som fungerte, sto sikkerheten stille uavhengig av modellstørrelse [4].</p>
+
+          <p class="prose">En ny oppdatering fra Veracode i mars 2026 viste at trenden holdt seg: To år med «revolusjonerende» modellutgivelser flyttet sikkerhetstallet fra omtrent 55 prosent til omtrent 55 prosent, mens andelen syntaktisk korrekt kode nå overstiger 95 prosent [5]. Det underliggende mønsteret er stabilt i begge rapportene: Modellene håndterer avgrensede svakheter som kan gjenkjennes som mønstre, godt. Beståttandelen er rundt 82 prosent for SQL-injeksjon og rundt 86 prosent for usikker kryptografi. Men de svikter på feil som avhenger av kontekst og dataflyt, med rundt 15 prosent for XSS og rundt 13 prosent for logginjeksjon [5]. De kan gjenkjenne mønsteret i en parameterisert spørring, men klarer ikke å følge potensielt skadelige data gjennom hele behandlingen av en forespørsel.</p>
+
+          <p class="prose">Forbeholdet: Veracode selger skanneverktøy, så vurder dette som en leverandørrapport. (Den mye gjentatte påstanden om «2,74 ganger flere sårbarheter enn menneskeskrevet kode», som tilskrives dem, finnes ikke i den opprinnelige bloggteksten. Derfor gjengir jeg den ikke som et faktum [4].)</p>
+
+          <p class="prose">Men funnet om uendret sikkerhet er mer enn én leverandørs påstand: Det samsvarer med et fagfellevurdert resultat. Metas CyberSecEval, som dekker 50 CWE-er på 8 programmeringsspråk, fant at modellene i gjennomsnitt foreslo usikker kode omtrent 30 prosent av gangene. Studien fant også en <em>negativ</em> sammenheng mellom kodeferdigheter og sikkerhet: Modeller som var bedre til å gjenskape mønstre fra treningsdataene, hadde <em>større</em> sannsynlighet for å produsere usikker kode [3]. Jo bedre en modell lærer treningsdataene sine, desto mer trofast lærer den også de usikre delene. To uavhengige kilder er enige om at økte ferdigheter ikke gir bedre sikkerhet.</p>
+
+          <h2>Andelene samler seg i samme område, og det er det viktige signalet</h2>
+
+          <p class="prose">Se på spennvidden i svarene på «hvor ofte produserer KI usikker kode?»:</p>
+
+          <ul>
+            <li>NYUs scenarioer som bevisst utfordrer modellen: omtrent 40 prosent [1].</li>
+            <li>Metas CyberSecEval, per kodeforslag: omtrent 30 prosent [3].</li>
+            <li>Veracodes omfattende OWASP-test: 45 prosent [4].</li>
+            <li>452 faktiske kodebiter fra Copilot som var tatt inn i GitHub-prosjekter, undersøkt av Fu og kolleger: 29,6 prosent inneholdt sikkerhetssvakheter, fordelt på 38 CWE-er [9].</li>
+            <li>CWEval, som vurderer funksjonalitet og sikkerhet samlet: Krav om <em>begge deler</em> senker beståttandelen med omtrent 30 prosent sammenlignet med korrekthet alene. Omtrent en tredel av språkmodellkoden som fungerer korrekt, oppfyller altså likevel ikke sikkerhetskravene [8].</li>
+          </ul>
+
+          <p class="prose">Ulike metoder gir omtrent samme intervall, fra 30 til 45 prosent. Når en syntetisk test, en leverandørskanning og en studie av kode som er tatt i bruk, alle havner i samme område, tyder det på en reell egenskap, ikke en effekt av målemetoden. Det er fortsatt viktig hva andelene regnes av: De høyeste tallene kommer fra instrukser som presses mot risikable CWE-er, med 40 hos NYU og 68 til 74 prosent i SecurityEval [1][7]. Tallet fra faktisk bruk ligger nærmere 30 [9].</p>
+
+          <h2>«Det virker» og «det er sikkert» er to forskjellige spørsmål</h2>
+
+          <p class="prose">Én test treffer den grunnleggende tankefeilen folk gjør: BaxBench, «Can LLMs Generate Correct and Secure Backends?», fra ETH Zurich og LogicStar, presentert på ICML 2025 [6]. Den består av 392 oppgaver for serverdelen av applikasjoner, hver med både funksjonelle tester <em>og</em> angrep skrevet av eksperter for å utnytte sårbarheter. Oppgavene ble kjørt mot 11 modeller, inkludert resonneringsmodeller som o1 og DeepSeek-R1 [6]. Selv de beste kommer ikke over omtrent 35 prosent kode som både er korrekt og sikker [6]. OpenAIs o1 nådde omtrent 62 prosent når bare korrekthet ble målt, men rundt halvparten av disse funksjonelt korrekte programmene kunne fortsatt angripes [6].</p>
+
+          <p class="prose">Dette viser aller tydeligst at «det består testene» og «det er sikkert» er uavhengige dimensjoner: Jo mer du baserer deg på tester som HumanEval, som bare måler korrekthet, desto mer overvurderer du hvor klar koden er for produksjon. Resonneringsmodellene, som mange håpet skulle tette gapet, gjorde heller ikke det på BaxBench [6].</p>
+
+          <h2>Nye feilkilder som er særegne for KI</h2>
+
+          <p class="prose">Så langt har poenget vært at «KI skriver de samme feilene som mennesker, bare i større skala». Men tre feilkilder finnes <em>fordi</em> koden kom fra en modell.</p>
+
+          <h3>Slopsquatting: Oppdiktede avhengigheter som angrepsflate</h3>
+
+          <p class="prose">Det tydeligste eksemplet er oppdiktede programvarepakker. Primærstudien er «We Have a Package for You!», av Spracklen og kolleger, presentert på USENIX Security 2025. Den omfatter 16 store språkmodeller og 576 000 kodeeksempler, med hallusinasjonsandeler på minst 5,2 prosent for kommersielle modeller og 21,7 prosent for modeller med åpen kildekode. Det ga 205 474 unike, falske pakkenavn. Omtalen av studien oppsummerer gjennomsnittet til rundt 19,7 prosent: Omtrent én av fem anbefalte pakker fantes ikke [13].</p>
+
+          <p class="prose">Det som gjør en hallusinasjon til et våpen, er at den gjentar seg: Da modellene ble spurt på nytt, dukket en stor andel av de oppdiktede navnene opp igjen. Omtalen oppgir at 43 prosent dukket opp i alle de ti gjentakelsene [13]. Et navn modellen finner på <em>konsekvent</em>, er forutsigbart. Det betyr at en angriper kan registrere det på forhånd.</p>
+
+          <p class="prose">Begrepet er «slopsquatting», laget av Seth Larson i Python Software Foundation [14], og det er ikke bare teori: Bar Lanyado i Lasso Security la merke til at språkmodeller stadig fant på en ikke-eksisterende PyPI-pakke kalt <strong>huggingface-cli</strong>. Han registrerte en tom pakke med det navnet og så den få mer enn 30 000 nedlastinger på tre måneder. Selv Alibaba kopierte den falske installasjonskommandoen inn i en offentlig README [15]. Begrensningen er at dette var en ufarlig demonstrasjon. Det finnes ingen bekreftet rapport om at en <em>ondsinnet</em> slopsquatting-pakke har ført til et omfattende sikkerhetsbrudd [15]. Mekanismen er påvist, men en hendelse med skader i stor skala er ennå ikke dokumentert.</p>
+
+          <h3>Lekkasje av hemmeligheter</h3>
+
+          <p class="prose">Den andre feilkilden er eksponering av hemmeligheter. GitGuardian analyserte omtrent 20 000 offentlige kodelagre med Copilot aktivert og fant at 6,4 prosent lekket minst én hemmelighet, mot et sammenligningsnivå på 4,6 prosent. Det er omtrent 40 prosent høyere [16]. Deres egen tolkning støtter hovedpoenget her: Det skyldes i stor grad at utviklere med KI-hjelp prioriterer fart fremfor ryddig sikkerhetspraksis [16]. Igjen handler det om menneskets rolle i arbeidsprosessen. Modellene kan også gjengi ekte tilgangsopplysninger fra treningsdataene: I en studie GitGuardian viser til, fikk 900 instrukser Copilot til å gi fra seg 2 702 hardkodede tilgangsopplysninger, hvorav minst omtrent 200 var ekte, identifiserbare hemmeligheter [16]. (Forbehold: GitGuardian selger verktøy som skanner etter hemmeligheter, og sammenligningen viser korrelasjon, ikke årsakssammenheng.)</p>
+
+          <h3>Gradvis svekkelse: Fellen i «gjør det bedre»</h3>
+
+          <p class="prose">Den tredje er den mest overraskende. En studie på IEEE ISTAS 2025, «Security Degradation in Iterative AI Code Generation», lot 400 kodeeksempler gå gjennom 40 runder med «forbedring». Den fant en økning på 37,6 prosent i kritiske sårbarheter etter bare fem runder, <em>selv når instruksen ba modellen gjøre koden sikrere</em> [18].</p>
+
+          <p class="prose">Hvis du noen gang har sittet i en runde med «vibe coding» og sagt «fiks det, prøv igjen» til en modell et dusin ganger, bør dette få deg til å stoppe opp: Prosessen du tror nærmer seg bedre kvalitet, kan bevege seg bort fra den. Det ville du ikke oppdaget uten en kontroll utenfra.</p>
+
+          <h2>Driftsdata fra store virksomheter: Hva som skjer i stor skala</h2>
+
+          <p class="prose">Studier har ryddige rammer, men er kunstige. Hva skjer i virkelige selskaper? Apiiro, en leverandør av applikasjonssikkerhet, publiserte i september 2025 driftsdata under tittelen «4x Velocity, 10x Vulnerabilities», fra titusenvis av kodelagre i Fortune 50-selskaper [12]. Utviklere med KI-hjelp produserte 3 til 4 ganger så mange kodeinnsjekkinger. I juni 2025 sto KI-generert kode bak mer enn 10 000 nye sikkerhetsfunn i måneden, en tidobling på seks måneder [12].</p>
+
+          <p class="prose">Men <em>typen feil</em> betyr mer enn mengden. Enkle syntaksfeil falt med omtrent 76 prosent, mens muligheter for rettighetseskalering økte med 322 prosent, arkitektur- og designfeil økte med 153 prosent, og eksponerte tilgangsopplysninger til skytjenester omtrent doblet seg [12]. (Den ofte gjentatte påstanden om «40 % økning i eksponerte hemmeligheter» fra denne rapporten er feil. Apiiros eget innlegg sier at eksponeringen omtrent doblet seg [12].)</p>
+
+          <p class="prose">Dette er Veracodes skille mellom feil som kan gjenkjennes som mønstre, og feil som avhenger av dataflyt, i virksomhetsskala: KI <em>retter de overflatiske feilene og mangedobler de dype</em>. Risikoen flytter seg til akkurat de stedene der mennesker var siste forsvarslinje, og der de nå kontrollerer minst fordi volumet er firedoblet. (Apiiro selger verktøy for å vurdere koderisiko, og dataene er egenrapporterte, men endringen i feiltypene støtter et mønster som også er funnet uavhengig av dem.)</p>
+
+          <h2>Hva prosessene viser: Det er størrelsen på endringene, ikke modellen</h2>
+
+          <p class="prose">Googles DORA-team fant i «2024 Accelerate State of DevOps Report» at en økning på 25 prosent i KI-bruk var forbundet med en anslått nedgang på 1,5 prosent i leveransetakt og 7,2 prosent i stabilitet, selv om rundt 75 prosent av respondentene rapporterte at de selv ble mer produktive [20]. DORAs tolkning er hovedpoenget: KI gjør det lett å produsere mer kode i større omganger, og store endringssett er den egentlige risikodriveren [20].</p>
+
+          <p class="prose">Dette passer med METRs randomiserte, kontrollerte forsøk fra juli 2025, som dokumenterer tankefeilen bak hele problemet. Seksten erfarne utviklere jobbet med 246 reelle oppgaver i sine egne, veletablerte kodelagre. Oppgavene ble tilfeldig fordelt mellom bruk og ikke-bruk av KI, og de brukte hovedsakelig Cursor Pro med Claude 3.5 og 3.7 Sonnet [22]. KI gjorde dem 19 prosent <em>tregere</em>. Likevel forventet de på forhånd å bli omtrent 24 prosent raskere. Selv etter at arbeidet hadde gått tregere, anslo de fortsatt at KI hadde gjort dem omtrent 20 prosent raskere [22].</p>
+
+          <p class="prose">Dette gapet mellom opplevelse og virkelighet er det samme som Stanford målte for sikkerhet. Når du overvurderer <em>farten</em>, leverer du litt for ivrig. Når du overvurderer <em>sikkerheten</em>, leverer du noe som kan angripes, mens du føler deg trygg. (Forbehold: METR hadde 16 deltakere, som jobbet i komplekse, veletablerte kodelagre med verktøy fra tidlig i 2025.)</p>
+
+          <h2>Hva som faktisk hjelper</h2>
+
+          <p class="prose">Funnene peker mot en bestemt arbeidsdeling mellom deterministiske verktøy og KI. KI er god til å <em>rette</em> kjente problemer: GitHubs Copilot Autofix, som kombinerer CodeQL med en modell, rapporterte en median rettetid på 28 minutter, mot 1,5 timer ved manuelt arbeid [19]. Det <em>deterministiske skanneverktøyet</em> finner problemet, og <em>modellen</em> foreslår en rettelse. Det er kombinasjonen som gir tidsgevinsten, ikke modellen alene. GitHubs data måler dessuten hvor raskt feil rettes, ikke om rettelsene er korrekte [19]. Men KI er svak som selvstendig <em>feilfinner</em>: En studie fra 2025, «Can AI Spot Security Flaws Before You Commit?», fant at Copilots kodegjennomgang ofte ikke oppdaget SQL-injeksjon, XSS og usikker deserialisering, og overså sikkerhetsfeil i konfigurasjonsfiler [17]. Deterministisk statisk sikkerhetsanalyse, SAST, for å finne feil; språkmodeller for å rette dem.</p>
+
+          <p class="prose">De etablerte anbefalingene er lite glamorøse og riktige: Kombiner KI-generering med SAST og obligatoriske kontroller mot sikkerhetsregler, skann etter hemmeligheter, lås og gjennomgå avhengigheter for å avverge slopsquatting, hold endringssettene små og ta med sikkerhetskrav i instruksene. OWASP har en Top 10 for språkmodellapplikasjoner [24], og NIST publiserte en «Generative AI Profile» (SP 800-218A) i juli 2024 [25]. Ingenting av dette betyr «slutt å bruke KI». Det betyr «ikke hopp over gjennomgangen bare fordi koden kom raskt og virker overbevisende».</p>
+
+          <p class="prose">Påstanden om at «KI skriver usikker kode», er sann i snever forstand: Modeller produserer et sårbart mønster omtrent 30 til 45 prosent av gangene, og dette har ikke blitt bedre etter hvert som modellene har blitt større [3][4][5][9]. Men den alarmistiske versjonen, at KI er en helt særegen fare, holder ikke i møte med «Lost at C» og Asare-studien. De fant at modellen alene ikke er dårligere enn sammenligningsgrunnlaget av menneskeskrevet kode, og at den faktisk er <em>bedre</em> når den får gjenskape kode på samme utgangspunkt [10][11].</p>
+
+          <p class="prose">Farten og omfanget virker gjennom mennesket: Stanford viser at folk føler seg sikrere mens de er mindre sikre [2]. Snyk viser at tre firedeler av utviklerne stoler mer på KI-kode enn menneskeskrevet kode, samtidig som de omgår sikkerhetsregler [26]. METR viser at vi feilvurderer selv ren arbeidshastighet [22], og DORA viser at større endringssett svekker stabiliteten [20]. Overdreven tillit kombinert med mangelfull kontroll.</p>
+
+          <p class="prose">Overskriften jeg ville skrevet, er derfor ikke «KI skriver usikker kode». Den er: <em>KI skriver omtrent like usikker kode som treningsdataene sine, selvsikkert og raskt, og nettopp kombinasjonen av selvsikkerhet og fart svekker menneskers kontroll.</em> Sårbarheten ligger i samspillet, ikke i modellen. KI fant ikke opp usikker kode. Den lærte av oss, og lærte bare å gjøre det raskere og høres sikker ut. Jobben vår nå er å fortsette å tvile på dens vegne.</p>
+
+          <div class="references">
+            <h2>Kilder</h2>
+            <ol>
+              <li>Pearce, Ahmad, Tan et al. "Asleep at the Keyboard? Assessing the Security of GitHub Copilot's Code Contributions." IEEE S&amp;P 2022. <a href="https://arxiv.org/abs/2108.09293" rel="noopener" target="_blank">https://arxiv.org/abs/2108.09293</a></li>
+              <li>Perry, Srivastava, Kumar, Boneh. "Do Users Write More Insecure Code with AI Assistants?" CCS 2023. <a href="https://arxiv.org/abs/2211.03622" rel="noopener" target="_blank">https://arxiv.org/abs/2211.03622</a></li>
+              <li>Bhatt, Evtimov et al. (Meta). "Purple Llama CyberSecEval: A Secure Coding Benchmark for Language Models." Desember 2023. <a href="https://arxiv.org/abs/2312.04724" rel="noopener" target="_blank">https://arxiv.org/abs/2312.04724</a></li>
+              <li>Veracode. "2025 GenAI Code Security Report." 30. juli 2025. <a href="https://www.veracode.com/blog/genai-code-security-report/" rel="noopener" target="_blank">https://www.veracode.com/blog/genai-code-security-report/</a></li>
+              <li>Veracode. "Spring 2026 GenAI Code Security." 24. mars 2026. <a href="https://www.veracode.com/blog/spring-2026-genai-code-security/" rel="noopener" target="_blank">https://www.veracode.com/blog/spring-2026-genai-code-security/</a></li>
+              <li>Vero, Mündler, Chibotaru et al. "BaxBench: Can LLMs Generate Correct and Secure Backends?" ICML 2025. <a href="https://arxiv.org/abs/2502.11844" rel="noopener" target="_blank">https://arxiv.org/abs/2502.11844</a></li>
+              <li>Siddiq, Santos. "SecurityEval." MSR4P&amp;S 2022. <a href="https://s2e-lab.github.io/preprints/msr4ps22-preprint.pdf" rel="noopener" target="_blank">https://s2e-lab.github.io/preprints/msr4ps22-preprint.pdf (engelsk)</a></li>
+              <li>"CWEval: Outcome-driven Evaluation on Functionality and Security of LLM Code Generation." Januar 2025. <a href="https://arxiv.org/html/2501.08200v1" rel="noopener" target="_blank">https://arxiv.org/html/2501.08200v1</a></li>
+              <li>Fu, Liang, Tahir et al. "Security Weaknesses of Copilot-Generated Code in GitHub Projects." 2023. <a href="https://arxiv.org/html/2310.02059v2" rel="noopener" target="_blank">https://arxiv.org/html/2310.02059v2</a></li>
+              <li>Sandoval, Pearce, Nys et al. "Lost at C: A User Study on the Security Implications of Large Language Model Code Assistants." USENIX Security 2023. <a href="https://arxiv.org/abs/2208.09727" rel="noopener" target="_blank">https://arxiv.org/abs/2208.09727</a></li>
+              <li>Asare et al. "Is GitHub's Copilot as Bad as Humans at Introducing Vulnerabilities in Code?" Empirical Software Engineering. <a href="https://arxiv.org/abs/2204.04741" rel="noopener" target="_blank">https://arxiv.org/abs/2204.04741</a></li>
+              <li>Apiiro. "4x Velocity, 10x Vulnerabilities: AI Coding Assistants Are Shipping More Risks." 4. september 2025. <a href="https://apiiro.com/blog/4x-velocity-10x-vulnerabilities-ai-coding-assistants-are-shipping-more-risks/" rel="noopener" target="_blank">https://apiiro.com/blog/4x-velocity-10x-vulnerabilities-ai-coding-assistants-are-shipping-more-risks/</a></li>
+              <li>Spracklen, Wijewickrama, Sakib et al. "We Have a Package for You! A Comprehensive Analysis of Package Hallucinations by Code Generating LLMs." USENIX Security 2025. <a href="https://arxiv.org/abs/2406.10279" rel="noopener" target="_blank">https://arxiv.org/abs/2406.10279</a></li>
+              <li>"Slopsquatting." <a href="https://en.wikipedia.org/wiki/Slopsquatting" rel="noopener" target="_blank">https://en.wikipedia.org/wiki/Slopsquatting</a></li>
+              <li>Lanyado (Lasso Security). "AI Package Hallucinations." <a href="https://www.lasso.security/blog/ai-package-hallucinations" rel="noopener" target="_blank">https://www.lasso.security/blog/ai-package-hallucinations</a> (omtale: <a href="https://www.theregister.com/2024/03/28/ai_bots_hallucinate_software_packages/" rel="noopener" target="_blank">https://www.theregister.com/2024/03/28/ai_bots_hallucinate_software_packages/</a>)</li>
+              <li>GitGuardian. "Yes, GitHub's Copilot Can Leak (Real) Secrets." 27. mars 2025. <a href="https://blog.gitguardian.com/yes-github-copilot-can-leak-secrets/" rel="noopener" target="_blank">https://blog.gitguardian.com/yes-github-copilot-can-leak-secrets/</a></li>
+              <li>"GitHub's Copilot Code Review: Can AI Spot Security Flaws Before You Commit?" 2025. <a href="https://arxiv.org/html/2509.13650v1" rel="noopener" target="_blank">https://arxiv.org/html/2509.13650v1</a></li>
+              <li>"Security Degradation in Iterative AI Code Generation: A Systematic Analysis of the Paradox." IEEE ISTAS 2025. <a href="https://arxiv.org/abs/2506.11022" rel="noopener" target="_blank">https://arxiv.org/abs/2506.11022</a></li>
+              <li>GitHub. "Secure code more than three times faster with Copilot Autofix." 14. august 2024. <a href="https://github.blog/news-insights/product-news/secure-code-more-than-three-times-faster-with-copilot-autofix/" rel="noopener" target="_blank">https://github.blog/news-insights/product-news/secure-code-more-than-three-times-faster-with-copilot-autofix/</a></li>
+              <li>DORA / Google Cloud. "2024 Accelerate State of DevOps Report." <a href="https://dora.dev/research/2024/dora-report/" rel="noopener" target="_blank">https://dora.dev/research/2024/dora-report/</a> (analyse med tallene 1,5 % / 7,2 %: <a href="https://redmonk.com/rstephens/2024/11/26/dora2024/" rel="noopener" target="_blank">https://redmonk.com/rstephens/2024/11/26/dora2024/</a>)</li>
+              <li>TechCrunch. "Microsoft CEO says up to 30% of the company's code was written by AI." 29. april 2025. <a href="https://techcrunch.com/2025/04/29/microsoft-ceo-says-up-to-30-of-the-companys-code-was-written-by-ai/" rel="noopener" target="_blank">https://techcrunch.com/2025/04/29/microsoft-ceo-says-up-to-30-of-the-companys-code-was-written-by-ai/</a></li>
+              <li>METR. "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity." Juli 2025. <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" rel="noopener" target="_blank">https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/</a></li>
+              <li>Stack Overflow. "2025 Developer Survey: AI." <a href="https://survey.stackoverflow.co/2025/ai/" rel="noopener" target="_blank">https://survey.stackoverflow.co/2025/ai/</a> (<a href="https://stackoverflow.blog/2025/12/29/developers-remain-willing-but-reluctant-to-use-ai-the-2025-developer-survey-results-are-here/" rel="noopener" target="_blank">https://stackoverflow.blog/2025/12/29/developers-remain-willing-but-reluctant-to-use-ai-the-2025-developer-survey-results-are-here/</a>)</li>
+              <li>OWASP. "Top 10 for Large Language Model Applications." <a href="https://genai.owasp.org/llm-top-10/" rel="noopener" target="_blank">https://genai.owasp.org/llm-top-10/</a></li>
+              <li>NIST. "SP 800-218A: Secure Software Development Practices for Generative AI." Juli 2024. <a href="https://csrc.nist.gov/pubs/sp/800/218/a/final" rel="noopener" target="_blank">https://csrc.nist.gov/pubs/sp/800/218/a/final</a></li>
+              <li>Snyk. "2023 AI-Generated Code Security Report." <a href="https://go.snyk.io/2023-ai-code-security-report.html" rel="noopener" target="_blank">https://go.snyk.io/2023-ai-code-security-report.html</a> (omtale: <a href="https://devclass.com/2023/12/05/ai-assistants-write-insecure-code-that-humans-trust-too-much-snyk-survey-finds/" rel="noopener" target="_blank">https://devclass.com/2023/12/05/ai-assistants-write-insecure-code-that-humans-trust-too-much-snyk-survey-finds/</a>)</li>
+            </ol>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="colophon">&copy; <span id="year">2026</span> Joakim Nordheim Larssen</span>
+    </div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>
