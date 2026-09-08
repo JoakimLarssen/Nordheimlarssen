@@ -1,11 +1,12 @@
 .writing-entry{grid-template-columns:1fr 24px}
 .hero h1{font-size:clamp(44px,5.1vw,68px);letter-spacing:-2.6px}
-.hero h1 em{letter-spacing:-2.7px;line-height:1.13}
+.hero h1,.cv-heading h1{font-weight:400}
+.hero h1 em{line-height:1.13}
 .hero{grid-template-columns:1.5fr 1fr;gap:64px}
 .hero-intro{max-width:46ch}
 .research-strip{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin:38px 0;padding:38px 0;border-block:1px solid var(--line)}
 .research-strip h2{font-size:34px;letter-spacing:-1px;margin-top:16px;line-height:1.18}
-.research-strip h2 em{font-family:var(--serif);font-weight:400}
+.research-strip h2 em{font-family:inherit;font-style:normal;font-weight:inherit}
 .research-strip>div>p{font-size:15px;line-height:1.9;color:var(--text)}
 .research-strip .text-link{margin-top:15px}
 .writing-search{margin:0 0 32px;max-width:720px}
