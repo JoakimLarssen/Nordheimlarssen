@@ -231,3 +231,35 @@ h1[tabindex="-1"]:focus{outline:none}
 @media (max-width:480px){.home-small{grid-column:1/-1;min-height:0}
 .home-small>.tile-link{min-height:0}}
 .about-page .page-heading{padding-bottom:16px}
+
+.coursework-feature { margin-bottom: 48px; }
+.coursework-heading { margin-bottom: 24px; }
+.coursework-heading h2,
+.writing-essays > h2 { font-size: 25px; line-height: 1.25; letter-spacing: -.65px; }
+.coursework-heading p { margin-top: 10px; font-size: 14px; line-height: 1.8; color: var(--text); }
+.coursework-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.coursework-card { display: flex; flex-direction: column; min-width: 0; padding: 32px; border: 1px solid var(--line); border-radius: 22px; color: var(--ink); transition: border-color .18s ease; }
+.coursework-cyber { background: var(--purple); }
+.coursework-network { background: var(--blue); }
+.coursework-card:hover { border-color: var(--accent); }
+.coursework-title { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+.coursework-title h3 { max-width: 17ch; font-size: clamp(25px, 2.4vw, 30px); font-weight: 500; line-height: 1.2; letter-spacing: -.8px; }
+.coursework-icon { width: 56px; height: 56px; flex: 0 0 56px; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: .65; }
+.coursework-course { margin-top: 20px; font-size: 13px; font-weight: 600; line-height: 1.6; }
+.coursework-summary { margin-top: 12px; margin-bottom: 28px; max-width: 46ch; font-size: 14px; line-height: 1.8; color: var(--text); }
+.coursework-action { display: flex; align-items: flex-start; min-height: 64px; justify-content: space-between; gap: 20px; padding-top: 18px; margin-top: auto; border-top: 1px solid var(--line); font-size: 13px; font-weight: 500; line-height: 1.6; }
+.coursework-action > span:last-child { font-size: 23px; font-weight: 400; line-height: 1; }
+.coursework-action small { display: block; margin-top: 4px; font-size: 12px; font-weight: 400; color: var(--text); }
+.writing-essays > h2 { margin-bottom: 24px; }
+.writing-essays .writing-entry h3 { font-size: 19px; line-height: 1.5; letter-spacing: -.3px; }
+.writing-essays .writing-entry:hover h3 { color: var(--accent); }
+@media (max-width: 740px) {
+  .coursework-feature { margin-bottom: 32px; }
+  .coursework-heading h2, .writing-essays > h2 { font-size: 23px; }
+  .coursework-grid { grid-template-columns: 1fr; gap: 18px; }
+  .coursework-card { padding: 25px; }
+  .coursework-title { gap: 16px; }
+  .coursework-title h3 { font-size: 26px; }
+  .coursework-icon { width: 44px; height: 44px; flex-basis: 44px; }
+  .writing-essays .writing-entry h3 { font-size: 18px; }
+}

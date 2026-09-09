@@ -65,8 +65,14 @@
   }
   function searchWriting(value) {
     const q=value.trim().toLocaleLowerCase(messages.dateLocale);
-    const entries=[...document.querySelectorAll('.writing-entry')];
-    entries.forEach(el=>{el.hidden=!el.textContent.toLocaleLowerCase(messages.dateLocale).includes(q);});
+    const entries=[...document.querySelectorAll('[data-writing-item]')];
+    entries.forEach(el=>{
+      const context=el.closest('[data-writing-group]')?.dataset.writingKeywords || '';
+      el.hidden=!`${el.textContent} ${context}`.toLocaleLowerCase(messages.dateLocale).includes(q);
+    });
+    document.querySelectorAll('[data-writing-group]').forEach(group=>{
+      group.hidden=![...group.querySelectorAll('[data-writing-item]')].some(el=>!el.hidden);
+    });
     const n=entries.filter(el=>!el.hidden).length;
     const count=document.querySelector('[data-writing-count]');
     if(count) count.textContent=messages.writing(n);
