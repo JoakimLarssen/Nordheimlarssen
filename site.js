@@ -25,8 +25,6 @@
       copyBlocked: 'Kunne ikke kopiere. Marker adressen, eller bruk e-postlenken.',
     },
   }[locale];
-  const media = window.matchMedia('(prefers-color-scheme: dark)');
-  const getSavedTheme = () => { try { return localStorage.getItem('jnl-theme'); } catch { return null; } };
   function syncTheme() {
     const dark = root.dataset.theme === 'dark';
     document.querySelectorAll('[data-theme-toggle]').forEach(button => {
@@ -111,13 +109,9 @@
   document.addEventListener('input',event=>{
     if(event.target.id==='writing-query')searchWriting(event.target.value);
   });
-  media.addEventListener('change',event=>{
-    const saved=getSavedTheme();
-    if(saved!=='light' && saved!=='dark') {root.dataset.theme=event.matches?'dark':'light';syncTheme();}
-  });
   window.addEventListener('storage',event=>{
-    if(event.key==='jnl-theme') {
-      root.dataset.theme=event.newValue==='light'||event.newValue==='dark'?event.newValue:media.matches?'dark':'light';syncTheme();
+    if(event.key==='jnl-theme' || event.key===null) {
+      root.dataset.theme=event.newValue==='dark'?'dark':'light';syncTheme();
     }
   });
   window.addEventListener('hashchange',()=>{
