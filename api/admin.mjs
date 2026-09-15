@@ -5,7 +5,6 @@ import { DeviceError, getDevices } from '../lib/admin-devices.mjs';
 const views = {
   login: new URL('../lib/views/admin-login.html', import.meta.url),
   dashboard: new URL('../lib/views/admin.html', import.meta.url),
-  result: new URL('../lib/views/login-result.html', import.meta.url),
 };
 
 function json(response, status, data) {
@@ -39,22 +38,21 @@ export default async function handler(request, response) {
     const config = configuration();
     const url = new URL(request.url, config.origin);
     route = url.searchParams.get('route') || 'page';
-    const methods = { page: 'GET', 'login-page': 'GET', 'login-result': 'GET', login: 'GET', callback: 'GET', session: 'GET', devices: 'GET', refresh: 'POST', logout: 'POST' };
+    const methods = { page: 'GET', 'login-page': 'GET', login: 'GET', callback: 'GET', session: 'GET', devices: 'GET', refresh: 'POST', logout: 'POST' };
     if (!Object.hasOwn(methods, route)) return json(response, 404, { error: 'not_found' });
     if (request.method !== methods[route]) {
       response.setHeader('Allow', methods[route]);
       return json(response, 405, { error: 'method_not_allowed' });
     }
     const auth = createAuth(request, response, config);
-    if (route === 'login-result') return await page(response, 'result');
     if (route === 'login') {
-      if (!config.ready) return redirect(response, '/api/admin?route=login-result&error=setup');
+      if (!config.ready) return redirect(response, '/admin/login?error=setup');
       return redirect(response, await beginLogin(auth, config));
     }
     if (route === 'callback') {
-      if (!config.ready) return redirect(response, '/api/admin?route=login-result&error=setup');
-      if (!await finishLogin(auth, url, config)) return redirect(response, '/api/admin?route=login-result&error=denied');
-      return redirect(response, '/api/admin?route=login-result');
+      if (!config.ready) return redirect(response, '/admin/login?error=setup');
+      if (!await finishLogin(auth, url, config)) return redirect(response, '/admin/login?error=denied');
+      return redirect(response, '/admin');
     }
     const session = await getSession(auth, config);
     if (route === 'login-page') return session ? redirect(response, '/admin') : await page(response, 'login');
@@ -68,7 +66,7 @@ export default async function handler(request, response) {
       return json(response, 200, { ok: true });
     }
   } catch (error) {
-    if (route === 'callback') return redirect(response, '/api/admin?route=login-result&error=unavailable');
+    if (route === 'callback') return redirect(response, '/admin/login?error=unavailable');
     return json(response, 503, { error: error instanceof DeviceError ? error.code : 'unavailable' });
   }
 }

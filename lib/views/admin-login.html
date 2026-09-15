@@ -1,36 +1,33 @@
 <!doctype html>
-<html lang="nb">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow, noarchive">
   <meta name="color-scheme" content="light dark">
-  <title>Logg inn på adminkonsollen | Nordheim Larssen</title>
+  <title>Log in to Admin Console | Nordheim Larssen</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <script src="/theme.js"></script>
   <link rel="stylesheet" href="/admin/admin.css">
   <script src="/admin/login.js" defer></script>
 </head>
-<body>
-  <a class="skip" href="#main">Hopp til innhold</a>
+<body class="login-page">
+  <a class="skip" href="#main">Skip to content</a>
   <header class="admin-header wrap">
-    <a class="brand" href="/no/" aria-label="Nordheim Larssen, hjem"><img class="light-logo" src="/images/brand/primary-light.svg" width="248" height="38" alt=""><img class="dark-logo" src="/images/brand/primary-dark.svg" width="248" height="38" alt=""></a>
-    <a class="quiet-link" href="/no/">Til nettsiden <span aria-hidden="true">↗</span></a>
+    <a class="brand" href="/" aria-label="Nordheim Larssen, home"><img class="light-logo" src="/images/brand/primary-light.svg" width="248" height="38" alt=""><img class="dark-logo" src="/images/brand/primary-dark.svg" width="248" height="38" alt=""></a>
+    <a class="quiet-link" href="/">Back to website <span aria-hidden="true">↗</span></a>
   </header>
-  <main id="main" class="login-layout wrap">
-    <div class="login-copy">
-      <h1>Logg inn på<br><span>adminkonsollen</span></h1>
-      <button class="button" id="login-button" type="button">Logg inn med GitHub</button>
-      <p class="login-note">Kun kontoen din har tilgang.</p>
+  <main id="main" class="login-main">
+    <section class="login-panel" aria-labelledby="login-title">
+      <h1 id="login-title">Log in to Admin Console</h1>
+      <a class="github-login" id="login-button" href="/api/admin?route=login">
+        <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6.766 11.328c-2.063-.25-3.516-1.734-3.516-3.656 0-.781.281-1.625.75-2.188-.203-.515-.172-1.609.063-2.062.625-.078 1.468.25 1.968.703.594-.187 1.219-.281 1.985-.281.765 0 1.39.094 1.953.265.484-.437 1.344-.765 1.969-.687.218.422.25 1.515.046 2.047.5.593.766 1.39.766 2.203 0 1.922-1.453 3.375-3.547 3.64.531.344.89 1.094.89 1.954v1.625c0 .468.391.734.86.547C13.781 14.359 16 11.53 16 8.03 16 3.61 12.406 0 7.984 0 3.563 0 0 3.61 0 8.031a7.88 7.88 0 0 0 5.172 7.422c.422.156.828-.125.828-.547v-1.25c-.219.094-.5.156-.75.156-1.031 0-1.64-.562-2.078-1.609-.172-.422-.36-.672-.719-.719-.187-.015-.25-.093-.25-.187 0-.188.313-.328.625-.328.453 0 .844.281 1.25.86.313.452.64.655 1.031.655s.641-.14 1-.5c.266-.265.47-.5.657-.656"/></svg>
+        <span>Continue with GitHub</span>
+      </a>
       <p class="notice" id="login-message" role="status" hidden></p>
-      <noscript><p>JavaScript må være på for å bruke adminkonsollen.</p></noscript>
-    </div>
-    <div class="login-art" aria-hidden="true">
-      <div class="art-laptop"><div class="art-screen"><span class="terminal-prompt">&gt;_</span><span class="terminal-cursor"></span></div><div class="art-base"></div></div>
-      <div class="art-mini"><img src="/images/brand/symbol-light.svg" alt=""></div>
-      <div class="art-shadow"></div>
-    </div>
+      <noscript><p class="login-note">Sign-in works without JavaScript. Enable it to use the admin console.</p></noscript>
+    </section>
   </main>
-  <footer class="admin-footer wrap"><span>Nordheim Larssen</span><span>Adminkonsoll</span></footer>
+  <footer class="login-footer">Nordheim Larssen</footer>
 </body>
 </html>
