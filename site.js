@@ -77,6 +77,20 @@
     const empty=document.querySelector('[data-search-empty]');
     if(empty) {empty.textContent=messages.noMatches;empty.hidden=n!==0;}
   }
+  function isFirstSiteEntry() {
+    let firstEntry = true;
+    try {
+      firstEntry = sessionStorage.getItem('jnl-logo-entered') !== '1';
+      sessionStorage.setItem('jnl-logo-entered', '1');
+    } catch {}
+    // Referrer also covers links from an older open page or unavailable storage.
+    try {
+      if (document.referrer && new URL(document.referrer).origin === location.origin) return false;
+    } catch {}
+    const navigation = window.performance?.getEntriesByType?.('navigation')?.[0];
+    return firstEntry && navigation?.type !== 'back_forward';
+  }
+  const showLogoEntrance = isFirstSiteEntry();
   const motionLogos = new WeakSet();
   function initLogoMotion() {
     document.querySelectorAll('.site-logo').forEach(logo => {
@@ -104,7 +118,7 @@
       reduced.addEventListener('change', stop);
       document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
       window.addEventListener('pagehide', stop);
-      play('ink-trace');
+      if (showLogoEntrance) play('ink-trace');
       // One quiet idle movement per page, with no repeating background animation.
       if (!reduced.matches) idleTimer = setTimeout(() => {
         if (!logo.matches(':hover, :focus')) play('float');
