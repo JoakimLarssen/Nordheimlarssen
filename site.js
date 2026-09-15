@@ -77,8 +77,42 @@
     const empty=document.querySelector('[data-search-empty]');
     if(empty) {empty.textContent=messages.noMatches;empty.hidden=n!==0;}
   }
+  const motionLogos = new WeakSet();
+  function initLogoMotion() {
+    document.querySelectorAll('.site-logo').forEach(logo => {
+      if (motionLogos.has(logo) || !logo.querySelector('.site-logo-symbol')) return;
+      motionLogos.add(logo);
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let idleTimer;
+      function settle() { delete logo.dataset.logoMotion; }
+      function play(motion) {
+        if (reduced.matches || document.hidden || logo.dataset.logoMotion) return;
+        const bounds = logo.getBoundingClientRect();
+        if (bounds.bottom <= 0 || bounds.top >= window.innerHeight) return;
+        logo.dataset.logoMotion = motion;
+      }
+      logo.addEventListener('animationend', event => {
+        if (event.target.classList.contains('brand-companion')) settle();
+      });
+      logo.addEventListener('pointerenter', event => {
+        if (event.pointerType === 'mouse' || event.pointerType === 'pen') play('assemble');
+      });
+      logo.addEventListener('focus', () => {
+        if (logo.matches(':focus-visible')) play('assemble');
+      });
+      function stop() { clearTimeout(idleTimer); settle(); }
+      reduced.addEventListener('change', stop);
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
+      window.addEventListener('pagehide', stop);
+      play('ink-trace');
+      // One quiet idle movement per page, with no repeating background animation.
+      if (!reduced.matches) idleTimer = setTimeout(() => {
+        if (!logo.matches(':hover, :focus')) play('float');
+      }, 7500);
+    });
+  }
   function initPage() {
-    syncTheme();updateClock();syncLanguageLinks();
+    syncTheme();updateClock();syncLanguageLinks();initLogoMotion();
     document.querySelectorAll('[data-filters],[data-writing-search]').forEach(el=>{el.hidden=false;});
     document.querySelectorAll('[data-copy-email]').forEach(el=>{el.hidden=!(navigator.clipboard && window.isSecureContext);});
     if(document.querySelector('[data-writing-search]')) searchWriting('');
