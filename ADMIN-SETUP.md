@@ -13,7 +13,7 @@ https://www.nordheimlarssen.no/api/admin?route=callback
 http://127.0.0.1:4310/api/admin?route=callback
 ```
 
-Knappen åpner GitHub i et eget vindu. Hovedsiden blir stående på nettsiden. Etter innlogging lukkes GitHub-vinduet; hovedsiden sjekker serverøkten og åpner adminkonsollen. Hvis nettleseren blokkerer vinduet, ber siden brukeren om å tillate det. GitHub krever sin egen autorisasjonsside og tilbyr ikke en innebygd passorddialog. Avbrutt eller avvist innlogging gir en melding uten tilgang til private data.
+«Continue with GitHub» bruker GitHub-logoen og åpner GitHub i samme fane. Etter autorisasjon sender callback-ruten brukeren direkte til adminkonsollen. Avbrutt eller avvist innlogging returnerer til innloggingssiden med en melding. Selve innloggingen fungerer også uten JavaScript.
 
 | Servervariabel | Verdi eller formål |
 | --- | --- |
@@ -38,7 +38,7 @@ Serveren kontrollerer GitHub-brukeren gjennom `/user` etter kodeutvekslingen. Ba
 
 `public.admin_sessions` lagrer SHA-256-hashen av et tilfeldig økttoken, GitHub-ID, CSRF-token og utløpstid. Rå økttokens og GitHub access tokens lagres ikke i databasen. GitHub-tokenet brukes bare under innloggingen. Hver privat forespørsel sjekker at økten finnes og ikke er utløpt. Økter varer i åtte timer. Utlogging sletter den gjeldende økten; slett alle rader i `admin_sessions` for å avslutte alle økter. Utløpte rader kan ryddes med `delete from public.admin_sessions where expires_at <= now();`.
 
-Innloggingen bruker tilfeldig `state` og PKCE med S256. Den midlertidige OAuth-informasjonskapselen er signert, bundet til nettsidens origin og gyldig i ti minutter. Økttokens er også bundet til origin. Informasjonskapsler er HttpOnly og SameSite=Lax; i produksjon brukes Secure og `__Host-`-prefiks. Oppdatering og utlogging krever POST, korrekt Origin og øktens CSRF-token. Popup-meldinger inneholder ingen hemmeligheter og kan ikke alene gi innlogging: hovedsiden sjekker økten på serveren.
+Innloggingen bruker tilfeldig `state` og PKCE med S256. Den midlertidige OAuth-informasjonskapselen er signert, bundet til nettsidens origin og gyldig i ti minutter. Økttokens er også bundet til origin. Informasjonskapsler er HttpOnly og SameSite=Lax; i produksjon brukes Secure og `__Host-`-prefiks. Oppdatering og utlogging krever POST, korrekt Origin og øktens CSRF-token.
 
 ## Private databaseopplysninger
 
@@ -67,6 +67,6 @@ npm run dev
 
 ## Verifikasjon
 
-27 direkte runtime-kontroller av OAuth, PKCE, signert state, avvist bruker, private informasjonskapsler, kontoopprettelse før økt, hashet lagring og utlogging bestod. Disse brukte simulerte GitHub- og databasesvar. Ekte GitHub-innlogging med popup er også verifisert lokalt som JoakimLarssen, med de fire maskinradene hentet fra Supabase. Ekte utlogging fungerte.
+27 direkte runtime-kontroller av OAuth, PKCE, signert state, avvist bruker, private informasjonskapsler, kontoopprettelse før økt, hashet lagring og utlogging bestod. Disse brukte simulerte GitHub- og databasesvar. Ekte GitHub-innlogging er også verifisert lokalt som JoakimLarssen, med de fire maskinradene hentet fra Supabase. Ekte utlogging fungerte.
 
 Tailscale-svar i tidligere runtime-kontroller var simulerte. Ingen faktisk SSH-tilkobling er bekreftet gjennom denne løsningen.
