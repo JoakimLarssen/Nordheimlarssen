@@ -1,4 +1,5 @@
 .site-logo {
+  --brand-ink: #24232C;
   display: flex;
   align-items: center;
   gap: 0;
@@ -7,15 +8,57 @@
   line-height: 1;
 }
 .site-logo::after { content: none; }
-.site-logo picture { display: block; }
-.site-logo img {
+.site-logo svg {
   display: block;
-  width: 280px;
   height: auto;
+  flex: 0 0 auto;
+  fill: var(--brand-ink);
 }
-.site-logo .site-logo-dark { display: none; }
-:root[data-theme="dark"] .site-logo-light { display: none; }
-:root[data-theme="dark"] .site-logo-dark { display: block; }
+.site-logo .site-logo-symbol { width: calc(280px * 128 / 828); overflow: visible; }
+.site-logo .site-logo-wordmark { width: calc(280px * 700 / 828); }
+.site-logo-symbol path { transform-box: view-box; transform-origin: 64px 64px; }
+:root[data-theme="dark"] .site-logo { --brand-ink: #F7F5F0; }
+
+/* Motion enhances the static artwork; the wordmark stays readable throughout. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-logo[data-logo-motion="ink-trace"] .site-logo-symbol path {
+    stroke: var(--brand-ink);
+    stroke-width: 1.6;
+    stroke-dasharray: 1;
+    animation: brand-ink-trace 1.8s ease-in-out both;
+  }
+  .site-logo[data-logo-motion="ink-trace"] .site-logo-symbol .brand-companion { animation-delay: 180ms; }
+  .site-logo[data-logo-motion="assemble"] .brand-body {
+    animation: brand-assemble-body 700ms cubic-bezier(.22,.8,.25,1) both;
+  }
+  .site-logo[data-logo-motion="assemble"] .brand-companion {
+    animation: brand-assemble-companion 800ms cubic-bezier(.22,.8,.25,1) both;
+  }
+  .site-logo[data-logo-motion="float"] .brand-body { animation: brand-float-body 3.2s ease-in-out both; }
+  .site-logo[data-logo-motion="float"] .brand-companion { animation: brand-float-companion 3.2s ease-in-out both; }
+}
+@keyframes brand-ink-trace {
+  0% { stroke-dashoffset: 1; stroke-opacity: 1; fill-opacity: 0; }
+  62% { stroke-dashoffset: 0; stroke-opacity: 1; fill-opacity: 0; }
+  100% { stroke-dashoffset: 0; stroke-opacity: 0; fill-opacity: 1; }
+}
+@keyframes brand-assemble-body {
+  0% { transform: translate(-8px,-6px) rotate(-8deg) scale(.96); }
+  100% { transform: none; }
+}
+@keyframes brand-assemble-companion {
+  0% { transform: translate(10px,6px) rotate(9deg) scale(.96); }
+  100% { transform: none; }
+}
+@keyframes brand-float-body {
+  0%, 100% { transform: none; }
+  45% { transform: translate(0,-2px) rotate(-3deg); }
+}
+@keyframes brand-float-companion {
+  0%, 100% { transform: none; }
+  45% { transform: translate(3px,-4px) rotate(5deg); }
+}
 @media (max-width: 1000px) {
-  .site-logo img { width: 48px; height: 48px; }
+  .site-logo .site-logo-symbol { width: 48px; height: 48px; }
+  .site-logo .site-logo-wordmark { display: none; }
 }
