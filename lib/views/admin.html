@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="color-scheme" content="light dark">
+  <title>Adminkonsoll | Nordheim Larssen</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script src="/theme.js"></script>
+  <link rel="stylesheet" href="/admin/admin.css">
+  <script src="/admin/admin.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Hopp til innhold</a>
+  <header class="admin-header wrap">
+    <a class="brand" href="/no/" aria-label="Nordheim Larssen, hjem"><img class="light-logo" src="/images/brand/primary-light.svg" width="248" height="38" alt=""><img class="dark-logo" src="/images/brand/primary-dark.svg" width="248" height="38" alt=""></a>
+    <div class="header-actions"><a class="quiet-link" href="/no/">Til nettsiden <span aria-hidden="true">↗</span></a><button id="logout" class="button secondary" type="button" disabled>Logg ut</button></div>
+  </header>
+  <main id="main" class="wrap dashboard">
+    <section class="dashboard-heading">
+      <div><h1>Adminkonsoll</h1><p>Finn adressen, kopier kommandoen og koble til.</p></div>
+      <button id="refresh" class="button" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 11-2l3 3M4 16l3 3a7 7 0 0 0 11-2"/></svg><span>Oppdater adresser</span></button>
+    </section>
+    <div class="overview-line"><p id="summary">Henter maskinene dine …</p><p id="updated"></p></div>
+    <p id="notice" class="notice" role="status" hidden></p>
+    <div id="devices" class="device-grid" aria-busy="true"></div>
+    <section class="connection-help" aria-labelledby="connection-title">
+      <div><h2 id="connection-title">Koble til fra terminalen</h2><p>Kopier SSH-kommandoen for maskinen du vil inn på, og lim den inn i terminalen på maskinen du bruker.</p></div>
+      <p id="connection-note">Maskinen du kobler til må være våken og ha SSH slått på. Private SSH-nøkler blir på maskinene dine.</p>
+    </section>
+    <noscript><p>JavaScript må være på for å vise adresser og SSH-kommandoer.</p></noscript>
+  </main>
+  <footer class="admin-footer wrap"><span>Nordheim Larssen</span><span id="account">Adminkonsoll</span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

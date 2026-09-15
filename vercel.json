@@ -1,4 +1,18 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/admin.mjs": {
+      "includeFiles": "lib/views/*.html",
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    { "source": "/admin", "destination": "/api/admin?route=page" },
+    { "source": "/admin/", "destination": "/api/admin?route=page" },
+    { "source": "/admin/login", "destination": "/api/admin?route=login-page" },
+    { "source": "/admin/login/", "destination": "/api/admin?route=login-page" }
+  ],
   "headers": [
     {
       "source": "/cv.pdf",
