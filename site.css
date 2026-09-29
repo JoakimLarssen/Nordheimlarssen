@@ -263,3 +263,56 @@ h1[tabindex="-1"]:focus{outline:none}
   .coursework-icon { width: 44px; height: 44px; flex-basis: 44px; }
   .writing-essays .writing-entry h3 { font-size: 18px; }
 }
+
+@font-face {
+  font-family: 'Frist Cover Manrope';
+  src: url('/fonts/manrope-latin-wght-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+.stage.frist-stage {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30%;
+  align-items: center;
+  gap: 40px;
+  background: #ecece8;
+  color: #171717;
+}
+.case .frist-stage .stage-title {
+  margin: 0;
+  max-width: none;
+  min-width: 0;
+  font-family: 'Frist Cover Manrope', Arial, sans-serif;
+  font-size: clamp(32px, 5.7cqw, 64px);
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.13;
+  letter-spacing: -0.045em;
+}
+.frist-stage .frist-mark {
+  display: block;
+  justify-self: center;
+  width: min(100%, 230px);
+  height: auto;
+}
+@media (max-width: 740px) {
+  .stage.frist-stage { gap: 20px; }
+}
+@media (max-width: 480px) {
+  .stage.frist-stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    gap: 12px;
+  }
+  .case .frist-stage .stage-title { font-size: clamp(24px, 8cqw, 32px); }
+  .frist-stage .frist-mark {
+    justify-self: end;
+    align-self: end;
+    width: 110px;
+  }
+}
+@media (forced-colors: active) {
+  .stage.frist-stage { forced-color-adjust: none; }
+}
