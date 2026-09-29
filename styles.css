@@ -453,10 +453,11 @@ a { color: var(--acc); text-decoration: none; }
 }
 .article-summary li:last-child { margin-bottom: 0; }
 .article-summary li::before {
-  content: "\203A";            /* single right-angle marker, in green */
-  position: absolute; left: .1em; top: 0;
-  color: var(--acc);
-  font-family: var(--mono);
+  content: "";
+  position: absolute; left: .1em; top: .65em;
+  width: .25em; height: .25em;
+  border-radius: 50%;
+  background: var(--dim);
 }
 .article-summary li strong { color: var(--fg-hi); font-weight: 500; }
 .article-summary li em { font-style: italic; }
