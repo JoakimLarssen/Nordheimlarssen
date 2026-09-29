@@ -1,18 +1,23 @@
-.home-page .hero-links {
+:root {
+  --action-ink: var(--ink, var(--fg-hi));
+  --action-soft: var(--soft, color-mix(in srgb, var(--fg-hi) 5%, var(--bg)));
+  --action-surface: var(--surface, var(--panel));
+  --action-muted: var(--muted, var(--dim));
+}
+
+.hero-links {
   flex-wrap: wrap;
   gap: 12px;
 }
 
-.home-page .profile-socials,
-.home-page .socials {
+.profile-socials,
+.socials {
   gap: 8px;
 }
 
-.home-page .text-link,
-.home-page .site-top .top-contact,
 .home-page .now-item h2 a,
-.home-page .footer-nav a {
-  color: var(--ink);
+.footer-nav a {
+  color: var(--action-ink);
   text-decoration: underline;
   text-decoration-color: var(--line);
   text-decoration-thickness: 1px;
@@ -20,9 +25,11 @@
   transition: text-decoration-color .18s ease;
 }
 
-.home-page .hero-links .text-link,
-.home-page .profile-socials a,
-.home-page .socials a {
+body .text-link,
+.profile-socials a,
+.socials a,
+.article .article-back,
+.coursework-action > span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -30,32 +37,33 @@
   padding: 10px 16px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: var(--soft);
-  color: var(--ink);
+  background: var(--action-soft);
+  color: var(--action-ink);
+  font-size: 13px;
   font-weight: 500;
   line-height: 1.5;
   text-decoration: none;
   transition: background-color .18s ease, border-color .18s ease;
 }
 
-.home-page .hero-links .text-link:is(:hover, :focus-visible),
-.home-page .profile-socials a:is(:hover, :focus-visible),
-.home-page .socials a:is(:hover, :focus-visible) {
-  border-color: var(--muted);
-  background: var(--surface);
-  color: var(--ink);
+body .text-link:is(:hover, :focus-visible),
+.profile-socials a:is(:hover, :focus-visible),
+.socials a:is(:hover, :focus-visible),
+.article .article-back:is(:hover, :focus-visible),
+.coursework-card:is(:hover, :focus-visible) .coursework-action > span {
+  border-color: var(--action-muted);
+  background: var(--action-surface);
+  color: var(--action-ink);
 }
 
-.home-page .text-link:is(:hover, :focus-visible),
-.home-page .site-top .top-contact:is(:hover, :focus-visible),
 .home-page .now-item h2 a:is(:hover, :focus-visible),
-.home-page .footer-nav a:is(:hover, :focus-visible) {
-  color: var(--ink);
+.footer-nav a:is(:hover, :focus-visible) {
+  color: var(--action-ink);
   text-decoration-color: currentColor;
 }
 
-.home-page .section-heading,
-.home-page .notes-heading {
+.section-heading,
+.notes-heading {
   flex-wrap: wrap;
   gap: 12px 20px;
 }
@@ -125,15 +133,69 @@
   background: var(--soft);
 }
 
-.home-page .footer-nav a {
+.footer-nav a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
 }
 
-.home-page :focus-visible,
-.home-page .site-top :focus-visible {
-  outline-color: var(--ink);
+body :focus-visible {
+  outline-color: var(--action-ink);
+}
+
+.writing-list .writing-entry {
+  grid-template-columns: minmax(0, 1fr);
+  padding: 24px 16px;
+  transition: background-color .18s ease;
+}
+
+.writing-list .writing-entry:is(:hover, :focus-visible) {
+  background: var(--soft);
+}
+
+.writing-essays .writing-entry:is(:hover, :focus-visible) h3 {
+  color: var(--ink);
+}
+
+.writing-entry h3 {
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 5px;
+}
+
+.writing-entry:is(:hover, :focus-visible) h3 {
+  text-decoration-color: currentColor;
+}
+
+.coursework-card:is(:hover, :focus-visible) {
+  border-color: var(--muted);
+}
+
+.coursework-action > span {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.coursework-action {
+  min-height: 84px;
+}
+
+.coursework-action small {
+  margin-top: 4px;
+}
+
+.contact-links .text-link {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.text-link {
+  align-self: flex-start;
+}
+
+@media (max-width: 740px) {
+  .setup-card > .text-link { justify-self: start; }
 }
 
 @media (max-width: 1000px) {
