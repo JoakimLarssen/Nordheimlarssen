@@ -1,4 +1,4 @@
-import { cp, mkdir, readdir, rm } from 'node:fs/promises';
+import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -15,4 +15,20 @@ for (const entry of await readdir(root, { withFileTypes: true })) {
     await cp(path.join(root, entry.name), path.join(output, entry.name), { recursive: true });
   }
 }
-console.log('Public site built in dist/. Server code and private configuration are excluded.');
+async function addAnalytics(directory) {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name !== 'admin') await addAnalytics(file);
+    } else if (entry.name.endsWith('.html')) {
+      const html = await readFile(file, 'utf8');
+      const script = '<script defer src="/_vercel/insights/script.js"></script>';
+      if (!html.includes(script)) {
+        await writeFile(file, html.replace('</head>', `${script}\n</head>`));
+      }
+    }
+  }
+}
+
+await addAnalytics(output);
+console.log('Public site built in dist/ with Web Analytics. Server code and private configuration are excluded.');
