@@ -99,7 +99,7 @@ h1[tabindex="-1"]:focus{outline:none}
 .academic-current h3{font-size:18px;line-height:1.5;letter-spacing:-.3px}
 .academic-current p{font-size:13px;line-height:1.7;color:var(--text);margin-top:5px}
 .academic-current>p{font-size:12px;margin-top:0}
-.academic-records{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:28px}
+.academic-records{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:28px}
 .academic-record{min-width:0}
 .academic-record h3{font-size:19px;line-height:1.4;letter-spacing:-.3px}
 .academic-context{font-size:13px;color:var(--text);margin-top:8px;line-height:1.8}
@@ -115,7 +115,7 @@ h1[tabindex="-1"]:focus{outline:none}
 .setup-summary>.desk-objects{height:55px;margin-top:18px;margin-bottom:12px}
 .setup-summary>.text-link{line-height:1.7}
 .mac-spec-card .desk-objects{margin-top:24px}
-@media (max-width:1000px){.academic-records{gap:26px}}
+@media (max-width:1000px){.academic-records{grid-template-columns:1fr 1fr;gap:26px}}
 @media (max-width:740px){.profile-socials{gap:18px;margin-top:14px}
 .profile-socials a{font-size:12px}
 .socials{gap:4px 20px}
